@@ -49,9 +49,15 @@ RUN apk add --no-cache \
     npm \
     libsndfile
 
+# CN networks frequently time out on pypi.org (uv-build fetch below), so
+# route package/index lookups through TUNA. Swap for Aliyun/USTC if TUNA is
+# unreachable:
+#   https://mirrors.aliyun.com/pypi/simple/
+#   https://pypi.mirrors.ustc.edu.cn/simple/
 ENV UV_PROJECT_ENVIRONMENT=/app/.venv \
     UV_LINK_MODE=copy \
-    PATH="/app/.venv/bin:${PATH}"
+    PATH="/app/.venv/bin:${PATH}" \
+    UV_DEFAULT_INDEX=https://pypi.tuna.tsinghua.edu.cn/simple
 
 # Copy dependency metadata first for layer caching
 COPY pyproject.toml uv.lock ./
