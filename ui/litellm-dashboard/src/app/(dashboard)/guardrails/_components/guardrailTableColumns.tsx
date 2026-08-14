@@ -4,7 +4,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, Trash2 } from "lucide-react";
 
 import { DataTableSortHeader } from "@/components/shared/DataTable";
-import { TFunction } from "@/i18n";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { TFunction } from "@/i18n";
 import { DateCell, IdentityCell, StatusBadge } from "@/components/shared/table_cells";

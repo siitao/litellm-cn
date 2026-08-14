@@ -13,6 +13,7 @@ import { cn } from "@/lib/cva.config";
 import AddGuardrailForm from "./add_guardrail_form";
 import GuardrailTable from "./guardrail_table";
 import { isAdminRole } from "@/utils/roles";
+import { useLanguage } from "@/contexts/LanguageContext";
 import GuardrailInfoView from "./guardrail_info";
 import GuardrailTestPlayground from "./GuardrailTestPlayground";
 import NotificationsManager from "@/components/molecules/notifications_manager";
