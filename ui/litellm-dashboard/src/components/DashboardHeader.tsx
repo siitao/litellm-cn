@@ -13,9 +13,11 @@ import { getBreadcrumb } from "@/components/leftnav";
 import { BlogDropdown } from "@/components/Navbar/BlogDropdown/BlogDropdown";
 import { CommunityEngagementButtons } from "@/components/Navbar/CommunityEngagementButtons/CommunityEngagementButtons";
 import { NotificationsBell } from "@/components/Navbar/NotificationsBell/NotificationsBell";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import ViewSwitcher from "@/components/Navbar/ViewSwitcher";
 import WorkerDropdown from "@/components/Navbar/WorkerDropdown/WorkerDropdown";
 import { useWorker } from "@/hooks/useWorker";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { useDisableShowPrompts } from "@/app/(dashboard)/hooks/useDisableShowPrompts";
 import { clearTokenCookies } from "@/utils/cookieUtils";
 import { clearStoredReturnUrl, getLoginUrl } from "@/utils/returnUrlUtils";
@@ -27,7 +29,8 @@ interface DashboardHeaderProps {
 // Top bar for the dashboard shell. Sits only over the content column (the brand
 // lives in the sidebar header); mirrors the design's breadcrumb-left / tools-right layout.
 export function DashboardHeader({ page }: DashboardHeaderProps) {
-  const { title } = getBreadcrumb(page);
+  const { t } = useLanguage();
+  const { title } = getBreadcrumb(page, t);
   const { isControlPlane, selectedWorker } = useWorker();
   const showWorkerSwitch = isControlPlane && selectedWorker !== null;
   const hideCommunityLinks = useDisableShowPrompts();
@@ -68,11 +71,12 @@ export function DashboardHeader({ page }: DashboardHeaderProps) {
           render={<a href="https://docs.litellm.ai/docs/" target="_blank" rel="noopener noreferrer" />}
           className="text-muted-foreground"
         >
-          Docs
+          {t("nav.docs")}
         </Button>
         <BlogDropdown />
         {!hideCommunityLinks && <CommunityEngagementButtons />}
         <ToolbarSeparator />
+        <LanguageSwitcher />
         <NotificationsBell />
       </div>
     </header>

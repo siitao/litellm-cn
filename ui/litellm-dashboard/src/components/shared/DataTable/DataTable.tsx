@@ -29,6 +29,7 @@ import * as React from "react";
 import { Fragment, useState } from "react";
 
 import { Skeleton } from "@/components/ui/skeleton";
+import { useLanguage } from "@/contexts/LanguageContext";
 import {
   Table as TableRoot,
   TableBody,
@@ -311,13 +312,14 @@ function MessageRow({ colSpan, children }: { colSpan: number; children: React.Re
 }
 
 function DefaultEmptyState() {
+  const { t } = useLanguage();
   return (
     <div className="flex flex-col items-center gap-1 py-6">
       <div className="mb-1 flex size-10 items-center justify-center rounded-lg bg-muted">
         <SearchX className="size-5 text-muted-foreground" />
       </div>
-      <div className="text-sm font-medium text-foreground">No results</div>
-      <div className="text-sm text-muted-foreground">No rows match your search or filters.</div>
+      <div className="text-sm font-medium text-foreground">{t("common.no_results")}</div>
+      <div className="text-sm text-muted-foreground">{t("common.no_rows_match")}</div>
     </div>
   );
 }
@@ -505,7 +507,7 @@ export function DataTable<TData extends RowData, TValue>(props: DataTableProps<T
 
   const {
     isLoading = false,
-    loadingMessage = "Loading…",
+    loadingMessage,
     skeletonRowCount = 8,
     noDataMessage,
     paginationMode = "none",
@@ -522,6 +524,9 @@ export function DataTable<TData extends RowData, TValue>(props: DataTableProps<T
     paginationSlot,
     footer,
   } = resolved;
+
+  const { t } = useLanguage();
+  const loadingLabel = loadingMessage ?? t("common.loading");
 
   const table = useDataTableInstance(resolved);
 
@@ -560,7 +565,7 @@ export function DataTable<TData extends RowData, TValue>(props: DataTableProps<T
           rowCount={skeletonRowCount}
           columns={table.getVisibleLeafColumns()}
           size={size}
-          message={loadingMessage}
+          message={loadingLabel}
         />
       );
     }

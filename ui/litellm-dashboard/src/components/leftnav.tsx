@@ -5,6 +5,8 @@ import { useHealthReadinessDetails } from "@/app/(dashboard)/hooks/healthReadine
 import { useLogout } from "@/app/(dashboard)/hooks/useLogout";
 import { getProxyBaseUrl } from "@/components/networking";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { TFunction, t as translate } from "@/i18n";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -368,6 +370,64 @@ const menuGroups: MenuGroup[] = [
   },
 ];
 
+// Group label → i18n key. Keys are the stable menu keys, not the English text,
+// so the nav stays canonical in English while rendering translates at display.
+const SECTION_TRANSLATION_KEY: Record<string, string> = {
+  "AI GATEWAY": "nav.section_ai_gateway",
+  OBSERVABILITY: "nav.section_observability",
+  "ACCESS CONTROL": "nav.section_access_control",
+  "DEVELOPER TOOLS": "nav.section_developer_tools",
+  SETTINGS: "nav.section_settings",
+};
+
+// Fallback translate used by module-level consumers (getBreadcrumb) that have no
+// access to the LanguageContext; keeps them deterministic and English by default.
+const englishT: TFunction = (key) => translate(key, "en");
+
+// i18n dictionary suffix for a nav item. item.key is stable while labels change;
+// the legacy "Old Usage" entry uses the key "4", which is unreadable as a dict key.
+const navKeySuffix = (item: MenuItem): string => (item.key === "4" ? "old_usage" : item.key);
+
+const navText = (item: MenuItem, translateFn: TFunction): string => translateFn(`nav.${navKeySuffix(item)}`);
+
+// Render a translated label. Badge-bearing labels keep their markup here while
+// the visible text comes from the i18n dictionary.
+const navLabel = (item: MenuItem, translateFn: TFunction): React.ReactNode => {
+  const text = navText(item, translateFn);
+  if (typeof item.label === "string") return text;
+  switch (item.key) {
+    case "cost-optimization":
+      return (
+        <span className="flex items-center gap-2">
+          {text} <BetaBadge />
+        </span>
+      );
+    case "projects":
+      return (
+        <span className="flex items-center gap-2">
+          {text} <BetaBadge />
+        </span>
+      );
+    case "settings":
+      return (
+        <span className="flex items-center gap-2">
+          {text} <NewBadge />
+        </span>
+      );
+    case "admin-panel":
+      return (
+        <span className="flex items-center gap-2">
+          {text}{" "}
+          <NewBadge dot>
+            <span />
+          </NewBadge>
+        </span>
+      );
+    default:
+      return item.label;
+  }
+};
+
 const findParentKey = (page: string): string | null => {
   for (const group of menuGroups) {
     for (const item of group.items) {
@@ -402,17 +462,21 @@ const prettify = (key: string): string =>
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ");
 
-const labelText = (item: MenuItem): string => (typeof item.label === "string" ? item.label : prettify(item.key));
+const labelText = (item: MenuItem, translateFn: TFunction): string => navText(item, translateFn);
 
 // Breadcrumb ("Section" / "Page") for the top bar, derived from the same nav config.
-export const getBreadcrumb = (page: string): { section: string | null; title: string } => {
+// `translate` defaults to English so non-UI consumers (page_utils, tests) stay
+// deterministic; the dashboard passes the live context `t` for i18n.
+export const getBreadcrumb = (
+  page: string,
+  translateFn: TFunction = englishT,
+): { section: string | null; title: string } => {
   for (const group of menuGroups) {
     for (const item of group.items) {
       const section = SECTION_DISPLAY[group.groupLabel] ?? group.groupLabel;
-      if (item.page === page)
-        return { section, title: typeof item.label === "string" ? item.label : prettify(item.key) };
+      if (item.page === page) return { section, title: navText(item, translateFn) };
       const child = item.children?.find((c) => c.page === page);
-      if (child) return { section, title: typeof child.label === "string" ? child.label : prettify(child.key) };
+      if (child) return { section, title: navText(child, translateFn) };
     }
   }
   return { section: null, title: prettify(page) };
@@ -431,6 +495,7 @@ const Sidebar_: React.FC<SidebarProps> = ({
   allowVectorStoresForTeamAdmins,
 }) => {
   const { userId, accessToken, userRole, isViewOnly } = useAuthorized();
+  const { t } = useLanguage();
   const isOrgAdmin = useIsOrgAdmin();
   const { data: teams } = useTeams();
   const { logoUrl } = useTheme();
@@ -504,7 +569,10 @@ const Sidebar_: React.FC<SidebarProps> = ({
 
   const visibleGroups = menuGroups
     .filter((group) => !group.roles || group.roles.includes(userRole))
-    .map((group) => ({ groupLabel: group.groupLabel, items: filterItemsByRole(group.items) }))
+    .map((group) => ({
+      groupLabel: t(SECTION_TRANSLATION_KEY[group.groupLabel] ?? "nav.section_settings"),
+      items: filterItemsByRole(group.items).map((item) => ({ ...item, label: navLabel(item, t) })),
+    }))
     .filter((group) => group.items.length > 0);
 
   const toggleGroup = (key: string) => {
@@ -540,7 +608,7 @@ const Sidebar_: React.FC<SidebarProps> = ({
           href={item.external_url}
           target="_blank"
           rel="noopener noreferrer"
-          title={collapsed ? labelText(item) : undefined}
+          title={collapsed ? labelText(item, t) : undefined}
           data-active={active || undefined}
           className={cn(sidebarMenuButtonVariants({ isActive: active, size }))}
         >
@@ -557,7 +625,7 @@ const Sidebar_: React.FC<SidebarProps> = ({
         key={item.key}
         href={href}
         onClick={(e) => handleLeafClick(e, item)}
-        title={collapsed ? labelText(item) : undefined}
+        title={collapsed ? labelText(item, t) : undefined}
         data-active={active || undefined}
         className={cn(sidebarMenuButtonVariants({ isActive: active, size }))}
       >
@@ -580,7 +648,7 @@ const Sidebar_: React.FC<SidebarProps> = ({
         <SidebarMenuButton
           isActive={active}
           onClick={() => toggleGroup(item.key)}
-          title={collapsed ? labelText(item) : undefined}
+          title={collapsed ? labelText(item, t) : undefined}
         >
           {item.icon}
           <span className="flex-1 truncate group-data-[collapsed=true]/sidebar:hidden">{item.label}</span>

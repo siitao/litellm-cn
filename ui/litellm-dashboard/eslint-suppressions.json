@@ -4,6 +4,11 @@
       "count": 1
     }
   },
+  "src/contexts/LanguageContext.tsx": {
+    "no-restricted-imports": {
+      "count": 3
+    }
+  },
   "src/app/(dashboard)/access-groups/_components/AccessGroupsModal/AccessGroupBaseForm.tsx": {
     "no-restricted-imports": {
       "count": 2
