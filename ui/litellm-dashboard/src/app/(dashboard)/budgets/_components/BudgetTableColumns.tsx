@@ -4,6 +4,7 @@ import { ColumnDef, FilterFn } from "@tanstack/react-table";
 import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 
 import { DataTableSortHeader } from "@/components/shared/DataTable";
+import { TFunction } from "@/i18n";
 import { DateCell, IdCell, MoneyCell } from "@/components/shared/table_cells";
 import type { budgetItem } from "@/app/(dashboard)/hooks/budgets/useBudgets";
 import { buttonVariants } from "@/components/ui/button";
@@ -82,6 +83,7 @@ export const BUDGET_TABLE_HIDDEN_COLUMNS: Record<string, boolean> = {
 };
 
 interface BudgetTableColumnsDeps {
+  t: TFunction;
   canModify: boolean;
   onEditClick: (budget: budgetItem) => void;
   onDeleteClick: (budget: budgetItem) => void;
@@ -91,12 +93,13 @@ export const getBudgetTableColumns = ({
   canModify,
   onEditClick,
   onDeleteClick,
+  t,
 }: BudgetTableColumnsDeps): ColumnDef<budgetItem>[] => [
   {
     id: "budget_id",
     accessorKey: "budget_id",
     meta: { title: "Budget ID" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Budget ID" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("budgets.col_budget_id")} />,
     cell: ({ row }) => (
       <IdCell value={row.original.budget_id} variant="plain" truncate={false} copyable className="whitespace-nowrap" />
     ),
@@ -106,7 +109,7 @@ export const getBudgetTableColumns = ({
     accessorKey: "max_budget",
     filterFn: serverFilter,
     meta: { title: "Max Budget", numeric: true },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Max Budget" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("budgets.col_max_budget")} />,
     size: 120,
     cell: ({ row }) => <MoneyCell value={row.original.max_budget} decimals={2} showZero emptyText="Unlimited" />,
   },
@@ -114,7 +117,7 @@ export const getBudgetTableColumns = ({
     id: "tpm_limit",
     accessorKey: "tpm_limit",
     meta: { title: "TPM", numeric: true },
-    header: ({ column }) => <DataTableSortHeader column={column} title="TPM" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("budgets.col_tpm")} />,
     size: 100,
     cell: ({ row }) => <RateLimitCell value={row.original.tpm_limit} />,
   },
@@ -122,7 +125,7 @@ export const getBudgetTableColumns = ({
     id: "rpm_limit",
     accessorKey: "rpm_limit",
     meta: { title: "RPM", numeric: true },
-    header: ({ column }) => <DataTableSortHeader column={column} title="RPM" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("budgets.col_rpm")} />,
     size: 100,
     cell: ({ row }) => <RateLimitCell value={row.original.rpm_limit} />,
   },
@@ -133,7 +136,7 @@ export const getBudgetTableColumns = ({
     meta: { title: "Reset" },
     // "7d"/"30d" sort lexicographically, not chronologically, so the route does not offer it.
     enableSorting: false,
-    header: ({ column }) => <DataTableSortHeader column={column} title="Reset" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("budgets.col_reset")} />,
     size: 110,
     cell: ({ row }) => <BudgetDurationCell value={row.original.budget_duration} />,
   },
@@ -142,7 +145,7 @@ export const getBudgetTableColumns = ({
     accessorKey: "created_at",
     filterFn: serverFilter,
     meta: { title: "Created" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Created" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("budgets.col_created")} />,
     size: 160,
     cell: ({ row }) => <DateCell value={row.original.created_at} />,
   },

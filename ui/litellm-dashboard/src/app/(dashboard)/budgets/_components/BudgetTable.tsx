@@ -1,5 +1,6 @@
 "use client";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Inbox, ShieldAlert } from "lucide-react";
 import React, { useMemo, useState } from "react";
 
@@ -210,11 +211,12 @@ function BudgetFilterFields({ get, set }: FilterDraft) {
 }
 
 const BudgetTable: React.FC<BudgetTableProps> = ({ list, canModify, onEditClick, onDeleteClick }) => {
+  const { t } = useLanguage();
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   const columns = useMemo(
-    () => getBudgetTableColumns({ canModify, onEditClick, onDeleteClick }),
-    [canModify, onEditClick, onDeleteClick],
+    () => getBudgetTableColumns({ canModify, onEditClick, onDeleteClick, t }),
+    [canModify, onEditClick, onDeleteClick, t],
   );
 
   const hasQuery = list.searchValue.trim() !== "" || list.columnFilters.length > 0;

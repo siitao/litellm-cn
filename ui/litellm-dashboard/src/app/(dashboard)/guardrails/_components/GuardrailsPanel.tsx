@@ -33,6 +33,7 @@ interface GuardrailsResponse {
 }
 
 const GuardrailsPanel: React.FC<GuardrailsPanelProps> = ({ accessToken, userRole }) => {
+  const { t } = useLanguage();
   const [guardrailsList, setGuardrailsList] = useState<Guardrail[]>([]);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isCustomCodeModalVisible, setIsCustomCodeModalVisible] = useState(false);
@@ -130,13 +131,13 @@ const GuardrailsPanel: React.FC<GuardrailsPanelProps> = ({ accessToken, userRole
           {isAdmin && (
             <>
               <TabsTrigger value="garden" className="flex-none">
-                Guardrail Garden
+                {t("guardrails.tab_garden")}
               </TabsTrigger>
               <TabsTrigger value="guardrails" className="flex-none">
-                Guardrails
+                {t("guardrails.tab_guardrails")}
               </TabsTrigger>
               <TabsTrigger value="playground" className="flex-none" disabled={!accessToken}>
-                Test Playground
+                {t("guardrails.tab_test_playground")}
               </TabsTrigger>
             </>
           )}
@@ -156,17 +157,17 @@ const GuardrailsPanel: React.FC<GuardrailsPanelProps> = ({ accessToken, userRole
                 <DropdownMenu>
                   <DropdownMenuTrigger disabled={!accessToken} className={cn(buttonVariants({ variant: "default" }))}>
                     <Plus />
-                    Add New Guardrail
+                    {t("guardrails.add_new")}
                     <ChevronDown />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="start" className="w-56">
                     <DropdownMenuItem onClick={handleAddGuardrail}>
                       <Plus />
-                      Add Provider Guardrail
+                      {t("guardrails.add_provider")}
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={handleAddCustomCodeGuardrail}>
                       <Code />
-                      Create Custom Code Guardrail
+                      {t("guardrails.create_custom")}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 import { SortingState } from "@tanstack/react-table";
 import { Inbox } from "lucide-react";
 import React, { useMemo, useState } from "react";
@@ -36,11 +37,12 @@ const GuardrailTable: React.FC<GuardrailTableProps> = ({
   onDeleteClick,
   onGuardrailClick,
 }) => {
+  const { t } = useLanguage();
   const [sorting, setSorting] = useState<SortingState>(DEFAULT_SORTING);
 
   const columns = useMemo(
-    () => getGuardrailTableColumns({ onGuardrailClick, onDeleteClick }),
-    [onGuardrailClick, onDeleteClick],
+    () => getGuardrailTableColumns({ onGuardrailClick, onDeleteClick, t }),
+    [onGuardrailClick, onDeleteClick, t],
   );
 
   return (

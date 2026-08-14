@@ -18,6 +18,7 @@ import { getGeneralSettingsCall, updateConfigFieldSetting, deleteConfigFieldSett
 import { InputNumber, Select as AntdSelect } from "antd";
 import { TrashIcon } from "@heroicons/react/outline";
 import { StatusBadge } from "@/components/shared/table_cells";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 import RouterSettings from "@/components/router_settings";
 import Fallbacks from "@/components/Settings/RouterSettings/Fallbacks/Fallbacks";
@@ -107,6 +108,7 @@ export const PromptCachingPanel: React.FC<{
   settings: generalSettingsItem[];
   onChange: (fieldName: string, newValue: any) => void;
 }> = ({ accessToken, settings, onChange }) => {
+  const { t } = useLanguage();
   const enableSetting = settings.find((s) => s.field_name === ENABLE_ANTHROPIC_PROMPT_CACHING);
   const ttlSetting = settings.find((s) => s.field_name === ANTHROPIC_PROMPT_CACHING_TTL);
 
@@ -131,11 +133,11 @@ export const PromptCachingPanel: React.FC<{
 
   return (
     <Card>
-      <Title>Prompt Caching</Title>
+      <Title>{t("router_settings.prompt_caching")}</Title>
 
       <div className="mt-6 flex items-start justify-between gap-8">
         <div className="max-w-2xl">
-          <Text className="font-medium">Automatic Anthropic prompt caching</Text>
+          <Text className="font-medium">{t("router_settings.auto_anthropic_caching")}</Text>
           <p className="mt-1 text-xs text-gray-500">{enableSetting.field_description}</p>
         </div>
         <Switch checked={enabled} onChange={(checked) => persist(ENABLE_ANTHROPIC_PROMPT_CACHING, checked)} />
@@ -144,14 +146,14 @@ export const PromptCachingPanel: React.FC<{
       {ttlSetting && (
         <div className="mt-6 flex items-start justify-between gap-8">
           <div className="max-w-2xl">
-            <Text className={`font-medium ${enabled ? "" : "text-gray-400"}`}>Cache lifetime (TTL)</Text>
+            <Text className={`font-medium ${enabled ? "" : "text-gray-400"}`}>{t("router_settings.cache_ttl")}</Text>
             <p className="mt-1 text-xs text-gray-500">{ttlSetting.field_description}</p>
           </div>
           <AntdSelect
             allowClear
             disabled={!enabled}
             style={{ minWidth: "10rem" }}
-            placeholder="5m (default)"
+            placeholder={t("router_settings.ttl_placeholder")}
             value={ttlSetting.field_value || undefined}
             options={(ttlSetting.field_options ?? []).map((option) => ({ label: option, value: option }))}
             onChange={(newValue) => persist(ANTHROPIC_PROMPT_CACHING_TTL, newValue ?? "")}
@@ -163,6 +165,7 @@ export const PromptCachingPanel: React.FC<{
 };
 
 const GeneralSettings: React.FC<GeneralSettingsPageProps> = ({ accessToken, userRole, userID }) => {
+  const { t } = useLanguage();
   const [generalSettings, setGeneralSettings] = useState<generalSettingsItem[]>([]);
 
   useEffect(() => {
@@ -234,11 +237,11 @@ const GeneralSettings: React.FC<GeneralSettingsPageProps> = ({ accessToken, user
     <div className="w-full">
       <Tabs defaultValue="loadbalancing" className="h-[75vh] w-full">
         <TabsList variant="line" className="mx-8 mt-4">
-          <TabsTrigger value="loadbalancing">Loadbalancing</TabsTrigger>
-          <TabsTrigger value="routing-groups">Routing Groups</TabsTrigger>
-          <TabsTrigger value="fallbacks">Fallbacks</TabsTrigger>
-          <TabsTrigger value="prompt-caching">Prompt Caching</TabsTrigger>
-          <TabsTrigger value="general">General</TabsTrigger>
+          <TabsTrigger value="loadbalancing">{t("router_settings.tab_loadbalancing")}</TabsTrigger>
+          <TabsTrigger value="routing-groups">{t("router_settings.tab_routing_groups")}</TabsTrigger>
+          <TabsTrigger value="fallbacks">{t("router_settings.tab_fallbacks")}</TabsTrigger>
+          <TabsTrigger value="prompt-caching">{t("router_settings.tab_prompt_caching")}</TabsTrigger>
+          <TabsTrigger value="general">{t("router_settings.tab_general")}</TabsTrigger>
         </TabsList>
         <TabsContent value="loadbalancing" className="px-8 py-6">
           <RouterSettings accessToken={accessToken} userRole={userRole} userID={userID} />
@@ -257,10 +260,10 @@ const GeneralSettings: React.FC<GeneralSettingsPageProps> = ({ accessToken, user
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableHeaderCell>Setting</TableHeaderCell>
-                  <TableHeaderCell>Value</TableHeaderCell>
-                  <TableHeaderCell>Status</TableHeaderCell>
-                  <TableHeaderCell>Action</TableHeaderCell>
+                  <TableHeaderCell>{t("router_settings.col_setting")}</TableHeaderCell>
+                  <TableHeaderCell>{t("router_settings.col_value")}</TableHeaderCell>
+                  <TableHeaderCell>{t("router_settings.col_status")}</TableHeaderCell>
+                  <TableHeaderCell>{t("router_settings.col_action")}</TableHeaderCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -286,17 +289,17 @@ const GeneralSettings: React.FC<GeneralSettingsPageProps> = ({ accessToken, user
                       </TableCell>
                       <TableCell>
                         {value.stored_in_db == true ? (
-                          <StatusBadge tone="success" label="In DB" />
+                          <StatusBadge tone="success" label={t("router_settings.status_in_db")} />
                         ) : value.stored_in_db == false ? (
-                          <StatusBadge tone="neutral" label="In Config" />
+                          <StatusBadge tone="neutral" label={t("router_settings.status_in_config")} />
                         ) : (
-                          <StatusBadge tone="neutral" label="Not Set" />
+                          <StatusBadge tone="neutral" label={t("router_settings.status_not_set")} />
                         )}
                       </TableCell>
                       <TableCell>
-                        <Button onClick={() => handleUpdateField(value.field_name)}>Update</Button>
+                        <Button onClick={() => handleUpdateField(value.field_name)}>{t("router_settings.update")}</Button>
                         <Icon icon={TrashIcon} color="red" onClick={() => handleResetField(value.field_name)}>
-                          Reset
+                          {t("router_settings.reset")}
                         </Icon>
                       </TableCell>
                     </TableRow>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 import { SortingState } from "@tanstack/react-table";
 import { Layers } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -46,10 +47,12 @@ export function AccessGroupsTable({
   onGroupClick,
   onDeleteClick,
 }: AccessGroupsTableProps) {
+  const { t } = useLanguage();
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const columns = useMemo(() => {
-    const deps = { canModify, onGroupClick, onDeleteClick };
+    const deps = { canModify, onGroupClick, onDeleteClick, t,
+  };
     return getAccessGroupsTableColumns(deps);
   }, [canModify, onGroupClick, onDeleteClick]);
 

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Switch } from "@/components/ui/switch";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 import { QUICK_SELECT_OPTIONS } from "./constants";
 import { getTimeRangeDisplay } from "./logs_utils";
@@ -41,6 +42,7 @@ export function LogsTableToolbar({
   onResetToFirstPage,
   onResetFilters,
 }: LogsTableToolbarProps) {
+  const { t } = useLanguage();
   const [quickSelectOpen, setQuickSelectOpen] = useState(false);
 
   const applyQuickSelect = (option: { label: string; value: number; unit: string }) => {
@@ -90,7 +92,7 @@ export function LogsTableToolbar({
               className="w-full justify-start font-normal"
               onClick={() => onIsCustomDateChange(!isCustomDate)}
             >
-              Custom Range
+              {t("request_logs.custom_range")}
             </Button>
           </div>
         </PopoverContent>
@@ -121,23 +123,24 @@ export function LogsTableToolbar({
       )}
 
       <div className="flex items-center gap-2">
-        <span className="text-sm font-medium">Live Tail</span>
-        <Switch checked={isLiveTail} onCheckedChange={onIsLiveTailChange} aria-label="Live Tail" />
+        <span className="text-sm font-medium">{t("request_logs.live_tail")}</span>
+        <Switch checked={isLiveTail} onCheckedChange={onIsLiveTailChange} aria-label={t("request_logs.live_tail")} />
       </div>
 
       <Button variant="outline" size="sm" onClick={onResetFilters}>
-        Reset Filters
+        {t("request_logs.reset_filters")}
       </Button>
     </div>
   );
 }
 
 export function LiveTailBanner({ onStop }: { onStop: () => void }) {
+  const { t } = useLanguage();
   return (
     <div className="mb-4 flex items-center justify-between rounded-md border border-green-200 bg-green-50 px-4 py-2">
-      <span className="text-sm text-green-700">Auto-refreshing every 15 seconds</span>
+      <span className="text-sm text-green-700">{t("request_logs.auto_refresh_banner")}</span>
       <button type="button" onClick={onStop} className="text-sm text-green-600 hover:text-green-800">
-        Stop
+        {t("usage.stop")}
       </button>
     </div>
   );

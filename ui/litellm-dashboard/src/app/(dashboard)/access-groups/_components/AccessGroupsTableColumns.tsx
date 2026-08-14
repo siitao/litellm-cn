@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Bot, Layers, MoreHorizontal, Server, Trash2 } from "lucide-react";
 
 import { DataTableSortHeader } from "@/components/shared/DataTable";
+import { TFunction } from "@/i18n";
 import { DateCell, IdentityCell } from "@/components/shared/table_cells";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -88,6 +89,7 @@ function AccessGroupRowActions({
 }
 
 interface AccessGroupsTableColumnsDeps {
+  t: TFunction;
   canModify: boolean;
   onGroupClick: (id: string) => void;
   onDeleteClick: (group: AccessGroup) => void;
@@ -97,13 +99,14 @@ export const getAccessGroupsTableColumns = ({
   canModify,
   onGroupClick,
   onDeleteClick,
+  t,
 }: AccessGroupsTableColumnsDeps): ColumnDef<AccessGroup>[] => {
   const columns: ColumnDef<AccessGroup>[] = [
     {
       id: "id",
       accessorKey: "id",
       meta: { title: "ID" },
-      header: "ID",
+      header: t("access_groups.col_id"),
       size: 200,
       enableSorting: false,
       cell: ({ row }) => (
@@ -118,7 +121,7 @@ export const getAccessGroupsTableColumns = ({
       id: "name",
       accessorKey: "name",
       meta: { title: "Name" },
-      header: ({ column }) => <DataTableSortHeader column={column} title="Name" />,
+      header: ({ column }) => <DataTableSortHeader column={column} title={t("access_groups.col_name")} />,
       size: 220,
       enableSorting: true,
       cell: ({ row }) => {
@@ -133,7 +136,7 @@ export const getAccessGroupsTableColumns = ({
     {
       id: "resources",
       meta: { title: "Resources" },
-      header: "Resources",
+      header: t("access_groups.col_resources"),
       size: 220,
       enableSorting: false,
       cell: ({ row }) => <ResourcesCell group={row.original} />,
@@ -142,7 +145,7 @@ export const getAccessGroupsTableColumns = ({
       id: "createdAt",
       accessorKey: "createdAt",
       meta: { title: "Created" },
-      header: ({ column }) => <DataTableSortHeader column={column} title="Created" />,
+      header: ({ column }) => <DataTableSortHeader column={column} title={t("access_groups.col_created")} />,
       size: 150,
       enableSorting: true,
       sortingFn: "datetime",
@@ -152,7 +155,7 @@ export const getAccessGroupsTableColumns = ({
       id: "updatedAt",
       accessorKey: "updatedAt",
       meta: { title: "Updated" },
-      header: "Updated",
+      header: t("access_groups.col_updated"),
       size: 150,
       enableSorting: false,
       cell: ({ row }) => <DateCell value={row.original.updatedAt} precision="date" />,

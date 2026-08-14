@@ -27,6 +27,7 @@ import UISettings from "@/components/Settings/AdminSettings/UISettings/UISetting
 import UserBannerSettings from "@/components/Settings/AdminSettings/UserBannerSettings/UserBannerSettings";
 import HashicorpVault from "@/components/Settings/AdminSettings/HashicorpVault/HashicorpVault";
 import PluginSettings from "@/components/Settings/AdminSettings/PluginSettings/PluginSettings";
+import { useLanguage } from "@/contexts/LanguageContext";
 import SSOModals from "@/components/SSOModals";
 import UIAccessControlForm from "@/components/UIAccessControlForm";
 
@@ -37,6 +38,7 @@ interface AdminPanelProps {
 }
 
 const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
+  const { t } = useLanguage();
   const { premiumUser, accessToken, userId: userID } = useAuthorized();
   const [form] = Form.useForm();
   const [isAddSSOModalVisible, setIsAddSSOModalVisible] = useState(false);
@@ -188,16 +190,16 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
   const tabItems = [
     {
       key: "sso-settings",
-      label: "SSO Settings",
+      label: t("admin_panel.tab_sso"),
       children: <SSOSettings />,
     },
     {
       key: "security-settings",
-      label: "Security Settings",
+      label: t("admin_panel.tab_security"),
       children: (
         <>
           <Card>
-            <Title level={4}> ✨ Security Settings</Title>
+            <Title level={4}> {t("admin_panel.security_section")}</Title>
             <Alert
               message="SSO Configuration Deprecated"
               description="Editing SSO Settings on this page is deprecated and will be removed in a future version. Please use the SSO Settings tab for SSO configuration."
@@ -215,7 +217,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
             >
               <div>
                 <Button style={{ width: "150px" }} onClick={() => setIsAddSSOModalVisible(true)}>
-                  {ssoConfigured ? "Edit SSO Settings" : "Add SSO"}
+                  {ssoConfigured ? t("admin_panel.edit_sso") : t("admin_panel.add_sso")}
                 </Button>
               </div>
               <div>
@@ -351,7 +353,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
     },
     {
       key: "scim",
-      label: "SCIM",
+      label: t("admin_panel.tab_scim"),
       children: <SCIMConfig accessToken={accessToken} userID={userID} proxySettings={proxySettings} />,
     },
     {
@@ -359,7 +361,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
       label: (
         <Space>
           <Text>
-            UI Settings <NewBadge />
+            {t("admin_panel.tab_ui_settings")} <NewBadge />
           </Text>
         </Space>
       ),
@@ -372,7 +374,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
     },
     {
       key: "logging-settings",
-      label: "Logging Settings",
+      label: t("admin_panel.tab_logging"),
       children: <LoggingSettings />,
     },
     {
@@ -389,8 +391,8 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
 
   return (
     <div className="w-full m-2 mt-2 p-8">
-      <Title level={4}>Admin Access </Title>
-      <Paragraph>Go to &apos;Internal Users&apos; page to add other admins.</Paragraph>
+      <Title level={4}>{t("admin_panel.heading")} </Title>
+      <Paragraph>{t("admin_panel.note")}</Paragraph>
       <Tabs items={tabItems} />
     </div>
   );

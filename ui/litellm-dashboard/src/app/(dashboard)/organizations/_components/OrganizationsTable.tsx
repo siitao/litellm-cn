@@ -1,5 +1,6 @@
 "use client";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 import { SortingState } from "@tanstack/react-table";
 import { Building2, SearchX } from "lucide-react";
 import React, { useMemo, useState } from "react";
@@ -49,12 +50,13 @@ const OrganizationsTable: React.FC<OrganizationsTableProps> = ({
   onEditClick,
   onDeleteClick,
 }) => {
+  const { t } = useLanguage();
   const [sorting, setSorting] = useState<SortingState>(DEFAULT_SORTING);
 
   const columns = useMemo(() => {
-    const deps = { userRole, onOrganizationClick, onEditClick, onDeleteClick };
+    const deps = { userRole, onOrganizationClick, onEditClick, onDeleteClick, t };
     return getOrganizationsTableColumns(deps);
-  }, [userRole, onOrganizationClick, onEditClick, onDeleteClick]);
+  }, [userRole, onOrganizationClick, onEditClick, onDeleteClick, t]);
 
   return (
     <DataTable

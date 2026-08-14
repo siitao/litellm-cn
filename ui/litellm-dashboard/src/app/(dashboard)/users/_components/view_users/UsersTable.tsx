@@ -21,6 +21,7 @@ import { SearchSelect } from "@/components/shared/SearchSelect";
 import { Input } from "@/components/ui/input";
 
 import { getUsersTableColumns } from "./UsersTableColumns";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export interface UsersTableTeamOption {
   team_id: string;
@@ -69,7 +70,7 @@ function EmptyState() {
 }
 
 export function UsersTable({
-  data,
+data,
   rowCount,
   isLoading,
   possibleUIRoles,
@@ -89,10 +90,11 @@ export function UsersTable({
   onDeleteUser,
   onResetPassword,
 }: UsersTableProps) {
+  const { t } = useLanguage();
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   const columns = useMemo(() => {
-    const columnDeps = {
+    const columnDeps = { t,
       possibleUIRoles,
       includeSelection: selectionEnabled,
       onUserClick,
@@ -100,7 +102,7 @@ export function UsersTable({
       onResetPassword,
     };
     return getUsersTableColumns(columnDeps);
-  }, [possibleUIRoles, selectionEnabled, onUserClick, onDeleteUser, onResetPassword]);
+  }, [possibleUIRoles, selectionEnabled, onUserClick, onDeleteUser, onResetPassword, t]);
 
   const roleOptions = useMemo(
     () =>

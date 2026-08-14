@@ -1,3 +1,4 @@
+import { useLanguage } from "@/contexts/LanguageContext";
 import { organizationKeys, useOrganizations } from "@/app/(dashboard)/hooks/organizations/useOrganizations";
 import { useUserModels } from "@/app/(dashboard)/hooks/models/useModels";
 import OrganizationFilters, { FilterState } from "@/app/(dashboard)/organizations/OrganizationFilters";
@@ -20,6 +21,7 @@ interface OrganizationsPanelProps {
 }
 
 const OrganizationsPanel: React.FC<OrganizationsPanelProps> = ({ userRole, accessToken, premiumUser }) => {
+  const { t } = useLanguage();
   const [selectedOrgId, setSelectedOrgId] = useQueryState("org", parseAsString.withOptions({ history: "push" }));
   const [editOrg, setEditOrg] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -82,7 +84,7 @@ const OrganizationsPanel: React.FC<OrganizationsPanelProps> = ({ userRole, acces
     return (
       <div className="mx-4 mt-4">
         <p className="text-sm text-muted-foreground">
-          This is a LiteLLM Enterprise feature, and requires a valid key to use. Get a trial key{" "}
+          {t("orgs.enterprise_feature")}. Get a trial key{" "}
           <a
             href="https://www.litellm.ai/#pricing"
             target="_blank"
@@ -101,7 +103,7 @@ const OrganizationsPanel: React.FC<OrganizationsPanelProps> = ({ userRole, acces
     <div className="mx-4 mt-4 flex flex-col gap-4">
       {(userRole === "Admin" || userRole === "Org Admin") && (
         <Button className="w-fit" onClick={() => setIsOrgModalVisible(true)}>
-          + Create New Organization
+          + {t("orgs.create_org")}
         </Button>
       )}
 
@@ -120,7 +122,7 @@ const OrganizationsPanel: React.FC<OrganizationsPanelProps> = ({ userRole, acces
         />
       ) : (
         <>
-          <p className="text-sm text-muted-foreground">Click on an organization ID to view its details.</p>
+          <p className="text-sm text-muted-foreground">{t("orgs.click_hint")}</p>
           <OrganizationFilters
             filters={filters}
             showFilters={showFilters}

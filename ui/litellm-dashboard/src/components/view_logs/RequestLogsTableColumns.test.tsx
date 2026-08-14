@@ -5,6 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 import { DataTable } from "@/components/shared/DataTable";
 
 import type { LogEntry } from "./columns";
+import { t as t_en } from "@/i18n";
 import { getRequestLogsTableColumns } from "./RequestLogsTableColumns";
 
 const logEntry = (overrides: Partial<LogEntry>): LogEntry => ({
@@ -26,7 +27,7 @@ const logEntry = (overrides: Partial<LogEntry>): LogEntry => ({
   ...overrides,
 });
 
-const noopDeps = { onKeyHashClick: vi.fn(), onSessionClick: vi.fn() };
+const noopDeps = { onKeyHashClick: vi.fn(), onSessionClick: vi.fn(), t: (key: string) => t_en(key, "en") };
 
 function renderRows(rows: LogEntry[], deps = noopDeps) {
   render(
@@ -78,7 +79,7 @@ describe("Cost column", () => {
 describe("row action cells", () => {
   it("reports the key hash through the injected dependency rather than a row field", async () => {
     const user = userEvent.setup();
-    const deps = { onKeyHashClick: vi.fn(), onSessionClick: vi.fn() };
+    const deps = { onKeyHashClick: vi.fn(), onSessionClick: vi.fn(), t: (key: string) => t_en(key, "en") };
     renderRows([logEntry({ request_id: "req-key", metadata: { user_api_key: "sk-hash-9" } })], deps);
 
     await user.click(screen.getByText("sk-hash-9"));
@@ -87,7 +88,7 @@ describe("row action cells", () => {
 
   it("reports the session id from the session cell", async () => {
     const user = userEvent.setup();
-    const deps = { onKeyHashClick: vi.fn(), onSessionClick: vi.fn() };
+    const deps = { onKeyHashClick: vi.fn(), onSessionClick: vi.fn(), t: (key: string) => t_en(key, "en") };
     renderRows([logEntry({ request_id: "req-sess", session_id: "sess-42" })], deps);
 
     await user.click(screen.getByText("sess-42"));

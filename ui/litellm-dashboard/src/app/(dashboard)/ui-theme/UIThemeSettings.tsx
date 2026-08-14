@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { UiLoadingSpinner } from "@/components/ui/ui-loading-spinner";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { getProxyBaseUrl, getGlobalLitellmHeaderName } from "@/components/networking";
 import NotificationsManager from "@/components/molecules/notifications_manager";
 
@@ -15,6 +16,7 @@ interface UIThemeSettingsProps {
 }
 
 const UIThemeSettings: React.FC<UIThemeSettingsProps> = ({ userID, userRole, accessToken }) => {
+  const { t } = useLanguage();
   const { setLogoUrl, setFaviconUrl } = useTheme();
   const [logoUrlInput, setLogoUrlInput] = useState<string>("");
   const [faviconUrlInput, setFaviconUrlInput] = useState<string>("");
@@ -117,16 +119,16 @@ const UIThemeSettings: React.FC<UIThemeSettingsProps> = ({ userID, userRole, acc
   return (
     <div className="w-full mx-auto max-w-4xl px-6 py-8">
       <div className="mb-8">
-        <h1 className="mb-2 text-2xl font-bold">UI Theme Customization</h1>
+        <h1 className="mb-2 text-2xl font-bold">{t("ui_theme.heading")}</h1>
         <p className="text-sm text-muted-foreground">
-          Customize your LiteLLM admin dashboard with a custom logo and favicon.
+          {t("ui_theme.subtitle")}
         </p>
       </div>
       <Card>
         <CardContent className="space-y-6">
           <div>
             <Label htmlFor="ui-theme-logo-url" className="mb-2">
-              Custom Logo URL
+              {t("ui_theme.logo_url")}
             </Label>
             <Input
               id="ui-theme-logo-url"
@@ -143,7 +145,7 @@ const UIThemeSettings: React.FC<UIThemeSettingsProps> = ({ userID, userRole, acc
           </div>
           <div>
             <Label htmlFor="ui-theme-favicon-url" className="mb-2">
-              Custom Favicon URL
+              {t("ui_theme.favicon_url")}
             </Label>
             <Input
               id="ui-theme-favicon-url"
@@ -161,11 +163,11 @@ const UIThemeSettings: React.FC<UIThemeSettingsProps> = ({ userID, userRole, acc
           <div className="flex gap-3 pt-4">
             <Button onClick={handleSave} disabled={loading}>
               {loading && <UiLoadingSpinner className="size-4" />}
-              Save Changes
+              {t("ui_theme.save_changes")}
             </Button>
             <Button variant="outline" onClick={handleReset} disabled={loading}>
               {loading && <UiLoadingSpinner className="size-4" />}
-              Reset to Default
+              {t("ui_theme.reset_default")}
             </Button>
           </div>
         </CardContent>

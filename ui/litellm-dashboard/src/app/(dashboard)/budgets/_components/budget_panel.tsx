@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DeleteResourceModal from "@/components/common_components/DeleteResourceModal";
 import NotificationsManager from "@/components/molecules/notifications_manager";
 import { useBudgetList, useDeleteBudget, budgetItem } from "@/app/(dashboard)/hooks/budgets/useBudgets";
+import { useLanguage } from "@/contexts/LanguageContext";
 import BudgetModal from "./budget_modal";
 import BudgetTable from "./BudgetTable";
 import EditBudgetModal from "./edit_budget_modal";
@@ -25,6 +26,7 @@ interface BudgetSettingsPageProps {
 }
 
 const BudgetPanel: React.FC<BudgetSettingsPageProps> = ({ accessToken }) => {
+  const { t } = useLanguage();
   const [isCreateModelVisible, setIsCreateModelVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [selectedBudget, setSelectedBudget] = useState<budgetItem | null>(null);
@@ -82,8 +84,8 @@ const BudgetPanel: React.FC<BudgetSettingsPageProps> = ({ accessToken }) => {
     <div className="flex h-full flex-col gap-4 p-6 px-12">
       <PageHeader
         icon={<Wallet className="size-5" />}
-        title="Budgets"
-        subtitle="Spend, TPM and RPM limits you can assign to customers."
+        title={t("budgets.title")}
+        subtitle={t("budgets.subtitle")}
       />
       <Tabs defaultValue="budgets" className="min-h-0 flex-1 gap-0">
         <div className="flex items-center gap-4 border-b border-border">
@@ -91,7 +93,7 @@ const BudgetPanel: React.FC<BudgetSettingsPageProps> = ({ accessToken }) => {
             <>
               <Button onClick={() => setIsCreateModelVisible(true)}>
                 <Plus className="size-4" />
-                Create Budget
+                {t("budgets.create_budget")}
               </Button>
               <ToolbarSeparator className="h-6" />
             </>
@@ -101,7 +103,7 @@ const BudgetPanel: React.FC<BudgetSettingsPageProps> = ({ accessToken }) => {
               Budgets
             </TabsTrigger>
             <TabsTrigger value="examples" className="flex-none px-4">
-              Examples
+              {t("budgets.tab_examples")}
             </TabsTrigger>
           </TabsList>
         </div>
@@ -140,17 +142,17 @@ const BudgetPanel: React.FC<BudgetSettingsPageProps> = ({ accessToken }) => {
         </TabsContent>
         <TabsContent value="examples" className="min-h-0 flex-1 overflow-y-auto">
           <div className="pt-6">
-            <p className="text-base text-muted-foreground">How to use budget id</p>
+            <p className="text-base text-muted-foreground">{t("budgets.how_to_use")}</p>
             <Tabs defaultValue="assign-budget">
               <TabsList variant="line" className="h-auto w-full justify-start rounded-none border-b p-0">
                 <TabsTrigger value="assign-budget" className="flex-none rounded-none px-4 py-2">
-                  Assign Budget to Customer
+                  {t("budgets.assign_to_customer")}
                 </TabsTrigger>
                 <TabsTrigger value="curl" className="flex-none rounded-none px-4 py-2">
-                  Test it (Curl)
+                  {t("budgets.test_curl")}
                 </TabsTrigger>
                 <TabsTrigger value="openai-sdk" className="flex-none rounded-none px-4 py-2">
-                  Test it (OpenAI SDK)
+                  {t("budgets.test_sdk")}
                 </TabsTrigger>
               </TabsList>
               <TabsContent value="assign-budget">

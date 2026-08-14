@@ -4,6 +4,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, Trash2 } from "lucide-react";
 
 import { DataTableSortHeader } from "@/components/shared/DataTable";
+import { TFunction } from "@/i18n";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { TFunction } from "@/i18n";
 import { DateCell, IdentityCell, StatusBadge } from "@/components/shared/table_cells";
 import { Guardrail, GuardrailDefinitionLocation } from "@/components/guardrails/types";
 import { buttonVariants } from "@/components/ui/button";
@@ -36,6 +39,7 @@ interface GuardrailRowActionsProps {
 }
 
 function GuardrailRowActions({ guardrail, onDeleteClick }: GuardrailRowActionsProps) {
+  const { t } = useLanguage();
   const isConfigGuardrail = guardrail.guardrail_definition_location === GuardrailDefinitionLocation.CONFIG;
 
   return (
@@ -53,7 +57,7 @@ function GuardrailRowActions({ guardrail, onDeleteClick }: GuardrailRowActionsPr
           disabled={isConfigGuardrail}
           data-testid="guardrail-action-delete"
           title={isConfigGuardrail ? CONFIG_DELETE_HINT : undefined}
-          onClick={() => onDeleteClick(guardrail.guardrail_id, guardrail.guardrail_name || "Unnamed Guardrail")}
+          onClick={() => onDeleteClick(guardrail.guardrail_id, guardrail.guardrail_name || t("guardrails.unnamed"))}
         >
           <Trash2 />
           Delete
@@ -64,6 +68,7 @@ function GuardrailRowActions({ guardrail, onDeleteClick }: GuardrailRowActionsPr
 }
 
 interface GuardrailTableColumnsDeps {
+  t: TFunction;
   onGuardrailClick: (guardrailId: string) => void;
   onDeleteClick: (guardrailId: string, guardrailName: string) => void;
 }
@@ -71,12 +76,13 @@ interface GuardrailTableColumnsDeps {
 export const getGuardrailTableColumns = ({
   onGuardrailClick,
   onDeleteClick,
+  t,
 }: GuardrailTableColumnsDeps): ColumnDef<Guardrail>[] => [
   {
     id: "guardrail_id",
     accessorKey: "guardrail_id",
     meta: { title: "Guardrail ID" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Guardrail ID" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("guardrails.col_id")} />,
     size: 200,
     enableSorting: true,
     cell: ({ row }) => (
@@ -91,7 +97,7 @@ export const getGuardrailTableColumns = ({
     id: "guardrail_name",
     accessorKey: "guardrail_name",
     meta: { title: "Name" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Name" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("guardrails.col_name")} />,
     size: 200,
     enableSorting: true,
     cell: ({ row }) => {
@@ -106,7 +112,7 @@ export const getGuardrailTableColumns = ({
   {
     id: "provider",
     meta: { title: "Provider" },
-    header: "Provider",
+    header: t("guardrails.col_provider"),
     size: 180,
     enableSorting: false,
     cell: ({ row }) => <GuardrailProviderCell provider={row.original.litellm_params.guardrail} />,
@@ -114,7 +120,7 @@ export const getGuardrailTableColumns = ({
   {
     id: "mode",
     meta: { title: "Mode" },
-    header: "Mode",
+    header: t("guardrails.col_mode"),
     size: 130,
     enableSorting: false,
     cell: ({ row }) => (
@@ -124,7 +130,7 @@ export const getGuardrailTableColumns = ({
   {
     id: "default_on",
     meta: { title: "Default On" },
-    header: "Default On",
+    header: t("guardrails.col_default_on"),
     size: 120,
     enableSorting: false,
     cell: ({ row }) => {
@@ -138,7 +144,7 @@ export const getGuardrailTableColumns = ({
     id: "created_at",
     accessorKey: "created_at",
     meta: { title: "Created At" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Created At" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("guardrails.col_created_at")} />,
     size: 150,
     enableSorting: true,
     cell: ({ row }) => <DateCell value={row.original.created_at} />,
@@ -147,7 +153,7 @@ export const getGuardrailTableColumns = ({
     id: "updated_at",
     accessorKey: "updated_at",
     meta: { title: "Updated At" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Updated At" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("guardrails.col_updated_at")} />,
     size: 150,
     enableSorting: true,
     cell: ({ row }) => <DateCell value={row.original.updated_at} />,

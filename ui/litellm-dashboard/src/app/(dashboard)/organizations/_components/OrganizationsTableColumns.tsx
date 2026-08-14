@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 
 import { DataTableSortHeader } from "@/components/shared/DataTable";
+import { TFunction } from "@/i18n";
 import { DateCell, IdentityCell, ModelsCell, MoneyCell } from "@/components/shared/table_cells";
 import { Organization } from "@/components/networking";
 import { buttonVariants } from "@/components/ui/button";
@@ -72,6 +73,7 @@ function OrganizationRowActions({ organization, onEditClick, onDeleteClick }: Or
 }
 
 export interface OrganizationsTableColumnsDeps {
+  t: TFunction;
   userRole: string;
   onOrganizationClick: (organizationId: string) => void;
   onEditClick: (organizationId: string) => void;
@@ -83,11 +85,12 @@ export const getOrganizationsTableColumns = ({
   onOrganizationClick,
   onEditClick,
   onDeleteClick,
+  t,
 }: OrganizationsTableColumnsDeps): ColumnDef<Organization>[] => [
   {
     id: "organization_id",
     accessorKey: "organization_id",
-    meta: { title: "Organization ID" },
+    meta: { title: t("orgs.col_org_id") },
     header: ({ column }) => <DataTableSortHeader column={column} title="Organization ID" />,
     size: 220,
     enableSorting: true,
@@ -103,7 +106,7 @@ export const getOrganizationsTableColumns = ({
   {
     id: "organization_alias",
     accessorKey: "organization_alias",
-    meta: { title: "Organization Name" },
+    meta: { title: t("orgs.col_org_name") },
     header: ({ column }) => <DataTableSortHeader column={column} title="Organization Name" />,
     size: 200,
     enableSorting: true,
@@ -120,7 +123,7 @@ export const getOrganizationsTableColumns = ({
     id: "created_at",
     accessorKey: "created_at",
     sortingFn: "datetime",
-    meta: { title: "Created" },
+    meta: { title: t("orgs.col_created") },
     header: ({ column }) => <DataTableSortHeader column={column} title="Created" />,
     size: 130,
     enableSorting: true,
@@ -129,7 +132,7 @@ export const getOrganizationsTableColumns = ({
   {
     id: "spend",
     accessorKey: "spend",
-    meta: { title: "Spend (USD)" },
+    meta: { title: t("orgs.col_spend") },
     header: ({ column }) => <DataTableSortHeader column={column} title="Spend (USD)" />,
     size: 120,
     enableSorting: true,

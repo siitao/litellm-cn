@@ -2,6 +2,7 @@ import { AccessGroupResponse, useAccessGroups } from "@/app/(dashboard)/hooks/ac
 import { useDeleteAccessGroup } from "@/app/(dashboard)/hooks/accessGroups/useDeleteAccessGroup";
 import { Plus, SearchIcon, X } from "lucide-react";
 import { useMemo, useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import DeleteResourceModal from "@/components/common_components/DeleteResourceModal";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { Button } from "@/components/ui/button";
@@ -31,6 +32,7 @@ function mapResponseToAccessGroup(r: AccessGroupResponse): AccessGroup {
 }
 
 export function AccessGroupsPage() {
+  const { t } = useLanguage();
   const { userRole } = useAuthorized();
   // Admin Viewer follows the read-parity rule: see access groups, no writes.
   const canModify = isProxyAdminRole(userRole ?? "");
@@ -62,13 +64,13 @@ export function AccessGroupsPage() {
     <div className="p-6 px-12">
       <div className="mb-4">
         <PageHeader
-          title="Access Groups"
-          subtitle="Manage resource permissions for your organization"
+          title={t("access_groups.title")}
+          subtitle={t("access_groups.subtitle")}
           actions={
             canModify ? (
               <Button onClick={() => setIsCreateModalVisible(true)}>
                 <Plus className="size-4" />
-                Create Access Group
+                {t("access_groups.create")}
               </Button>
             ) : undefined
           }
@@ -81,7 +83,7 @@ export function AccessGroupsPage() {
             <SearchIcon className="size-4 text-muted-foreground" />
           </InputGroupAddon>
           <InputGroupInput
-            placeholder="Search groups by name, ID, or description..."
+            placeholder={t("access_groups.search_placeholder")}
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />

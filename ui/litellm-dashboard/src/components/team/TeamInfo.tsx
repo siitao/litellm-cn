@@ -1,5 +1,6 @@
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
 import useCan from "@/app/(dashboard)/hooks/useCan";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { organizationKeys, useOrganizations } from "@/app/(dashboard)/hooks/organizations/useOrganizations";
 import { useQueryClient } from "@tanstack/react-query";
 import UserSearchModal from "@/components/common_components/user_search_modal";
@@ -74,7 +75,6 @@ import {
   getTeamInfoDefaultTab,
   getTeamInfoVisibleTabs,
   TEAM_INFO_TAB_KEYS,
-  TEAM_INFO_TAB_LABELS,
 } from "./tabVisibilityUtils";
 import TeamMembersComponent from "./TeamMemberTab";
 import { TeamVirtualKeysTable } from "./TeamVirtualKeysTable";
@@ -191,6 +191,7 @@ const TeamInfoView: React.FC<TeamInfoProps> = ({
   premiumUser = false,
   onUpdate,
 }) => {
+  const { t } = useLanguage();
   const [teamData, setTeamData] = useState<TeamData | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAddMemberModalVisible, setIsAddMemberModalVisible] = useState(false);
@@ -757,7 +758,7 @@ const TeamInfoView: React.FC<TeamInfoProps> = ({
         items={[
           {
             key: TEAM_INFO_TAB_KEYS.OVERVIEW,
-            label: TEAM_INFO_TAB_LABELS[TEAM_INFO_TAB_KEYS.OVERVIEW],
+            label: t("teams.tab_overview"),
             children: (
               <Grid numItems={1} numItemsSm={2} numItemsLg={3} className="gap-6">
                 <Card>
@@ -793,7 +794,7 @@ const TeamInfoView: React.FC<TeamInfoProps> = ({
                           <Text className="text-gray-500">Per-model limits:</Text>
                           {models.map((m) => (
                             <Text key={m} className="text-xs">
-                              {m}: TPM {modelTpm[m] ?? "—"}, RPM {modelRpm[m] ?? "—"}
+                              {m}: TPM {modelTpm[m] ?? "–"}, RPM {modelRpm[m] ?? "–"}
                             </Text>
                           ))}
                         </div>
@@ -893,17 +894,17 @@ const TeamInfoView: React.FC<TeamInfoProps> = ({
           },
           {
             key: TEAM_INFO_TAB_KEYS.MY_USER,
-            label: TEAM_INFO_TAB_LABELS[TEAM_INFO_TAB_KEYS.MY_USER],
+            label: t("teams.tab_my_user"),
             children: <MyUserTab teamId={teamId} />,
           },
           {
             key: TEAM_INFO_TAB_KEYS.VIRTUAL_KEYS,
-            label: TEAM_INFO_TAB_LABELS[TEAM_INFO_TAB_KEYS.VIRTUAL_KEYS],
+            label: t("teams.tab_virtual_keys"),
             children: <TeamVirtualKeysTable teamId={teamId} teamAlias={info.team_alias} organization={organization} />,
           },
           {
             key: TEAM_INFO_TAB_KEYS.MEMBERS,
-            label: TEAM_INFO_TAB_LABELS[TEAM_INFO_TAB_KEYS.MEMBERS],
+            label: t("teams.tab_members"),
             children: (
               <TeamMembersComponent
                 teamData={teamData}
@@ -917,12 +918,12 @@ const TeamInfoView: React.FC<TeamInfoProps> = ({
           },
           {
             key: TEAM_INFO_TAB_KEYS.MEMBER_PERMISSIONS,
-            label: TEAM_INFO_TAB_LABELS[TEAM_INFO_TAB_KEYS.MEMBER_PERMISSIONS],
+            label: t("teams.tab_member_permissions"),
             children: <MemberPermissions teamId={teamId} accessToken={accessToken} canEditTeam={canEditTeam} />,
           },
           {
             key: TEAM_INFO_TAB_KEYS.SETTINGS,
-            label: TEAM_INFO_TAB_LABELS[TEAM_INFO_TAB_KEYS.SETTINGS],
+            label: t("teams.tab_settings"),
             children: (
               <Card className="overflow-y-auto max-h-[65vh]">
                 <div className="flex justify-between items-center mb-4">
@@ -1106,7 +1107,7 @@ const TeamInfoView: React.FC<TeamInfoProps> = ({
                               return (
                                 <Select
                                   mode="multiple"
-                                  placeholder="Leave empty — all team models accessible to every member"
+                                  placeholder="Leave empty –all team models accessible to every member"
                                   value={form.getFieldValue("default_team_member_models") || []}
                                   onChange={(values) => form.setFieldValue("default_team_member_models", values)}
                                   options={teamModels.map((m: string) => ({ label: m, value: m }))}
@@ -1277,7 +1278,7 @@ const TeamInfoView: React.FC<TeamInfoProps> = ({
                       label={
                         <span>
                           Guardrails{" "}
-                          <Tooltip title="Select which guardrails apply to this team. Global guardrails are enabled by default — uncheck to opt out. Other guardrails are opt-in.">
+                          <Tooltip title="Select which guardrails apply to this team. Global guardrails are enabled by default –uncheck to opt out. Other guardrails are opt-in.">
                             <a
                               href="https://docs.litellm.ai/docs/proxy/guardrails/quick_start"
                               target="_blank"
@@ -1605,7 +1606,7 @@ const TeamInfoView: React.FC<TeamInfoProps> = ({
                             <Text className="text-gray-500">Per-model limits:</Text>
                             {models.map((m) => (
                               <div key={m} className="text-xs ml-2">
-                                {m}: TPM {modelTpm[m] ?? "—"}, RPM {modelRpm[m] ?? "—"}
+                                {m}: TPM {modelTpm[m] ?? "–"}, RPM {modelRpm[m] ?? "–"}
                               </div>
                             ))}
                           </div>

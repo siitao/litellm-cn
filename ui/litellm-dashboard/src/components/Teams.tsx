@@ -12,6 +12,7 @@ import React, { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { Button as UIButton } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { teamsTableKeys } from "@/app/(dashboard)/hooks/teams/useTeams";
 import { parseAsString, useQueryState } from "nuqs";
 import { TeamsTable } from "./TeamsPage/TeamsTable";
@@ -92,6 +93,7 @@ const getAdminOrganizations = (
 
 // @deprecated
 const Teams: React.FC<TeamProps> = ({ accessToken, userID, userRole, premiumUser = false }) => {
+  const { t } = useLanguage();
   const { data: organizationsData } = useOrganizations();
   const organizations = organizationsData ?? null;
   const { data: teamMetadataSchemaFields = [], isLoading: isTeamMetadataSchemaLoading } = useTeamMetadataSchema();
@@ -459,14 +461,14 @@ const Teams: React.FC<TeamProps> = ({ accessToken, userID, userRole, premiumUser
     },
     {
       key: "available-teams",
-      label: "Available Teams",
+      label: t("teams.available_teams"),
       children: <AvailableTeamsPanel accessToken={accessToken} userID={userID} />,
     },
     ...(isProxyAdminRole(userRole || "")
       ? [
           {
             key: "default-settings",
-            label: "Default Team Settings",
+            label: t("teams.default_settings"),
             children: <TeamSSOSettings accessToken={accessToken} userID={userID || ""} userRole={userRole || ""} />,
           },
         ]
@@ -498,8 +500,8 @@ const Teams: React.FC<TeamProps> = ({ accessToken, userID, userRole, premiumUser
           <div className="mb-4">
             <PageHeader
               icon={<Users className="size-5" />}
-              title="Teams"
-              subtitle="Manage teams, members, and their access to models and budgets"
+              title={t("teams.title")}
+              subtitle={t("teams.subtitle")}
             />
           </div>
 
@@ -510,7 +512,7 @@ const Teams: React.FC<TeamProps> = ({ accessToken, userID, userRole, premiumUser
                 <div className="flex items-center gap-4 pr-4">
                   <UIButton onClick={() => setIsTeamModalVisible(true)} data-testid="create-team-button">
                     <Plus className="size-4" />
-                    Create Team
+                    {t("teams.create_team")}
                   </UIButton>
                   <div className="h-6 w-px bg-gray-200" />
                 </div>

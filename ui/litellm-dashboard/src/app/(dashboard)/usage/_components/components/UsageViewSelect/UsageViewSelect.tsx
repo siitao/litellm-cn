@@ -2,6 +2,7 @@ import { BarChart3, Bot, Building2, Globe, LineChart, ShoppingCart, Tags, User, 
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { hasCapability, type Capability } from "@/utils/capabilities";
 import { all_admin_roles } from "@/utils/roles";
 export type UsageOption =
@@ -103,15 +104,42 @@ const OPTIONS: OptionConfig[] = [
     adminOnly: true,
   },
 ];
+const OPTION_LABEL_KEY: Record<string, string> = {
+  global: "usage.view_global_usage",
+  "my-usage": "usage.view_my_usage",
+  organization: "usage.view_organization_usage",
+  team: "usage.view_team_usage",
+  customer: "usage.view_customer_usage",
+  tag: "usage.view_tag_usage",
+  agent: "usage.view_agent_usage",
+  user: "usage.view_user_usage",
+  "user-agent-activity": "usage.view_user_agent_activity",
+};
+
+const OPTION_DESC_KEY: Record<string, string> = {
+  global: "usage.view_global_desc",
+  "my-usage": "usage.view_my_desc",
+  organization: "usage.view_org_desc",
+  team: "usage.view_team_desc",
+  customer: "usage.view_customer_desc",
+  tag: "usage.view_tag_desc",
+  agent: "usage.view_agent_desc",
+  user: "usage.view_user_desc",
+  "user-agent-activity": "usage.view_user_agent_desc",
+};
+
 export const UsageViewSelect: React.FC<UsageViewSelectProps> = ({
   value,
   onChange,
   userRole,
   canViewTagUsage = false,
-  title = "Usage View",
-  description = "Select the usage data you want to view",
+  title,
+  description,
   "data-id": dataId,
 }) => {
+  const { t } = useLanguage();
+  const viewTitle = title ?? t("usage.view_title");
+  const viewDescription = description ?? t("usage.view_description");
   const isAdmin = all_admin_roles.includes(userRole ?? "");
   const getFilteredOptions = () => {
     return OPTIONS.filter((option) => {
@@ -126,13 +154,13 @@ export const UsageViewSelect: React.FC<UsageViewSelectProps> = ({
       }
       return true;
     }).map((option) => {
-      let label = option.label;
-      let desc = option.description;
+      let label = t(OPTION_LABEL_KEY[option.value] ?? option.label);
+      let desc = t(OPTION_DESC_KEY[option.value] ?? option.description);
       if (option.showForAdmin && option.showForNonAdmin) {
-        label = isAdmin ? option.showForAdmin : option.showForNonAdmin;
+        label = isAdmin ? t(OPTION_LABEL_KEY[option.value]) : t("usage.view_my_usage");
       }
       if (option.descriptionForAdmin && option.descriptionForNonAdmin) {
-        desc = isAdmin ? option.descriptionForAdmin : option.descriptionForNonAdmin;
+        desc = isAdmin ? t(OPTION_DESC_KEY[option.value]) : t("usage.view_my_desc");
       }
       return {
         value: option.value,
@@ -153,8 +181,8 @@ export const UsageViewSelect: React.FC<UsageViewSelectProps> = ({
             <BarChart3 className="size-8" />
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="text-sm font-semibold text-gray-900 mb-0.5 leading-tight">{title}</h3>
-            <p className="text-xs text-gray-600 leading-tight">{description}</p>
+            <h3 className="text-sm font-semibold text-gray-900 mb-0.5 leading-tight">{viewTitle}</h3>
+            <p className="text-xs text-gray-600 leading-tight">{viewDescription}</p>
           </div>
         </div>
         <div className="shrink-0">

@@ -6,6 +6,7 @@ import moment from "moment";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { AutoRouterModelGroupsProvider } from "@/components/shared/table_cells";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { internalUserRoles } from "../../utils/roles";
 import type { KeyResponse } from "../key_team_helpers/key_list";
 import { keyInfoV1Call, uiSpendLogsCall } from "../networking";
@@ -43,6 +44,7 @@ interface SessionComposition {
 }
 
 export default function RequestLogsPanel({ accessToken, token, userRole, userID, isActive }: RequestLogsPanelProps) {
+  const { t } = useLanguage();
   const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: PAGE_SIZE });
   const [sorting, setSorting] = useState<SortingState>(DEFAULT_LOGS_SORTING);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -273,7 +275,7 @@ export default function RequestLogsPanel({ accessToken, token, userRole, userID,
         keyData={selectedKeyInfo}
         teams={allTeams ?? []}
         onClose={() => setSelectedKeyIdInfoView(null)}
-        backButtonText="Back to Logs"
+        backButtonText={t("request_logs.back_to_logs")}
       />
     );
   }
@@ -281,7 +283,7 @@ export default function RequestLogsPanel({ accessToken, token, userRole, userID,
   return (
     <AutoRouterModelGroupsProvider>
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-xl font-semibold">Request Logs</h1>
+        <h1 className="text-xl font-semibold">{t("request_logs.heading")}</h1>
       </div>
 
       {isLiveTail && pagination.pageIndex === 0 && <LiveTailBanner onStop={() => setIsLiveTail(false)} />}

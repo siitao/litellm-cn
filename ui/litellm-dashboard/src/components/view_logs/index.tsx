@@ -6,6 +6,7 @@ import AuditLogsPanel from "./AuditLogsPanel";
 import RequestLogsPanel from "./RequestLogsPanel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UiLoadingSpinner } from "@/components/ui/ui-loading-spinner";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface SpendLogsTableProps {
   accessToken: string | null;
@@ -28,23 +29,37 @@ const DELETED_KEYS_TAB: LogsTab = { id: "deleted keys", label: "Deleted Keys" };
 const DELETED_TEAMS_TAB: LogsTab = { id: "deleted teams", label: "Deleted Teams" };
 
 export default function SpendLogsTable({ accessToken, token, userRole, userID, premiumUser }: SpendLogsTableProps) {
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState<LogsTabId>(REQUEST_LOGS_TAB.id);
   const canViewAuditLogs = useCan("viewAuditLogs");
   const canViewDeletedTeams = useCan("viewDeletedTeams");
 
   if (!accessToken || !token || !userRole || !userID) {
     return (
-      <div role="status" aria-busy="true" aria-label="Loading" className="flex h-64 items-center justify-center">
+      <div role="status" aria-busy="true" aria-label={t("common.loading")} className="flex h-64 items-center justify-center">
         <UiLoadingSpinner className="size-8 text-primary" />
       </div>
     );
   }
 
+  const tabLabel = (id: LogsTabId): string => {
+    switch (id) {
+      case "request logs":
+        return t("request_logs.tab_request_logs");
+      case "audit logs":
+        return t("request_logs.tab_audit_logs");
+      case "deleted keys":
+        return t("request_logs.tab_deleted_keys");
+      case "deleted teams":
+        return t("request_logs.tab_deleted_teams");
+    }
+  };
+
   const tabs: LogsTab[] = [
-    REQUEST_LOGS_TAB,
-    ...(canViewAuditLogs ? [AUDIT_LOGS_TAB] : []),
-    DELETED_KEYS_TAB,
-    ...(canViewDeletedTeams ? [DELETED_TEAMS_TAB] : []),
+    { ...REQUEST_LOGS_TAB, label: tabLabel(REQUEST_LOGS_TAB.id) },
+    ...(canViewAuditLogs ? [{ ...AUDIT_LOGS_TAB, label: tabLabel(AUDIT_LOGS_TAB.id) }] : []),
+    { ...DELETED_KEYS_TAB, label: tabLabel(DELETED_KEYS_TAB.id) },
+    ...(canViewDeletedTeams ? [{ ...DELETED_TEAMS_TAB, label: tabLabel(DELETED_TEAMS_TAB.id) }] : []),
   ];
 
   const renderPanel = (tabId: LogsTabId) => {

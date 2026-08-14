@@ -1,3 +1,4 @@
+import { useLanguage } from "@/contexts/LanguageContext";
 import {
   Button,
   Card,
@@ -203,6 +204,7 @@ const buildCallbackPayload = (formValues: Record<string, any>, callbackName: str
 };
 
 const Settings: React.FC<SettingsPageProps> = ({ accessToken, userRole, userID, premiumUser }) => {
+  const { t } = useLanguage();
   const [callbacks, setCallbacks] = useState<AlertingObject[]>([]);
   const [isLoadingCallbacks, setIsLoadingCallbacks] = useState(true);
   const [alerts, setAlerts] = useState<any[]>([]);
@@ -450,11 +452,11 @@ const Settings: React.FC<SettingsPageProps> = ({ accessToken, userRole, userID, 
       <Grid numItems={1} className="gap-2 p-8 w-full mt-2">
         <TabGroup>
           <TabList variant="line" defaultValue="1">
-            <Tab value="1">Logging Callbacks</Tab>
-            <Tab value="2">CloudZero Cost Tracking</Tab>
-            <Tab value="2">Alerting Types</Tab>
-            <Tab value="3">Alerting Settings</Tab>
-            <Tab value="4">Email Alerts</Tab>
+            <Tab value="1">{t("logging_alerts.tab_callbacks")}</Tab>
+            <Tab value="2">{t("logging_alerts.tab_cloudzero")}</Tab>
+            <Tab value="2">{t("logging_alerts.tab_alerting_types")}</Tab>
+            <Tab value="3">{t("logging_alerts.tab_alerting_settings")}</Tab>
+            <Tab value="4">{t("logging_alerts.tab_email_alerts")}</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
@@ -547,7 +549,7 @@ const Settings: React.FC<SettingsPageProps> = ({ accessToken, userRole, userID, 
                   </TableBody>
                 </Table>
                 <Button size="xs" className="mt-2" onClick={handleSaveAlerts}>
-                  Save Changes
+                  {t("logging_alerts.save_changes")}
                 </Button>
 
                 <Button
@@ -563,7 +565,7 @@ const Settings: React.FC<SettingsPageProps> = ({ accessToken, userRole, userID, 
                   }}
                   className="mx-2"
                 >
-                  Test Alerts
+                  {t("logging_alerts.test_alerts")}
                 </Button>
               </Card>
             </TabPanel>
@@ -578,7 +580,7 @@ const Settings: React.FC<SettingsPageProps> = ({ accessToken, userRole, userID, 
       </Grid>
 
       <Modal
-        title="Add Logging Callback"
+        title={t("logging_alerts.add_callback")}
         open={showAddCallbacksModal}
         width={800}
         onCancel={() => {
@@ -639,7 +641,7 @@ const Settings: React.FC<SettingsPageProps> = ({ accessToken, userRole, userID, 
       <Modal
         open={showEditCallback}
         width={800}
-        title={"Edit Callback Settings"}
+        title={t("logging_alerts.edit_callback")}
         onCancel={() => {
           setShowEditCallback(false);
           setSelectedEditCallback(null);
@@ -693,7 +695,7 @@ const Settings: React.FC<SettingsPageProps> = ({ accessToken, userRole, userID, 
               loading={isUpdatingCallback}
               disabled={isUpdatingCallback}
             >
-              {isUpdatingCallback ? "Saving..." : "Save Changes"}
+              {isUpdatingCallback ? "Saving..." : t("logging_alerts.save_changes")}
             </Button2>
           </div>
         </Form>
@@ -701,7 +703,7 @@ const Settings: React.FC<SettingsPageProps> = ({ accessToken, userRole, userID, 
 
       <DeleteResourceModal
         isOpen={showDeleteConfirmModal}
-        title="Delete Callback"
+        title={t("logging_alerts.delete_callback")}
         message="Are you sure you want to delete this callback? This action cannot be undone."
         resourceInformationTitle="Callback Information"
         resourceInformation={[

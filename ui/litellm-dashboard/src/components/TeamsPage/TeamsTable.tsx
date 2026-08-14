@@ -10,6 +10,7 @@ import {
 } from "@/components/shared/DataTable";
 import { SearchSelect } from "@/components/shared/SearchSelect";
 import { Input } from "@/components/ui/input";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { DEBOUNCE_WAIT_MS } from "@/utils/debounceConstants";
 import { useDebouncedValue } from "@tanstack/react-pacer/debouncer";
 import { ColumnFiltersState, OnChangeFn, PaginationState, SortingState } from "@tanstack/react-table";
@@ -41,6 +42,7 @@ const FILTER_LABELS: Record<string, string> = {
 };
 
 export function TeamsTable({ userRole, userID, onSelectTeam, onEditTeam, onDeleteTeam }: TeamsTableProps) {
+  const { t } = useLanguage();
   const { data: fetchedOrganizations } = useOrganizations();
   const organizations = useMemo(() => fetchedOrganizations ?? [], [fetchedOrganizations]);
 
@@ -98,9 +100,9 @@ export function TeamsTable({ userRole, userID, onSelectTeam, onEditTeam, onDelet
   }, []);
 
   const columns = useMemo(() => {
-    const columnDeps = { organizations, userRole, onSelectTeam, onEditTeam, onDeleteTeam };
+    const columnDeps = { organizations, userRole, onSelectTeam, onEditTeam, onDeleteTeam, t };
     return getTeamTableColumns(columnDeps);
-  }, [organizations, userRole, onSelectTeam, onEditTeam, onDeleteTeam]);
+  }, [organizations, userRole, onSelectTeam, onEditTeam, onDeleteTeam, t]);
 
   const orgOptions = useMemo(
     () =>

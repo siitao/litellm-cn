@@ -5,6 +5,7 @@ import { ScrollText } from "lucide-react";
 import { useMemo, useState, type ReactNode } from "react";
 
 import { DataTable, DataTableFilterDrawer, DataTableToolbar } from "@/components/shared/DataTable";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 import type { Team } from "../key_team_helpers/key_list";
 import type { LogEntry } from "./columns";
@@ -71,12 +72,13 @@ export function RequestLogsTable({
   logsWindow,
   toolbarChildren,
 }: RequestLogsTableProps) {
+  const { t } = useLanguage();
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   const columns = useMemo(() => {
-    const deps = { onKeyHashClick, onSessionClick };
+    const deps = { onKeyHashClick, onSessionClick, t };
     return getRequestLogsTableColumns(deps);
-  }, [onKeyHashClick, onSessionClick]);
+  }, [onKeyHashClick, onSessionClick, t]);
 
   const isFiltered = columnFilters.length > 0 || searchValue !== "";
 
