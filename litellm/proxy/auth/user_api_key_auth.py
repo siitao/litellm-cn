@@ -2272,7 +2272,12 @@ async def _run_centralized_common_checks(
         )
 
     fetch_coros: Final = []
-    if user_api_key_auth_obj.team_id is not None:
+    # UI session tokens carry the virtual team_id UI_TEAM_ID ("litellm-dashboard"),
+    # which is never persisted — a real row would bind its budget and permissions
+    # to every UI session, so /team/new rejects it. Skip the DB lookup for it,
+    # mirroring the MCP auth helpers and agent_permission_handler; otherwise every
+    # management request from the dashboard 404s with "Team doesn't exist in db".
+    if user_api_key_auth_obj.team_id is not None and user_api_key_auth_obj.team_id != UI_TEAM_ID:
         fetch_coros.append(
             _safe_fetch(
                 "team",
