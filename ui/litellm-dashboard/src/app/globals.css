@@ -30,6 +30,16 @@
   }
 }
 
+/* System font stack (incl. CJK). Replaces next/font Google Inter, which fetched
+   a font over the network at build time (breaks offline Docker builds) and had
+   no CJK glyphs anyway — Chinese text renders with the platform's native UI
+   fonts. */
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+}
+
 :root {
   --radius: 0.5rem;
   --background: oklch(1 0 0);

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 
 import { NuqsAdapter } from "nuqs/adapters/next/app";
@@ -8,8 +7,6 @@ import AntdGlobalProvider from "@/contexts/AntdGlobalProvider";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import ReactQueryProvider from "@/contexts/ReactQueryProvider";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "LiteLLM Dashboard",
@@ -23,8 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="zh">
+      <body>
         <NuqsAdapter>
           <ReactQueryProvider>
             <AntdGlobalProvider>
