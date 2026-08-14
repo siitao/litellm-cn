@@ -7,6 +7,18 @@ multiplexing = false
 [net]
 retry = 5
 
+# In CN networks crates.io is frequently unreachable (connection reset), which
+# fails the `maturin`/`cargo metadata` step during `uv sync`. Route the sparse
+# index and crate downloads through RSProxy (this fork is CN-oriented). Swap the
+# registry URL for a TUNA/USTC mirror if rsproxy is unavailable:
+#   sparse+https://mirrors.tuna.tsinghua.edu.cn/crates.io-index/
+#   sparse+https://mirrors.ustc.edu.cn/crates.io-index/
+[source.crates-io]
+replace-with = "rsproxy-sparse"
+
+[source.rsproxy-sparse]
+registry = "sparse+https://rsproxy.cn/index/"
+
 # PyO3 cdylib (`litellm-python-bridge`) links against the host interpreter's
 # symbols, which are not present at link time when building an extension module.
 # On macOS, tell the linker to resolve undefined `_Py*` symbols dynamically at
