@@ -1,5 +1,7 @@
 {
   "common": {
+    "last_refreshed": "最后刷新：{time}",
+    "logout": "退出登录",
     "save": "保存",
     "cancel": "取消",
     "delete": "删除",
@@ -226,6 +228,34 @@
     "sort_budget": "预算"
   },
   "users": {
+    "premium": "高级版",
+    "premium_tooltip": "升级到高级版以使用高级功能",
+    "standard": "标准版",
+    "hide_new_feature_indicators": "隐藏新功能提示",
+    "hide_all_prompts": "隐藏所有提示",
+    "hide_blog_posts": "隐藏博客文章",
+    "hide_bouncing_icon": "隐藏弹跳图标",
+    "toggle_hide_new_feature_indicators": "切换隐藏新功能提示",
+    "toggle_hide_all_prompts": "切换隐藏所有提示",
+    "toggle_hide_blog_posts": "切换隐藏博客文章",
+    "toggle_hide_bouncing_icon": "切换隐藏弹跳图标",
+    "tier": "版本",
+    "copy_email": "复制邮箱",
+    "thanks_using_litellm": "感谢使用 LiteLLM！",
+    "back_to_users": "返回用户列表",
+    "user_not_found": "未找到用户",
+    "tab_details": "详情",
+    "show_less": "收起",
+    "personal_models": "个人模型",
+    "user_settings": "用户设置",
+    "edit_settings": "编辑设置",
+    "mcp_permissions": "MCP 权限",
+    "invitation_link": "邀请链接",
+    "reset_password_link": "重置密码链接",
+    "invitation_link_desc": "复制生成的链接并发送给用户，以将其接入代理。",
+    "reset_password_link_desc": "复制生成的链接并发送给用户，以重置其密码。",
+    "copy_invitation_link": "复制邀请链接",
+    "copy_password_reset_link": "复制密码重置链接",
     "user_email": "用户邮箱",
     "user_id": "用户 ID",
     "role": "角色",
@@ -470,6 +500,11 @@
     "delete_confirm": "确定要删除此护栏吗？此操作无法撤销。"
   },
   "admin_panel": {
+    "all_ips_allowed": "允许所有 IP 地址",
+    "ui_access_control_settings": "UI 访问控制设置",
+    "enter_ip": "请输入 IP 地址",
+    "enter_ip_placeholder": "输入 IP 地址",
+    "delete_ip_confirm": "确定要删除 IP 地址 {ip} 吗？",
     "heading": "管理员访问",
     "note": "前往“内部用户”页面添加其他管理员。",
     "tab_sso": "SSO 设置",
@@ -524,6 +559,13 @@
     "reset": "重置"
   },
   "logging_alerts": {
+    "no_callbacks": "未配置回调",
+    "no_callbacks_desc": "添加第一个回调，开始将日志数据写入外部服务。",
+    "active_callbacks": "启用的日志回调",
+    "loading_callbacks": "正在加载回调…",
+    "mode_success_failure": "成功与失败",
+    "col_callback_name": "回调名称",
+    "col_mode": "模式",
     "tab_callbacks": "日志回调",
     "tab_cloudzero": "CloudZero 成本跟踪",
     "tab_alerting_types": "告警类型",
@@ -547,6 +589,12 @@
     "enterprise_feature": "✨ 企业版功能"
   },
   "teams": {
+    "add_team": "添加团队",
+    "remove_from_team": "从团队移除",
+    "add_user_to_team": "将用户添加到团队",
+    "select_a_team": "选择一个团队",
+    "member_role": "成员角色",
+    "add_to_team": "添加到团队",
     "title": "团队",
     "subtitle": "管理团队、成员及其对模型和预算的访问",
     "team_id": "团队 ID",
@@ -618,5 +666,41 @@
     "enter_user_id": "输入用户 ID…",
     "enter_team_id": "输入团队 ID…",
     "enter_key_hash": "输入密钥哈希…"
+  },
+  "caching": {
+    "tab_analytics": "缓存分析",
+    "tab_health": "缓存健康",
+    "tab_settings": "缓存设置",
+    "tab_coordination": "协调 Redis",
+    "stat_hit_ratio": "缓存命中率",
+    "stat_hits": "缓存命中",
+    "stat_cached_tokens": "缓存补全 Token",
+    "select_virtual_keys": "选择虚拟密钥",
+    "no_virtual_keys": "未找到虚拟密钥",
+    "select_models": "选择模型",
+    "no_models": "未找到模型",
+    "series_api_requests": "LLM API 请求",
+    "series_cache_hit": "缓存命中",
+    "series_failed": "失败请求",
+    "chart_hits_vs_requests": "缓存命中 vs API 请求",
+    "chart_cached_vs_generated": "缓存补全 Token vs 生成补全 Token"
+  },
+  "tag_management": {
+    "click_hint": "点击标签名称查看并编辑详情。",
+    "create_tag": "创建新标签",
+    "delete_title": "删除标签",
+    "tag_information": "标签信息",
+    "col_name": "标签名称"
+  },
+  "prompts": {
+    "all_environments": "所有环境",
+    "add_new": "添加新提示词",
+    "upload_prompt_file": "上传 .prompt 文件",
+    "delete_title": "删除提示词",
+    "playground": "调试沙盒",
+    "original_request": "原始请求",
+    "transformed_request": "转换后的请求",
+    "transform": "转换",
+    "copy_to_clipboard": "复制到剪贴板"
   }
 }

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import {
   Card,
   Text,
@@ -73,6 +74,7 @@ export default function UserInfoView({
   initialTab = 0,
   startInEditMode = false,
 }: UserInfoViewProps) {
+  const { t } = useLanguage();
   const [userData, setUserData] = useState<UserInfoV2Response | null>(null);
   const [teamDetails, setTeamDetails] = useState<TeamDisplayInfo[]>([]);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -337,7 +339,7 @@ export default function UserInfoView({
     return (
       <div className="p-4">
         <Button icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">
-          Back to Users
+          {t("users.back_to_users")}
         </Button>
         <Text>Loading user data...</Text>
       </div>
@@ -348,9 +350,9 @@ export default function UserInfoView({
     return (
       <div className="p-4">
         <Button icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">
-          Back to Users
+          {t("users.back_to_users")}
         </Button>
-        <Text>User not found</Text>
+        <Text>{t("users.user_not_found")}</Text>
       </div>
     );
   }
@@ -421,18 +423,18 @@ export default function UserInfoView({
 
       <DeleteResourceModal
         isOpen={isDeleteModalOpen}
-        title="Delete User?"
-        message="Are you sure you want to delete this user? This action cannot be undone."
-        resourceInformationTitle="User Information"
+        title={`${t("users.row_delete")}?`}
+        message={t("users.delete_confirm")}
+        resourceInformationTitle={t("users.user_information")}
         resourceInformation={[
-          { label: "Email", value: userData.user_email },
-          { label: "User ID", value: userData.user_id, code: true },
+          { label: t("users.col_email"), value: userData.user_email },
+          { label: t("users.user_id"), value: userData.user_id, code: true },
           {
-            label: "Global Proxy Role",
+            label: t("users.col_global_role"),
             value: (userData.user_role && possibleUIRoles?.[userData.user_role]?.ui_label) || userData.user_role || "-",
           },
           {
-            label: "Total Spend (USD)",
+            label: t("users.col_spend"),
             value: userData.spend !== null && userData.spend !== undefined ? userData.spend.toFixed(2) : undefined,
           },
         ]}
@@ -443,8 +445,8 @@ export default function UserInfoView({
 
       <TabGroup defaultIndex={activeTab} onIndexChange={setActiveTab}>
         <TabList className="mb-4">
-          <Tab>Overview</Tab>
-          <Tab>Details</Tab>
+          <Tab>{t("teams.tab_overview")}</Tab>
+          <Tab>{t("users.tab_details")}</Tab>
         </TabList>
 
         <TabPanels>
@@ -464,7 +466,7 @@ export default function UserInfoView({
 
               <Card>
                 <div className="flex justify-between items-center mb-2">
-                  <Text>Teams</Text>
+                  <Text>{t("teams.title")}</Text>
                   {isProxyAdmin && (
                     <Button icon={PlusIcon} variant="light" size="xs" onClick={handleOpenAddTeamModal}>
                       Add Team
@@ -502,7 +504,7 @@ export default function UserInfoView({
                       </Table>
                     </div>
                   ) : (
-                    <Text>No teams</Text>
+                    <Text>{t("teams.no_teams")}</Text>
                   )}
                   {!isTeamsExpanded && teamDetails.length > 20 && (
                     <Button variant="light" size="xs" className="mt-2" onClick={() => setIsTeamsExpanded(true)}>
@@ -518,12 +520,12 @@ export default function UserInfoView({
               </Card>
 
               <Card>
-                <Text>Personal Models</Text>
+                <Text>{t("users.personal_models")}</Text>
                 <div className="mt-2">
                   {userData.models?.length && userData.models?.length > 0 ? (
                     userData.models?.map((model, index) => <Text key={index}>{model}</Text>)
                   ) : (
-                    <Text>All proxy models</Text>
+                    <Text>{t("users.all_proxy_models")}</Text>
                   )}
                 </div>
               </Card>
@@ -534,9 +536,9 @@ export default function UserInfoView({
           <TabPanel>
             <Card>
               <div className="flex justify-between items-center mb-4">
-                <Title>User Settings</Title>
+                <Title>{t("users.user_settings")}</Title>
                 {!isEditing && userRole && rolesWithWriteAccess.includes(userRole) && (
-                  <Button onClick={() => setIsEditing(true)}>Edit Settings</Button>
+                  <Button onClick={() => setIsEditing(true)}>{t("users.edit_settings")}</Button>
                 )}
               </div>
 
@@ -556,7 +558,7 @@ export default function UserInfoView({
               ) : (
                 <div className="space-y-4">
                   <div>
-                    <Text className="font-medium">User ID</Text>
+                    <Text className="font-medium">{t("users.user_id")}</Text>
                     <div className="flex items-center cursor-pointer">
                       <Text className="font-mono">{userData.user_id}</Text>
                       <AntdButton
@@ -579,7 +581,7 @@ export default function UserInfoView({
                   </div>
 
                   <div>
-                    <Text className="font-medium">User Alias</Text>
+                    <Text className="font-medium">{t("users.col_alias")}</Text>
                     <Text>{userData.user_alias || "Not Set"}</Text>
                   </div>
 
@@ -594,12 +596,12 @@ export default function UserInfoView({
                   </div>
 
                   <div>
-                    <Text className="font-medium">Last Updated</Text>
+                    <Text className="font-medium">{t("users.col_updated_at")}</Text>
                     <Text>{userData.updated_at ? new Date(userData.updated_at).toLocaleString() : "Unknown"}</Text>
                   </div>
 
                   <div>
-                    <Text className="font-medium">Personal Models</Text>
+                    <Text className="font-medium">{t("users.personal_models")}</Text>
                     <div className="flex flex-wrap gap-2 mt-1">
                       {userData.models?.length && userData.models?.length > 0 ? (
                         userData.models?.map((model, index) => (
@@ -608,13 +610,13 @@ export default function UserInfoView({
                           </span>
                         ))
                       ) : (
-                        <Text>All proxy models</Text>
+                        <Text>{t("users.all_proxy_models")}</Text>
                       )}
                     </div>
                   </div>
 
                   <div>
-                    <Text className="font-medium">Max Budget</Text>
+                    <Text className="font-medium">{t("users.col_budget")}</Text>
                     <Text>
                       {userData.max_budget !== null && userData.max_budget !== undefined
                         ? `$${formatNumberWithCommas(userData.max_budget, 4)}`
@@ -623,7 +625,7 @@ export default function UserInfoView({
                   </div>
 
                   <div>
-                    <Text className="font-medium">Budget Reset</Text>
+                    <Text className="font-medium">{t("keys.col_budget_reset")}</Text>
                     <Text>{getBudgetDurationLabel(userData.budget_duration ?? null)}</Text>
                   </div>
 
@@ -635,7 +637,7 @@ export default function UserInfoView({
                   </div>
 
                   <div>
-                    <Text className="font-medium mb-2">MCP Permissions</Text>
+                    <Text className="font-medium mb-2">{t("users.mcp_permissions")}</Text>
                     <MCPServerPermissions
                       mcpServers={userData.object_permission?.mcp_servers || []}
                       mcpAccessGroups={userData.object_permission?.mcp_access_groups || []}
@@ -667,7 +669,7 @@ export default function UserInfoView({
         resourceInformationTitle="Team Membership"
         resourceInformation={[
           { label: "Team", value: teamToRemove?.team_alias || teamToRemove?.team_id },
-          { label: "User ID", value: userData?.user_id, code: true },
+          { label: t("users.user_id"), value: userData?.user_id, code: true },
           { label: "Email", value: userData?.user_email },
         ]}
         onCancel={handleRemoveTeamCancel}

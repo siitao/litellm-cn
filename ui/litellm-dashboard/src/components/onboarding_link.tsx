@@ -1,4 +1,5 @@
 import React from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Button, Modal, Typography } from "antd";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Text } from "@tremor/react";
@@ -58,6 +59,7 @@ export default function OnboardingModal({
   invitationLinkData,
   modalType = "invitation",
 }: OnboardingProps) {
+  const { t } = useLanguage();
   const { Paragraph } = Typography;
   const handleInvitationOk = () => {
     setIsInvitationLinkModalVisible(false);
@@ -77,7 +79,7 @@ export default function OnboardingModal({
 
   return (
     <Modal
-      title={modalType === "invitation" ? "Invitation Link" : "Reset Password Link"}
+      title={modalType === "invitation" ? t("users.invitation_link") : t("users.reset_password_link")}
       open={isInvitationLinkModalVisible}
       width={800}
       footer={null}
@@ -86,15 +88,15 @@ export default function OnboardingModal({
     >
       <Paragraph>
         {modalType === "invitation"
-          ? "Copy and send the generated link to onboard this user to the proxy."
-          : "Copy and send the generated link to the user to reset their password."}
+          ? t("users.invitation_link_desc")
+          : t("users.reset_password_link_desc")}
       </Paragraph>
       <div className="flex justify-between pt-5 pb-2">
-        <Text className="text-base">User ID</Text>
+        <Text className="text-base">{t("users.user_id")}</Text>
         <Text>{invitationLinkData?.user_id}</Text>
       </div>
       <div className="flex justify-between pt-5 pb-2">
-        <Text>{modalType === "invitation" ? "Invitation Link" : "Reset Password Link"}</Text>
+        <Text>{modalType === "invitation" ? t("users.invitation_link") : t("users.reset_password_link")}</Text>
         <Text>
           <Text>{getInvitationUrl()}</Text>
         </Text>
@@ -102,7 +104,7 @@ export default function OnboardingModal({
       <div className="flex justify-end mt-5">
         <CopyToClipboard text={getInvitationUrl()} onCopy={() => NotificationsManager.success("Copied!")}>
           <Button type="primary">
-            {modalType === "invitation" ? "Copy invitation link" : "Copy password reset link"}
+            {modalType === "invitation" ? t("users.copy_invitation_link") : t("users.copy_password_reset_link")}
           </Button>
         </CopyToClipboard>
       </div>

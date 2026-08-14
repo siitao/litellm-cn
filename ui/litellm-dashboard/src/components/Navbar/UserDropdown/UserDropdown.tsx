@@ -1,4 +1,5 @@
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { useDisableBlogPosts } from "@/app/(dashboard)/hooks/useDisableBlogPosts";
 import { useDisableBouncingIcon } from "@/app/(dashboard)/hooks/useDisableBouncingIcon";
 import { useDisableShowPrompts } from "@/app/(dashboard)/hooks/useDisableShowPrompts";
@@ -69,6 +70,7 @@ interface UserDropdownProps {
 }
 
 const UserDropdown: React.FC<UserDropdownProps> = ({ onLogout, variant = "navbar", collapsed = false }) => {
+  const { t } = useLanguage();
   const { userId, userEmail, userRoleLabel: userRole, premiumUser } = useAuthorized();
   const disableShowPrompts = useDisableShowPrompts();
   const disableBlogPosts = useDisableBlogPosts();
@@ -86,7 +88,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ onLogout, variant = "navbar
       label: (
         <Space>
           <LogoutOutlined />
-          Logout
+          {t("common.logout")}
         </Space>
       ),
       onClick: onLogout,
@@ -102,11 +104,11 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ onLogout, variant = "navbar
         </Space>
         {premiumUser ? (
           <Tag icon={<CrownOutlined />} color="gold">
-            Premium
+            {t("users.premium")}
           </Tag>
         ) : (
-          <Tooltip title="Upgrade to Premium for advanced features" placement="left">
-            <Tag icon={<CrownOutlined />}>Standard</Tag>
+          <Tooltip title={t("users.premium_tooltip")} placement="left">
+            <Tag icon={<CrownOutlined />}>{t("users.standard")}</Tag>
           </Tooltip>
         )}
       </Space>
@@ -114,7 +116,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ onLogout, variant = "navbar
       <Space style={{ width: "100%", justifyContent: "space-between" }}>
         <Space>
           <UserOutlined />
-          <Text type="secondary">User ID</Text>
+          <Text type="secondary">{t("users.user_id")}</Text>
         </Space>
         <Text copyable ellipsis style={{ maxWidth: "150px" }} title={userId || "-"}>
           {userId || "-"}
@@ -123,13 +125,13 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ onLogout, variant = "navbar
       <Space style={{ width: "100%", justifyContent: "space-between" }}>
         <Space>
           <SafetyOutlined />
-          <Text type="secondary">Role</Text>
+          <Text type="secondary">{t("users.role")}</Text>
         </Space>
         <Text>{userRole}</Text>
       </Space>
       <Divider style={{ margin: "8px 0" }} />
       <Space style={{ width: "100%", justifyContent: "space-between" }}>
-        <Text type="secondary">Hide New Feature Indicators</Text>
+        <Text type="secondary">{t("users.hide_new_feature_indicators")}</Text>
         <Switch
           size="small"
           checked={disableShowNewBadge}
@@ -143,11 +145,11 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ onLogout, variant = "navbar
               emitLocalStorageChange("disableShowNewBadge");
             }
           }}
-          aria-label="Toggle hide new feature indicators"
+          aria-label={t("users.toggle_hide_new_feature_indicators")}
         />
       </Space>
       <Space style={{ width: "100%", justifyContent: "space-between" }}>
-        <Text type="secondary">Hide All Prompts</Text>
+        <Text type="secondary">{t("users.hide_all_prompts")}</Text>
         <Switch
           size="small"
           checked={disableShowPrompts}
@@ -160,11 +162,11 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ onLogout, variant = "navbar
               emitLocalStorageChange("disableShowPrompts");
             }
           }}
-          aria-label="Toggle hide all prompts"
+          aria-label={t("users.toggle_hide_all_prompts")}
         />
       </Space>
       <Space style={{ width: "100%", justifyContent: "space-between" }}>
-        <Text type="secondary">Hide Blog Posts</Text>
+        <Text type="secondary">{t("users.hide_blog_posts")}</Text>
         <Switch
           size="small"
           checked={disableBlogPosts}
@@ -177,11 +179,11 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ onLogout, variant = "navbar
               emitLocalStorageChange("disableBlogPosts");
             }
           }}
-          aria-label="Toggle hide blog posts"
+          aria-label={t("users.toggle_hide_blog_posts")}
         />
       </Space>
       <Space style={{ width: "100%", justifyContent: "space-between" }}>
-        <Text type="secondary">Hide Bouncing Icon</Text>
+        <Text type="secondary">{t("users.hide_bouncing_icon")}</Text>
         <Switch
           size="small"
           checked={disableBouncingIcon}
@@ -194,7 +196,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ onLogout, variant = "navbar
               emitLocalStorageChange("disableBouncingIcon");
             }
           }}
-          aria-label="Toggle hide bouncing icon"
+          aria-label={t("users.toggle_hide_bouncing_icon")}
         />
       </Space>
     </Space>

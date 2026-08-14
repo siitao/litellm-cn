@@ -1,6 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
+import { TFunction } from "@/i18n";
 import { MoreHorizontal, Pencil, Play, Trash2 } from "lucide-react";
 
 import { StatusBadge, type StatusTone } from "@/components/shared/table_cells";
@@ -30,11 +31,11 @@ export type AvailableCallbacks = Record<string, AvailableCallbackMeta>;
 
 export const callbackRowMode = (record: CallbackRow): string => record.type || record.mode || "success";
 
-const CALLBACK_MODE_LABELS: Record<string, string> = {
+const CALLBACK_MODE_LABELS = (t: TFunction): Record<string, string> => ({
   success: "Success",
   failure: "Failure",
-  success_and_failure: "Success & Failure",
-};
+  success_and_failure: t("logging_alerts.mode_success_failure"),
+});
 
 function callbackModeTone(mode: string): StatusTone {
   if (mode === "success") return "success";
@@ -79,6 +80,7 @@ function CallbackRowActions({ callback, onTest, onEdit, onDelete }: CallbackRowA
 }
 
 interface LoggingCallbacksTableColumnsDeps {
+  t: TFunction;
   availableCallbacks: AvailableCallbacks;
   onTest: (callback: AlertingObject) => void | Promise<void>;
   onEdit: (callback: AlertingObject) => void;
@@ -90,12 +92,13 @@ export const getLoggingCallbacksTableColumns = ({
   onTest,
   onEdit,
   onDelete,
+  t,
 }: LoggingCallbacksTableColumnsDeps): ColumnDef<CallbackRow>[] => [
   {
     id: "name",
     accessorKey: "name",
-    meta: { title: "Callback Name" },
-    header: "Callback Name",
+    meta: { title: t("logging_alerts.col_callback_name") },
+    header: t("logging_alerts.col_callback_name"),
     enableSorting: false,
     cell: ({ row }) => {
       const id = row.original.name;
@@ -109,13 +112,13 @@ export const getLoggingCallbacksTableColumns = ({
   },
   {
     id: "mode",
-    meta: { title: "Mode", skeleton: "badge" },
-    header: "Mode",
+    meta: { title: t("logging_alerts.col_mode"), skeleton: "badge" },
+    header: t("logging_alerts.col_mode"),
     size: 240,
     enableSorting: false,
     cell: ({ row }) => {
       const mode = callbackRowMode(row.original);
-      return <StatusBadge tone={callbackModeTone(mode)} label={CALLBACK_MODE_LABELS[mode] || mode} />;
+      return <StatusBadge tone={callbackModeTone(mode)} label={CALLBACK_MODE_LABELS(t)[mode] || mode} />;
     },
   },
   {

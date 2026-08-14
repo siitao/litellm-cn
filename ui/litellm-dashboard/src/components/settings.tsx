@@ -271,14 +271,14 @@ const Settings: React.FC<SettingsPageProps> = ({ accessToken, userRole, userID, 
     }
   };
   const alerts_to_UI_NAME: Record<string, string> = {
-    llm_exceptions: "LLM Exceptions",
-    llm_too_slow: "LLM Responses Too Slow",
-    llm_requests_hanging: "LLM Requests Hanging",
-    budget_alerts: "Budget Alerts (API Keys, Users)",
-    db_exceptions: "Database Exceptions (Read/Write)",
-    daily_reports: "Weekly/Monthly Spend Reports",
-    outage_alerts: "Outage Alerts",
-    region_outage_alerts: "Region Outage Alerts",
+    llm_exceptions: t("logging_alerts.alert_llm_exceptions"),
+    llm_too_slow: t("logging_alerts.alert_slow_responses"),
+    llm_requests_hanging: t("logging_alerts.alert_hanging"),
+    budget_alerts: t("logging_alerts.alert_budget"),
+    db_exceptions: t("logging_alerts.alert_db_exceptions"),
+    daily_reports: t("logging_alerts.alert_spend_reports"),
+    outage_alerts: t("logging_alerts.alert_outage"),
+    region_outage_alerts: t("logging_alerts.alert_region_outage"),
   };
 
   useEffect(() => {
@@ -488,7 +488,7 @@ const Settings: React.FC<SettingsPageProps> = ({ accessToken, userRole, userID, 
             <TabPanel>
               <Card>
                 <Text className="my-2">
-                  Alerts are only supported for Slack Webhook URLs. Get your webhook urls from{" "}
+                  {t("logging_alerts.slack_only_note")}{" "}
                   <a href="https://api.slack.com/messaging/webhooks" target="_blank" style={{ color: "blue" }}>
                     here
                   </a>
@@ -498,7 +498,7 @@ const Settings: React.FC<SettingsPageProps> = ({ accessToken, userRole, userID, 
                     <TableRow>
                       <TableHeaderCell></TableHeaderCell>
                       <TableHeaderCell></TableHeaderCell>
-                      <TableHeaderCell>Slack Webhook URL</TableHeaderCell>
+                      <TableHeaderCell>{t("logging_alerts.slack_webhook_url")}</TableHeaderCell>
                     </TableRow>
                   </TableHead>
 

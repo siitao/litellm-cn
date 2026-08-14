@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { ArrowRight, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,6 +13,7 @@ interface TransformRequestPanelProps {
 }
 
 const TransformRequestPanel: React.FC<TransformRequestPanelProps> = ({ accessToken }) => {
+  const { t } = useLanguage();
   const [originalRequestJSON, setOriginalRequestJSON] = useState(`{
   "model": "openai/gpt-4o",
   "messages": [
@@ -126,7 +128,7 @@ ${formattedBody}
 
   return (
     <div className="p-2">
-      <h1 className="text-lg font-medium text-foreground">Playground</h1>
+      <h1 className="text-lg font-medium text-foreground">{t("prompts.playground")}</h1>
       <p className="text-sm text-muted-foreground">
         See how LiteLLM transforms your request for the specified provider.
       </p>
@@ -134,7 +136,7 @@ ${formattedBody}
         {/* Original Request Panel */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-2xl font-bold">Original Request</CardTitle>
+            <CardTitle className="text-2xl font-bold">{t("prompts.original_request")}</CardTitle>
             <CardDescription>The request you would send to LiteLLM /chat/completions endpoint.</CardDescription>
           </CardHeader>
 
@@ -150,7 +152,7 @@ ${formattedBody}
 
           <CardFooter className="justify-end">
             <Button onClick={handleTransform} disabled={isLoading}>
-              <span>Transform</span>
+              <span>{t("prompts.transform")}</span>
               {isLoading ? <UiLoadingSpinner className="size-4" /> : <ArrowRight />}
             </Button>
           </CardFooter>
@@ -159,7 +161,7 @@ ${formattedBody}
         {/* Transformed Request Panel */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-2xl font-bold">Transformed Request</CardTitle>
+            <CardTitle className="text-2xl font-bold">{t("prompts.transformed_request")}</CardTitle>
             <CardDescription>How LiteLLM transforms your request for the specified provider.</CardDescription>
             <p className="mt-2 text-xs text-muted-foreground">Note: Sensitive headers are not shown.</p>
           </CardHeader>
@@ -187,7 +189,7 @@ ${formattedBody}
               <Button
                 variant="ghost"
                 size="icon-sm"
-                aria-label="Copy to clipboard"
+                aria-label={t("prompts.copy_to_clipboard")}
                 className="absolute top-2 right-2"
                 onClick={() => {
                   navigator.clipboard.writeText(transformedResponse || "");

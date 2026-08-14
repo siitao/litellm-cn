@@ -52,7 +52,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
   const [ssoConfigured, setSsoConfigured] = useState<boolean>(false);
 
   const baseUrl = useBaseUrl();
-  const all_ip_address_allowed = "All IP Addresses Allowed";
+  const all_ip_address_allowed = t("admin_panel.all_ips_allowed");
 
   let nonSssoUrl = baseUrl;
   nonSssoUrl += "/fallback/login";
@@ -222,7 +222,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
               </div>
               <div>
                 <Button style={{ width: "150px" }} onClick={handleShowAllowedIPs}>
-                  Allowed IPs
+                  {t("admin_panel.allowed_ips")}
                 </Button>
               </div>
               <div>
@@ -254,23 +254,23 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
               ssoConfigured={ssoConfigured}
             />
             <Modal
-              title="Manage Allowed IP Addresses"
+              title={t("admin_panel.manage_allowed_ips")}
               width={800}
               open={isAllowedIPModalVisible}
               onCancel={() => setIsAllowedIPModalVisible(false)}
               footer={[
                 <Button className="mx-1" key="add" onClick={() => setIsAddIPModalVisible(true)}>
-                  Add IP Address
+                  {t("admin_panel.add_ip")}
                 </Button>,
                 <Button key="close" onClick={() => setIsAllowedIPModalVisible(false)}>
-                  Close
+                  {t("common.close")}
                 </Button>,
               ]}
             >
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableHeaderCell>IP Address</TableHeaderCell>
+                    <TableHeaderCell>{t("admin_panel.col_ip_address")}</TableHeaderCell>
                     <TableHeaderCell className="text-right">Action</TableHeaderCell>
                   </TableRow>
                 </TableHead>
@@ -292,23 +292,23 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
             </Modal>
 
             <Modal
-              title="Add Allowed IP Address"
+              title={t("admin_panel.add_ip_address")}
               open={isAddIPModalVisible}
               onCancel={() => setIsAddIPModalVisible(false)}
               footer={null}
             >
               <Form onFinish={handleAddIP}>
-                <Form.Item name="ip" rules={[{ required: true, message: "Please enter an IP address" }]}>
-                  <Input placeholder="Enter IP address" />
+                <Form.Item name="ip" rules={[{ required: true, message: t("admin_panel.enter_ip") }]}>
+                  <Input placeholder={t("admin_panel.enter_ip_placeholder")} />
                 </Form.Item>
                 <Form.Item>
-                  <Button2 htmlType="submit">Add IP Address</Button2>
+                  <Button2 htmlType="submit">{t("admin_panel.add_ip")}</Button2>
                 </Form.Item>
               </Form>
             </Modal>
 
             <Modal
-              title="Confirm Delete"
+              title={t("admin_panel.confirm_delete")}
               open={isDeleteIPModalVisible}
               onCancel={() => setIsDeleteIPModalVisible(false)}
               onOk={confirmDeleteIP}
@@ -317,16 +317,16 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
                   Yes
                 </Button>,
                 <Button key="close" onClick={() => setIsDeleteIPModalVisible(false)}>
-                  Close
+                  {t("common.close")}
                 </Button>,
               ]}
             >
-              <Text>Are you sure you want to delete the IP address: {ipToDelete}?</Text>
+              <Text>{t("admin_panel.delete_ip_confirm").replace("{ip}", ipToDelete ?? "")}</Text>
             </Modal>
 
             {/* UI Access Control Modal */}
             <Modal
-              title="UI Access Control Settings"
+              title={t("admin_panel.ui_access_control_settings")}
               open={isUIAccessControlModalVisible}
               width={600}
               footer={null}
@@ -342,7 +342,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
               />
             </Modal>
           </div>
-          <Callout title="Login without SSO" color="teal">
+          <Callout title={t("admin_panel.login_without_sso")} color="teal">
             If you need to login without sso, you can access{" "}
             <a href={nonSssoUrl} target="_blank" rel="noopener noreferrer">
               <b>{nonSssoUrl}</b>{" "}

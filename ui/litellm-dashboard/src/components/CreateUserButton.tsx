@@ -1,4 +1,5 @@
 import { InfoCircleOutlined, UserAddOutlined } from "@ant-design/icons";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { useQueryClient } from "@tanstack/react-query";
 import { useOrganizations } from "@/app/(dashboard)/hooks/organizations/useOrganizations";
 import { Accordion, AccordionBody, AccordionHeader, SelectItem, TextInput } from "@tremor/react";
@@ -68,6 +69,7 @@ export const CreateUserButton: React.FC<CreateuserProps> = ({
   onUserCreated,
   isEmbedded = false,
 }) => {
+  const { t } = useLanguage();
   const queryClient = useQueryClient();
   const [uiSettings, setUISettings] = useState<UISettings | null>(null);
   const [form] = Form.useForm();
@@ -192,7 +194,7 @@ export const CreateUserButton: React.FC<CreateuserProps> = ({
         initialValues={{ user_role: "internal_user_viewer", send_invite_email: true }}
       >
         <Alert
-          message="Email invitations"
+          message={t("users.email_invitations")}
           description={
             <>
               New users receive an email invite only when an email integration (SMTP, Resend, or SendGrid) is
@@ -206,10 +208,10 @@ export const CreateUserButton: React.FC<CreateuserProps> = ({
           showIcon
           className="mb-4"
         />
-        <Form.Item label="User Email" name="user_email">
+        <Form.Item label={t("users.user_email")} name="user_email">
           <TextInput placeholder="" />
         </Form.Item>
-        <Form.Item label="User Role" name="user_role">
+        <Form.Item label={t("users.role")} name="user_role">
           <Select2>
             {possibleUIRoles &&
               Object.entries(possibleUIRoles).map(([role, { ui_label, description }]) => (
@@ -232,12 +234,12 @@ export const CreateUserButton: React.FC<CreateuserProps> = ({
           <Input.TextArea rows={4} placeholder="Enter metadata as JSON" />
         </Form.Item>
 
-        <Form.Item label="Send invitation email" name="send_invite_email" valuePropName="checked">
+        <Form.Item label={t("users.send_invitation_email")} name="send_invite_email" valuePropName="checked">
           <Checkbox />
         </Form.Item>
 
         <div style={{ textAlign: "right", marginTop: "10px" }}>
-          <Button htmlType="submit">Create User</Button>
+          <Button htmlType="submit">{t("users.invite_user")}</Button>
         </div>
       </Form>
     );
@@ -247,11 +249,11 @@ export const CreateUserButton: React.FC<CreateuserProps> = ({
   return (
     <div className="flex gap-2">
       <Button type="primary" className="mb-0" onClick={() => setIsModalVisible(true)}>
-        + Invite User
+        + {t("users.invite_user")}
       </Button>
       <BulkCreateUsers accessToken={accessToken} teams={teams} possibleUIRoles={possibleUIRoles} />
       <Modal
-        title="Invite User"
+        title={t("users.invite_user")}
         open={isModalVisible}
         width={800}
         footer={null}
@@ -259,9 +261,9 @@ export const CreateUserButton: React.FC<CreateuserProps> = ({
         onCancel={handleCancel}
       >
         <Space direction="vertical" size="middle">
-          <Text className="mb-1">Create a User who can own keys</Text>
+          <Text className="mb-1">{t("users.invite_intro")}</Text>
           <Alert
-            message="Email invitations"
+            message={t("users.email_invitations")}
             description={
               <>
                 New users receive an email invite only when an email integration (SMTP, Resend, or SendGrid) is
@@ -284,13 +286,13 @@ export const CreateUserButton: React.FC<CreateuserProps> = ({
           labelAlign="left"
           initialValues={{ user_role: "internal_user_viewer", send_invite_email: true }}
         >
-          <Form.Item label="User Email" name="user_email">
+          <Form.Item label={t("users.user_email")} name="user_email">
             <Input />
           </Form.Item>
           <Form.Item
             label={
               <span>
-                Global Proxy Role{" "}
+                {t("users.col_global_role")}{" "}
                 <Tooltip title="This role is independent of any team/org specific roles. Configure Team / Organization Admins in the Settings">
                   <InfoCircleOutlined />
                 </Tooltip>
@@ -338,12 +340,12 @@ export const CreateUserButton: React.FC<CreateuserProps> = ({
           <Form.Item label="Metadata" name="metadata">
             <Input.TextArea rows={4} placeholder="Enter metadata as JSON" />
           </Form.Item>
-          <Form.Item label="Send invitation email" name="send_invite_email" valuePropName="checked">
+          <Form.Item label={t("users.send_invitation_email")} name="send_invite_email" valuePropName="checked">
             <Checkbox />
           </Form.Item>
           <Accordion>
             <AccordionHeader>
-              <Text strong>Personal Key Creation</Text>
+              <Text strong>{t("users.personal_key_creation")}</Text>
             </AccordionHeader>
             <AccordionBody>
               <Form.Item
@@ -361,10 +363,10 @@ export const CreateUserButton: React.FC<CreateuserProps> = ({
               >
                 <Select2 mode="multiple" placeholder="Select models" style={{ width: "100%" }}>
                   <Select2.Option key="all-proxy-models" value="all-proxy-models">
-                    All Proxy Models
+                    {t("users.all_proxy_models")}
                   </Select2.Option>
                   <Select2.Option key="no-default-models" value="no-default-models">
-                    No Default Models
+                    {t("users.no_default_models")}
                   </Select2.Option>
                   {userModels.map((model) => (
                     <Select2.Option key={model} value={model}>
