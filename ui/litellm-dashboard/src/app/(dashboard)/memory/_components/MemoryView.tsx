@@ -16,6 +16,7 @@ import { MemoryDetailDrawer } from "./MemoryDetailDrawer";
 import { MemoryEditModal } from "./MemoryEditModal";
 import { MemoryTable } from "./MemoryTable";
 
+import { t } from "@/i18n";
 interface MemoryViewProps {
   accessToken: string | null;
   userID: string | null;
@@ -149,7 +150,7 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
       try {
         metadataPayload = JSON.parse(metadataText);
       } catch {
-        MessageManager.error("Metadata must be valid JSON (or leave empty).");
+        MessageManager.error(t("Metadata must be valid JSON (or leave empty)."));
         return false;
       }
     }
@@ -180,9 +181,8 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
       <div className="flex flex-col gap-6">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-semibold text-foreground">Memory</h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Inspect what your agents have stored under{" "}
+            <h1 className="text-2xl font-semibold text-foreground">{t("Memory")}</h1>
+            <p className="mt-1 text-sm text-muted-foreground">{t("Inspect what your agents have stored under")}{" "}
               <code className="rounded-sm border border-border bg-muted px-1 py-0.5 font-mono text-xs text-foreground">
                 /v1/memory
               </code>
@@ -230,16 +230,16 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
       {/* Delete confirmation modal */}
       <DeleteResourceModal
         isOpen={!!deleteRow}
-        title="Delete memory"
-        message="This action cannot be undone."
+        title={t("Delete memory")}
+        message={t("This action cannot be undone.")}
         resourceInformationTitle="Memory"
         resourceInformation={
           deleteRow
             ? [
-                { label: "Key", value: deleteRow.key, code: true },
-                { label: "Memory ID", value: deleteRow.memory_id, code: true },
-                { label: "User ID", value: deleteRow.user_id ?? "-", code: true },
-                { label: "Team ID", value: deleteRow.team_id ?? "-", code: true },
+                { label: t("Key"), value: deleteRow.key, code: true },
+                { label: t("Memory ID"), value: deleteRow.memory_id, code: true },
+                { label: t("User ID"), value: deleteRow.user_id ?? "-", code: true },
+                { label: t("Team ID"), value: deleteRow.team_id ?? "-", code: true },
               ]
             : []
         }

@@ -13,6 +13,7 @@ import {
 import { parseErrorMessage } from "./shared/errorUtils";
 import NotificationsManager from "./molecules/notifications_manager";
 
+import { t } from "@/i18n";
 interface SCIMConfigProps {
   accessToken: string | null;
   userID: string | null;
@@ -58,9 +59,9 @@ const SCIMConfig: React.FC<SCIMConfigProps> = ({ accessToken, userID, proxySetti
 
       const response = await keyCreateCall(accessToken, userID, formData);
       setTokenData(response);
-      NotificationsManager.success("SCIM token created successfully");
+      NotificationsManager.success(t("SCIM token created successfully"));
     } catch (error: any) {
-      console.error("Error creating SCIM token:", error);
+      console.error(t("Error creating SCIM token:"), error);
       NotificationsManager.fromBackend("Failed to create SCIM token: " + parseErrorMessage(error));
     } finally {
       setIsCreatingToken(false);
@@ -71,7 +72,7 @@ const SCIMConfig: React.FC<SCIMConfigProps> = ({ accessToken, userID, proxySetti
     <Grid numItems={1}>
       <Card>
         <div className="flex items-center mb-4">
-          <Title>SCIM Configuration</Title>
+          <Title>{t("SCIM Configuration")}</Title>
         </div>
         <Text className="text-gray-600">
           System for Cross-domain Identity Management (SCIM) allows you to automatically provision and manage users and
@@ -92,14 +93,12 @@ const SCIMConfig: React.FC<SCIMConfigProps> = ({ accessToken, userID, proxySetti
                 SCIM Tenant URL
               </Title>
             </div>
-            <Text className="text-gray-600 mb-3">
-              Use this URL in your identity provider SCIM integration settings.
-            </Text>
+            <Text className="text-gray-600 mb-3">{t("Use this URL in your identity provider SCIM integration settings.")}</Text>
             <div className="flex items-center">
               <TextInput value={scimBaseUrl} disabled={true} className="grow" />
               <CopyToClipboard
                 text={scimBaseUrl}
-                onCopy={() => NotificationsManager.success("URL copied to clipboard")}
+                onCopy={() => NotificationsManager.success(t("URL copied to clipboard"))}
               >
                 <TremorButton variant="primary" className="ml-2 flex items-center">
                   <CopyOutlined className="h-4 w-4 mr-1" />
@@ -131,10 +130,10 @@ const SCIMConfig: React.FC<SCIMConfigProps> = ({ accessToken, userID, proxySetti
                 <Form form={form} onFinish={handleCreateSCIMToken} layout="vertical">
                   <Form.Item
                     name="key_alias"
-                    label="Token Name"
+                    label={t("Token Name")}
                     rules={[{ required: true, message: "Please enter a name for your token" }]}
                   >
-                    <TextInput placeholder="SCIM Access Token" />
+                    <TextInput placeholder={t("SCIM Access Token")} />
                   </Form.Item>
                   <Form.Item>
                     <TremorButton
@@ -153,16 +152,14 @@ const SCIMConfig: React.FC<SCIMConfigProps> = ({ accessToken, userID, proxySetti
               <Card className="border border-yellow-300 bg-yellow-50">
                 <div className="flex items-center mb-2 text-yellow-800">
                   <ExclamationCircleOutlined className="h-5 w-5 mr-2" />
-                  <Title className="text-lg text-yellow-800">Your SCIM Token</Title>
+                  <Title className="text-lg text-yellow-800">{t("Your SCIM Token")}</Title>
                 </div>
-                <Text className="text-yellow-800 mb-4 font-medium">
-                  Make sure to copy this token now. You will not be able to see it again.
-                </Text>
+                <Text className="text-yellow-800 mb-4 font-medium">{t("Make sure to copy this token now. You will not be able to see it again.")}</Text>
                 <div className="flex items-center">
                   <TextInput value={tokenData.key} className="grow mr-2 bg-white" type="password" disabled={true} />
                   <CopyToClipboard
                     text={tokenData.key}
-                    onCopy={() => NotificationsManager.success("Token copied to clipboard")}
+                    onCopy={() => NotificationsManager.success(t("Token copied to clipboard"))}
                   >
                     <TremorButton variant="primary" className="flex items-center">
                       <CopyOutlined className="h-4 w-4 mr-1" />

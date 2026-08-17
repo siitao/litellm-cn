@@ -22,10 +22,11 @@ import { fetchClient } from "@/lib/http/api";
 import { buildBody, settingsToForm, type DefaultInternalUserParams, type InternalUserSettings } from "./mapper";
 import { defaultUserSettingsSchema, EMPTY_TEAM_ROW, type DefaultUserSettingsFormValues } from "./schema";
 
+import { t } from "@/i18n";
 const NO_RESET = "never";
 
 const BUDGET_DURATION_OPTIONS = [
-  { value: NO_RESET, label: "No reset" },
+  { value: NO_RESET, label: t("No reset")},
   { value: "1h", label: "hourly" },
   { value: "24h", label: "daily" },
   { value: "7d", label: "weekly" },
@@ -33,8 +34,8 @@ const BUDGET_DURATION_OPTIONS = [
 ] as const;
 
 const TEAM_ROLE_OPTIONS = [
-  { value: "user", label: "User" },
-  { value: "admin", label: "Admin" },
+  { value: "user", label: t("User")},
+  { value: "admin", label: t("Admin")},
 ] as const;
 
 const MODEL_SENTINEL_LABELS: ReadonlyMap<string, string> = new Map(
@@ -85,7 +86,7 @@ const TeamPickerField = ({ control, index }: { control: SettingsControl; index: 
   );
 
   return (
-    <FormField control={control} name={`teams.${index}.team_id`} label="Team">
+    <FormField control={control} name={`teams.${index}.team_id`} label={t("Team")}>
       {({ id, value, onChange, "aria-invalid": ariaInvalid, "aria-describedby": ariaDescribedBy }) => (
         <PaginatedSearchSelect
           options={options}
@@ -96,8 +97,8 @@ const TeamPickerField = ({ control, index }: { control: SettingsControl; index: 
           hasNextPage={hasNextPage}
           isLoading={isLoading}
           isFetchingNextPage={isFetchingNextPage}
-          placeholder="Search a team"
-          emptyText="No teams found"
+          placeholder={t("Search a team")}
+          emptyText={t("No teams found")}
           inputId={id}
           aria-invalid={ariaInvalid}
           aria-describedby={ariaDescribedBy}
@@ -113,31 +114,27 @@ const TeamsField = ({ control }: { control: SettingsControl }) => {
   return (
     <div className="flex w-full flex-col gap-3">
       <div>
-        <p className="text-sm font-medium">Default Teams</p>
-        <p className="text-sm text-muted-foreground">
-          New users are added to these teams. Only teams that already exist can be selected.
-        </p>
+        <p className="text-sm font-medium">{t("Default Teams")}</p>
+        <p className="text-sm text-muted-foreground">{t("New users are added to these teams. Only teams that already exist can be selected.")}</p>
       </div>
 
       {fields.map((field, index) => (
         <div key={field.id} className="rounded-lg border border-border p-4">
           <div className="mb-3 flex items-center justify-between">
-            <p className="text-sm font-medium">Team {index + 1}</p>
-            <Button type="button" variant="destructive" size="sm" onClick={() => remove(index)}>
-              Remove
-            </Button>
+            <p className="text-sm font-medium">{t("Team")} {index + 1}</p>
+            <Button type="button" variant="destructive" size="sm" onClick={() => remove(index)}>{t("Remove")}</Button>
           </div>
 
           <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
             <TeamPickerField control={control} index={index} />
 
-            <FormField control={control} name={`teams.${index}.max_budget_in_team`} label="Max Budget in Team (USD)">
+            <FormField control={control} name={`teams.${index}.max_budget_in_team`} label={t("Max Budget in Team (USD)")}>
               {({ ref, ...budgetField }) => (
-                <Input {...budgetField} ref={ref} type="number" step="any" min={0} placeholder="Optional" />
+                <Input {...budgetField} ref={ref} type="number" step="any" min={0} placeholder={t("Optional")} />
               )}
             </FormField>
 
-            <FormField control={control} name={`teams.${index}.user_role`} label="Team Role">
+            <FormField control={control} name={`teams.${index}.user_role`} label={t("Team Role")}>
               {({ id, value, onChange, "aria-invalid": ariaInvalid, "aria-describedby": ariaDescribedBy }) => (
                 <Select
                   items={TEAM_ROLE_OPTIONS}
@@ -166,9 +163,7 @@ const TeamsField = ({ control }: { control: SettingsControl }) => {
         </div>
       ))}
 
-      <Button type="button" variant="outline" onClick={() => append(EMPTY_TEAM_ROW)}>
-        Add Team
-      </Button>
+      <Button type="button" variant="outline" onClick={() => append(EMPTY_TEAM_ROW)}>{t("Add Team")}</Button>
     </div>
   );
 };
@@ -193,18 +188,18 @@ const SettingsView = ({ values, roleOptions }: SettingsViewProps) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <ViewRow label="Default Role">{roleLabel === "" ? "Not set" : roleLabel}</ViewRow>
-      <ViewRow label="Max Budget (USD)">{values.max_budget === "" ? "Not set" : values.max_budget}</ViewRow>
-      <ViewRow label="Reset Budget">{durationLabel}</ViewRow>
-      <ViewRow label="Default Models">
+      <ViewRow label={t("Default Role")}>{roleLabel === "" ? "Not set" : roleLabel}</ViewRow>
+      <ViewRow label={t("Max Budget (USD)")}>{values.max_budget === "" ? "Not set" : values.max_budget}</ViewRow>
+      <ViewRow label={t("Reset Budget")}>{durationLabel}</ViewRow>
+      <ViewRow label={t("Default Models")}>
         {values.models.length === 0
           ? "Not set"
           : values.models.map((model) => MODEL_SENTINEL_LABELS.get(model) ?? model).join(", ")}
       </ViewRow>
       <div>
-        <p className="text-sm font-medium">Default Teams</p>
+        <p className="text-sm font-medium">{t("Default Teams")}</p>
         {values.teams.length === 0 ? (
-          <p className="text-sm text-muted-foreground">None</p>
+          <p className="text-sm text-muted-foreground">{t("None")}</p>
         ) : (
           values.teams.map((team) => (
             <p key={team.team_id} className="text-sm text-muted-foreground">
@@ -235,7 +230,7 @@ const SettingsForm = ({ initialValues, roleOptions, updateSettings, onCancel, on
   const mutation = useMutation({
     mutationFn: (values: DefaultUserSettingsFormValues) => updateSettings(buildBody(values)),
     onSuccess: (_result, values) => {
-      NotificationsManager.success("Default user settings updated successfully");
+      NotificationsManager.success(t("Default user settings updated successfully"));
       queryClient.invalidateQueries({ queryKey: SETTINGS_QUERY_KEY });
       form.reset(values);
       onSaved();
@@ -254,7 +249,7 @@ const SettingsForm = ({ initialValues, roleOptions, updateSettings, onCancel, on
         <FormField
           control={form.control}
           name="user_role"
-          label="Default Role"
+          label={t("Default Role")}
           description="Role assigned to new users"
         >
           {({ id, value, onChange, "aria-invalid": ariaInvalid, "aria-describedby": ariaDescribedBy }) => (
@@ -264,7 +259,7 @@ const SettingsForm = ({ initialValues, roleOptions, updateSettings, onCancel, on
               onValueChange={(selected) => onChange(selected ?? "")}
             >
               <SelectTrigger id={id} className="w-full" aria-invalid={ariaInvalid} aria-describedby={ariaDescribedBy}>
-                <SelectValue placeholder="Not set" />
+                <SelectValue placeholder={t("Not set")} />
               </SelectTrigger>
               <SelectContent>
                 {roleOptions.map((option) => (
@@ -283,7 +278,7 @@ const SettingsForm = ({ initialValues, roleOptions, updateSettings, onCancel, on
         <FormField
           control={form.control}
           name="max_budget"
-          label="Max Budget (USD)"
+          label={t("Max Budget (USD)")}
           description="Default maximum budget for new users"
         >
           {({ ref, ...field }) => <Input {...field} ref={ref} type="number" step="any" min={0} />}
@@ -292,8 +287,8 @@ const SettingsForm = ({ initialValues, roleOptions, updateSettings, onCancel, on
         <FormField
           control={form.control}
           name="budget_duration"
-          label="Reset Budget"
-          description="How often the default budget resets"
+          label={t("Reset Budget")}
+          description={t("How often the default budget resets")}
         >
           {({ id, value, onChange, "aria-invalid": ariaInvalid, "aria-describedby": ariaDescribedBy }) => (
             <Select
@@ -318,7 +313,7 @@ const SettingsForm = ({ initialValues, roleOptions, updateSettings, onCancel, on
         <FormField
           control={form.control}
           name="models"
-          label="Default Models"
+          label={t("Default Models")}
           description="Models new users can access"
         >
           {(field) => (
@@ -343,9 +338,7 @@ const SettingsForm = ({ initialValues, roleOptions, updateSettings, onCancel, on
             onCancel();
           }}
           disabled={mutation.isPending}
-        >
-          Cancel
-        </Button>
+        >{t("Cancel")}</Button>
         <Button type="submit" disabled={!isDirty || mutation.isPending}>
           {mutation.isPending ? "Saving..." : "Save Changes"}
         </Button>
@@ -357,7 +350,7 @@ const SettingsForm = ({ initialValues, roleOptions, updateSettings, onCancel, on
 const SettingsCard = ({ action, children }: { action?: React.ReactNode; children: React.ReactNode }) => (
   <Card>
     <CardHeader>
-      <CardTitle>Default User Settings</CardTitle>
+      <CardTitle>{t("Default User Settings")}</CardTitle>
       <CardDescription>
         Applied to every new internal user created through SSO or the user management APIs.
       </CardDescription>
@@ -402,7 +395,7 @@ export const DefaultUserSettingsForm = ({
   if (isError || initialValues === undefined) {
     return (
       <SettingsCard>
-        <p role="alert">Could not load the default user settings.</p>
+        <p role="alert">{t("Could not load the default user settings.")}</p>
       </SettingsCard>
     );
   }
@@ -411,9 +404,7 @@ export const DefaultUserSettingsForm = ({
     <SettingsCard
       action={
         isEditing ? undefined : (
-          <Button type="button" onClick={() => setIsEditing(true)}>
-            Edit Settings
-          </Button>
+          <Button type="button" onClick={() => setIsEditing(true)}>{t("Edit Settings")}</Button>
         )
       }
     >

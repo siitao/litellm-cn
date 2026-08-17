@@ -9,6 +9,7 @@ import { DataTable } from "@/components/shared/DataTable";
 import { getSearchToolTableColumns, searchToolKey } from "./SearchToolTableColumns";
 import { AvailableSearchProvider, SearchTool } from "./types";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface SearchToolTableProps {
   searchTools: SearchTool[];
   isLoading: boolean;
@@ -21,13 +22,14 @@ interface SearchToolTableProps {
 const DEFAULT_SORTING: SortingState = [{ id: "created_at", desc: true }];
 
 function EmptyState() {
-  return (
+
+  const { t } = useLanguage();  return (
     <div className="flex flex-col items-center gap-1 py-6">
       <div className="mb-1 flex size-10 items-center justify-center rounded-lg bg-muted">
         <Inbox className="size-5 text-muted-foreground" />
       </div>
-      <div className="text-sm font-medium text-foreground">No search tools configured</div>
-      <div className="text-sm text-muted-foreground">Add a search tool to enable web search for your models.</div>
+      <div className="text-sm font-medium text-foreground">{t("No search tools configured")}</div>
+      <div className="text-sm text-muted-foreground">{t("Add a search tool to enable web search for your models.")}</div>
     </div>
   );
 }

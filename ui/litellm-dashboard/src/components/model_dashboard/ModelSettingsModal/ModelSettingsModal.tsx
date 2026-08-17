@@ -7,6 +7,7 @@ import { parseErrorMessage } from "@/components/shared/errorUtils";
 import { Button, Form, Modal, Skeleton, Space, Switch, Typography } from "antd";
 import React, { useEffect, useMemo } from "react";
 
+import { t } from "@/i18n";
 interface ModelSettingsModalProps {
   isVisible: boolean;
   onCancel: () => void;
@@ -44,7 +45,7 @@ const ModelSettingsModal: React.FC<ModelSettingsModalProps> = ({ isVisible, onCa
     try {
       await mutateAsync(formValues, {
         onSuccess: () => {
-          NotificationsManager.success("Model storage settings updated successfully");
+          NotificationsManager.success(t("Model storage settings updated successfully"));
           refetch();
           onSuccess?.();
         },
@@ -64,13 +65,11 @@ const ModelSettingsModal: React.FC<ModelSettingsModalProps> = ({ isVisible, onCa
 
   return (
     <Modal
-      title={<Typography.Title level={5}>Model Settings</Typography.Title>}
+      title={<Typography.Title level={5}>{t("Model Settings")}</Typography.Title>}
       open={isVisible}
       footer={
         <Space>
-          <Button onClick={handleCancel} disabled={isPending || isLoadingConfig}>
-            Cancel
-          </Button>
+          <Button onClick={handleCancel} disabled={isPending || isLoadingConfig}>{t("Cancel")}</Button>
           <Button type="primary" loading={isPending} disabled={isLoadingConfig} onClick={() => form.submit()}>
             {isPending ? "Saving..." : "Save Settings"}
           </Button>
@@ -86,7 +85,7 @@ const ModelSettingsModal: React.FC<ModelSettingsModalProps> = ({ isVisible, onCa
         initialValues={initialValues}
       >
         <Form.Item
-          label="Store Model in DB"
+          label={t("Store Model in DB")}
           name="store_model_in_db"
           tooltip={
             proxyConfigData?.find((f) => f.field_name === "store_model_in_db")?.field_description ||

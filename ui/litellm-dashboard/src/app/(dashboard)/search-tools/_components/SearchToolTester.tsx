@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { UiLoadingSpinner } from "@/components/ui/ui-loading-spinner";
 
+import { t } from "@/i18n";
 interface SearchResult {
   title: string;
   url: string;
@@ -39,7 +40,7 @@ export const SearchToolTester: React.FC<SearchToolTesterProps> = ({ searchToolNa
 
   const handleSearch = async () => {
     if (!query.trim()) {
-      MessageManager.warning("Please enter a search query");
+      MessageManager.warning(t("Please enter a search query"));
       return;
     }
 
@@ -60,7 +61,7 @@ export const SearchToolTester: React.FC<SearchToolTesterProps> = ({ searchToolNa
 
       setSearchHistory((prev) => [historyEntry, ...prev]);
     } catch (error) {
-      console.error("Error querying search tool:", error);
+      console.error(t("Error querying search tool:"), error);
       NotificationsManager.fromBackend("Failed to query search tool");
     } finally {
       setIsLoading(false);
@@ -74,7 +75,7 @@ export const SearchToolTester: React.FC<SearchToolTesterProps> = ({ searchToolNa
   const clearHistory = () => {
     setSearchHistory([]);
     setExpandedResults({});
-    NotificationsManager.success("Search history cleared");
+    NotificationsManager.success(t("Search history cleared"));
   };
 
   const toggleResultExpansion = (historyIndex: number, resultIndex: number) => {
@@ -90,7 +91,7 @@ export const SearchToolTester: React.FC<SearchToolTesterProps> = ({ searchToolNa
   return (
     <Card className={`mt-6 ${className}`}>
       <div className="px-6">
-        <h2 className="text-lg font-semibold text-foreground">Test Search Tool</h2>
+        <h2 className="text-lg font-semibold text-foreground">{t("Test Search Tool")}</h2>
       </div>
 
       <div className="flex min-h-[600px] flex-col px-6">
@@ -125,8 +126,8 @@ export const SearchToolTester: React.FC<SearchToolTesterProps> = ({ searchToolNa
               <div className="mb-6 flex size-24 items-center justify-center rounded-full bg-muted">
                 <Search className="size-12 text-muted-foreground" />
               </div>
-              <p className="text-lg font-medium text-foreground">Test your search tool</p>
-              <p className="mt-2 text-sm text-muted-foreground">Enter a query above to see search results</p>
+              <p className="text-lg font-medium text-foreground">{t("Test your search tool")}</p>
+              <p className="mt-2 text-sm text-muted-foreground">{t("Enter a query above to see search results")}</p>
             </div>
           ) : (
             <div>
@@ -142,9 +143,7 @@ export const SearchToolTester: React.FC<SearchToolTesterProps> = ({ searchToolNa
                   <div className="mb-6 rounded-lg border border-border bg-muted/50 p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
-                        <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
-                          Search Query
-                        </p>
+                        <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">{t("Search Query")}</p>
                         <div className="mt-1.5 text-base font-semibold text-foreground">{latestResults.query}</div>
                       </div>
                       <div className="ml-4 text-right">
@@ -226,8 +225,8 @@ export const SearchToolTester: React.FC<SearchToolTesterProps> = ({ searchToolNa
                       <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-muted">
                         <Search className="size-6 text-muted-foreground" />
                       </div>
-                      <p className="font-medium text-foreground">No results found</p>
-                      <p className="mt-1 text-sm text-muted-foreground">Try a different search query</p>
+                      <p className="font-medium text-foreground">{t("No results found")}</p>
+                      <p className="mt-1 text-sm text-muted-foreground">{t("Try a different search query")}</p>
                     </div>
                   )}
                 </>
@@ -236,10 +235,8 @@ export const SearchToolTester: React.FC<SearchToolTesterProps> = ({ searchToolNa
               {searchHistory.length > 1 && (
                 <div className="mt-8 border-t border-border pt-6">
                   <div className="mb-4 flex items-center justify-between">
-                    <p className="text-sm font-semibold text-foreground">Previous Searches</p>
-                    <Button variant="link" size="sm" className="h-auto p-0" onClick={clearHistory}>
-                      Clear All
-                    </Button>
+                    <p className="text-sm font-semibold text-foreground">{t("Previous Searches")}</p>
+                    <Button variant="link" size="sm" className="h-auto p-0" onClick={clearHistory}>{t("Clear All")}</Button>
                   </div>
                   <div className="space-y-2">
                     {searchHistory.slice(1, 6).map((entry, index) => (

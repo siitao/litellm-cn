@@ -16,6 +16,7 @@ import { ClockCircleOutlined } from "@ant-design/icons";
 import { Button, Card, Form, Input, InputNumber, Skeleton, Space, Switch, Typography } from "antd";
 import React, { useCallback, useMemo } from "react";
 
+import { t } from "@/i18n";
 const STORE_PROMPTS_FIELD_NAME = "store_prompts_in_spend_logs";
 
 interface OptionalField {
@@ -30,39 +31,39 @@ const OPTIONAL_FIELDS: readonly OptionalField[] = [
   {
     name: GeneralSettingsFieldName.MAXIMUM_SPEND_LOGS_RETENTION_PERIOD,
     kind: "duration",
-    label: "Maximum Spend Logs Retention Period (Optional)",
-    placeholder: "e.g., 7d, 30d",
+    label: t("Maximum Spend Logs Retention Period (Optional)"),
+    placeholder: t("e.g., 7d, 30d"),
     fallbackTooltip:
       "Set the maximum retention period for spend logs (e.g., '7d' for 7 days, '30d' for 30 days). Leave empty for no limit.",
   },
   {
     name: GeneralSettingsFieldName.MAXIMUM_SPEND_LOGS_CLEANUP_BATCH_SIZE,
     kind: "count",
-    label: "Spend Logs Cleanup Batch Size (Optional)",
-    placeholder: "e.g., 1000",
+    label: t("Spend Logs Cleanup Batch Size (Optional)"),
+    placeholder: t("e.g., 1000"),
     fallbackTooltip: "Rows deleted per DELETE statement during cleanup. Leave empty to use the default of 1000.",
   },
   {
     name: GeneralSettingsFieldName.MAXIMUM_SPEND_LOGS_CLEANUP_MAX_BATCHES,
     kind: "count",
-    label: "Spend Logs Cleanup Max Batches (Optional)",
-    placeholder: "e.g., 500",
+    label: t("Spend Logs Cleanup Max Batches (Optional)"),
+    placeholder: t("e.g., 500"),
     fallbackTooltip:
       "Maximum number of DELETE statements run per table per cleanup run. Leave empty to use the default of 500.",
   },
   {
     name: GeneralSettingsFieldName.MAXIMUM_SPEND_LOGS_CLEANUP_RUN_BUDGET,
     kind: "duration",
-    label: "Spend Logs Cleanup Run Budget (Optional)",
-    placeholder: "e.g., 5m",
+    label: t("Spend Logs Cleanup Run Budget (Optional)"),
+    placeholder: t("e.g., 5m"),
     fallbackTooltip:
       "Wall-clock budget for a whole cleanup run, shared across every table it cleans (e.g., '5m'). Leave empty to use the default of 5m.",
   },
   {
     name: GeneralSettingsFieldName.MAXIMUM_SPEND_LOGS_CLEANUP_BATCH_TIMEOUT,
     kind: "duration",
-    label: "Spend Logs Cleanup Batch Timeout (Optional)",
-    placeholder: "e.g., 30s",
+    label: t("Spend Logs Cleanup Batch Timeout (Optional)"),
+    placeholder: t("e.g., 30s"),
     fallbackTooltip:
       "Postgres statement and lock timeout applied to each cleanup batch, so cleanup never monopolizes a connection (e.g., '30s'). Leave empty to use the default of 30s.",
   },
@@ -174,7 +175,7 @@ const LoggingSettings: React.FC = () => {
     const updateParams = buildUpdateParams(formValues);
     const submitUpdate = () =>
       mutate(updateParams, {
-        onSuccess: () => NotificationsManager.success("Spend logs settings updated successfully"),
+        onSuccess: () => NotificationsManager.success(t("Spend logs settings updated successfully")),
         onError: (error) =>
           NotificationsManager.fromBackend("Failed to save spend logs settings: " + parseErrorMessage(error)),
       });
@@ -197,18 +198,16 @@ const LoggingSettings: React.FC = () => {
   };
 
   return (
-    <Card title="Logging Settings">
+    <Card title={t("Logging Settings")}>
       <Space direction="vertical" size="large" style={{ width: "100%" }}>
-        <Typography.Paragraph style={{ marginBottom: 0 }} type="secondary">
-          Proxy-wide settings that control how request and response data are written to spend logs.
-        </Typography.Paragraph>
+        <Typography.Paragraph style={{ marginBottom: 0 }} type="secondary">{t("Proxy-wide settings that control how request and response data are written to spend logs.")}</Typography.Paragraph>
 
         {isLoadingConfig ? (
           <Skeleton active paragraph={{ rows: 4 }} />
         ) : (
           <Form form={form} layout="vertical" onFinish={handleFormSubmit} initialValues={initialValues}>
             <Form.Item
-              label="Store Prompts in Spend Logs"
+              label={t("Store Prompts in Spend Logs")}
               name={STORE_PROMPTS_FIELD_NAME}
               tooltip={describeField(
                 STORE_PROMPTS_FIELD_NAME,

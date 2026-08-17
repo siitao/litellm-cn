@@ -9,6 +9,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { formatStrategyLabel } from "./strategy";
 import type { RoutingGroup } from "./types";
 
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/i18n";
 interface RoutingGroupUsagePanelProps {
   group: RoutingGroup;
   baseUrl: string;
@@ -57,16 +59,17 @@ console.log(response);`;
 
 const SNIPPET_TABS = [
   { value: "curl", label: "cURL", language: "bash", build: buildCurlSnippet },
-  { value: "python", label: "Python (OpenAI SDK)", language: "python", build: buildPythonSnippet },
-  { value: "javascript", label: "JavaScript (OpenAI SDK)", language: "javascript", build: buildJsSnippet },
+  { value: "python", label: t("Python (OpenAI SDK)"), language: "python", build: buildPythonSnippet },
+  { value: "javascript", label: t("JavaScript (OpenAI SDK)"), language: "javascript", build: buildJsSnippet },
 ] as const;
 
 export function RoutingGroupUsagePanel({ group, baseUrl }: RoutingGroupUsagePanelProps) {
-  return (
+
+  const { t } = useLanguage();  return (
     <div className="border-y bg-muted/40 px-4 py-4">
       <div className="mb-2 flex items-center gap-2">
         <Code2 className="size-4 text-primary" />
-        <span className="text-sm font-medium text-foreground">How routing works for this group</span>
+        <span className="text-sm font-medium text-foreground">{t("How routing works for this group")}</span>
       </div>
       <p className="mb-3 text-sm text-muted-foreground">
         Callers request any model in the group by name; LiteLLM picks a deployment behind the scenes using the{" "}

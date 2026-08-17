@@ -4,6 +4,7 @@ import { Tool } from "./types";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
+import { t } from "@/i18n";
 interface ToolsCardProps {
   tools: Tool[];
   onAddTool: () => void;
@@ -15,14 +16,14 @@ const ToolsCard: React.FC<ToolsCardProps> = ({ tools, onAddTool, onEditTool, onR
   return (
     <Card className="p-3">
       <div className="flex items-center justify-between mb-2">
-        <p className="text-sm font-medium">Tools</p>
+        <p className="text-sm font-medium">{t("Tools")}</p>
         <Button variant="ghost" size="sm" onClick={onAddTool}>
           <PlusIcon size={14} className="mr-1" />
           Add
         </Button>
       </div>
       {tools.length === 0 ? (
-        <p className="text-muted-foreground text-xs">No tools added</p>
+        <p className="text-muted-foreground text-xs">{t("No tools added")}</p>
       ) : (
         <div className="space-y-2">
           {tools.map((tool, index) => (
@@ -32,9 +33,7 @@ const ToolsCard: React.FC<ToolsCardProps> = ({ tools, onAddTool, onEditTool, onR
                 <div className="text-xs text-muted-foreground truncate">{tool.description}</div>
               </div>
               <div className="flex items-center space-x-1 ml-2">
-                <Button variant="ghost" size="sm" onClick={() => onEditTool(index)}>
-                  Edit
-                </Button>
+                <Button variant="ghost" size="sm" onClick={() => onEditTool(index)}>{t("Edit")}</Button>
                 <Button
                   variant="ghost"
                   size="icon-sm"

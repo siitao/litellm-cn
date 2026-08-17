@@ -9,12 +9,14 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { ParsedMessage } from "./prettyMessagesTypes";
 import { SimpleMessageBlock } from "./SimpleMessageBlock";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface HistoryTreeProps {
   messages: ParsedMessage[];
 }
 
 export function HistoryTree({ messages }: HistoryTreeProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
+
+  const { t } = useLanguage();  const [isExpanded, setIsExpanded] = useState(false);
 
   if (messages.length === 0) {
     return null;
@@ -28,8 +30,7 @@ export function HistoryTree({ messages }: HistoryTreeProps) {
         ) : (
           <ChevronRight className="size-3 shrink-0 text-muted-foreground" />
         )}
-        <span className="text-[10px] uppercase tracking-[0.5px] text-muted-foreground">
-          HISTORY ({messages.length} message{messages.length !== 1 ? "s" : ""})
+        <span className="text-[10px] uppercase tracking-[0.5px] text-muted-foreground">{t("HISTORY (")}{messages.length} message{messages.length !== 1 ? "s" : ""})
         </span>
       </CollapsibleTrigger>
 

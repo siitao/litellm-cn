@@ -5,6 +5,7 @@ import { useCreateProject, ProjectCreateParams } from "@/app/(dashboard)/hooks/p
 import { ProjectBaseForm, ProjectFormValues } from "./ProjectBaseForm";
 import { buildProjectApiParams } from "./projectFormUtils";
 
+import { t } from "@/i18n";
 interface CreateProjectModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -24,7 +25,7 @@ export function CreateProjectModal({ isOpen, onClose }: CreateProjectModalProps)
 
       createMutation.mutate(params, {
         onSuccess: () => {
-          MessageManager.success("Project created successfully");
+          MessageManager.success(t("Project created successfully"));
           form.resetFields();
           onClose();
         },
@@ -33,7 +34,7 @@ export function CreateProjectModal({ isOpen, onClose }: CreateProjectModalProps)
         },
       });
     } catch (error) {
-      console.error("Validation failed:", error);
+      console.error(t("Validation failed:"), error);
     }
   };
 
@@ -45,27 +46,21 @@ export function CreateProjectModal({ isOpen, onClose }: CreateProjectModalProps)
   return (
     <Modal
       title={
-        <Typography.Text strong style={{ fontSize: 18 }}>
-          Create New Project
-        </Typography.Text>
+        <Typography.Text strong style={{ fontSize: 18 }}>{t("Create New Project")}</Typography.Text>
       }
       open={isOpen}
       onCancel={handleCancel}
       width={720}
       destroyOnHidden
       footer={[
-        <Button key="cancel" onClick={handleCancel}>
-          Cancel
-        </Button>,
+        <Button key="cancel" onClick={handleCancel}>{t("Cancel")}</Button>,
         <Button
           key="submit"
           type="primary"
           icon={<FolderAddOutlined />}
           loading={createMutation.isPending}
           onClick={handleSubmit}
-        >
-          Create Project
-        </Button>,
+        >{t("Create Project")}</Button>,
       ]}
     >
       <ProjectBaseForm form={form} />

@@ -7,6 +7,7 @@ import { userDailyActivityAggregatedCall } from "../networking";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
+import { t } from "@/i18n";
 const USAGE_QUERY_KEY = "chat-user-usage";
 
 interface Props {
@@ -109,15 +110,15 @@ const UsagePanel: React.FC<Props> = ({ accessToken, userId }) => {
 
   const statCards: Array<{ label: string; value: string; sub?: string; subVariant?: "error" }> = meta
     ? [
-        { label: "Total Spend", value: `$${meta.total_spend.toFixed(2)}` },
-        { label: "API Requests", value: formatNumber(meta.total_api_requests) },
+        { label: t("Total Spend"), value: `$${meta.total_spend.toFixed(2)}` },
+        { label: t("API Requests"), value: formatNumber(meta.total_api_requests) },
         {
-          label: "Tokens Used",
+          label: t("Tokens Used"),
           value: formatNumber(meta.total_tokens),
           sub: `${formatNumber(meta.total_prompt_tokens)} in / ${formatNumber(meta.total_completion_tokens)} out`,
         },
         {
-          label: "Success Rate",
+          label: t("Success Rate"),
           value:
             meta.total_api_requests > 0
               ? `${((meta.total_successful_requests / meta.total_api_requests) * 100).toFixed(1)}%`
@@ -132,8 +133,8 @@ const UsagePanel: React.FC<Props> = ({ accessToken, userId }) => {
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h2 className="text-base font-semibold text-foreground mb-0.5">Your Usage</h2>
-          <p className="text-sm text-muted-foreground m-0">Spend and request activity</p>
+          <h2 className="text-base font-semibold text-foreground mb-0.5">{t("Your Usage")}</h2>
+          <p className="text-sm text-muted-foreground m-0">{t("Spend and request activity")}</p>
         </div>
         <div className="flex gap-1">
           {TIME_RANGE_OPTIONS.map((opt) => (
@@ -186,11 +187,11 @@ const UsagePanel: React.FC<Props> = ({ accessToken, userId }) => {
           {dailyData.length > 1 && (
             <div className="grid grid-cols-2 gap-3">
               <div className="border rounded-lg p-4 bg-card">
-                <div className="text-xs text-muted-foreground mb-2">Daily Spend</div>
+                <div className="text-xs text-muted-foreground mb-2">{t("Daily Spend")}</div>
                 <SparklineBar data={dailySpend} maxVal={maxSpend} />
               </div>
               <div className="border rounded-lg p-4 bg-card">
-                <div className="text-xs text-muted-foreground mb-2">Daily Requests</div>
+                <div className="text-xs text-muted-foreground mb-2">{t("Daily Requests")}</div>
                 <SparklineBar data={dailyRequests} maxVal={maxRequests} />
               </div>
             </div>

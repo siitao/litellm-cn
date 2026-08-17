@@ -8,6 +8,7 @@ import NotificationsManager from "../molecules/notifications_manager";
 import { testConnectionRequest } from "../networking";
 import { prepareModelAddRequest } from "./handle_add_model_submit";
 
+import { t } from "@/i18n";
 interface ModelConnectionTestProps {
   formValues: Record<string, any>;
   accessToken: string;
@@ -54,7 +55,7 @@ const ModelConnectionTest: React.FC<ModelConnectionTestProps> = ({
       const response = await testConnectionRequest(accessToken, litellmParamsObj, modelInfoObj, modelInfoObj?.mode);
 
       if (response.status === "success") {
-        NotificationsManager.success("Connection test successful!");
+        NotificationsManager.success(t("Connection test successful!"));
         setError(null);
         setIsSuccess(true);
       } else {
@@ -64,7 +65,7 @@ const ModelConnectionTest: React.FC<ModelConnectionTestProps> = ({
         setIsSuccess(false);
       }
     } catch (connectionError) {
-      console.error("Test connection error:", connectionError);
+      console.error(t("Test connection error:"), connectionError);
       setError(connectionError instanceof Error ? connectionError.message : String(connectionError));
       setIsSuccess(false);
     } finally {
@@ -137,26 +138,24 @@ ${formattedBody}
       {isLoading ? (
         <div aria-busy="true" className="flex flex-col items-center justify-center gap-4 px-5 py-8 text-center">
           <LoaderCircle className="size-8 animate-spin text-primary" />
-          <p className="text-base">Testing connection to {modelName}...</p>
+          <p className="text-base">{t("Testing connection to")} {modelName}...</p>
         </div>
       ) : isSuccess ? (
         <div className="flex items-center justify-center gap-2.5 px-5 py-8">
           <CircleCheck className="size-6 text-primary" />
-          <p data-testid="connection-success-msg" className="text-lg font-medium">
-            Connection to {modelName} successful!
+          <p data-testid="connection-success-msg" className="text-lg font-medium">{t("Connection to")} {modelName} successful!
           </p>
         </div>
       ) : (
         <div>
           <div className="mb-5 flex items-center gap-3">
             <AlertTriangle className="size-6 text-destructive" />
-            <p data-testid="connection-failure-msg" className="text-lg font-medium text-destructive">
-              Connection to {modelName} failed
+            <p data-testid="connection-failure-msg" className="text-lg font-medium text-destructive">{t("Connection to")} {modelName} failed
             </p>
           </div>
 
           <div className="mb-5 rounded-lg border border-destructive/30 bg-destructive/10 p-4 shadow-xs">
-            <p className="mb-2 font-medium">Error:</p>
+            <p className="mb-2 font-medium">{t("Error:")}</p>
             <p className="text-sm leading-relaxed text-destructive">{errorMessage}</p>
 
             {error && (
@@ -173,7 +172,7 @@ ${formattedBody}
 
           {showDetails && (
             <div className="mb-5">
-              <p className="mb-2 text-sm font-medium">Troubleshooting Details</p>
+              <p className="mb-2 text-sm font-medium">{t("Troubleshooting Details")}</p>
               <pre className="max-h-52 overflow-auto rounded-lg border bg-muted/50 p-4 text-xs leading-relaxed">
                 {typeof error === "string" ? error : JSON.stringify(error, null, 2)}
               </pre>
@@ -181,7 +180,7 @@ ${formattedBody}
           )}
 
           <div>
-            <p className="mb-2 text-sm font-medium">API Request</p>
+            <p className="mb-2 text-sm font-medium">{t("API Request")}</p>
             <pre className="max-h-64 overflow-auto rounded-lg border bg-muted/50 p-4 text-xs leading-relaxed">
               {curlCommand || "No request data available"}
             </pre>
@@ -191,7 +190,7 @@ ${formattedBody}
               className="mt-2"
               onClick={() => {
                 navigator.clipboard.writeText(curlCommand || "");
-                NotificationsManager.success("Copied to clipboard");
+                NotificationsManager.success(t("Copied to clipboard"));
               }}
             >
               <Copy data-icon="inline-start" />

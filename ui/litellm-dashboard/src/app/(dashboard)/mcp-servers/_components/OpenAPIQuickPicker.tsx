@@ -3,6 +3,7 @@ import { UiLoadingSpinner } from "@/components/ui/ui-loading-spinner";
 import { cn } from "@/lib/cva.config";
 import { fetchOpenAPIRegistry } from "@/components/networking";
 
+import { t } from "@/i18n";
 export interface OpenAPIKeyTool {
   name: string;
   description: string;
@@ -50,7 +51,7 @@ const OpenAPIQuickPicker: React.FC<OpenAPIQuickPickerProps> = ({ accessToken, se
   if (loading) {
     return (
       <div className="mb-4">
-        <span className="text-sm font-medium">Popular APIs</span>
+        <span className="text-sm font-medium">{t("Popular APIs")}</span>
         <div className="flex justify-center py-6">
           <UiLoadingSpinner className="size-5 text-muted-foreground" />
         </div>
@@ -62,7 +63,7 @@ const OpenAPIQuickPicker: React.FC<OpenAPIQuickPickerProps> = ({ accessToken, se
 
   return (
     <div className="mb-4">
-      <span className="mb-2 block text-sm font-medium">Popular APIs</span>
+      <span className="mb-2 block text-sm font-medium">{t("Popular APIs")}</span>
 
       <div className="grid grid-cols-5 gap-2">
         {apis.map((api) => {

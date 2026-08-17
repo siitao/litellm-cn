@@ -6,6 +6,7 @@ import React from "react";
 import { ssoProviderLogoMap, ssoProviderDisplayNames } from "../constants";
 import { Logo } from "@/components/molecules/logo/Logo";
 
+import { t } from "@/i18n";
 export interface BaseSSOSettingsFormProps {
   form: any; // Replace with proper Form type if available
   onFormSubmit: (formValues: Record<string, any>) => Promise<void>;
@@ -31,8 +32,8 @@ export const ssoProviderConfigs: Record<string, SSOProviderConfig> = {
       google_client_secret: "GOOGLE_CLIENT_SECRET",
     },
     fields: [
-      { label: "Google Client ID", name: "google_client_id" },
-      { label: "Google Client Secret", name: "google_client_secret" },
+      { label: t("Google Client ID"), name: "google_client_id" },
+      { label: t("Google Client Secret"), name: "google_client_secret" },
     ],
   },
   microsoft: {
@@ -42,9 +43,9 @@ export const ssoProviderConfigs: Record<string, SSOProviderConfig> = {
       microsoft_tenant: "MICROSOFT_TENANT",
     },
     fields: [
-      { label: "Microsoft Client ID", name: "microsoft_client_id" },
-      { label: "Microsoft Client Secret", name: "microsoft_client_secret" },
-      { label: "Microsoft Tenant", name: "microsoft_tenant" },
+      { label: t("Microsoft Client ID"), name: "microsoft_client_id" },
+      { label: t("Microsoft Client Secret"), name: "microsoft_client_secret" },
+      { label: t("Microsoft Tenant"), name: "microsoft_tenant" },
     ],
   },
   okta: {
@@ -57,20 +58,20 @@ export const ssoProviderConfigs: Record<string, SSOProviderConfig> = {
       generic_scope: "GENERIC_SCOPE",
     },
     fields: [
-      { label: "Generic Client ID", name: "generic_client_id" },
-      { label: "Generic Client Secret", name: "generic_client_secret" },
+      { label: t("Generic Client ID"), name: "generic_client_id" },
+      { label: t("Generic Client Secret"), name: "generic_client_secret" },
       {
-        label: "Authorization Endpoint",
+        label: t("Authorization Endpoint"),
         name: "generic_authorization_endpoint",
         placeholder: "https://your-domain/authorize",
       },
-      { label: "Token Endpoint", name: "generic_token_endpoint", placeholder: "https://your-domain/token" },
+      { label: t("Token Endpoint"), name: "generic_token_endpoint", placeholder: "https://your-domain/token" },
       {
-        label: "Userinfo Endpoint",
+        label: t("Userinfo Endpoint"),
         name: "generic_userinfo_endpoint",
         placeholder: "https://your-domain/userinfo",
       },
-      { label: "Scopes", name: "generic_scope", placeholder: "openid email profile", required: false },
+      { label: t("Scopes"), name: "generic_scope", placeholder: "openid email profile", required: false },
     ],
   },
   generic: {
@@ -83,12 +84,12 @@ export const ssoProviderConfigs: Record<string, SSOProviderConfig> = {
       generic_scope: "GENERIC_SCOPE",
     },
     fields: [
-      { label: "Generic Client ID", name: "generic_client_id" },
-      { label: "Generic Client Secret", name: "generic_client_secret" },
-      { label: "Authorization Endpoint", name: "generic_authorization_endpoint" },
-      { label: "Token Endpoint", name: "generic_token_endpoint" },
-      { label: "Userinfo Endpoint", name: "generic_userinfo_endpoint" },
-      { label: "Scopes", name: "generic_scope", placeholder: "openid email profile", required: false },
+      { label: t("Generic Client ID"), name: "generic_client_id" },
+      { label: t("Generic Client Secret"), name: "generic_client_secret" },
+      { label: t("Authorization Endpoint"), name: "generic_authorization_endpoint" },
+      { label: t("Token Endpoint"), name: "generic_token_endpoint" },
+      { label: t("Userinfo Endpoint"), name: "generic_userinfo_endpoint" },
+      { label: t("Scopes"), name: "generic_scope", placeholder: "openid email profile", required: false },
     ],
   },
   saml: {
@@ -100,26 +101,26 @@ export const ssoProviderConfigs: Record<string, SSOProviderConfig> = {
     },
     fields: [
       {
-        label: "IdP Metadata URL",
+        label: t("IdP Metadata URL"),
         name: "saml_idp_metadata_url",
         required: false,
         placeholder: "https://idp.example.com/metadata (use this or the metadata XML below)",
       },
       {
-        label: "IdP Metadata XML",
+        label: t("IdP Metadata XML"),
         name: "saml_idp_metadata_xml",
         required: false,
         type: "textarea",
-        placeholder: "Paste the IdP metadata XML here if you do not have a metadata URL",
+        placeholder: t("Paste the IdP metadata XML here if you do not have a metadata URL"),
       },
       {
-        label: "SP Entity ID",
+        label: t("SP Entity ID"),
         name: "saml_sp_entity_id",
         required: false,
-        placeholder: "Defaults to <proxy base url>/sso/saml/metadata",
+        placeholder: t("Defaults to <proxy base url>/sso/saml/metadata"),
       },
       {
-        label: "Allow IdP-initiated (unsolicited) responses",
+        label: t("Allow IdP-initiated (unsolicited) responses"),
         name: "saml_allow_unsolicited",
         required: false,
         type: "checkbox",
@@ -165,7 +166,7 @@ const BaseSSOSettingsForm: React.FC<BaseSSOSettingsFormProps> = ({ form, onFormS
     <div>
       <Form form={form} onFinish={onFormSubmit} labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} labelAlign="left">
         <Form.Item
-          label="SSO Provider"
+          label={t("SSO Provider")}
           name="sso_provider"
           rules={[{ required: true, message: "Please select an SSO provider" }]}
         >
@@ -200,14 +201,14 @@ const BaseSSOSettingsForm: React.FC<BaseSSOSettingsFormProps> = ({ form, onFormS
         </Form.Item>
 
         <Form.Item
-          label="Proxy Admin Email"
+          label={t("Proxy Admin Email")}
           name="user_email"
           rules={[{ required: true, message: "Please enter the email of the proxy admin" }]}
         >
           <TextInput />
         </Form.Item>
         <Form.Item
-          label="Proxy Base URL"
+          label={t("Proxy Base URL")}
           name="proxy_base_url"
           normalize={(value) => value?.trim()}
           rules={[
@@ -257,7 +258,7 @@ const BaseSSOSettingsForm: React.FC<BaseSSOSettingsFormProps> = ({ form, onFormS
             const supportsRoleMappings = provider === "okta" || provider === "generic";
             return useRoleMappings && supportsRoleMappings ? (
               <Form.Item
-                label="Group Claim"
+                label={t("Group Claim")}
                 name="group_claim"
                 rules={[{ required: true, message: "Please enter the group claim" }]}
               >
@@ -282,10 +283,10 @@ const BaseSSOSettingsForm: React.FC<BaseSSOSettingsFormProps> = ({ form, onFormS
               <>
                 <Form.Item label="Default Role" name="default_role" initialValue="Internal User">
                   <Select>
-                    <Select.Option value="internal_user_viewer">Internal Viewer</Select.Option>
-                    <Select.Option value="internal_user">Internal User</Select.Option>
-                    <Select.Option value="proxy_admin_viewer">Admin Viewer</Select.Option>
-                    <Select.Option value="proxy_admin">Proxy Admin</Select.Option>
+                    <Select.Option value="internal_user_viewer">{t("Internal Viewer")}</Select.Option>
+                    <Select.Option value="internal_user">{t("Internal User")}</Select.Option>
+                    <Select.Option value="proxy_admin_viewer">{t("Admin Viewer")}</Select.Option>
+                    <Select.Option value="proxy_admin">{t("Proxy Admin")}</Select.Option>
                   </Select>
                 </Form.Item>
 
@@ -336,7 +337,7 @@ const BaseSSOSettingsForm: React.FC<BaseSSOSettingsFormProps> = ({ form, onFormS
             const supportsTeamMappings = provider === "okta" || provider === "generic";
             return useTeamMappings && supportsTeamMappings ? (
               <Form.Item
-                label="Team IDs JWT Field"
+                label={t("Team IDs JWT Field")}
                 name="team_ids_jwt_field"
                 rules={[{ required: true, message: "Please enter the team IDs JWT field" }]}
               >

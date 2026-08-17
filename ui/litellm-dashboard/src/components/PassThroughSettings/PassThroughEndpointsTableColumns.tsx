@@ -18,6 +18,8 @@ import { cn } from "@/lib/cva.config";
 
 import type { passThroughItem } from "./PassThroughSettings";
 
+import { t } from "@/i18n";
+import { useLanguage } from "@/contexts/LanguageContext";
 function HeaderWithTooltip({ title, tooltip }: { title: string; tooltip: string }) {
   return (
     <div className="flex items-center gap-1">
@@ -72,11 +74,12 @@ interface EndpointRowActionsProps {
 }
 
 function EndpointRowActions({ endpoint, onEndpointClick, onDeleteClick }: EndpointRowActionsProps) {
-  const endpointId = endpoint.id;
+
+  const { t } = useLanguage();  const endpointId = endpoint.id;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open endpoint actions"
+        aria-label={t("Open endpoint actions")}
         data-testid={`endpoint-actions-${endpointId || endpoint.path}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -137,7 +140,7 @@ export const getPassThroughEndpointsTableColumns = ({
   {
     id: "path",
     accessorKey: "path",
-    meta: { title: "Path" },
+    meta: { title: t("Path")},
     header: "Path",
     size: 200,
     enableSorting: false,
@@ -150,7 +153,7 @@ export const getPassThroughEndpointsTableColumns = ({
   {
     id: "target",
     accessorKey: "target",
-    meta: { title: "Target" },
+    meta: { title: t("Target")},
     header: "Target",
     size: 240,
     enableSorting: false,
@@ -162,8 +165,8 @@ export const getPassThroughEndpointsTableColumns = ({
   },
   {
     id: "methods",
-    meta: { title: "Methods", skeleton: "chips" },
-    header: () => <HeaderWithTooltip title="Methods" tooltip="HTTP methods supported by this endpoint" />,
+    meta: { title: t("Methods"), skeleton: "chips" },
+    header: () => <HeaderWithTooltip title="Methods" tooltip={t("HTTP methods supported by this endpoint")} />,
     size: 150,
     enableSorting: false,
     cell: ({ row }) => <MethodsCell methods={row.original.methods} />,
@@ -171,8 +174,8 @@ export const getPassThroughEndpointsTableColumns = ({
   {
     id: "auth",
     accessorKey: "auth",
-    meta: { title: "Authentication", skeleton: "badge" },
-    header: () => <HeaderWithTooltip title="Authentication" tooltip="LiteLLM Virtual Key required to call endpoint" />,
+    meta: { title: t("Authentication"), skeleton: "badge" },
+    header: () => <HeaderWithTooltip title="Authentication" tooltip={t("LiteLLM Virtual Key required to call endpoint")} />,
     size: 140,
     enableSorting: false,
     cell: ({ row }) => (
@@ -181,7 +184,7 @@ export const getPassThroughEndpointsTableColumns = ({
   },
   {
     id: "headers",
-    meta: { title: "Headers" },
+    meta: { title: t("Headers")},
     header: "Headers",
     size: 180,
     enableSorting: false,
@@ -190,7 +193,7 @@ export const getPassThroughEndpointsTableColumns = ({
   {
     id: "actions",
     meta: { className: "text-right", headerClassName: "text-right" },
-    header: () => <span className="sr-only">Actions</span>,
+    header: () => <span className="sr-only">{t("Actions")}</span>,
     size: 64,
     enableSorting: false,
     enableHiding: false,

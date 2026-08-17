@@ -38,6 +38,7 @@ export interface DiscoveredAgentCardSelection {
 export type { DiscoveryRequestPlan } from "./agent_discovery_utils";
 import type { DiscoveryRequestPlan } from "./agent_discovery_utils";
 
+import { t } from "@/i18n";
 interface AgentCardDiscoveryProps {
   accessToken: string | null;
   /** Called whenever the upstream card or the user's selections change. Pass
@@ -253,7 +254,7 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
     <div className="mb-4 rounded-lg border border-border bg-muted/50 p-4">
       <div className="mb-2 flex items-center gap-2">
         <LinkIcon className="size-4 text-primary" />
-        <span className="text-sm font-medium text-foreground">Discover from agent URL</span>
+        <span className="text-sm font-medium text-foreground">{t("Discover from agent URL")}</span>
         <TooltipProvider delay={300}>
           <Tooltip>
             <TooltipTrigger
@@ -272,12 +273,10 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
       </div>
       {isParentDriven ? (
         <>
-          <p className="mb-2 text-xs text-muted-foreground">
-            Using the connection details you entered above. We&apos;ll fetch:
-          </p>
+          <p className="mb-2 text-xs text-muted-foreground">{t("Using the connection details you entered above. We&apos;ll fetch:")}</p>
           <div className="mb-3 rounded-sm border border-border bg-background px-3 py-2 font-mono text-xs break-all text-foreground">
             {discoveryRequest!.display_url || effectiveUrl || (
-              <span className="text-muted-foreground italic">Fill in the fields above first</span>
+              <span className="text-muted-foreground italic">{t("Fill in the fields above first")}</span>
             )}
           </div>
           <div className="flex justify-end">
@@ -289,10 +288,8 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
         </>
       ) : (
         <>
-          <p className="mb-3 text-xs text-muted-foreground">
-            Paste the upstream agent&apos;s base URL. We&apos;ll try <code>/.well-known/agent-card.json</code>,{" "}
-            <code>/.well-known/agent.json</code>, and <code>/agent.json</code> in order.
-          </p>
+          <p className="mb-3 text-xs text-muted-foreground">{t("Paste the upstream agent&apos;s base URL. We&apos;ll try")}<code>/.well-known/agent-card.json</code>,{" "}
+            <code>/.well-known/agent.json</code>, and <code>/agent.json</code>{t("in order.")}</p>
 
           <div className="flex w-full items-center gap-2">
             <Input
@@ -315,7 +312,7 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
       {error && (
         <Alert variant="destructive" className="mt-3">
           <CircleAlert />
-          <AlertTitle>Discovery failed</AlertTitle>
+          <AlertTitle>{t("Discovery failed")}</AlertTitle>
           <AlertDescription>{error}</AlertDescription>
           <AlertAction>
             <Button variant="ghost" size="icon-xs" aria-label="Dismiss error" onClick={() => setError(null)}>
@@ -335,26 +332,24 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
         <div className="mt-4 rounded-lg border border-border bg-background p-4">
           <div className="mb-3 flex flex-wrap items-center gap-2">
             <CircleCheck className="size-4 text-green-600" />
-            <span className="text-sm font-medium text-foreground">Upstream card loaded</span>
+            <span className="text-sm font-medium text-foreground">{t("Upstream card loaded")}</span>
             {card.version && <Badge variant="secondary">v{card.version}</Badge>}
             {card.provider?.organization && <Badge variant="secondary">{card.provider.organization}</Badge>}
           </div>
 
           <div className="mb-4 grid grid-cols-1 gap-3 md:grid-cols-2">
             <div>
-              <label className="mb-1 block text-xs font-medium text-muted-foreground">
-                Name (shown to API clients)
-              </label>
-              <Input value={editedName} onChange={(e) => setEditedName(e.target.value)} placeholder="Agent name" />
+              <label className="mb-1 block text-xs font-medium text-muted-foreground">{t("Name (shown to API clients)")}</label>
+              <Input value={editedName} onChange={(e) => setEditedName(e.target.value)} placeholder={t("Agent name")} />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-muted-foreground">Description</label>
+              <label className="mb-1 block text-xs font-medium text-muted-foreground">{t("Description")}</label>
               <Textarea
                 className="field-sizing-fixed min-h-0"
                 value={editedDescription}
                 onChange={(e) => setEditedDescription(e.target.value)}
                 rows={2}
-                placeholder="What this agent does"
+                placeholder={t("What this agent does")}
               />
             </div>
           </div>
@@ -366,7 +361,7 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
                   render={
                     <button type="button" className="group flex items-center gap-2">
                       <ChevronDown className="size-4 text-muted-foreground transition-transform group-data-[panel-open]:rotate-180" />
-                      <span className="text-sm font-medium text-foreground">Skills</span>
+                      <span className="text-sm font-medium text-foreground">{t("Skills")}</span>
                     </button>
                   }
                 />
@@ -376,7 +371,7 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
               </div>
               <CollapsibleContent className="pt-2">
                 {skillCount === 0 ? (
-                  <div className="py-6 text-center text-sm text-muted-foreground">Upstream card has no skills</div>
+                  <div className="py-6 text-center text-sm text-muted-foreground">{t("Upstream card has no skills")}</div>
                 ) : (
                   <div className="space-y-2">
                     {(card.skills ?? []).map((skill, idx) => {
@@ -418,7 +413,7 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
                   render={
                     <button type="button" className="group flex items-center gap-2">
                       <ChevronDown className="size-4 text-muted-foreground transition-transform group-data-[panel-open]:rotate-180" />
-                      <span className="text-sm font-medium text-foreground">Capabilities</span>
+                      <span className="text-sm font-medium text-foreground">{t("Capabilities")}</span>
                     </button>
                   }
                 />
@@ -449,7 +444,7 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
                       >
                         <div className="flex items-center gap-2">
                           <span className="text-sm font-medium text-foreground capitalize">{key}</span>
-                          {!upstreamHas && <Badge variant="outline">not advertised upstream</Badge>}
+                          {!upstreamHas && <Badge variant="outline">{t("not advertised upstream")}</Badge>}
                         </div>
                         <Switch
                           checked={Boolean(selectedCapabilities[key])}

@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
+import { t } from "@/i18n";
 export type ToolPermissionDecision = "allow" | "deny";
 export type ToolPermissionDefaultAction = "allow" | "deny";
 export type ToolPermissionOnDisallowedAction = "block" | "rewrite";
@@ -34,13 +35,13 @@ interface ToolPermissionRulesEditorProps {
 }
 
 const DECISION_ITEMS = [
-  { value: "allow", label: "Allow" },
-  { value: "deny", label: "Deny" },
+  { value: "allow", label: t("Allow")},
+  { value: "deny", label: t("Deny")},
 ] as const;
 
 const ON_DISALLOWED_ITEMS = [
-  { value: "block", label: "Block" },
-  { value: "rewrite", label: "Rewrite" },
+  { value: "block", label: t("Block")},
+  { value: "rewrite", label: t("Rewrite")},
 ] as const;
 
 const DEFAULT_CONFIG: ToolPermissionConfig = {
@@ -142,7 +143,7 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
 
     return (
       <div className="space-y-2">
-        <p className="text-sm text-muted-foreground">Argument constraints (dot or array paths)</p>
+        <p className="text-sm text-muted-foreground">{t("Argument constraints (dot or array paths)")}</p>
         {entries.map(([path, pattern], patternIndex) => (
           <div key={`${rule.id || index}-${patternIndex}`} className="flex items-start gap-2">
             <Input
@@ -160,7 +161,7 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
             <Button
               variant="outline"
               size="icon"
-              aria-label="Remove constraint"
+              aria-label={t("Remove constraint")}
               disabled={disabled}
               onClick={() =>
                 updateAllowedParamEntries(index, (entries) => {
@@ -196,7 +197,7 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
       <CardContent>
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-lg font-semibold">LiteLLM Tool Permission Guardrail</p>
+            <p className="text-lg font-semibold">{t("LiteLLM Tool Permission Guardrail")}</p>
             <p className="text-sm text-muted-foreground">
               Provide regex patterns (e.g., ^mcp__github_.*$) for tool names or types and optionally constrain payload
               fields.
@@ -213,14 +214,14 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
         <Separator className="my-4" />
 
         {config.rules.length === 0 ? (
-          <div className="py-10 text-center text-muted-foreground">No tool rules added yet</div>
+          <div className="py-10 text-center text-muted-foreground">{t("No tool rules added yet")}</div>
         ) : (
           <div className="space-y-4">
             {config.rules.map((rule, index) => (
               <Card key={rule.id || index} className="bg-muted/40">
                 <CardContent>
                   <div className="mb-3 flex items-center justify-between">
-                    <p className="font-semibold">Rule {index + 1}</p>
+                    <p className="font-semibold">{t("Rule")} {index + 1}</p>
                     <Button variant="ghost" disabled={disabled} onClick={() => removeRule(index)}>
                       <Trash2 />
                       Remove
@@ -228,7 +229,7 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
                   </div>
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div>
-                      <p className="text-sm font-medium">Rule ID</p>
+                      <p className="text-sm font-medium">{t("Rule ID")}</p>
                       <Input
                         disabled={disabled}
                         placeholder="unique_rule_id"
@@ -237,7 +238,7 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
                       />
                     </div>
                     <div>
-                      <p className="text-sm font-medium">Tool Name (optional)</p>
+                      <p className="text-sm font-medium">{t("Tool Name (optional)")}</p>
                       <Input
                         disabled={disabled}
                         placeholder="^mcp__github_.*$"
@@ -253,7 +254,7 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
 
                   <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div>
-                      <p className="text-sm font-medium">Tool Type (optional)</p>
+                      <p className="text-sm font-medium">{t("Tool Type (optional)")}</p>
                       <Input
                         disabled={disabled}
                         placeholder="^function$"
@@ -268,7 +269,7 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
                   </div>
 
                   <div className="mt-4 flex flex-col gap-2">
-                    <p className="text-sm font-medium">Decision</p>
+                    <p className="text-sm font-medium">{t("Decision")}</p>
                     <Select
                       items={DECISION_ITEMS}
                       disabled={disabled}
@@ -277,7 +278,7 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
                         value && updateRule(index, { decision: value as ToolPermissionDecision })
                       }
                     >
-                      <SelectTrigger className="w-[200px]" aria-label="Decision">
+                      <SelectTrigger className="w-[200px]" aria-label={t("Decision")}>
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent alignItemWithTrigger={false}>
@@ -301,7 +302,7 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
 
         <div className="grid gap-4 md:grid-cols-2">
           <div>
-            <p className="text-sm font-medium">Default action</p>
+            <p className="text-sm font-medium">{t("Default action")}</p>
             <Select
               items={DECISION_ITEMS}
               disabled={disabled}
@@ -310,7 +311,7 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
                 value && updateConfig({ default_action: value as ToolPermissionDefaultAction })
               }
             >
-              <SelectTrigger className="w-full" aria-label="Default action">
+              <SelectTrigger className="w-full" aria-label={t("Default action")}>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent alignItemWithTrigger={false}>
@@ -323,9 +324,7 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
             </Select>
           </div>
           <div>
-            <p className="flex items-center gap-1 text-sm font-medium">
-              On disallowed action
-              <Tooltip>
+            <p className="flex items-center gap-1 text-sm font-medium">{t("On disallowed action")}<Tooltip>
                 <TooltipTrigger
                   render={
                     <span className="cursor-help text-muted-foreground">
@@ -347,7 +346,7 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
                 value && updateConfig({ on_disallowed_action: value as ToolPermissionOnDisallowedAction })
               }
             >
-              <SelectTrigger className="w-full" aria-label="On disallowed action">
+              <SelectTrigger className="w-full" aria-label={t("On disallowed action")}>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent alignItemWithTrigger={false}>
@@ -362,7 +361,7 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
         </div>
 
         <div className="mt-4">
-          <p className="text-sm font-medium">Violation message (optional)</p>
+          <p className="text-sm font-medium">{t("Violation message (optional)")}</p>
           <Textarea
             className="field-sizing-fixed"
             disabled={disabled}

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { testMCPToolsListRequest } from "../components/networking";
 import { AUTH_TYPE, OAUTH_FLOW, TRANSPORT, isClientForwardedTokenMode } from "@/components/mcp_tools/types";
 
+import { t } from "@/i18n";
 interface MCPServerConfig {
   server_id?: string;
   server_name?: string;
@@ -173,7 +174,7 @@ export const useTestMCPConnection = ({
         setHasShownSuccessMessage(false);
       }
     } catch (error) {
-      console.error("Tools fetch error:", error);
+      console.error(t("Tools fetch error:"), error);
       setToolsError(error instanceof Error ? error.message : String(error));
       setToolsErrorStatus(null);
       setToolsErrorStackTrace(null);

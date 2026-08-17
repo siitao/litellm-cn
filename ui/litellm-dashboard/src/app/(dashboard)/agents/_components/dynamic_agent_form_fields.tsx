@@ -4,6 +4,7 @@ import { AgentCreateInfo, AgentCredentialFieldMetadata } from "@/components/netw
 import { AGENT_FORM_CONFIG } from "./agent_config";
 import CostConfigFields from "./cost_config_fields";
 
+import { t } from "@/i18n";
 const { Panel } = Collapse;
 
 interface DynamicAgentFormFieldsProps {
@@ -19,15 +20,15 @@ const DynamicAgentFormFields: React.FC<DynamicAgentFormFieldsProps> = ({ agentTy
   return (
     <>
       <Form.Item
-        label="Agent Name"
+        label={t("Agent Name")}
         name="agent_name"
         rules={[{ required: true, message: "Please enter a unique agent name" }]}
-        tooltip="Unique identifier for the agent"
+        tooltip={t("Unique identifier for the agent")}
       >
-        <Input placeholder="e.g., my-langgraph-agent" />
+        <Input placeholder={t("e.g., my-langgraph-agent")} />
       </Form.Item>
 
-      <Form.Item label="Description" name="description" tooltip="Brief description of what this agent does">
+      <Form.Item label="Description" name="description" tooltip={t("Brief description of what this agent does")}>
         <Input.TextArea rows={2} placeholder="Describe what this agent does..." />
       </Form.Item>
 
@@ -126,7 +127,7 @@ export const buildDynamicAgentData = (values: any, agentTypeInfo: AgentCreateInf
         {
           id: "chat",
           name: "Chat",
-          description: "General chat capability",
+          description: t("General chat capability"),
           tags: ["chat", "conversation"],
         },
       ],

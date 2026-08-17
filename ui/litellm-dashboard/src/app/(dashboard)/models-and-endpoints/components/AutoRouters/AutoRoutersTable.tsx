@@ -9,6 +9,7 @@ import { AutoRouterIcon } from "@/components/shared/table_cells";
 import { getAutoRoutersTableColumns } from "./AutoRoutersTableColumns";
 import { AutoRouterRow } from "./autoRouterRows";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface AutoRoutersTableProps {
   routers: AutoRouterRow[];
   isLoading: boolean;
@@ -20,12 +21,13 @@ interface AutoRoutersTableProps {
 const PAGE_SIZE_OPTIONS = [10, 25, 50];
 
 function EmptyState({ canModify }: { canModify: boolean }) {
-  return (
+
+  const { t } = useLanguage();  return (
     <div className="flex flex-col items-center gap-1 py-6">
       <div className="mb-1 flex size-10 items-center justify-center rounded-lg bg-muted">
         <AutoRouterIcon size={20} className="text-muted-foreground" />
       </div>
-      <div className="text-sm font-medium text-foreground">No auto routers yet</div>
+      <div className="text-sm font-medium text-foreground">{t("No auto routers yet")}</div>
       <div className="text-sm text-muted-foreground">
         {canModify
           ? "Create an auto router to pick the right model per request instead of pinning one."

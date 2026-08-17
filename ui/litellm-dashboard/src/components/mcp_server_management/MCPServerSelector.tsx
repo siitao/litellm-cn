@@ -5,6 +5,7 @@ import { Select } from "antd";
 import React from "react";
 import { ALL_PROXY_MCP_SERVERS_SENTINEL, NO_MCP_SERVERS_SENTINEL } from "@/components/mcp_tools/constants";
 
+import { t } from "@/i18n";
 interface MCPServerSelectorProps {
   onChange: (selected: { servers: string[]; accessGroups: string[]; toolsets: string[] }) => void;
   value?: {
@@ -129,16 +130,16 @@ const MCPServerSelector: React.FC<MCPServerSelectorProps> = ({
           <Select.Option
             key={ALL_PROXY_MCP_SERVERS_SENTINEL}
             value={ALL_PROXY_MCP_SERVERS_SENTINEL}
-            label="All Proxy MCP Servers"
+            label={t("All Proxy MCP Servers")}
           >
-            <span style={{ color: "#1890ff", fontWeight: 500 }}>All Proxy MCP Servers</span>
+            <span style={{ color: "#1890ff", fontWeight: 500 }}>{t("All Proxy MCP Servers")}</span>
           </Select.Option>
         )}
         {allowNoMcpServers && (
-          <Select.Option key={NO_MCP_SERVERS_SENTINEL} value={NO_MCP_SERVERS_SENTINEL} label="No MCP Servers">
+          <Select.Option key={NO_MCP_SERVERS_SENTINEL} value={NO_MCP_SERVERS_SENTINEL} label={t("No MCP Servers")}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <span style={{ flex: 1 }}>No MCP Servers</span>
-              <span style={{ color: "#8c8c8c", fontSize: "12px", fontWeight: 500, opacity: 0.8 }}>Block all</span>
+              <span style={{ flex: 1 }}>{t("No MCP Servers")}</span>
+              <span style={{ color: "#8c8c8c", fontSize: "12px", fontWeight: 500, opacity: 0.8 }}>{t("Block all")}</span>
             </div>
           </Select.Option>
         )}

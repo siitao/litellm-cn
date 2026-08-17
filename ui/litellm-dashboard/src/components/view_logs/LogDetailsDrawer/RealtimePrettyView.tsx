@@ -16,6 +16,7 @@ import {
 } from "@ant-design/icons";
 import { SectionHeader } from "./SectionHeader";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 const { Text } = Typography;
 
 interface RealtimeEvent {
@@ -90,7 +91,8 @@ export function isRealtimeResponse(response: any): boolean {
 }
 
 export function RealtimePrettyView({ response, metrics }: RealtimePrettyViewProps) {
-  const events: RealtimeEvent[] = response?.results || [];
+
+  const { t } = useLanguage();  const events: RealtimeEvent[] = response?.results || [];
   const usage = response?.usage;
 
   const sessionEvent = events.find((e) => e.type === "session.created" || e.type === "session.updated");
@@ -121,16 +123,15 @@ export function RealtimePrettyView({ response, metrics }: RealtimePrettyViewProp
             fontStyle: "italic",
             fontSize: 13,
           }}
-        >
-          No recognized realtime events found
-        </div>
+        >{t("No recognized realtime events found")}</div>
       )}
     </div>
   );
 }
 
 function SessionCard({ session, turnCount }: { session: RealtimeSession; turnCount: number }) {
-  const [isCollapsed, setIsCollapsed] = useState(true);
+
+  const { t } = useLanguage();  const [isCollapsed, setIsCollapsed] = useState(true);
 
   return (
     <div
@@ -170,7 +171,7 @@ function SessionCard({ session, turnCount }: { session: RealtimeSession; turnCou
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <SettingOutlined style={{ color: "#8c8c8c", fontSize: 14 }} />
-            <Text style={{ fontWeight: 500, fontSize: 14 }}>Session</Text>
+            <Text style={{ fontWeight: 500, fontSize: 14 }}>{t("Session")}</Text>
           </div>
           <Text type="secondary" style={{ fontSize: 12 }}>
             {session.model}
@@ -237,9 +238,7 @@ function SessionCard({ session, turnCount }: { session: RealtimeSession; turnCou
                   display: "block",
                   marginBottom: 4,
                 }}
-              >
-                Instructions
-              </Text>
+              >{t("Instructions")}</Text>
               <div
                 style={{
                   fontSize: 12,

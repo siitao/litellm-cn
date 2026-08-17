@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
+import { t } from "@/i18n";
 interface PageVisibilitySettingsProps {
   enabledPagesInternalUsers: string[] | null | undefined;
   enabledPagesPropertyDescription?: string;
@@ -57,7 +58,7 @@ export default function PageVisibilitySettings({
     <div className="space-y-4">
       <div className="space-y-1">
         <div className="flex items-center gap-2">
-          <p className="text-sm font-medium text-foreground">Internal User Page Visibility</p>
+          <p className="text-sm font-medium text-foreground">{t("Internal User Page Visibility")}</p>
           <Badge variant={isPageVisibilitySet ? "secondary" : "outline"}>
             {isPageVisibilitySet
               ? `${selectedPages.length} page${selectedPages.length !== 1 ? "s" : ""} selected`
@@ -77,9 +78,7 @@ export default function PageVisibilitySettings({
       </div>
 
       <Collapsible className="rounded-lg border border-border">
-        <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium hover:bg-muted">
-          Configure Page Visibility
-          <ChevronDown className="size-4 transition-transform group-data-[panel-open]:rotate-180" />
+        <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm font-medium hover:bg-muted">{t("Configure Page Visibility")}<ChevronDown className="size-4 transition-transform group-data-[panel-open]:rotate-180" />
         </CollapsibleTrigger>
         <CollapsibleContent className="border-t border-border p-4">
           <div className="space-y-4">
@@ -110,13 +109,9 @@ export default function PageVisibilitySettings({
             ))}
 
             <div className="flex flex-wrap gap-2">
-              <Button type="button" onClick={handleSavePageVisibility} disabled={isUpdating}>
-                Save Page Visibility Settings
-              </Button>
+              <Button type="button" onClick={handleSavePageVisibility} disabled={isUpdating}>{t("Save Page Visibility Settings")}</Button>
               {isPageVisibilitySet && (
-                <Button type="button" variant="outline" onClick={handleResetToDefault} disabled={isUpdating}>
-                  Reset to Default (All Pages)
-                </Button>
+                <Button type="button" variant="outline" onClick={handleResetToDefault} disabled={isUpdating}>{t("Reset to Default (All Pages)")}</Button>
               )}
             </div>
           </div>

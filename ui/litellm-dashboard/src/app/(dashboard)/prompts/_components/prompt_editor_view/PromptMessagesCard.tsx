@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Select as ShadcnSelect, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
+import { t } from "@/i18n";
 interface PromptMessagesCardProps {
   messages: Message[];
   onAddMessage: () => void;
@@ -50,10 +51,8 @@ const PromptMessagesCard: React.FC<PromptMessagesCardProps> = ({
   return (
     <Card className="p-3">
       <div className="mb-2">
-        <p className="text-sm font-medium">Prompt messages</p>
-        <p className="text-muted-foreground text-xs mt-1">
-          Use <code className="bg-muted px-1 rounded-sm text-xs">{"{{variable}}"}</code> syntax for template variables
-        </p>
+        <p className="text-sm font-medium">{t("Prompt messages")}</p>
+        <p className="text-muted-foreground text-xs mt-1">{t("Use")}<code className="bg-muted px-1 rounded-sm text-xs">{"{{variable}}"}</code>{t("syntax for template variables")}</p>
       </div>
       <div className="space-y-2">
         {messages.map((message, index) => (
@@ -81,9 +80,9 @@ const PromptMessagesCard: React.FC<PromptMessagesCardProps> = ({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="user">User</SelectItem>
-                  <SelectItem value="assistant">Assistant</SelectItem>
-                  <SelectItem value="system">System</SelectItem>
+                  <SelectItem value="user">{t("User")}</SelectItem>
+                  <SelectItem value="assistant">{t("Assistant")}</SelectItem>
+                  <SelectItem value="system">{t("System")}</SelectItem>
                 </SelectContent>
               </ShadcnSelect>
               <div className="flex items-center gap-1">

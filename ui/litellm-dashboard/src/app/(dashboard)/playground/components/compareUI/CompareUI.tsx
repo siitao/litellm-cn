@@ -30,7 +30,8 @@ import {
   modelOptionsToSelectorOptions,
   agentOptionsToSelectorOptions,
 } from "./endpoint_config";
-export interface ComparisonInstance {
+
+import { useLanguage } from "@/contexts/LanguageContext";export interface ComparisonInstance {
   id: string;
   model: string;
   agent: string;
@@ -58,7 +59,8 @@ const GENERIC_FOLLOW_UPS = [
 const SUGGESTED_PROMPTS = ["Write me a poem", "Explain quantum computing", "Draft a polite email requesting a meeting"];
 const DEFAULT_ENDPOINT = EndpointId.CHAT_COMPLETIONS;
 export default function CompareUI({ accessToken, disabledPersonalKeyCreation }: CompareUIProps) {
-  const [comparisons, setComparisons] = useState<ComparisonInstance[]>([
+
+  const { t } = useLanguage();  const [comparisons, setComparisons] = useState<ComparisonInstance[]>([
     {
       id: "1",
       model: "",
@@ -145,7 +147,7 @@ export default function CompareUI({ accessToken, disabledPersonalKeyCreation }: 
         const nextOptions = Array.from(new Set(uniqueModels.map((model) => model.model_group)));
         setModelOptions(nextOptions);
       } catch (error) {
-        console.error("CompareUI: failed to fetch models", error);
+        console.error(t("CompareUI: failed to fetch models"), error);
         if (active) {
           setModelOptions([]);
         }
@@ -175,7 +177,7 @@ export default function CompareUI({ accessToken, disabledPersonalKeyCreation }: 
         if (!active) return;
         setAgentOptions(agents);
       } catch (error) {
-        console.error("CompareUI: failed to fetch agents", error);
+        console.error(t("CompareUI: failed to fetch agents"), error);
         if (active) {
           setAgentOptions([]);
         }
@@ -627,7 +629,7 @@ export default function CompareUI({ accessToken, disabledPersonalKeyCreation }: 
       requestPromise
         .catch((error) => {
           const errorMessage = error instanceof Error ? error.message : String(error);
-          console.error("CompareUI: failed to fetch response", error);
+          console.error(t("CompareUI: failed to fetch response"), error);
           NotificationsManager.fromBackend(errorMessage);
           setComparisons((prev) =>
             prev.map((comparison) => {
@@ -692,20 +694,18 @@ export default function CompareUI({ accessToken, disabledPersonalKeyCreation }: 
         <div className="border-b px-4 py-2">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-gray-600">Virtual Key Source</span>
+              <span className="text-sm font-medium text-gray-600">{t("Virtual Key Source")}</span>
               <Select
                 value={apiKeySource}
                 onValueChange={(value) => setApiKeySource(value as "session" | "custom")}
                 disabled={disabledPersonalKeyCreation}
               >
-                <SelectTrigger className="w-48" aria-label="Virtual Key Source">
+                <SelectTrigger className="w-48" aria-label={t("Virtual Key Source")}>
                   <SelectValue>{apiKeySource === "custom" ? "Virtual Key" : "Current UI Session"}</SelectValue>
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="session" disabled={!canUseSessionKey}>
-                    Current UI Session
-                  </SelectItem>
-                  <SelectItem value="custom">Virtual Key</SelectItem>
+                  <SelectItem value="session" disabled={!canUseSessionKey}>{t("Current UI Session")}</SelectItem>
+                  <SelectItem value="custom">{t("Virtual Key")}</SelectItem>
                 </SelectContent>
               </Select>
               {apiKeySource === "custom" && (
@@ -713,15 +713,15 @@ export default function CompareUI({ accessToken, disabledPersonalKeyCreation }: 
                   type="password"
                   value={customApiKey}
                   onChange={(event) => setCustomApiKey(event.target.value)}
-                  placeholder="Enter Virtual Key"
+                  placeholder={t("Enter Virtual Key")}
                   className="w-56"
                 />
               )}
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-gray-600">Endpoint</span>
+              <span className="text-sm font-medium text-gray-600">{t("Endpoint")}</span>
               <Select value={selectedEndpoint} onValueChange={(value) => setSelectedEndpoint(value as EndpointIdType)}>
-                <SelectTrigger className="w-56" aria-label="Endpoint">
+                <SelectTrigger className="w-56" aria-label={t("Endpoint")}>
                   <SelectValue>{endpointConfig.label}</SelectValue>
                 </SelectTrigger>
                 <SelectContent>
@@ -778,7 +778,7 @@ export default function CompareUI({ accessToken, disabledPersonalKeyCreation }: 
             <div className="border border-gray-200 shadow-lg rounded-xl bg-white p-4">
               <div className="flex items-center justify-between gap-4 mb-3 min-h-8">
                 {hasAttachment ? (
-                  <span className="text-sm text-gray-500">Attachment ready to send</span>
+                  <span className="text-sm text-gray-500">{t("Attachment ready to send")}</span>
                 ) : showSuggestedPrompts ? (
                   <div className="flex items-center gap-2 overflow-x-auto">
                     {SUGGESTED_PROMPTS.map((prompt) => (
@@ -837,7 +837,7 @@ export default function CompareUI({ accessToken, disabledPersonalKeyCreation }: 
                     <button
                       className="flex items-center justify-center w-6 h-6 text-gray-400 hover:text-gray-600 hover:bg-gray-200 rounded-full transition-colors"
                       onClick={handleRemoveFile}
-                      aria-label="Remove attachment"
+                      aria-label={t("Remove attachment")}
                     >
                       <Trash2 className="size-3" />
                     </button>

@@ -7,6 +7,7 @@ import { AuditLogEntry } from "./AuditLogsTableColumns";
 import { AuditLogsTable } from "./AuditLogsTable";
 import { AuditLogDrawer } from "./AuditLogDrawer/AuditLogDrawer";
 
+import { t } from "@/i18n";
 interface AuditLogsProps {
   accessToken: string | null;
   token: string | null;
@@ -89,12 +90,8 @@ export default function AuditLogsPanel({
     return (
       <div style={{ textAlign: "center", marginTop: "20px" }}>
         <h1 style={{ display: "block", marginBottom: "10px" }}>✨ Enterprise Feature.</h1>
-        <p style={{ display: "block", marginBottom: "10px" }}>
-          This is a LiteLLM Enterprise feature, and requires a valid key to use.
-        </p>
-        <p style={{ display: "block", marginBottom: "20px", fontStyle: "italic" }}>
-          Here&apos;s a preview of what Audit Logs offer:
-        </p>
+        <p style={{ display: "block", marginBottom: "10px" }}>{t("This is a LiteLLM Enterprise feature, and requires a valid key to use.")}</p>
+        <p style={{ display: "block", marginBottom: "20px", fontStyle: "italic" }}>{t("Here&apos;s a preview of what Audit Logs offer:")}</p>
         <img
           src={resolveLogoSrc(auditLogsPreviewImg)}
           alt="Audit Logs Preview"
@@ -116,7 +113,7 @@ export default function AuditLogsPanel({
   return (
     <>
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-xl font-semibold">Audit Logs</h1>
+        <h1 className="text-xl font-semibold">{t("Audit Logs")}</h1>
       </div>
 
       <AuditLogsTable

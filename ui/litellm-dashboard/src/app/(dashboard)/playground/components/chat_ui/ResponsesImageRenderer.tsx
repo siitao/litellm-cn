@@ -3,6 +3,7 @@ import { FileText } from "lucide-react";
 import { MessageType } from "@/components/chat_ui/types";
 import { shouldShowAttachedImage } from "./ResponsesImageUtils";
 
+import { t } from "@/i18n";
 interface ResponsesImageRendererProps {
   message: MessageType;
 }
@@ -18,7 +19,7 @@ const ResponsesImageRenderer: React.FC<ResponsesImageRendererProps> = ({ message
     <div className="mb-2">
       {isPdf ? (
         <div className="flex h-32 w-64 items-center justify-center rounded-md border border-gray-200 bg-red-50">
-          <FileText className="size-12 text-red-600" aria-label="PDF attachment" />
+          <FileText className="size-12 text-red-600" aria-label={t("PDF attachment")} />
         </div>
       ) : (
         <img

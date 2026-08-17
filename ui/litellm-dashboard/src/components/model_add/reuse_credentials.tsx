@@ -2,7 +2,8 @@ import React from "react";
 import { Form, Button, Tooltip, Typography, Modal } from "antd";
 import { TextInput } from "@tremor/react";
 import { CredentialItem } from "../networking";
-const { Link } = Typography;
+
+import { t } from "@/i18n";const { Link } = Typography;
 
 interface ReuseCredentialsModalProps {
   isVisible: boolean;
@@ -29,7 +30,7 @@ const ReuseCredentialsModal: React.FC<ReuseCredentialsModalProps> = ({
 
   return (
     <Modal
-      title="Reuse Credentials"
+      title={t("Reuse Credentials")}
       open={isVisible}
       onCancel={() => {
         onCancel();
@@ -41,12 +42,12 @@ const ReuseCredentialsModal: React.FC<ReuseCredentialsModalProps> = ({
       <Form form={form} onFinish={handleSubmit} layout="vertical">
         {/* Credential Name */}
         <Form.Item
-          label="Credential Name:"
+          label={t("Credential Name:")}
           name="credential_name"
           rules={[{ required: true, message: "Credential name is required" }]}
           initialValue={existingCredential?.credential_name}
         >
-          <TextInput placeholder="Enter a friendly name for these credentials" />
+          <TextInput placeholder={t("Enter a friendly name for these credentials")} />
         </Form.Item>
 
         {/* Display Credential Values of existingCredential, don't allow user to edit. Credential values is a dictionary */}
@@ -58,8 +59,8 @@ const ReuseCredentialsModal: React.FC<ReuseCredentialsModalProps> = ({
 
         {/* Modal Footer */}
         <div className="flex justify-between items-center">
-          <Tooltip title="Get help on our github">
-            <Link href="https://github.com/BerriAI/litellm/issues">Need Help?</Link>
+          <Tooltip title={t("Get help on our github")}>
+            <Link href="https://github.com/BerriAI/litellm/issues">{t("Need Help?")}</Link>
           </Tooltip>
 
           <div>
@@ -69,10 +70,8 @@ const ReuseCredentialsModal: React.FC<ReuseCredentialsModalProps> = ({
                 form.resetFields();
               }}
               style={{ marginRight: 10 }}
-            >
-              Cancel
-            </Button>
-            <Button htmlType="submit">Reuse Credentials</Button>
+            >{t("Cancel")}</Button>
+            <Button htmlType="submit">{t("Reuse Credentials")}</Button>
           </div>
         </div>
       </Form>

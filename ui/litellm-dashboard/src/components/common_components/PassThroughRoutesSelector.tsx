@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Select } from "antd";
 import { getPassThroughEndpointsCall } from "../networking";
 
+import { t } from "@/i18n";
 interface PassThroughRoutesSelectorProps {
   onChange?: (selectedRoutes: string[]) => void;
   value?: string[];
@@ -60,7 +61,7 @@ const PassThroughRoutesSelector: React.FC<PassThroughRoutesSelectorProps> = ({
           setPassThroughRoutes(routes);
         }
       } catch (error) {
-        console.error("Error fetching pass through routes:", error);
+        console.error(t("Error fetching pass through routes:"), error);
       } finally {
         setLoading(false);
       }

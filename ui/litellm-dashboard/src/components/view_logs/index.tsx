@@ -7,6 +7,7 @@ import RequestLogsPanel from "./RequestLogsPanel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UiLoadingSpinner } from "@/components/ui/ui-loading-spinner";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/i18n";
 
 interface SpendLogsTableProps {
   accessToken: string | null;
@@ -23,10 +24,10 @@ interface LogsTab {
   label: string;
 }
 
-const REQUEST_LOGS_TAB: LogsTab = { id: "request logs", label: "Request Logs" };
-const AUDIT_LOGS_TAB: LogsTab = { id: "audit logs", label: "Audit Logs" };
-const DELETED_KEYS_TAB: LogsTab = { id: "deleted keys", label: "Deleted Keys" };
-const DELETED_TEAMS_TAB: LogsTab = { id: "deleted teams", label: "Deleted Teams" };
+const REQUEST_LOGS_TAB: LogsTab = { id: "request logs", label: t("Request Logs")};
+const AUDIT_LOGS_TAB: LogsTab = { id: "audit logs", label: t("Audit Logs")};
+const DELETED_KEYS_TAB: LogsTab = { id: "deleted keys", label: t("Deleted Keys")};
+const DELETED_TEAMS_TAB: LogsTab = { id: "deleted teams", label: t("Deleted Teams")};
 
 export default function SpendLogsTable({ accessToken, token, userRole, userID, premiumUser }: SpendLogsTableProps) {
   const { t } = useLanguage();

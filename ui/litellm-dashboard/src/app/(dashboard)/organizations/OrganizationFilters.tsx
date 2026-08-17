@@ -3,6 +3,7 @@ import { FiltersButton } from "@/components/common_components/Filters/FiltersBut
 import { ResetFiltersButton } from "@/components/common_components/Filters/ResetFiltersButton";
 import { Search, User } from "lucide-react";
 
+import { t } from "@/i18n";
 interface OrganizationFiltersProps {
   filters: FilterState;
   showFilters: boolean;
@@ -30,7 +31,7 @@ const OrganizationFilters = ({
       {/* Search and Filter Controls */}
       <div className="flex flex-wrap items-center gap-3">
         <FilterInput
-          placeholder="Search by Organization Name"
+          placeholder={t("Search by Organization Name")}
           value={filters.org_alias}
           onChange={(value) => onChange("org_alias", value)}
           icon={Search}
@@ -50,7 +51,7 @@ const OrganizationFilters = ({
       {showFilters && (
         <div className="flex flex-wrap items-center gap-3 mt-3">
           <FilterInput
-            placeholder="Search by Organization ID"
+            placeholder={t("Search by Organization ID")}
             value={filters.org_id}
             onChange={(value) => onChange("org_id", value)}
             icon={User}

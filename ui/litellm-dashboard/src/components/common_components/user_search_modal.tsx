@@ -4,7 +4,8 @@ import { UserAddOutlined } from "@ant-design/icons";
 import { useDebouncedCallback } from "@tanstack/react-pacer/debouncer";
 import { userFilterUICall } from "@/components/networking";
 import { DEBOUNCE_WAIT_MS } from "@/utils/debounceConstants";
-interface User {
+
+import { t } from "@/i18n";interface User {
   user_id: string;
   user_email: string;
   role?: string;
@@ -49,9 +50,9 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
     {
       label: "admin",
       value: "admin",
-      description: "Admin role. Can create team keys, add members, and manage settings.",
+      description: t("Admin role. Can create team keys, add members, and manage settings."),
     },
-    { label: "user", value: "user", description: "User role. Can view team info, but not manage it." },
+    { label: "user", value: "user", description: t("User role. Can view team info, but not manage it.")},
   ],
   defaultRole = "user",
   teamId,
@@ -88,7 +89,7 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
       }));
       setUserOptions(options);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error(t("Error fetching users:"), error);
     } finally {
       setLoading(false);
     }
@@ -152,7 +153,7 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
           <Select
             showSearch
             className="w-full"
-            placeholder="Search by email"
+            placeholder={t("Search by email")}
             filterOption={false}
             onSearch={(value) => handleSearch(value, "user_email")}
             onSelect={(value, option) => handleSelect(value, option as UserOption)}
@@ -169,7 +170,7 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
           <Select
             showSearch
             className="w-full"
-            placeholder="Search by user ID"
+            placeholder={t("Search by user ID")}
             filterOption={false}
             onSearch={(value) => handleSearch(value, "user_id")}
             onSelect={(value, option) => handleSelect(value, option as UserOption)}

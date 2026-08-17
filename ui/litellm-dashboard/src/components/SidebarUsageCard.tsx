@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Award, ChevronDown, Loader2 } from "lucide-react";
 import { getRemainingUsers } from "./networking";
 
+import { t } from "@/i18n";
 interface SidebarUsageCardProps {
   accessToken: string | null;
   collapsed: boolean;
@@ -56,8 +57,8 @@ const remainingUsersQuery = (accessToken: string | null) => ({
 const buildMeters = (data: RemainingUsage | null): MeterData[] => {
   if (!data) return [];
   return [
-    ...(data.total_users != null ? [{ label: "Seats", used: data.total_users_used, total: data.total_users }] : []),
-    ...(data.total_teams != null ? [{ label: "Teams", used: data.total_teams_used, total: data.total_teams }] : []),
+    ...(data.total_users != null ? [{ label: t("Seats"), used: data.total_users_used, total: data.total_users }] : []),
+    ...(data.total_teams != null ? [{ label: t("Teams"), used: data.total_teams_used, total: data.total_teams }] : []),
   ];
 };
 
@@ -84,7 +85,7 @@ export default function SidebarUsageCard({ accessToken, collapsed, onExpandRail 
       <Button
         variant="outline"
         onClick={onExpandRail}
-        title="Enterprise usage"
+        title={t("Enterprise usage")}
         className="h-9 w-full rounded-lg border-sidebar-border bg-sidebar text-sidebar-primary shadow-none hover:bg-sidebar-accent hover:text-sidebar-primary"
       >
         <Award className="size-[18px]" strokeWidth={1.75} />
@@ -102,7 +103,7 @@ export default function SidebarUsageCard({ accessToken, collapsed, onExpandRail 
           <Award className="size-4" strokeWidth={1.75} />
         </span>
         <span className="min-w-0 flex-1 leading-tight">
-          <span className="block text-[13px] font-semibold text-foreground">Enterprise usage</span>
+          <span className="block text-[13px] font-semibold text-foreground">{t("Enterprise usage")}</span>
           <span className="block truncate text-[11px] text-muted-foreground">{subtitle}</span>
         </span>
         <ChevronDown className="size-4 flex-none -rotate-90 text-muted-foreground transition-transform group-data-[panel-open]/usage:rotate-0" />

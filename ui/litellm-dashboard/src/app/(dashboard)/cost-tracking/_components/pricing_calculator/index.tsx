@@ -5,6 +5,7 @@ import { PricingCalculatorProps, ModelEntry } from "./types";
 import MultiCostResults from "./multi_cost_results";
 import { useMultiCostEstimate } from "./use_multi_cost_estimate";
 
+import { t } from "@/i18n";
 type TimePeriod = "day" | "month";
 
 const generateId = () => `entry-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
@@ -65,14 +66,14 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({ accessToken, mode
 
   const columns = [
     {
-      title: "Model",
+      title: t("Model"),
       dataIndex: "model",
       key: "model",
       width: "35%",
       render: (_: string, record: ModelEntry) => (
         <Select
           showSearch
-          placeholder="Select a model"
+          placeholder={t("Select a model")}
           value={record.model || undefined}
           onChange={(value) => handleEntryChange(record.id, "model", value)}
           optionFilterProp="label"
@@ -91,7 +92,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({ accessToken, mode
       ),
     },
     {
-      title: "Input Tokens",
+      title: t("Input Tokens"),
       dataIndex: "input_tokens",
       key: "input_tokens",
       width: "18%",
@@ -107,7 +108,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({ accessToken, mode
       ),
     },
     {
-      title: "Output Tokens",
+      title: t("Output Tokens"),
       dataIndex: "output_tokens",
       key: "output_tokens",
       width: "18%",
@@ -172,8 +173,8 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({ accessToken, mode
           optionType="button"
           buttonStyle="solid"
         >
-          <Radio.Button value="day">Per Day</Radio.Button>
-          <Radio.Button value="month">Per Month</Radio.Button>
+          <Radio.Button value="day">{t("Per Day")}</Radio.Button>
+          <Radio.Button value="month">{t("Per Month")}</Radio.Button>
         </Radio.Group>
       </div>
 
@@ -184,9 +185,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({ accessToken, mode
         pagination={false}
         size="small"
         footer={() => (
-          <Button type="dashed" onClick={handleAddEntry} icon={<PlusOutlined />} className="w-full">
-            Add Another Model
-          </Button>
+          <Button type="dashed" onClick={handleAddEntry} icon={<PlusOutlined />} className="w-full">{t("Add Another Model")}</Button>
         )}
       />
 

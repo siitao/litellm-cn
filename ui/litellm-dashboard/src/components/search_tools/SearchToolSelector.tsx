@@ -14,6 +14,7 @@ import {
 import { cn } from "@/lib/cva.config";
 import { fetchSearchTools } from "../networking";
 
+import { t } from "@/i18n";
 export interface SearchToolSelectorProps {
   onChange: (selected: string[]) => void;
   value?: string[];
@@ -51,7 +52,7 @@ const SearchToolSelector: React.FC<SearchToolSelectorProps> = ({
             .filter((name: unknown): name is string => typeof name === "string" && name.length > 0),
         );
       } catch (e) {
-        console.error("Failed to load search tools:", e);
+        console.error(t("Failed to load search tools:"), e);
       } finally {
         setLoading(false);
       }

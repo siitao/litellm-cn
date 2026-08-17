@@ -4,6 +4,7 @@ import { Button } from "@tremor/react";
 import { resolvePoliciesCall, teamListCall, keyListCall, modelAvailableCall } from "@/components/networking";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
 
+import { t } from "@/i18n";
 const { Text } = Typography;
 
 interface PolicyTestPanelProps {
@@ -46,7 +47,7 @@ const PolicyTestPanel: React.FC<PolicyTestPanelProps> = ({ accessToken }) => {
       const teamsArray = Array.isArray(teamsResponse) ? teamsResponse : teamsResponse?.data || [];
       setAvailableTeams(teamsArray.map((t: any) => t.team_alias).filter(Boolean));
     } catch (error) {
-      console.error("Failed to load teams:", error);
+      console.error(t("Failed to load teams:"), error);
     }
 
     try {
@@ -54,7 +55,7 @@ const PolicyTestPanel: React.FC<PolicyTestPanelProps> = ({ accessToken }) => {
       const keysArray = keysResponse?.keys || keysResponse?.data || [];
       setAvailableKeys(keysArray.map((k: any) => k.key_alias).filter(Boolean));
     } catch (error) {
-      console.error("Failed to load keys:", error);
+      console.error(t("Failed to load keys:"), error);
     }
 
     try {
@@ -62,7 +63,7 @@ const PolicyTestPanel: React.FC<PolicyTestPanelProps> = ({ accessToken }) => {
       const modelsArray = modelsResponse?.data || (Array.isArray(modelsResponse) ? modelsResponse : []);
       setAvailableModels(modelsArray.map((m: any) => m.id || m.model_name).filter(Boolean));
     } catch (error) {
-      console.error("Failed to load models:", error);
+      console.error(t("Failed to load models:"), error);
     }
   };
 
@@ -82,7 +83,7 @@ const PolicyTestPanel: React.FC<PolicyTestPanelProps> = ({ accessToken }) => {
       const data = await resolvePoliciesCall(accessToken, context);
       setResult(data);
     } catch (error) {
-      console.error("Error resolving policies:", error);
+      console.error(t("Error resolving policies:"), error);
       setResult(null);
     } finally {
       setIsLoading(false);
@@ -99,7 +100,7 @@ const PolicyTestPanel: React.FC<PolicyTestPanelProps> = ({ accessToken }) => {
     <div>
       <div className="bg-white border rounded-lg p-6 mb-6">
         <div className="mb-5">
-          <h3 className="text-base font-semibold mb-1">Policy Simulator</h3>
+          <h3 className="text-base font-semibold mb-1">{t("Policy Simulator")}</h3>
           <Text type="secondary">
             Simulate a request to see which policies and guardrails would apply. Select a team, key, model, or tags
             below and click &quot;Simulate&quot; to see the results.
@@ -138,7 +139,7 @@ const PolicyTestPanel: React.FC<PolicyTestPanelProps> = ({ accessToken }) => {
             <Form.Item name="tags" label="Tags" className="mb-3">
               <Select
                 mode="tags"
-                placeholder="Type a tag and press Enter"
+                placeholder={t("Type a tag and press Enter")}
                 tokenSeparators={[",", " "]}
                 notFoundContent={null}
                 suffixIcon={null}
@@ -147,12 +148,8 @@ const PolicyTestPanel: React.FC<PolicyTestPanelProps> = ({ accessToken }) => {
             </Form.Item>
           </div>
           <div className="flex space-x-2">
-            <Button onClick={handleTest} loading={isLoading} disabled={!accessToken}>
-              Simulate
-            </Button>
-            <Button variant="secondary" onClick={handleReset}>
-              Reset
-            </Button>
+            <Button onClick={handleTest} loading={isLoading} disabled={!accessToken}>{t("Simulate")}</Button>
+            <Button variant="secondary" onClick={handleReset}>{t("Reset")}</Button>
           </div>
         </Form>
       </div>
@@ -175,7 +172,7 @@ const PolicyTestPanel: React.FC<PolicyTestPanelProps> = ({ accessToken }) => {
               />
             </svg>
           </div>
-          <p className="text-sm font-medium text-gray-600 mb-1">No simulation run yet</p>
+          <p className="text-sm font-medium text-gray-600 mb-1">{t("No simulation run yet")}</p>
           <p className="text-xs text-gray-400">
             Fill in one or more fields above and click &quot;Simulate&quot; to see which policies and guardrails would
             apply to that request.
@@ -186,11 +183,11 @@ const PolicyTestPanel: React.FC<PolicyTestPanelProps> = ({ accessToken }) => {
       {hasSearched && result && (
         <div className="bg-white border rounded-lg p-6">
           {result.matched_policies.length === 0 ? (
-            <Empty description="No policies matched this context" />
+            <Empty description={t("No policies matched this context")} />
           ) : (
             <>
               <div className="mb-4">
-                <p className="text-sm font-semibold mb-2">Effective Guardrails</p>
+                <p className="text-sm font-semibold mb-2">{t("Effective Guardrails")}</p>
                 <div className="flex flex-wrap gap-1">
                   {result.effective_guardrails.length > 0 ? (
                     result.effective_guardrails.map((g) => (
@@ -199,19 +196,19 @@ const PolicyTestPanel: React.FC<PolicyTestPanelProps> = ({ accessToken }) => {
                       </Tag>
                     ))
                   ) : (
-                    <span className="text-gray-400 text-sm">None</span>
+                    <span className="text-gray-400 text-sm">{t("None")}</span>
                   )}
                 </div>
               </div>
 
               <div>
-                <p className="text-sm font-semibold mb-2">Matched Policies</p>
+                <p className="text-sm font-semibold mb-2">{t("Matched Policies")}</p>
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b">
-                      <th className="text-left py-2 pr-4">Policy</th>
-                      <th className="text-left py-2 pr-4">Matched Via</th>
-                      <th className="text-left py-2">Guardrails Added</th>
+                      <th className="text-left py-2 pr-4">{t("Policy")}</th>
+                      <th className="text-left py-2 pr-4">{t("Matched Via")}</th>
+                      <th className="text-left py-2">{t("Guardrails Added")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -231,7 +228,7 @@ const PolicyTestPanel: React.FC<PolicyTestPanelProps> = ({ accessToken }) => {
                               ))}
                             </div>
                           ) : (
-                            <span className="text-gray-400">None</span>
+                            <span className="text-gray-400">{t("None")}</span>
                           )}
                         </td>
                       </tr>

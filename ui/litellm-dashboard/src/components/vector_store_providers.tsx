@@ -2,6 +2,7 @@ import { getProviderLogoAndName, Providers, providerLogoMap } from "@/components
 import milvusLogo from "../../public/assets/logos/milvus.svg";
 import postgresqlLogo from "../../public/assets/logos/postgresql.svg";
 import s3VectorLogo from "../../public/assets/logos/s3_vector.png";
+import { t } from "@/i18n";
 
 export enum VectorStoreProviders {
   Bedrock = "Amazon Bedrock",
@@ -54,7 +55,7 @@ export const vectorStoreProviderFields: Record<string, VectorStoreFieldConfig[]>
   pg_vector: [
     {
       name: "api_base",
-      label: "API Base",
+      label: t("API Base"),
       tooltip: "Enter the base URL of your deployed litellm-pgvector server (e.g., http://your-server:8000)",
       placeholder: "http://your-deployed-server:8000",
       required: true,
@@ -62,7 +63,7 @@ export const vectorStoreProviderFields: Record<string, VectorStoreFieldConfig[]>
     },
     {
       name: "api_key",
-      label: "API Key",
+      label: t("API Key"),
       tooltip: "Enter the API key from your deployed litellm-pgvector server",
       placeholder: "your-deployed-api-key",
       required: true,
@@ -73,7 +74,7 @@ export const vectorStoreProviderFields: Record<string, VectorStoreFieldConfig[]>
   "vertex_ai/search_api": [
     {
       name: "vertex_project",
-      label: "Vertex Project",
+      label: t("Vertex Project"),
       tooltip: "Google Cloud project ID that hosts the Vertex AI Search data store.",
       placeholder: "my-gcp-project-id",
       required: true,
@@ -81,7 +82,7 @@ export const vectorStoreProviderFields: Record<string, VectorStoreFieldConfig[]>
     },
     {
       name: "vertex_location",
-      label: "Vertex Location",
+      label: t("Vertex Location"),
       tooltip: "Vertex AI Search data store location. Must be one of global, us, or eu.",
       required: true,
       type: "select",
@@ -94,18 +95,18 @@ export const vectorStoreProviderFields: Record<string, VectorStoreFieldConfig[]>
     },
     {
       name: "vertex_collection_id",
-      label: "Collection ID (optional)",
+      label: t("Collection ID (optional)"),
       tooltip: "Discovery Engine collection ID. Leave blank to use the default collection.",
-      placeholder: "e.g. my-custom-collection",
+      placeholder: t("e.g. my-custom-collection"),
       required: false,
       type: "text",
     },
     {
       name: "vertex_engine_id",
-      label: "Engine ID (optional)",
+      label: t("Engine ID (optional)"),
       tooltip:
         "Search app (engine) ID. Required for website, healthcare, and connector-based data stores (Workspace, Slack, Jira, etc.) because these sources route search through an engine. Leave blank to query the data store directly.",
-      placeholder: "e.g. my-search-app_1234567890",
+      placeholder: t("e.g. my-search-app_1234567890"),
       required: false,
       type: "text",
     },
@@ -113,7 +114,7 @@ export const vectorStoreProviderFields: Record<string, VectorStoreFieldConfig[]>
   openai: [
     {
       name: "api_key",
-      label: "API Key",
+      label: t("API Key"),
       tooltip: "Enter your OpenAI API key",
       placeholder: "sk-...",
       required: true,
@@ -123,7 +124,7 @@ export const vectorStoreProviderFields: Record<string, VectorStoreFieldConfig[]>
   azure: [
     {
       name: "api_key",
-      label: "API Key",
+      label: t("API Key"),
       tooltip: "Enter your Azure OpenAI API key",
       placeholder: "your-azure-api-key",
       required: true,
@@ -131,7 +132,7 @@ export const vectorStoreProviderFields: Record<string, VectorStoreFieldConfig[]>
     },
     {
       name: "api_base",
-      label: "API Base",
+      label: t("API Base"),
       tooltip: "Enter your Azure OpenAI endpoint (e.g., https://your-resource.openai.azure.com/)",
       placeholder: "https://your-resource.openai.azure.com/",
       required: true,
@@ -141,16 +142,16 @@ export const vectorStoreProviderFields: Record<string, VectorStoreFieldConfig[]>
   milvus: [
     {
       name: "api_key",
-      label: "API Key",
+      label: t("API Key"),
       tooltip:
         "To obtain a token, you should use a colon (:) to concatenate the username and password that you use to access your Milvus instance (e.g., username:password)",
-      placeholder: "username:password or api key",
+      placeholder: t("username:password or api key"),
       required: true,
       type: "password",
     },
     {
       name: "api_base",
-      label: "API Base",
+      label: t("API Base"),
       tooltip: "Enter your Milvus endpoint (e.g., https://your-milvus-endpoint.com/)",
       placeholder: "https://your-milvus-endpoint.com/",
       required: true,
@@ -158,7 +159,7 @@ export const vectorStoreProviderFields: Record<string, VectorStoreFieldConfig[]>
     },
     {
       name: "embedding_model",
-      label: "Embedding Model",
+      label: t("Embedding Model"),
       tooltip: "Select the embedding model to use",
       placeholder: "text-embedding-3-small",
       required: true,
@@ -168,7 +169,7 @@ export const vectorStoreProviderFields: Record<string, VectorStoreFieldConfig[]>
   s3_vectors: [
     {
       name: "vector_bucket_name",
-      label: "Vector Bucket Name",
+      label: t("Vector Bucket Name"),
       tooltip: "S3 bucket name for vector storage (will be auto-created if it doesn't exist)",
       placeholder: "my-vector-bucket",
       required: true,
@@ -176,7 +177,7 @@ export const vectorStoreProviderFields: Record<string, VectorStoreFieldConfig[]>
     },
     {
       name: "index_name",
-      label: "Index Name",
+      label: t("Index Name"),
       tooltip: "Name for the vector index (optional, will be auto-generated if not provided)",
       placeholder: "my-vector-index",
       required: false,
@@ -184,16 +185,16 @@ export const vectorStoreProviderFields: Record<string, VectorStoreFieldConfig[]>
     },
     {
       name: "aws_region_name",
-      label: "AWS Region",
-      tooltip: "AWS region where the S3 bucket is located (e.g., us-west-2)",
+      label: t("AWS Region"),
+      tooltip: t("AWS region where the S3 bucket is located (e.g., us-west-2)"),
       placeholder: "us-west-2",
       required: true,
       type: "text",
     },
     {
       name: "embedding_model",
-      label: "Embedding Model",
-      tooltip: "Select the embedding model to use for vector generation",
+      label: t("Embedding Model"),
+      tooltip: t("Select the embedding model to use for vector generation"),
       placeholder: "text-embedding-3-small",
       required: true,
       type: "select",

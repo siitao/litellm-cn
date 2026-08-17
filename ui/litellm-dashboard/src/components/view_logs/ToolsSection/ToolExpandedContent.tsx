@@ -8,6 +8,7 @@ import { ParsedTool } from "./types";
 import { FormattedToolView } from "./FormattedToolView";
 import { JsonToolView } from "./JsonToolView";
 
+import { t } from "@/i18n";
 const { Text } = Typography;
 
 type ViewMode = "formatted" | "json";
@@ -29,11 +30,9 @@ export function ToolExpandedContent({ tool }: ToolExpandedContentProps) {
           marginBottom: 12,
         }}
       >
-        <Text type="secondary" style={{ fontSize: 12 }}>
-          Description
-        </Text>
+        <Text type="secondary" style={{ fontSize: 12 }}>{t("Description")}</Text>
         <Radio.Group size="small" value={viewMode} onChange={(e) => setViewMode(e.target.value)}>
-          <Radio.Button value="formatted">Formatted</Radio.Button>
+          <Radio.Button value="formatted">{t("Formatted")}</Radio.Button>
           <Radio.Button value="json">JSON</Radio.Button>
         </Radio.Group>
       </div>

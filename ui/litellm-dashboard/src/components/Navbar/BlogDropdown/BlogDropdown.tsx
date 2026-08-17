@@ -6,6 +6,7 @@ import { Button, Dropdown, Space, Typography } from "antd";
 import type { MenuProps } from "antd";
 import React from "react";
 
+import { t } from "@/i18n";
 const { Text, Title, Paragraph } = Typography;
 
 function formatDate(dateStr: string): string {
@@ -36,17 +37,15 @@ export const BlogDropdown: React.FC = () => {
         key: "error",
         label: (
           <Space>
-            <Text type="danger">Failed to load posts</Text>
-            <Button size="small" onClick={() => refetch()}>
-              Retry
-            </Button>
+            <Text type="danger">{t("Failed to load posts")}</Text>
+            <Button size="small" onClick={() => refetch()}>{t("Retry")}</Button>
           </Space>
         ),
         disabled: true,
       },
     ];
   } else if (!data || data.posts.length === 0) {
-    items = [{ key: "empty", label: <Text type="secondary">No posts available</Text>, disabled: true }];
+    items = [{ key: "empty", label: <Text type="secondary">{t("No posts available")}</Text>, disabled: true }];
   } else {
     items = [
       ...data.posts.slice(0, 5).map((post: BlogPost) => ({
@@ -67,9 +66,7 @@ export const BlogDropdown: React.FC = () => {
       {
         key: "view-all",
         label: (
-          <a href="https://docs.litellm.ai/blog" target="_blank" rel="noopener noreferrer">
-            View all posts
-          </a>
+          <a href="https://docs.litellm.ai/blog" target="_blank" rel="noopener noreferrer">{t("View all posts")}</a>
         ),
       },
     ];
@@ -78,9 +75,7 @@ export const BlogDropdown: React.FC = () => {
   // Blog opens a post list; Docs is a single outbound link — navbar adds a layout-only chevron there for alignment.
   return (
     <Dropdown menu={{ items }} trigger={["hover"]} placement="bottomRight">
-      <Button type="text" className={`${NAV_PRODUCT_LINK_CLASS} border-0! bg-transparent!`}>
-        Blog
-        <DownOutlined className="text-[10px] text-gray-500" aria-hidden />
+      <Button type="text" className={`${NAV_PRODUCT_LINK_CLASS} border-0! bg-transparent!`}>{t("Blog")}<DownOutlined className="text-[10px] text-gray-500" aria-hidden />
       </Button>
     </Dropdown>
   );

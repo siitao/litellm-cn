@@ -8,6 +8,7 @@ import { Logo } from "@/components/molecules/logo/Logo";
 import { ssoProviderDisplayNames, ssoProviderLogoMap } from "./Settings/AdminSettings/SSOSettings/constants";
 import { renderProviderFields } from "./Settings/AdminSettings/SSOSettings/Modals/BaseSSOSettingsForm";
 
+import { t } from "@/i18n";
 interface SSOModalsProps {
   isAddSSOModalVisible: boolean;
   isInstructionsModalVisible: boolean;
@@ -95,7 +96,7 @@ const SSOModals: React.FC<SSOModalsProps> = ({
             }, 100);
           }
         } catch (error) {
-          console.error("Failed to load SSO settings:", error);
+          console.error(t("Failed to load SSO settings:"), error);
         }
       }
     };
@@ -214,9 +215,9 @@ const SSOModals: React.FC<SSOModalsProps> = ({
       // Close the main SSO modal and trigger refresh
       handleAddSSOOk();
 
-      NotificationsManager.success("SSO settings cleared successfully");
+      NotificationsManager.success(t("SSO settings cleared successfully"));
     } catch (error) {
-      console.error("Failed to clear SSO settings:", error);
+      console.error(t("Failed to clear SSO settings:"), error);
       NotificationsManager.fromBackend("Failed to clear SSO settings");
     }
   };
@@ -241,7 +242,7 @@ const SSOModals: React.FC<SSOModalsProps> = ({
         >
           <>
             <Form.Item
-              label="SSO Provider"
+              label={t("SSO Provider")}
               name="sso_provider"
               rules={[{ required: true, message: "Please select an SSO provider" }]}
             >
@@ -276,14 +277,14 @@ const SSOModals: React.FC<SSOModalsProps> = ({
             </Form.Item>
 
             <Form.Item
-              label="Proxy Admin Email"
+              label={t("Proxy Admin Email")}
               name="user_email"
               rules={[{ required: true, message: "Please enter the email of the proxy admin" }]}
             >
               <TextInput />
             </Form.Item>
             <Form.Item
-              label="Proxy Base URL"
+              label={t("Proxy Base URL")}
               name="proxy_base_url"
               normalize={(value) => value?.trim()}
               rules={[
@@ -330,7 +331,7 @@ const SSOModals: React.FC<SSOModalsProps> = ({
                 const useRoleMappings = getFieldValue("use_role_mappings");
                 return useRoleMappings ? (
                   <Form.Item
-                    label="Group Claim"
+                    label={t("Group Claim")}
                     name="group_claim"
                     rules={[{ required: true, message: "Please enter the group claim" }]}
                   >
@@ -352,10 +353,10 @@ const SSOModals: React.FC<SSOModalsProps> = ({
                   <>
                     <Form.Item label="Default Role" name="default_role" initialValue="Internal User">
                       <Select>
-                        <Select.Option value="internal_user_viewer">Internal Viewer</Select.Option>
-                        <Select.Option value="internal_user">Internal User</Select.Option>
-                        <Select.Option value="proxy_admin_viewer">Admin Viewer</Select.Option>
-                        <Select.Option value="proxy_admin">Proxy Admin</Select.Option>
+                        <Select.Option value="internal_user_viewer">{t("Internal Viewer")}</Select.Option>
+                        <Select.Option value="internal_user">{t("Internal User")}</Select.Option>
+                        <Select.Option value="proxy_admin_viewer">{t("Admin Viewer")}</Select.Option>
+                        <Select.Option value="proxy_admin">{t("Proxy Admin")}</Select.Option>
                       </Select>
                     </Form.Item>
 
@@ -405,23 +406,21 @@ const SSOModals: React.FC<SSOModalsProps> = ({
                   e.currentTarget.style.backgroundColor = "#6366f1";
                   e.currentTarget.style.borderColor = "#6366f1";
                 }}
-              >
-                Clear
-              </Button2>
+              >{t("Clear")}</Button2>
             )}
-            <Button2 htmlType="submit">Save</Button2>
+            <Button2 htmlType="submit">{t("Save")}</Button2>
           </div>
         </Form>
       </Modal>
 
       {/* Clear Confirmation Modal */}
       <Modal
-        title="Confirm Clear SSO Settings"
+        title={t("Confirm Clear SSO Settings")}
         open={isClearConfirmModalVisible}
         onOk={handleClearSSO}
         onCancel={() => setIsClearConfirmModalVisible(false)}
-        okText="Yes, Clear"
-        cancelText="Cancel"
+        okText={t("Yes, Clear")}
+        cancelText={t("Cancel")}
         okButtonProps={{
           danger: true,
           style: {
@@ -430,25 +429,25 @@ const SSOModals: React.FC<SSOModalsProps> = ({
           },
         }}
       >
-        <p>Are you sure you want to clear all SSO settings? This action cannot be undone.</p>
-        <p>Users will no longer be able to login using SSO after this change.</p>
+        <p>{t("Are you sure you want to clear all SSO settings? This action cannot be undone.")}</p>
+        <p>{t("Users will no longer be able to login using SSO after this change.")}</p>
       </Modal>
 
       <Modal
-        title="SSO Setup Instructions"
+        title={t("SSO Setup Instructions")}
         open={isInstructionsModalVisible}
         width={800}
         footer={null}
         onOk={handleInstructionsOk}
         onCancel={handleInstructionsCancel}
       >
-        <p>Follow these steps to complete the SSO setup:</p>
+        <p>{t("Follow these steps to complete the SSO setup:")}</p>
         <Text className="mt-2">1. DO NOT Exit this TAB</Text>
         <Text className="mt-2">2. Open a new tab, visit your proxy base url</Text>
         <Text className="mt-2">3. Confirm your SSO is configured correctly and you can login on the new Tab</Text>
         <Text className="mt-2">4. If Step 3 is successful, you can close this tab</Text>
         <div style={{ textAlign: "right", marginTop: "10px" }}>
-          <Button2 onClick={handleInstructionsOk}>Done</Button2>
+          <Button2 onClick={handleInstructionsOk}>{t("Done")}</Button2>
         </div>
       </Modal>
     </>

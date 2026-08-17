@@ -9,6 +9,7 @@ import {
 import { getGuardrailProviderSpecificParams } from "@/components/networking";
 import NumericalInput from "@/components/shared/numerical_input";
 
+import { t } from "@/i18n";
 interface GuardrailProviderFieldsProps {
   selectedProvider: string | null;
   accessToken?: string | null;
@@ -67,7 +68,7 @@ const GuardrailProviderFields: React.FC<GuardrailProviderFieldsProps> = ({
         populateGuardrailProviders(data);
         populateGuardrailProviderMap(data);
       } catch (error) {
-        console.error("Error fetching provider params:", error);
+        console.error(t("Error fetching provider params:"), error);
         setError("Failed to load provider parameters");
       } finally {
         setLoading(false);
@@ -102,7 +103,7 @@ const GuardrailProviderFields: React.FC<GuardrailProviderFieldsProps> = ({
   const providerFields = providerParams && providerParams[providerKey];
 
   if (!providerFields || Object.keys(providerFields).length === 0) {
-    return <div>No configuration fields available for this provider.</div>;
+    return <div>{t("No configuration fields available for this provider.")}</div>;
   }
 
   // Fields to skip for content filter provider (handled in dedicated steps)
@@ -180,8 +181,8 @@ const GuardrailProviderFields: React.FC<GuardrailProviderFieldsProps> = ({
             </Select>
           ) : field.type === "bool" || field.type === "boolean" ? (
             <Select placeholder={field.description}>
-              <Select.Option value={true}>True</Select.Option>
-              <Select.Option value={false}>False</Select.Option>
+              <Select.Option value={true}>{t("True")}</Select.Option>
+              <Select.Option value={false}>{t("False")}</Select.Option>
             </Select>
           ) : field.type === "percentage" && field.min != null && field.max != null ? (
             <Slider

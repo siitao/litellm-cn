@@ -13,8 +13,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useWorker } from "@/hooks/useWorker";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 function LoginPageContent() {
-  const [username, setUsername] = useState("");
+
+  const { t } = useLanguage();  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const { data: uiConfig, isLoading: isConfigLoading } = useUIConfig();
@@ -154,7 +156,7 @@ function LoginPageContent() {
             </div>
 
             <Alert
-              message="Admin UI Disabled"
+              message={t("Admin UI Disabled")}
               description={
                 <>
                   <Paragraph className="text-sm">
@@ -184,25 +186,21 @@ function LoginPageContent() {
           </div>
 
           <div className="text-center">
-            <Title level={3}>Login</Title>
-            <Text type="secondary">Access your LiteLLM Admin UI.</Text>
+            <Title level={3}>{t("Login")}</Title>
+            <Text type="secondary">{t("Access your LiteLLM Admin UI.")}</Text>
           </div>
 
           {!uiConfig?.hide_default_credentials_hint && (
             <Alert
-              message="Default Credentials"
+              message={t("Default Credentials")}
               description={
                 <>
-                  <Paragraph className="text-sm">
-                    By default, Username is <code className="bg-gray-100 px-1 py-0.5 rounded-sm text-xs">admin</code>{" "}
+                  <Paragraph className="text-sm">{t("By default, Username is")}<code className="bg-gray-100 px-1 py-0.5 rounded-sm text-xs">admin</code>{" "}
                     and Password is your set LiteLLM Proxy
                     <code className="bg-gray-100 px-1 py-0.5 rounded-sm text-xs">MASTER_KEY</code>.
                   </Paragraph>
-                  <Paragraph className="text-sm">
-                    Need to set UI credentials or SSO?{" "}
-                    <a href="https://docs.litellm.ai/docs/proxy/ui" target="_blank" rel="noopener noreferrer">
-                      Check the documentation
-                    </a>
+                  <Paragraph className="text-sm">{t("Need to set UI credentials or SSO?")}{" "}
+                    <a href="https://docs.litellm.ai/docs/proxy/ui" target="_blank" rel="noopener noreferrer">{t("Check the documentation")}</a>
                     .
                   </Paragraph>
                 </>
@@ -221,7 +219,7 @@ function LoginPageContent() {
                 <Select
                   value={selectedWorkerId || undefined}
                   onChange={(value) => setSelectedWorkerId(value)}
-                  placeholder="Choose a worker to connect to"
+                  placeholder={t("Choose a worker to connect to")}
                   size="large"
                   suffixIcon={<CloudServerOutlined />}
                   options={workers.map((w) => ({
@@ -233,12 +231,12 @@ function LoginPageContent() {
             )}
 
             <Form.Item
-              label="Username"
+              label={t("Username")}
               name="username"
               rules={[{ required: true, message: "Please enter your username" }]}
             >
               <Input
-                placeholder="Enter your username"
+                placeholder={t("Enter your username")}
                 autoComplete="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -249,12 +247,12 @@ function LoginPageContent() {
             </Form.Item>
 
             <Form.Item
-              label="Password"
+              label={t("Password")}
               name="password"
               rules={[{ required: true, message: "Please enter your password" }]}
             >
               <Input.Password
-                placeholder="Enter your password"
+                placeholder={t("Enter your password")}
                 autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -278,9 +276,7 @@ function LoginPageContent() {
             <Form.Item>
               {!uiConfig?.sso_configured ? (
                 <Popover content="Please configure SSO to log in with SSO." trigger="hover">
-                  <Button disabled block size="large">
-                    Login with SSO
-                  </Button>
+                  <Button disabled block size="large">{t("Login with SSO")}</Button>
                 </Popover>
               ) : (
                 <Button
@@ -300,9 +296,7 @@ function LoginPageContent() {
                   }}
                   block
                   size="large"
-                >
-                  Login with SSO
-                </Button>
+                >{t("Login with SSO")}</Button>
               )}
             </Form.Item>
           </Form>
@@ -316,8 +310,7 @@ function LoginPageContent() {
               <Text>
                 Single Sign-On (SSO) is enabled. LiteLLM no longer automatically redirects to the SSO login flow upon
                 loading this page. To re-enable auto-redirect-to-SSO, set{" "}
-                <Text code>AUTO_REDIRECT_UI_LOGIN_TO_SSO=true</Text> in your environment configuration.
-              </Text>
+                <Text code>AUTO_REDIRECT_UI_LOGIN_TO_SSO=true</Text>{t("in your environment configuration.")}</Text>
             }
           />
         )}

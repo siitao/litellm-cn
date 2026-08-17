@@ -13,6 +13,7 @@ import {
   GuardrailListResponse,
 } from "./helpers";
 
+import { t } from "@/i18n";
 interface PromptCompressionTabProps {
   accessToken: string | null;
 }
@@ -36,7 +37,7 @@ const PromptCompressionTab: React.FC<PromptCompressionTabProps> = ({ accessToken
     getGuardrailsList(accessToken)
       .then((response) => setGuardrails(compressionGuardrailsOf(response as GuardrailListResponse)))
       .catch((error) => {
-        console.error("Failed to load compression guardrails:", error);
+        console.error(t("Failed to load compression guardrails:"), error);
         NotificationsManager.fromBackend("Failed to load compression guardrails");
       })
       .finally(() => setIsLoading(false));
@@ -60,11 +61,11 @@ const PromptCompressionTab: React.FC<PromptCompressionTabProps> = ({ accessToken
           defaultOn: values.defaultOn ?? true,
         }),
       );
-      NotificationsManager.success("Compression guardrail created");
+      NotificationsManager.success(t("Compression guardrail created"));
       form.resetFields();
       await loadGuardrails();
     } catch (error) {
-      console.error("Failed to create compression guardrail:", error);
+      console.error(t("Failed to create compression guardrail:"), error);
       NotificationsManager.fromBackend("Failed to create compression guardrail");
     } finally {
       setIsSaving(false);
@@ -75,7 +76,7 @@ const PromptCompressionTab: React.FC<PromptCompressionTabProps> = ({ accessToken
     <div className="w-full space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>Headroom prompt compression</CardTitle>
+          <CardTitle>{t("Headroom prompt compression")}</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="mb-4 text-sm text-muted-foreground">
@@ -86,9 +87,7 @@ const PromptCompressionTab: React.FC<PromptCompressionTabProps> = ({ accessToken
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 underline"
-            >
-              Headroom setup docs
-            </a>
+            >{t("Headroom setup docs")}</a>
           </p>
           {isLoading && <p className="text-sm text-muted-foreground">Loading...</p>}
           {!isLoading && guardrails.length === 0 && (
@@ -122,7 +121,7 @@ const PromptCompressionTab: React.FC<PromptCompressionTabProps> = ({ accessToken
 
       <Card>
         <CardHeader>
-          <CardTitle>Add Headroom compression guardrail</CardTitle>
+          <CardTitle>{t("Add Headroom compression guardrail")}</CardTitle>
         </CardHeader>
         <CardContent>
           <Form
@@ -137,8 +136,8 @@ const PromptCompressionTab: React.FC<PromptCompressionTabProps> = ({ accessToken
             </Form.Item>
             <Form.Item
               name="apiBase"
-              label="Headroom API base"
-              tooltip="Base URL of your Headroom compression service (LiteLLM calls its /v1/compress endpoint)"
+              label={t("Headroom API base")}
+              tooltip={t("Base URL of your Headroom compression service (LiteLLM calls its /v1/compress endpoint)")}
               extra="The URL where your Headroom compression service is hosted"
               rules={[{ required: true, message: "API base is required" }]}
             >
@@ -162,9 +161,7 @@ const PromptCompressionTab: React.FC<PromptCompressionTabProps> = ({ accessToken
               </p>
             </div>
             <div className="flex justify-end">
-              <Button type="primary" htmlType="submit" loading={isSaving}>
-                Add guardrail
-              </Button>
+              <Button type="primary" htmlType="submit" loading={isSaving}>{t("Add guardrail")}</Button>
             </div>
           </Form>
         </CardContent>

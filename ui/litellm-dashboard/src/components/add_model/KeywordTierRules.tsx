@@ -4,6 +4,7 @@ import React from "react";
 
 import { emptyKeywordTierRuleIndexes } from "./complexity_router_keywords";
 
+import { t } from "@/i18n";
 const { Text } = Typography;
 
 export type ComplexityTier = "SIMPLE" | "MEDIUM" | "COMPLEX" | "REASONING";
@@ -80,16 +81,12 @@ const KeywordTierRules: React.FC<KeywordTierRulesProps> = ({ rules, onChange, ti
     <div className="w-full max-w-none">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
-          <Typography.Title level={4} style={{ margin: 0 }}>
-            Keyword Tier Overrides
-          </Typography.Title>
+          <Typography.Title level={4} style={{ margin: 0 }}>{t("Keyword Tier Overrides")}</Typography.Title>
           <Tooltip title="Match known terms and force the request straight to a chosen complexity tier, bypassing rule-based scoring.">
             <InfoCircleOutlined className="text-gray-400" />
           </Tooltip>
         </div>
-        <Button icon={<PlusOutlined />} onClick={addRule}>
-          Add keyword rule
-        </Button>
+        <Button icon={<PlusOutlined />} onClick={addRule}>{t("Add keyword rule")}</Button>
       </div>
       <Text type="secondary" style={{ display: "block", marginBottom: 16 }}>
         Optional: route requests containing specific keywords directly to a tier, e.g. route &quot;invoice, refund,
@@ -98,7 +95,7 @@ const KeywordTierRules: React.FC<KeywordTierRulesProps> = ({ rules, onChange, ti
 
       {rules.length === 0 ? (
         <Card className="bg-gray-50">
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No keyword tier overrides configured" />
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={t("No keyword tier overrides configured")} />
         </Card>
       ) : (
         <div className="flex flex-col gap-3">
@@ -106,8 +103,7 @@ const KeywordTierRules: React.FC<KeywordTierRulesProps> = ({ rules, onChange, ti
             <Card key={rule.id} size="small">
               <div className="flex items-end gap-3">
                 <div className="flex-1">
-                  <Text strong style={{ display: "block", marginBottom: 8 }}>
-                    Keywords {index + 1}
+                  <Text strong style={{ display: "block", marginBottom: 8 }}>{t("Keywords")} {index + 1}
                   </Text>
                   <AntdSelect
                     mode="tags"
@@ -117,7 +113,7 @@ const KeywordTierRules: React.FC<KeywordTierRulesProps> = ({ rules, onChange, ti
                     onSearch={(text) => setDraft(rule.id, text)}
                     onInputKeyDown={commitDraftOnEnter(rule)}
                     onBlur={() => commitDraft(rule)}
-                    placeholder="e.g., invoice, refund, billing"
+                    placeholder={t("e.g., invoice, refund, billing")}
                     tokenSeparators={[","]}
                     open={false}
                     suffixIcon={null}
@@ -126,15 +122,11 @@ const KeywordTierRules: React.FC<KeywordTierRulesProps> = ({ rules, onChange, ti
                     status={emptyRuleIndexes.has(index) ? "error" : undefined}
                   />
                   {emptyRuleIndexes.has(index) && (
-                    <Text type="danger" style={{ fontSize: 12 }}>
-                      At least one keyword is required
-                    </Text>
+                    <Text type="danger" style={{ fontSize: 12 }}>{t("At least one keyword is required")}</Text>
                   )}
                 </div>
                 <div style={{ width: 220 }}>
-                  <Text strong style={{ display: "block", marginBottom: 8 }}>
-                    Route to tier
-                  </Text>
+                  <Text strong style={{ display: "block", marginBottom: 8 }}>{t("Route to tier")}</Text>
                   <AntdSelect
                     value={rule.tier}
                     onChange={(tier: ComplexityTier) => updateRule(rule.id, { tier })}

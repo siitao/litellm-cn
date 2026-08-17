@@ -44,7 +44,7 @@ function GuardrailRowActions({ guardrail, onDeleteClick }: GuardrailRowActionsPr
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open guardrail actions"
+        aria-label={t("Open guardrail actions")}
         data-testid={`guardrail-actions-${guardrail.guardrail_id}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -80,7 +80,7 @@ export const getGuardrailTableColumns = ({
   {
     id: "guardrail_id",
     accessorKey: "guardrail_id",
-    meta: { title: "Guardrail ID" },
+    meta: { title: t("Guardrail ID")},
     header: ({ column }) => <DataTableSortHeader column={column} title={t("guardrails.col_id")} />,
     size: 200,
     enableSorting: true,
@@ -95,7 +95,7 @@ export const getGuardrailTableColumns = ({
   {
     id: "guardrail_name",
     accessorKey: "guardrail_name",
-    meta: { title: "Name" },
+    meta: { title: t("Name")},
     header: ({ column }) => <DataTableSortHeader column={column} title={t("guardrails.col_name")} />,
     size: 200,
     enableSorting: true,
@@ -110,7 +110,7 @@ export const getGuardrailTableColumns = ({
   },
   {
     id: "provider",
-    meta: { title: "Provider" },
+    meta: { title: t("Provider")},
     header: t("guardrails.col_provider"),
     size: 180,
     enableSorting: false,
@@ -118,7 +118,7 @@ export const getGuardrailTableColumns = ({
   },
   {
     id: "mode",
-    meta: { title: "Mode" },
+    meta: { title: t("Mode")},
     header: t("guardrails.col_mode"),
     size: 130,
     enableSorting: false,
@@ -128,7 +128,7 @@ export const getGuardrailTableColumns = ({
   },
   {
     id: "default_on",
-    meta: { title: "Default On" },
+    meta: { title: t("Default On")},
     header: t("guardrails.col_default_on"),
     size: 120,
     enableSorting: false,
@@ -142,7 +142,7 @@ export const getGuardrailTableColumns = ({
   {
     id: "created_at",
     accessorKey: "created_at",
-    meta: { title: "Created At" },
+    meta: { title: t("Created At")},
     header: ({ column }) => <DataTableSortHeader column={column} title={t("guardrails.col_created_at")} />,
     size: 150,
     enableSorting: true,
@@ -151,7 +151,7 @@ export const getGuardrailTableColumns = ({
   {
     id: "updated_at",
     accessorKey: "updated_at",
-    meta: { title: "Updated At" },
+    meta: { title: t("Updated At")},
     header: ({ column }) => <DataTableSortHeader column={column} title={t("guardrails.col_updated_at")} />,
     size: 150,
     enableSorting: true,
@@ -160,7 +160,7 @@ export const getGuardrailTableColumns = ({
   {
     id: "actions",
     meta: { className: "text-right", headerClassName: "text-right" },
-    header: () => <span className="sr-only">Actions</span>,
+    header: () => <span className="sr-only">{t("Actions")}</span>,
     size: 64,
     enableSorting: false,
     enableHiding: false,

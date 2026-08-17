@@ -25,6 +25,7 @@ import { KeyResponse, Team } from "../key_team_helpers/key_list";
 import { Organization } from "../networking";
 import KeyInfoView from "../templates/key_info_view";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface TeamVirtualKeysTableProps {
   teamId: string;
   teamAlias?: string;
@@ -38,7 +39,8 @@ interface TeamVirtualKeysTableProps {
 const DEFAULT_SORTING: SortingState = [{ id: "created_at", desc: true }];
 
 export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVirtualKeysTableProps) {
-  const [selectedKey, setSelectedKey] = useState<KeyResponse | null>(null);
+
+  const { t } = useLanguage();  const [selectedKey, setSelectedKey] = useState<KeyResponse | null>(null);
   const [sorting, setSorting] = useState<SortingState>(DEFAULT_SORTING);
   const [tablePagination, setTablePagination] = useState<PaginationState>({
     pageIndex: 0,
@@ -132,7 +134,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
       {
         id: "token",
         accessorKey: "token",
-        meta: { title: "Key ID" },
+        meta: { title: t("Key ID")},
         header: ({ column }) => <DataTableSortHeader column={column} title="Key ID" variant="header-cycle" />,
         size: 120,
         enableSorting: true,
@@ -143,7 +145,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
       {
         id: "key_alias",
         accessorKey: "key_alias",
-        meta: { title: "Key Alias" },
+        meta: { title: t("Key Alias")},
         header: ({ column }) => <DataTableSortHeader column={column} title="Key Alias" variant="header-cycle" />,
         size: 150,
         enableSorting: true,
@@ -207,7 +209,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
       {
         id: "created_at",
         accessorKey: "created_at",
-        meta: { title: "Created At" },
+        meta: { title: t("Created At")},
         header: ({ column }) => <DataTableSortHeader column={column} title="Created At" variant="header-cycle" />,
         size: 120,
         enableSorting: true,
@@ -231,9 +233,9 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
           const popoverContent = (
             <div className="flex min-w-[200px] max-w-[300px] flex-col gap-2 text-xs">
               {[
-                { label: "User Alias", value: userAlias },
-                { label: "User Email", value: userEmail },
-                { label: "User ID", value: userId },
+                { label: t("User Alias"), value: userAlias },
+                { label: t("User Email"), value: userEmail },
+                { label: t("User ID"), value: userId },
               ].map(({ label, value }) => (
                 <div key={label} className="flex flex-col min-w-0">
                   <span className="text-muted-foreground">{label}</span>
@@ -276,7 +278,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
       {
         id: "updated_at",
         accessorKey: "updated_at",
-        meta: { title: "Updated At" },
+        meta: { title: t("Updated At")},
         header: ({ column }) => <DataTableSortHeader column={column} title="Updated At" variant="header-cycle" />,
         size: 120,
         enableSorting: true,
@@ -301,7 +303,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
       {
         id: "spend",
         accessorKey: "spend",
-        meta: { title: "Spend (USD)" },
+        meta: { title: t("Spend (USD)")},
         header: ({ column }) => <DataTableSortHeader column={column} title="Spend (USD)" variant="header-cycle" />,
         size: 100,
         enableSorting: true,
@@ -310,7 +312,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
       {
         id: "max_budget",
         accessorKey: "max_budget",
-        meta: { title: "Budget (USD)" },
+        meta: { title: t("Budget (USD)")},
         header: ({ column }) => <DataTableSortHeader column={column} title="Budget (USD)" variant="header-cycle" />,
         size: 110,
         enableSorting: true,
@@ -337,14 +339,10 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
           const scope = deriveKeyModelScope(info.row.original.allowed_routes, info.row.original.key_type);
           const emptyModelsBadge = !scope.hasModelAccess ? (
             <Tooltip content={`Scoped to ${scope.label} routes; this key cannot call any models`}>
-              <Badge variant="secondary" className="mb-1">
-                No model access
-              </Badge>
+              <Badge variant="secondary" className="mb-1">{t("No model access")}</Badge>
             </Tooltip>
           ) : (
-            <Badge variant="destructive" className="mb-1">
-              All Proxy Models
-            </Badge>
+            <Badge variant="destructive" className="mb-1">{t("All Proxy Models")}</Badge>
           );
           return (
             <div className="flex flex-col py-2">
@@ -377,9 +375,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
                         <div className="flex flex-wrap gap-1">
                           {models.slice(0, 3).map((model, index) =>
                             model === "all-proxy-models" ? (
-                              <Badge key={index} variant="destructive">
-                                All Proxy Models
-                              </Badge>
+                              <Badge key={index} variant="destructive">{t("All Proxy Models")}</Badge>
                             ) : (
                               <Badge key={index}>
                                 {model.length > 30
@@ -397,9 +393,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
                             <div className="flex flex-wrap gap-1">
                               {models.slice(3).map((model, index) =>
                                 model === "all-proxy-models" ? (
-                                  <Badge key={index + 3} variant="destructive">
-                                    All Proxy Models
-                                  </Badge>
+                                  <Badge key={index + 3} variant="destructive">{t("All Proxy Models")}</Badge>
                                 ) : (
                                   <Badge key={index + 3}>
                                     {model.length > 30
@@ -429,8 +423,8 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
           const key = row.original;
           return (
             <div>
-              <div>TPM: {key.tpm_limit !== null ? key.tpm_limit : "Unlimited"}</div>
-              <div>RPM: {key.rpm_limit !== null ? key.rpm_limit : "Unlimited"}</div>
+              <div>{t("TPM:")} {key.tpm_limit !== null ? key.tpm_limit : "Unlimited"}</div>
+              <div>{t("RPM:")} {key.rpm_limit !== null ? key.rpm_limit : "Unlimited"}</div>
             </div>
           );
         },
@@ -491,15 +485,15 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
                   table={table}
                   open={filtersOpen}
                   onOpenChange={setFiltersOpen}
-                  title="Filters"
+                  title={t("Filters")}
                   description={`Narrow down keys for ${teamAlias ?? "this team"}`}
                 >
                   {({ get, set }) => (
-                    <DataTableFilterField label="User ID">
+                    <DataTableFilterField label={t("User ID")}>
                       <Input
                         value={(get("user_id") as string) ?? ""}
                         onChange={(event) => set("user_id", event.target.value)}
-                        placeholder="Filter by user ID…"
+                        placeholder={t("Filter by user ID…")}
                       />
                     </DataTableFilterField>
                   )}

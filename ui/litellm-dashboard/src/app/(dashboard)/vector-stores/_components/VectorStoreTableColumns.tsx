@@ -18,6 +18,8 @@ import { VectorStore } from "@/components/vector_store_management/types";
 import { cn } from "@/lib/cva.config";
 import { copyToClipboard } from "@/utils/dataUtils";
 
+import { t } from "@/i18n";
+import { useLanguage } from "@/contexts/LanguageContext";
 function VectorStoreProviderCell({ provider }: { provider: string }) {
   const { displayName, logo } = getProviderLogoAndName(provider);
   return (
@@ -64,10 +66,11 @@ interface VectorStoreRowActionsProps {
 }
 
 function VectorStoreRowActions({ vectorStore, onEdit, onDelete }: VectorStoreRowActionsProps) {
-  return (
+
+  const { t } = useLanguage();  return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open vector store actions"
+        aria-label={t("Open vector store actions")}
         data-testid={`vector-store-actions-${vectorStore.vector_store_id}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -113,8 +116,8 @@ export const getVectorStoreTableColumns = ({
   {
     id: "vector_store_id",
     accessorKey: "vector_store_id",
-    meta: { title: "Vector Store ID" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Vector Store ID" />,
+    meta: { title: t("Vector Store ID")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Vector Store ID")} />,
     size: 220,
     enableSorting: true,
     cell: ({ row }) => (
@@ -129,8 +132,8 @@ export const getVectorStoreTableColumns = ({
   {
     id: "vector_store_name",
     accessorKey: "vector_store_name",
-    meta: { title: "Name" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Name" />,
+    meta: { title: t("Name")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Name")} />,
     size: 200,
     enableSorting: true,
     cell: ({ row }) => {
@@ -145,7 +148,7 @@ export const getVectorStoreTableColumns = ({
   {
     id: "vector_store_description",
     accessorKey: "vector_store_description",
-    meta: { title: "Description" },
+    meta: { title: t("Description")},
     header: "Description",
     size: 280,
     enableSorting: false,
@@ -160,7 +163,7 @@ export const getVectorStoreTableColumns = ({
   },
   {
     id: "files",
-    meta: { title: "Files" },
+    meta: { title: t("Files")},
     header: "Files",
     size: 160,
     enableSorting: false,
@@ -169,7 +172,7 @@ export const getVectorStoreTableColumns = ({
   {
     id: "provider",
     accessorKey: "custom_llm_provider",
-    meta: { title: "Provider" },
+    meta: { title: t("Provider")},
     header: "Provider",
     size: 160,
     enableSorting: false,
@@ -179,8 +182,8 @@ export const getVectorStoreTableColumns = ({
     id: "created_at",
     accessorKey: "created_at",
     sortingFn: "datetime",
-    meta: { title: "Created At" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Created At" />,
+    meta: { title: t("Created At")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Created At")} />,
     size: 150,
     enableSorting: true,
     cell: ({ row }) => <DateCell value={row.original.created_at} precision="date" />,
@@ -189,8 +192,8 @@ export const getVectorStoreTableColumns = ({
     id: "updated_at",
     accessorKey: "updated_at",
     sortingFn: "datetime",
-    meta: { title: "Updated At" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Updated At" />,
+    meta: { title: t("Updated At")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Updated At")} />,
     size: 150,
     enableSorting: true,
     cell: ({ row }) => <DateCell value={row.original.updated_at} precision="date" />,
@@ -198,7 +201,7 @@ export const getVectorStoreTableColumns = ({
   {
     id: "actions",
     meta: { className: "text-right", headerClassName: "text-right" },
-    header: () => <span className="sr-only">Actions</span>,
+    header: () => <span className="sr-only">{t("Actions")}</span>,
     size: 64,
     enableSorting: false,
     enableHiding: false,

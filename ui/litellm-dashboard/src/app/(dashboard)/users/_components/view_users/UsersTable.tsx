@@ -58,13 +58,14 @@ const FILTER_LABELS: Record<string, string> = {
 };
 
 function EmptyState() {
-  return (
+
+  const { t } = useLanguage();  return (
     <div className="flex flex-col items-center gap-1 py-6">
       <div className="mb-1 flex size-10 items-center justify-center rounded-lg bg-muted">
         <Users className="size-5 text-muted-foreground" />
       </div>
-      <div className="text-sm font-medium text-foreground">No users found</div>
-      <div className="text-sm text-muted-foreground">Try adjusting your search or filters.</div>
+      <div className="text-sm font-medium text-foreground">{t("No users found")}</div>
+      <div className="text-sm text-muted-foreground">{t("Try adjusting your search or filters.")}</div>
     </div>
   );
 }
@@ -169,43 +170,43 @@ data,
             table={table}
             open={filtersOpen}
             onOpenChange={setFiltersOpen}
-            title="Filters"
-            description="Narrow down your users"
+            title={t("Filters")}
+            description={t("Narrow down your users")}
           >
             {({ get, set }) => (
               <>
-                <DataTableFilterField label="User ID">
+                <DataTableFilterField label={t("User ID")}>
                   <Input
                     value={(get("user_id") as string) ?? ""}
                     onChange={(event) => set("user_id", event.target.value)}
-                    placeholder="Enter user ID…"
+                    placeholder={t("Enter user ID…")}
                     data-testid="users-filter-user-id"
                   />
                 </DataTableFilterField>
-                <DataTableFilterField label="SSO ID">
+                <DataTableFilterField label={t("SSO ID")}>
                   <Input
                     value={(get("sso_user_id") as string) ?? ""}
                     onChange={(event) => set("sso_user_id", event.target.value)}
-                    placeholder="Enter SSO ID…"
+                    placeholder={t("Enter SSO ID…")}
                     data-testid="users-filter-sso-id"
                   />
                 </DataTableFilterField>
-                <DataTableFilterField label="Role">
+                <DataTableFilterField label={t("Role")}>
                   <SearchSelect
                     options={roleOptions}
                     value={(get("user_role") as string) || undefined}
                     onValueChange={(value) => set("user_role", value)}
-                    placeholder="Select a role…"
-                    emptyText="No roles found"
+                    placeholder={t("Select a role…")}
+                    emptyText={t("No roles found")}
                   />
                 </DataTableFilterField>
-                <DataTableFilterField label="Team">
+                <DataTableFilterField label={t("Team")}>
                   <SearchSelect
                     options={teamOptions}
                     value={(get("team") as string) || undefined}
                     onValueChange={(value) => set("team", value)}
-                    placeholder="Select a team…"
-                    emptyText="No teams found"
+                    placeholder={t("Select a team…")}
+                    emptyText={t("No teams found")}
                   />
                 </DataTableFilterField>
               </>

@@ -9,6 +9,7 @@ import { buildAttachmentData } from "./build_attachment_data";
 import { getInvalidTeamEntries } from "./scope_validation";
 import ImpactPreviewAlert from "./impact_preview_alert";
 
+import { t } from "@/i18n";
 const { Text } = Typography;
 
 interface AddAttachmentFormProps {
@@ -62,7 +63,7 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
       setAvailableTeams(teamAliases);
       setTeamsLoaded(true);
     } catch (error) {
-      console.error("Failed to load teams:", error);
+      console.error(t("Failed to load teams:"), error);
     } finally {
       setIsLoadingTeams(false);
     }
@@ -75,7 +76,7 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
       const keyAliases = keysArray.map((k: any) => k.key_alias).filter(Boolean);
       setAvailableKeys(keyAliases);
     } catch (error) {
-      console.error("Failed to load keys:", error);
+      console.error(t("Failed to load keys:"), error);
     } finally {
       setIsLoadingKeys(false);
     }
@@ -88,7 +89,7 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
       const modelIds = modelsArray.map((m: any) => m.id || m.model_name).filter(Boolean);
       setAvailableModels(modelIds);
     } catch (error) {
-      console.error("Failed to load models:", error);
+      console.error(t("Failed to load models:"), error);
     } finally {
       setIsLoadingModels(false);
     }
@@ -122,7 +123,7 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
       const result = await estimateAttachmentImpactCall(accessToken, data);
       setImpactResult(result);
     } catch (error) {
-      console.error("Failed to estimate impact:", error);
+      console.error(t("Failed to estimate impact:"), error);
     } finally {
       setIsEstimating(false);
     }
@@ -175,7 +176,7 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
       onSuccess();
       onClose();
     } catch (error) {
-      console.error("Failed to create attachment:", error);
+      console.error(t("Failed to create attachment:"), error);
       NotificationsManager.fromBackend(
         "Failed to create attachment: " + (error instanceof Error ? error.message : String(error)),
       );
@@ -200,12 +201,12 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
       >
         <Form.Item
           name="policy_names"
-          label="Policies"
+          label={t("Policies")}
           rules={[{ required: true, message: "Please select at least one policy" }]}
         >
           <Select
             mode="multiple"
-            placeholder="Select policies to attach"
+            placeholder={t("Select policies to attach")}
             options={policyOptions}
             showSearch
             filterOption={(input, option) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase())}
@@ -214,13 +215,13 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
         </Form.Item>
 
         <Divider orientation="left">
-          <Text strong>Scope</Text>
+          <Text strong>{t("Scope")}</Text>
         </Divider>
 
-        <Form.Item label="Scope Type">
+        <Form.Item label={t("Scope Type")}>
           <Radio.Group value={scopeType} onChange={(e) => setScopeType(e.target.value)}>
-            <Radio value="specific">Specific (teams, keys, models, or tags)</Radio>
-            <Radio value="global">Global (applies to all requests)</Radio>
+            <Radio value="specific">{t("Specific (teams, keys, models, or tags)")}</Radio>
+            <Radio value="global">{t("Global (applies to all requests)")}</Radio>
           </Radio.Group>
         </Form.Item>
 
@@ -228,8 +229,8 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
           <>
             <Form.Item
               name="teams"
-              label="Teams"
-              tooltip="Select team aliases or enter custom patterns. Supports wildcards (e.g., healthcare-*)"
+              label={t("Teams")}
+              tooltip={t("Select team aliases or enter custom patterns. Supports wildcards (e.g., healthcare-*)")}
               rules={[
                 {
                   validator: async (_rule, value?: string[]) => {
@@ -262,8 +263,8 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
 
             <Form.Item
               name="keys"
-              label="Keys"
-              tooltip="Select key aliases or enter custom patterns. Supports wildcards (e.g., dev-*)"
+              label={t("Keys")}
+              tooltip={t("Select key aliases or enter custom patterns. Supports wildcards (e.g., dev-*)")}
             >
               <Select
                 mode="tags"
@@ -282,7 +283,7 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
 
             <Form.Item
               name="models"
-              label="Models"
+              label={t("Models")}
               tooltip="Model names this attachment applies to. Supports wildcards (e.g., gpt-4*). Leave empty to apply to all models."
             >
               <Select
@@ -304,19 +305,17 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
 
             <Form.Item
               name="tags"
-              label="Tags"
+              label={t("Tags")}
               tooltip="Match against tags set in key or team metadata. Use exact values (e.g., healthcare) or wildcard patterns (e.g., health-*) where * matches any suffix."
               extra={
-                <Text type="secondary" style={{ fontSize: 12 }}>
-                  Matches tags from key/team <code>metadata.tags</code> or tags passed dynamically in the request body.
-                  Use <code>*</code> as a suffix wildcard (e.g., <code>prod-*</code> matches <code>prod-us</code>,{" "}
+                <Text type="secondary" style={{ fontSize: 12 }}>{t("Matches tags from key/team")}<code>metadata.tags</code>{t("or tags passed dynamically in the request body. Use")}<code>*</code>{t("as a suffix wildcard (e.g.,")}<code>prod-*</code> matches <code>prod-us</code>,{" "}
                   <code>prod-eu</code>).
                 </Text>
               }
             >
               <Select
                 mode="tags"
-                placeholder="Type a tag and press Enter (e.g. healthcare, prod-*)"
+                placeholder={t("Type a tag and press Enter (e.g. healthcare, prod-*)")}
                 tokenSeparators={[",", " "]}
                 notFoundContent={null}
                 suffixIcon={null}
@@ -330,17 +329,11 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
         {impactResult && <ImpactPreviewAlert impactResult={impactResult} />}
 
         <div className="flex justify-end space-x-2 mt-4">
-          <Button variant="secondary" onClick={handleClose}>
-            Cancel
-          </Button>
+          <Button variant="secondary" onClick={handleClose}>{t("Cancel")}</Button>
           {scopeType === "specific" && (
-            <Button variant="secondary" onClick={handlePreviewImpact} loading={isEstimating}>
-              Estimate Impact
-            </Button>
+            <Button variant="secondary" onClick={handlePreviewImpact} loading={isEstimating}>{t("Estimate Impact")}</Button>
           )}
-          <Button onClick={handleSubmit} loading={isSubmitting}>
-            Create Attachment
-          </Button>
+          <Button onClick={handleSubmit} loading={isSubmitting}>{t("Create Attachment")}</Button>
         </div>
       </Form>
     </Modal>

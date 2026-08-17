@@ -24,6 +24,7 @@ import RouterSettings from "@/components/router_settings";
 import Fallbacks from "@/components/Settings/RouterSettings/Fallbacks/Fallbacks";
 import RoutingGroups from "@/components/routing_groups";
 
+import { t } from "@/i18n";
 const PROMPT_CACHING_TAB = "prompt_caching";
 const ENABLE_ANTHROPIC_PROMPT_CACHING = "enable_anthropic_prompt_caching";
 const ANTHROPIC_PROMPT_CACHING_TTL = "anthropic_prompt_caching_ttl";
@@ -93,7 +94,7 @@ const SettingValueEditor: React.FC<{
       <AntdSelect
         allowClear
         style={{ minWidth: "8rem" }}
-        placeholder="Default"
+        placeholder={t("Default")}
         value={setting.field_value || undefined}
         options={(setting.field_options ?? []).map((option) => ({ label: option, value: option }))}
         onChange={(newValue) => onChange(setting.field_name, newValue ?? "")}

@@ -19,6 +19,8 @@ import { copyToClipboard } from "@/utils/dataUtils";
 
 import ImpactPopover from "./impact_popover";
 
+import { t } from "@/i18n";
+import { useLanguage } from "@/contexts/LanguageContext";
 function ChipList({ values }: { values: string[] }) {
   if (values.length === 0) {
     return <span className="text-muted-foreground">-</span>;
@@ -45,12 +47,13 @@ const CONFIG_ATTACHMENT_HINT =
   "Config attachments are defined in the config file and cannot be deleted from the dashboard.";
 
 function AttachmentRowActions({ attachment, isAdmin, onDeleteClick }: AttachmentRowActionsProps) {
-  const isConfigAttachment = attachment.definition_location === "config";
+
+  const { t } = useLanguage();  const isConfigAttachment = attachment.definition_location === "config";
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open attachment actions"
+        aria-label={t("Open attachment actions")}
         data-testid={`attachment-actions-${attachment.attachment_id}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -98,7 +101,7 @@ export const getAttachmentTableColumns = ({
   {
     id: "attachment_id",
     accessorKey: "attachment_id",
-    meta: { title: "Attachment ID" },
+    meta: { title: t("Attachment ID")},
     header: "Attachment ID",
     size: 160,
     enableSorting: false,
@@ -107,8 +110,8 @@ export const getAttachmentTableColumns = ({
   {
     id: "policy_name",
     accessorKey: "policy_name",
-    meta: { title: "Policy", skeleton: "badge" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Policy" />,
+    meta: { title: t("Policy"), skeleton: "badge" },
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Policy")} />,
     size: 180,
     enableSorting: true,
     cell: ({ row }) => <StatusBadge tone="info" label={row.original.policy_name} />,
@@ -116,7 +119,7 @@ export const getAttachmentTableColumns = ({
   {
     id: "scope",
     accessorFn: (row) => row.scope ?? "",
-    meta: { title: "Scope", skeleton: "badge" },
+    meta: { title: t("Scope"), skeleton: "badge" },
     header: "Scope",
     size: 120,
     enableSorting: false,
@@ -126,7 +129,7 @@ export const getAttachmentTableColumns = ({
         return <span className="text-muted-foreground">-</span>;
       }
       if (scope === "*") {
-        return <StatusBadge tone="warning" label="Global (*)" />;
+        return <StatusBadge tone="warning" label={t("Global (*)")} />;
       }
       return (
         <span className="block max-w-40 truncate text-xs" title={scope}>
@@ -137,7 +140,7 @@ export const getAttachmentTableColumns = ({
   },
   {
     id: "teams",
-    meta: { title: "Teams", skeleton: "chips" },
+    meta: { title: t("Teams"), skeleton: "chips" },
     header: "Teams",
     size: 160,
     enableSorting: false,
@@ -145,7 +148,7 @@ export const getAttachmentTableColumns = ({
   },
   {
     id: "keys",
-    meta: { title: "Keys", skeleton: "chips" },
+    meta: { title: t("Keys"), skeleton: "chips" },
     header: "Keys",
     size: 160,
     enableSorting: false,
@@ -153,7 +156,7 @@ export const getAttachmentTableColumns = ({
   },
   {
     id: "models",
-    meta: { title: "Models", skeleton: "chips" },
+    meta: { title: t("Models"), skeleton: "chips" },
     header: "Models",
     size: 160,
     enableSorting: false,
@@ -161,7 +164,7 @@ export const getAttachmentTableColumns = ({
   },
   {
     id: "tags",
-    meta: { title: "Tags", skeleton: "chips" },
+    meta: { title: t("Tags"), skeleton: "chips" },
     header: "Tags",
     size: 160,
     enableSorting: false,
@@ -170,8 +173,8 @@ export const getAttachmentTableColumns = ({
   {
     id: "created_at",
     accessorFn: (row) => row.created_at ?? "",
-    meta: { title: "Created At" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Created At" />,
+    meta: { title: t("Created At")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Created At")} />,
     size: 150,
     enableSorting: true,
     cell: ({ row }) => <DateCell value={row.original.created_at} />,
@@ -179,7 +182,7 @@ export const getAttachmentTableColumns = ({
   {
     id: "actions",
     meta: { className: "text-right", headerClassName: "text-right" },
-    header: () => <span className="sr-only">Actions</span>,
+    header: () => <span className="sr-only">{t("Actions")}</span>,
     size: 88,
     enableSorting: false,
     enableHiding: false,

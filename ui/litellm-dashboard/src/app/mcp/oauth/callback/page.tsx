@@ -4,6 +4,7 @@ import { Suspense, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { getSecureItem, setSecureItem } from "@/utils/secureStorage";
 
+import { t } from "@/i18n";
 // Written to sessionStorage so the admin hook (useMcpOAuthFlow), the user hook
 // (useUserMcpOAuthFlow), and the tools re-auth hook (useToolsOAuthFlow) can each
 // pick up the result.  Each hook reads its own namespace to avoid cross-flow collisions.
@@ -79,7 +80,7 @@ const McpOAuthCallbackContent = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 p-6">
       <div className="max-w-lg w-full rounded-lg bg-white shadow-md p-8 text-center space-y-4">
-        <h1 className="text-xl font-semibold text-slate-900">LiteLLM MCP OAuth</h1>
+        <h1 className="text-xl font-semibold text-slate-900">{t("LiteLLM MCP OAuth")}</h1>
         <p className="text-sm text-slate-700">
           Authorization complete. You may close this window and return to the LiteLLM dashboard.
         </p>

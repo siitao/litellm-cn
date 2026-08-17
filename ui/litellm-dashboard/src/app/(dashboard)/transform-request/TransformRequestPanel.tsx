@@ -102,16 +102,16 @@ ${formattedBody}
 
         // Update state with the formatted curl command
         setTransformedResponse(formattedCurl);
-        NotificationsManager.success("Request transformed successfully");
+        NotificationsManager.success(t("Request transformed successfully"));
       } else {
         // Handle the case where the API returns a different format
         // Try to extract the parts from a string response if needed
         const rawText = typeof data === "string" ? data : JSON.stringify(data);
         setTransformedResponse(rawText);
-        NotificationsManager.info("Transformed request received in unexpected format");
+        NotificationsManager.info(t("Transformed request received in unexpected format"));
       }
     } catch (err) {
-      console.error("Error transforming request:", err);
+      console.error(t("Error transforming request:"), err);
       NotificationsManager.fromBackend("Failed to transform request");
     } finally {
       setIsLoading(false);
@@ -129,15 +129,13 @@ ${formattedBody}
   return (
     <div className="p-2">
       <h1 className="text-lg font-medium text-foreground">{t("prompts.playground")}</h1>
-      <p className="text-sm text-muted-foreground">
-        See how LiteLLM transforms your request for the specified provider.
-      </p>
+      <p className="text-sm text-muted-foreground">{t("See how LiteLLM transforms your request for the specified provider.")}</p>
       <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
         {/* Original Request Panel */}
         <Card>
           <CardHeader>
             <CardTitle className="text-2xl font-bold">{t("prompts.original_request")}</CardTitle>
-            <CardDescription>The request you would send to LiteLLM /chat/completions endpoint.</CardDescription>
+            <CardDescription>{t("The request you would send to LiteLLM /chat/completions endpoint.")}</CardDescription>
           </CardHeader>
 
           <CardContent>
@@ -146,7 +144,7 @@ ${formattedBody}
               value={originalRequestJSON}
               onChange={(e) => setOriginalRequestJSON(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Press Cmd/Ctrl + Enter to transform"
+              placeholder={t("Press Cmd/Ctrl + Enter to transform")}
             />
           </CardContent>
 
@@ -162,8 +160,8 @@ ${formattedBody}
         <Card>
           <CardHeader>
             <CardTitle className="text-2xl font-bold">{t("prompts.transformed_request")}</CardTitle>
-            <CardDescription>How LiteLLM transforms your request for the specified provider.</CardDescription>
-            <p className="mt-2 text-xs text-muted-foreground">Note: Sensitive headers are not shown.</p>
+            <CardDescription>{t("How LiteLLM transforms your request for the specified provider.")}</CardDescription>
+            <p className="mt-2 text-xs text-muted-foreground">{t("Note: Sensitive headers are not shown.")}</p>
           </CardHeader>
 
           <CardContent>
@@ -193,7 +191,7 @@ ${formattedBody}
                 className="absolute top-2 right-2"
                 onClick={() => {
                   navigator.clipboard.writeText(transformedResponse || "");
-                  NotificationsManager.success("Copied to clipboard");
+                  NotificationsManager.success(t("Copied to clipboard"));
                 }}
               >
                 <Copy />
@@ -203,8 +201,7 @@ ${formattedBody}
         </Card>
       </div>
       <div className="mt-4 text-right">
-        <p className="text-sm text-muted-foreground">
-          Found an error? File an issue{" "}
+        <p className="text-sm text-muted-foreground">{t("Found an error? File an issue")}{" "}
           <a
             className="underline underline-offset-4"
             href="https://github.com/BerriAI/litellm/issues"

@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/cva.config";
 
+import { t } from "@/i18n";
+import { useLanguage } from "@/contexts/LanguageContext";
 export interface PolicyRow {
   policy_name: string;
   primaryPolicy: Policy;
@@ -48,12 +50,13 @@ interface PolicyRowActionsProps {
 }
 
 function PolicyRowActions({ policy, onEditClick, onDeleteClick }: PolicyRowActionsProps) {
-  const isConfigPolicy = policy.definition_location === "config";
+
+  const { t } = useLanguage();  const isConfigPolicy = policy.definition_location === "config";
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open policy actions"
+        aria-label={t("Open policy actions")}
         data-testid={`policy-actions-${policy.policy_id}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -101,8 +104,8 @@ export const getPolicyTableColumns = ({
   {
     id: "policy_name",
     accessorKey: "policy_name",
-    meta: { title: "Name", skeleton: "twoLine" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Name" />,
+    meta: { title: t("Name"), skeleton: "twoLine" },
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Name")} />,
     size: 220,
     enableSorting: true,
     cell: ({ row }) => {
@@ -126,7 +129,7 @@ export const getPolicyTableColumns = ({
   {
     id: "description",
     accessorFn: (row) => row.primaryPolicy.description ?? "",
-    meta: { title: "Description" },
+    meta: { title: t("Description")},
     header: "Description",
     size: 220,
     enableSorting: false,
@@ -145,7 +148,7 @@ export const getPolicyTableColumns = ({
   {
     id: "inherit",
     accessorFn: (row) => row.primaryPolicy.inherit ?? "",
-    meta: { title: "Inherits From", skeleton: "badge" },
+    meta: { title: t("Inherits From"), skeleton: "badge" },
     header: "Inherits From",
     size: 150,
     enableSorting: false,
@@ -159,7 +162,7 @@ export const getPolicyTableColumns = ({
   },
   {
     id: "guardrails_add",
-    meta: { title: "Guardrails (Add)", skeleton: "chips" },
+    meta: { title: t("Guardrails (Add)"), skeleton: "chips" },
     header: "Guardrails (Add)",
     size: 180,
     enableSorting: false,
@@ -167,7 +170,7 @@ export const getPolicyTableColumns = ({
   },
   {
     id: "guardrails_remove",
-    meta: { title: "Guardrails (Remove)", skeleton: "chips" },
+    meta: { title: t("Guardrails (Remove)"), skeleton: "chips" },
     header: "Guardrails (Remove)",
     size: 180,
     enableSorting: false,
@@ -175,7 +178,7 @@ export const getPolicyTableColumns = ({
   },
   {
     id: "model_condition",
-    meta: { title: "Model Condition" },
+    meta: { title: t("Model Condition")},
     header: "Model Condition",
     size: 160,
     enableSorting: false,
@@ -194,8 +197,8 @@ export const getPolicyTableColumns = ({
   {
     id: "created_at",
     accessorFn: (row) => row.primaryPolicy.created_at ?? "",
-    meta: { title: "Created At" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Created At" />,
+    meta: { title: t("Created At")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Created At")} />,
     size: 150,
     enableSorting: true,
     cell: ({ row }) => <DateCell value={row.original.primaryPolicy.created_at} />,
@@ -205,7 +208,7 @@ export const getPolicyTableColumns = ({
         {
           id: "actions",
           meta: { className: "text-right", headerClassName: "text-right" },
-          header: () => <span className="sr-only">Actions</span>,
+          header: () => <span className="sr-only">{t("Actions")}</span>,
           size: 64,
           enableSorting: false,
           enableHiding: false,

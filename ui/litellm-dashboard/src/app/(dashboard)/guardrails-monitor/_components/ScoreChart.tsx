@@ -2,6 +2,7 @@ import React from "react";
 import { BarChart } from "@/components/shared/charts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+import { t } from "@/i18n";
 /**
  * Overview chart: Request Outcomes Over Time (passed vs blocked).
  * Stacked bar chart. Data from usage/overview API (chart array).
@@ -16,7 +17,7 @@ export function ScoreChart({ data }: ScoreChartProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-base font-semibold">Request Outcomes Over Time</CardTitle>
+        <CardTitle className="text-base font-semibold">{t("Request Outcomes Over Time")}</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="h-80 min-h-[280px]">
@@ -33,9 +34,7 @@ export function ScoreChart({ data }: ScoreChartProps) {
               className="h-full"
             />
           ) : (
-            <div className="flex items-center justify-center h-full text-sm text-gray-500">
-              No chart data for this period
-            </div>
+            <div className="flex items-center justify-center h-full text-sm text-gray-500">{t("No chart data for this period")}</div>
           )}
         </div>
       </CardContent>

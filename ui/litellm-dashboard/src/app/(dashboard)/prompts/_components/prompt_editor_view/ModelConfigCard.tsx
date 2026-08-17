@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { SettingsIcon } from "lucide-react";
 import ModelSelector from "@/components/common_components/ModelSelector";
 
+import { t } from "@/i18n";
 interface ModelConfigCardProps {
   model: string;
   temperature?: number;
@@ -34,20 +35,18 @@ const ModelConfigCard: React.FC<ModelConfigCardProps> = ({
 
       <Button type="button" variant="outline" onClick={() => setShowConfig(!showConfig)} className="gap-2">
         <SettingsIcon size={16} />
-        <span>Parameters</span>
+        <span>{t("Parameters")}</span>
       </Button>
 
       <Dialog open={showConfig} onOpenChange={setShowConfig}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Model Parameters</DialogTitle>
+            <DialogTitle>{t("Model Parameters")}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label htmlFor="prompt-temperature" className="text-sm text-foreground">
-                  Temperature
-                </label>
+                <label htmlFor="prompt-temperature" className="text-sm text-foreground">{t("Temperature")}</label>
                 <Input
                   id="prompt-temperature"
                   type="number"
@@ -62,9 +61,7 @@ const ModelConfigCard: React.FC<ModelConfigCardProps> = ({
             </div>
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label htmlFor="prompt-max-tokens" className="text-sm text-foreground">
-                  Max Tokens
-                </label>
+                <label htmlFor="prompt-max-tokens" className="text-sm text-foreground">{t("Max Tokens")}</label>
                 <Input
                   id="prompt-max-tokens"
                   type="number"

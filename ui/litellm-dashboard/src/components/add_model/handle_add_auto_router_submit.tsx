@@ -1,6 +1,7 @@
 import { modelCreateCall, Model } from "../networking";
 import NotificationManager from "../molecules/notifications_manager";
 
+import { t } from "@/i18n";
 export const handleAddAutoRouterSubmit = async (values: any, accessToken: string, form: any, callback?: () => void) => {
   try {
     let autoRouterConfig: any;
@@ -50,7 +51,7 @@ export const handleAddAutoRouterSubmit = async (values: any, accessToken: string
       callback();
     }
   } catch (error) {
-    console.error("Failed to add auto router:", error);
+    console.error(t("Failed to add auto router:"), error);
     NotificationManager.fromBackend("Failed to add auto router: " + error);
   }
 };

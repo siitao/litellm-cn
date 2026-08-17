@@ -4,6 +4,7 @@ import { TeamOutlined } from "@ant-design/icons";
 import { Text } from "@tremor/react";
 import { useAccessGroups, AccessGroupResponse } from "@/app/(dashboard)/hooks/accessGroups/useAccessGroups";
 
+import { t } from "@/i18n";
 export interface AccessGroupSelectorProps {
   value?: string[];
   onChange?: (value: string[]) => void;
@@ -84,7 +85,7 @@ const AccessGroupSelector: React.FC<AccessGroupSelectorProps> = ({
         style={{ width: "100%", ...style }}
         className={`rounded-md ${className ?? ""}`}
         notFoundContent={
-          isError ? <span className="text-red-500">Failed to load access groups</span> : "No access groups found"
+          isError ? <span className="text-red-500">{t("Failed to load access groups")}</span> : "No access groups found"
         }
         filterOption={(input, option) => {
           const searchText = options.find((opt) => opt.value === option?.value)?.searchText ?? "";

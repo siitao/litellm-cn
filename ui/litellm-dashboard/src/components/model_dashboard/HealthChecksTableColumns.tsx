@@ -8,6 +8,7 @@ import { createSelectionColumn, DataTableSortHeader } from "@/components/shared/
 import { IdentityCell, StatusBadge, type StatusTone } from "@/components/shared/table_cells";
 import { cn } from "@/lib/cva.config";
 
+import { t } from "@/i18n";
 export interface HealthStatus {
   status: string;
   lastCheck: string;
@@ -222,7 +223,7 @@ export const getHealthChecksTableColumns = ({
   {
     id: "model_id",
     accessorFn: (row) => row.model_info?.id ?? "",
-    meta: { title: "Model ID" },
+    meta: { title: t("Model ID")},
     header: ({ column }) => <DataTableSortHeader column={column} title="Model ID" variant="header-cycle" />,
     size: 220,
     enableSorting: true,
@@ -241,7 +242,7 @@ export const getHealthChecksTableColumns = ({
   {
     id: "model_name",
     accessorKey: "model_name",
-    meta: { title: "Model Name" },
+    meta: { title: t("Model Name")},
     header: ({ column }) => <DataTableSortHeader column={column} title="Model Name" variant="header-cycle" />,
     size: 200,
     enableSorting: true,
@@ -258,7 +259,7 @@ export const getHealthChecksTableColumns = ({
   {
     id: "team_id",
     accessorFn: (row) => row.model_info?.team_id ?? "",
-    meta: { title: "Team Alias" },
+    meta: { title: t("Team Alias")},
     header: ({ column }) => <DataTableSortHeader column={column} title="Team Alias" variant="header-cycle" />,
     size: 160,
     enableSorting: true,
@@ -279,7 +280,7 @@ export const getHealthChecksTableColumns = ({
   {
     id: "health_status",
     accessorKey: "health_status",
-    meta: { title: "Health Status", skeleton: "badge" },
+    meta: { title: t("Health Status"), skeleton: "badge" },
     header: ({ column }) => <DataTableSortHeader column={column} title="Health Status" variant="header-cycle" />,
     size: 170,
     enableSorting: true,
@@ -312,7 +313,7 @@ export const getHealthChecksTableColumns = ({
           <HealthStatusBadge status={model.health_status} />
           {hasSuccessResponse && (
             <DetailButton
-              label="View response details"
+              label={t("View response details")}
               testId="view-health-success-btn"
               className="text-green-600 hover:bg-green-50 hover:text-green-800"
               onClick={() => onShowSuccess(displayName, successResponse)}
@@ -325,7 +326,7 @@ export const getHealthChecksTableColumns = ({
   {
     id: "health_error",
     accessorKey: "health_error",
-    meta: { title: "Error Details" },
+    meta: { title: t("Error Details")},
     header: "Error Details",
     size: 240,
     enableSorting: false,
@@ -335,7 +336,7 @@ export const getHealthChecksTableColumns = ({
       const healthStatus = modelHealthStatuses[modelId];
 
       if (!healthStatus?.error) {
-        return <span className="text-sm text-muted-foreground">No errors</span>;
+        return <span className="text-sm text-muted-foreground">{t("No errors")}</span>;
       }
 
       const cleanedError = healthStatus.error;
@@ -349,7 +350,7 @@ export const getHealthChecksTableColumns = ({
           </span>
           {fullError !== cleanedError && (
             <DetailButton
-              label="View full error details"
+              label={t("View full error details")}
               testId="view-health-error-btn"
               className="text-red-600 hover:bg-red-50 hover:text-red-800"
               onClick={() => onShowError(displayName, cleanedError, fullError)}
@@ -362,7 +363,7 @@ export const getHealthChecksTableColumns = ({
   {
     id: "last_check",
     accessorKey: "last_check",
-    meta: { title: "Last Check" },
+    meta: { title: t("Last Check")},
     header: ({ column }) => <DataTableSortHeader column={column} title="Last Check" variant="header-cycle" />,
     size: 170,
     enableSorting: true,
@@ -381,7 +382,7 @@ export const getHealthChecksTableColumns = ({
   {
     id: "last_success",
     accessorKey: "last_success",
-    meta: { title: "Last Success" },
+    meta: { title: t("Last Success")},
     header: ({ column }) => <DataTableSortHeader column={column} title="Last Success" variant="header-cycle" />,
     size: 170,
     enableSorting: true,
@@ -399,8 +400,8 @@ export const getHealthChecksTableColumns = ({
   },
   {
     id: "actions",
-    meta: { title: "Actions", className: "text-right", headerClassName: "text-right" },
-    header: () => <span className="sr-only">Actions</span>,
+    meta: { title: t("Actions"), className: "text-right", headerClassName: "text-right" },
+    header: () => <span className="sr-only">{t("Actions")}</span>,
     size: 80,
     enableSorting: false,
     enableHiding: false,

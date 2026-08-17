@@ -17,6 +17,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { UiLoadingSpinner } from "@/components/ui/ui-loading-spinner";
 import { cn } from "@/lib/cva.config";
 
+import { t } from "@/i18n";
 interface WorkflowRunsProps {
   accessToken: string | null;
 }
@@ -233,7 +234,7 @@ const GanttTimeline: React.FC<{
   events: WorkflowRunEvent[];
 }> = ({ run, events }) => {
   if (events.length === 0) {
-    return <div className="py-4 font-mono text-xs text-muted-foreground">No events recorded</div>;
+    return <div className="py-4 font-mono text-xs text-muted-foreground">{t("No events recorded")}</div>;
   }
 
   const runStart = new Date(run.created_at).getTime();
@@ -401,7 +402,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
       const data = await res.json();
       setRuns(data.runs ?? []);
     } catch (err) {
-      console.error("workflow runs fetch failed:", err);
+      console.error(t("workflow runs fetch failed:"), err);
     } finally {
       setLoadingRuns(false);
     }
@@ -438,7 +439,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
           ),
         );
       } catch (err) {
-        console.error("workflow run detail fetch failed:", err);
+        console.error(t("workflow run detail fetch failed:"), err);
       } finally {
         setLoadingDetail(false);
       }
@@ -456,7 +457,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
         id: "run",
         accessorFn: (row) => `${runTitle(row)} ${row.run_id}`,
         header: "Run",
-        meta: { title: "Run", skeleton: "twoLine" },
+        meta: { title: t("Run"), skeleton: "twoLine" },
         cell: ({ row }) => {
           const run = row.original;
           return (
@@ -473,7 +474,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
       {
         accessorKey: "workflow_type",
         header: "Type",
-        meta: { title: "Type" },
+        meta: { title: t("Type")},
         filterFn: "includesString",
         cell: ({ row }) => (
           <span className="font-mono text-xs text-muted-foreground">{row.original.workflow_type}</span>
@@ -483,7 +484,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
         id: "status",
         accessorKey: "status",
         header: "Status",
-        meta: { title: "Status" },
+        meta: { title: t("Status")},
         filterFn: "equalsString",
         cell: ({ row }) => {
           const run = row.original;
@@ -498,7 +499,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
       {
         accessorKey: "created_at",
         header: "Created",
-        meta: { title: "Created" },
+        meta: { title: t("Created")},
         cell: ({ row }) => <span className="text-xs text-muted-foreground">{timeAgo(row.original.created_at)}</span>,
       },
     ],
@@ -509,10 +510,8 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
     <div className="w-full px-8 py-6">
       {/* page header */}
       <div className="mb-5">
-        <div className="text-lg font-semibold text-foreground">Workflow Runs</div>
-        <div className="mt-0.5 text-[13px] text-muted-foreground">
-          Durable state tracking for agents and automated workflows
-        </div>
+        <div className="text-lg font-semibold text-foreground">{t("Workflow Runs")}</div>
+        <div className="mt-0.5 text-[13px] text-muted-foreground">{t("Durable state tracking for agents and automated workflows")}</div>
       </div>
 
       <DataTable
@@ -521,7 +520,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
         getRowId={(run) => run.run_id}
         isLoading={loadingRuns}
         loadingMessage="Loading workflow runs…"
-        noDataMessage={<div className="py-6 text-center text-[13px] text-muted-foreground">No workflow runs yet</div>}
+        noDataMessage={<div className="py-6 text-center text-[13px] text-muted-foreground">{t("No workflow runs yet")}</div>}
         paginationMode="client"
         pageSizeOptions={[50, 100]}
         filterMode="client"
@@ -546,22 +545,22 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
               table={table}
               open={filtersOpen}
               onOpenChange={setFiltersOpen}
-              title="Filters"
-              description="Narrow down workflow runs"
+              title={t("Filters")}
+              description={t("Narrow down workflow runs")}
             >
               {({ get, set }) => (
                 <>
-                  <DataTableFilterField label="Status">
+                  <DataTableFilterField label={t("Status")}>
                     <Select
                       items={STATUS_LABELS}
                       value={(get("status") as string) || null}
                       onValueChange={(value: string | null) => set("status", value ?? "")}
                     >
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder="All statuses" />
+                        <SelectValue placeholder={t("All statuses")} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value={null}>All statuses</SelectItem>
+                        <SelectItem value={null}>{t("All statuses")}</SelectItem>
                         {RUN_STATUS_OPTIONS.map((status) => (
                           <SelectItem key={status} value={status}>
                             {STATUS_LABELS[status]}
@@ -570,7 +569,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
                       </SelectContent>
                     </Select>
                   </DataTableFilterField>
-                  <DataTableFilterField label="Type">
+                  <DataTableFilterField label={t("Type")}>
                     <Input
                       value={(get("workflow_type") as string) ?? ""}
                       onChange={(event) => set("workflow_type", event.target.value)}
@@ -590,10 +589,8 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
           showCloseButton={false}
           className="overflow-y-auto p-0 data-[side=right]:w-full data-[side=right]:sm:max-w-[680px]"
         >
-          <SheetTitle className="sr-only">Workflow run details</SheetTitle>
-          <SheetDescription className="sr-only">
-            Metadata, timeline and messages for the selected workflow run
-          </SheetDescription>
+          <SheetTitle className="sr-only">{t("Workflow run details")}</SheetTitle>
+          <SheetDescription className="sr-only">{t("Metadata, timeline and messages for the selected workflow run")}</SheetDescription>
           {!selectedRun ? null : loadingDetail ? (
             <div className="flex justify-center py-20">
               <UiLoadingSpinner className="size-8 text-muted-foreground" />
@@ -623,7 +620,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
               {/* collapsible sections */}
               <div className="divide-y overflow-hidden rounded-lg border">
                 <DetailSection
-                  title="Timeline"
+                  title={t("Timeline")}
                   meta={
                     <>
                       {events.length} {events.length === 1 ? "event" : "events"}
@@ -635,7 +632,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
                 </DetailSection>
                 <DetailSection title="Messages" meta={messages.length}>
                   {messages.length === 0 ? (
-                    <div className="py-3 font-mono text-xs text-muted-foreground">No messages</div>
+                    <div className="py-3 font-mono text-xs text-muted-foreground">{t("No messages")}</div>
                   ) : (
                     <div>
                       {messages.map((msg) => (

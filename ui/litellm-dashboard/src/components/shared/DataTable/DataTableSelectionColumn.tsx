@@ -4,6 +4,7 @@ import type { ColumnDef, Row, RowData, Table } from "@tanstack/react-table";
 
 import { Checkbox } from "@/components/ui/checkbox";
 
+import { t } from "@/i18n";
 interface SelectionColumnOptions<TData> {
   rowAriaLabel?: (row: Row<TData>) => string;
 }
@@ -14,7 +15,7 @@ function SelectAllCheckbox<TData>({ table }: { table: Table<TData> }) {
 
   return (
     <Checkbox
-      aria-label="Select all rows"
+      aria-label={t("Select all rows")}
       data-testid="datatable-select-all"
       checked={allSelected}
       indeterminate={someSelected && !allSelected}
@@ -46,7 +47,7 @@ export function createSelectionColumn<TData extends RowData>(
     enableSorting: false,
     enableHiding: false,
     enableResizing: false,
-    meta: { title: "Select", className: "w-11", headerClassName: "w-11" },
+    meta: { title: t("Select"), className: "w-11", headerClassName: "w-11" },
     header: ({ table }) => <SelectAllCheckbox table={table} />,
     cell: ({ row }) => <SelectRowCheckbox row={row} label={rowAriaLabel?.(row) ?? "Select row"} />,
   };

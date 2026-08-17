@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { SearchToolTester } from "./SearchToolTester";
 import { AvailableSearchProvider, SearchTool } from "./types";
 
+import { t } from "@/i18n";
 interface SearchToolViewProps {
   searchTool: SearchTool;
   onBack: () => void;
@@ -51,7 +52,7 @@ export const SearchToolView: React.FC<SearchToolViewProps> = ({
             <Button
               variant="ghost"
               size="icon-xs"
-              aria-label="Copy search tool name"
+              aria-label={t("Copy search tool name")}
               className="text-muted-foreground"
               onClick={() => copyToClipboard(searchTool.search_tool_name, "search-tool-name")}
             >
@@ -63,7 +64,7 @@ export const SearchToolView: React.FC<SearchToolViewProps> = ({
             <Button
               variant="ghost"
               size="icon-xs"
-              aria-label="Copy search tool ID"
+              aria-label={t("Copy search tool ID")}
               className="text-muted-foreground"
               onClick={() => copyToClipboard(searchTool.search_tool_id, "search-tool-id")}
             >
@@ -76,7 +77,7 @@ export const SearchToolView: React.FC<SearchToolViewProps> = ({
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <Card>
           <CardContent>
-            <p className="text-sm text-muted-foreground">Provider</p>
+            <p className="text-sm text-muted-foreground">{t("Provider")}</p>
             <p className="mt-2 text-lg font-semibold text-foreground">
               {getProviderDisplayName(searchTool.litellm_params.search_provider)}
             </p>
@@ -85,14 +86,14 @@ export const SearchToolView: React.FC<SearchToolViewProps> = ({
 
         <Card>
           <CardContent>
-            <p className="text-sm text-muted-foreground">API Key</p>
+            <p className="text-sm text-muted-foreground">{t("API Key")}</p>
             <p className="mt-2 text-foreground">{searchTool.litellm_params.api_key ? "****" : "Not set"}</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent>
-            <p className="text-sm text-muted-foreground">Created At</p>
+            <p className="text-sm text-muted-foreground">{t("Created At")}</p>
             <p className="mt-2 text-foreground">
               {searchTool.created_at ? new Date(searchTool.created_at).toLocaleString() : "Unknown"}
             </p>
@@ -103,7 +104,7 @@ export const SearchToolView: React.FC<SearchToolViewProps> = ({
       {searchTool.search_tool_info?.description && (
         <Card className="mt-6">
           <CardContent>
-            <p className="text-sm text-muted-foreground">Description</p>
+            <p className="text-sm text-muted-foreground">{t("Description")}</p>
             <p className="mt-2 text-foreground">{searchTool.search_tool_info.description}</p>
           </CardContent>
         </Card>

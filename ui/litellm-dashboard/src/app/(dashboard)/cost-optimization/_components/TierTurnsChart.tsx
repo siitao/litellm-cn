@@ -16,6 +16,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { viewGroup, type BenchmarkView } from "./autoRouterBenchmarks";
 
+import { t } from "@/i18n";
 const safeParse = (value: string): unknown => {
   try {
     return JSON.parse(value);
@@ -103,7 +104,7 @@ const TierTurnsChart: React.FC<TierTurnsChartProps> = ({ view, autoRouters }) =>
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Routing by tier</CardTitle>
+        <CardTitle>{t("Routing by tier")}</CardTitle>
         <p className="text-sm text-muted-foreground">
           Turns each tier served. Turns the classifier sent to the default model belong to no tier and are not counted
           here, so this can total less than the router&apos;s turns.

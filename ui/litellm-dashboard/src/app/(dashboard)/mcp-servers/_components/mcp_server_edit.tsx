@@ -51,6 +51,7 @@ import NotificationsManager from "@/components/molecules/notifications_manager";
 import { useMcpOAuthFlow } from "@/hooks/useMcpOAuthFlow";
 import { getSecureItem, setSecureItem } from "@/utils/secureStorage";
 
+import { t } from "@/i18n";
 interface MCPServerEditProps {
   mcpServer: MCPServer;
   accessToken: string | null;
@@ -243,7 +244,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
       authorizedIdentityRef.current = getOAuthAuthorizationIdentity(form.getFieldsValue(true));
 
       NotificationsManager.success(
-        "OAuth authorization successful! Please click 'Update MCP Server' to save the credentials.",
+        t("OAuth authorization successful! Please click 'Update MCP Server' to save the credentials."),
       );
     },
     onBeforeRedirect: persistEditUiState,
@@ -396,7 +397,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
         setAliasManuallyEdited(parsed.aliasManuallyEdited);
       }
     } catch (err) {
-      console.error("Failed to restore MCP edit state", err);
+      console.error(t("Failed to restore MCP edit state"), err);
     } finally {
       window.sessionStorage.removeItem(EDIT_OAUTH_UI_STATE_KEY);
     }
@@ -989,7 +990,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
         }
       }
 
-      NotificationsManager.success("MCP Server updated successfully");
+      NotificationsManager.success(t("MCP Server updated successfully"));
       setAppMayNotMatchUpstream(false);
       onSuccess(updated);
     } catch (error: any) {
@@ -1000,8 +1001,8 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
   return (
     <TabGroup>
       <TabList className="grid w-full grid-cols-2">
-        <Tab>Server Configuration</Tab>
-        <Tab>Cost Configuration</Tab>
+        <Tab>{t("Server Configuration")}</Tab>
+        <Tab>{t("Cost Configuration")}</Tab>
       </TabList>
       <TabPanels className="mt-6">
         <TabPanel>
@@ -1013,7 +1014,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
             layout="vertical"
           >
             <Form.Item
-              label="MCP Server Name"
+              label={t("MCP Server Name")}
               name="server_name"
               rules={[
                 {
@@ -1024,7 +1025,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
               <Input className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500" />
             </Form.Item>
             <Form.Item
-              label="Alias"
+              label={t("Alias")}
               name="alias"
               rules={[
                 {
@@ -1043,17 +1044,17 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
             <MCPLogoSelector value={logoUrl} onChange={setLogoUrl} />
             <Form.Item label="Transport Type" name="transport" rules={[{ required: true }]}>
               <Select onChange={handleTransportChange}>
-                <Select.Option value="http">Streamable HTTP (Recommended)</Select.Option>
-                <Select.Option value="sse">Server-Sent Events (SSE)</Select.Option>
-                <Select.Option value="stdio">Standard Input/Output (stdio)</Select.Option>
-                <Select.Option value={TRANSPORT.OPENAPI}>OpenAPI Spec</Select.Option>
+                <Select.Option value="http">{t("Streamable HTTP (Recommended)")}</Select.Option>
+                <Select.Option value="sse">{t("Server-Sent Events (SSE)")}</Select.Option>
+                <Select.Option value="stdio">{t("Standard Input/Output (stdio)")}</Select.Option>
+                <Select.Option value={TRANSPORT.OPENAPI}>{t("OpenAPI Spec")}</Select.Option>
               </Select>
             </Form.Item>
 
             {/* URL field - only for HTTP/SSE */}
             {isMCPTransport && (
               <Form.Item
-                label="MCP Server URL"
+                label={t("MCP Server URL")}
                 name="url"
                 rules={[
                   { required: true, message: "Please enter a server URL" },
@@ -1071,9 +1072,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
             {isOpenAPITransport && (
               <Form.Item
                 label={
-                  <span className="text-sm font-medium text-gray-700 flex items-center">
-                    OpenAPI Spec URL
-                    <Tooltip title="URL to an OpenAPI specification (JSON or YAML). MCP tools will be automatically generated from the API endpoints defined in the spec.">
+                  <span className="text-sm font-medium text-gray-700 flex items-center">{t("OpenAPI Spec URL")}<Tooltip title="URL to an OpenAPI specification (JSON or YAML). MCP tools will be automatically generated from the API endpoints defined in the spec.">
                       <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                     </Tooltip>
                   </span>
@@ -1090,9 +1089,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
 
             <Form.Item
               label={
-                <span className="text-sm font-medium text-gray-700 flex items-center">
-                  Max Concurrent Requests (optional)
-                  <Tooltip title="Maximum number of tool calls LiteLLM will run against this server at the same time. Additional calls wait for a free slot. Leave blank for no limit.">
+                <span className="text-sm font-medium text-gray-700 flex items-center">{t("Max Concurrent Requests (optional)")}<Tooltip title="Maximum number of tool calls LiteLLM will run against this server at the same time. Additional calls wait for a free slot. Leave blank for no limit.">
                     <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                   </Tooltip>
                 </span>
@@ -1102,7 +1099,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
               <InputNumber
                 min={1}
                 precision={0}
-                placeholder="e.g. 10"
+                placeholder={t("e.g. 10")}
                 style={{ width: "100%" }}
                 className="rounded-lg"
               />
@@ -1113,19 +1110,17 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
               <>
                 <Form.Item label="Authentication" name="auth_type" rules={[{ required: true }]}>
                   <Select virtual={false}>
-                    <Select.Option value="none">None</Select.Option>
-                    <Select.Option value="api_key">API Key</Select.Option>
-                    <Select.Option value="bearer_token">Bearer Token</Select.Option>
-                    <Select.Option value="token">Token</Select.Option>
-                    <Select.Option value="basic">Basic Auth</Select.Option>
-                    <Select.Option value="oauth2">OAuth</Select.Option>
-                    <Select.Option value="oauth2_token_exchange">OAuth Token Exchange (OBO)</Select.Option>
-                    <Select.Option value="oauth2_id_jag">ID-JAG (Okta Cross App Access)</Select.Option>
-                    <Select.Option value="aws_sigv4">AWS SigV4 (Bedrock AgentCore MCPs)</Select.Option>
-                    <Select.Option value="true_passthrough">True Passthrough (no LiteLLM auth)</Select.Option>
-                    <Select.Option value="oauth_delegate">
-                      OAuth Delegate (client-supplied upstream token)
-                    </Select.Option>
+                    <Select.Option value="none">{t("None")}</Select.Option>
+                    <Select.Option value="api_key">{t("API Key")}</Select.Option>
+                    <Select.Option value="bearer_token">{t("Bearer Token")}</Select.Option>
+                    <Select.Option value="token">{t("Token")}</Select.Option>
+                    <Select.Option value="basic">{t("Basic Auth")}</Select.Option>
+                    <Select.Option value="oauth2">{t("OAuth")}</Select.Option>
+                    <Select.Option value="oauth2_token_exchange">{t("OAuth Token Exchange (OBO)")}</Select.Option>
+                    <Select.Option value="oauth2_id_jag">{t("ID-JAG (Okta Cross App Access)")}</Select.Option>
+                    <Select.Option value="aws_sigv4">{t("AWS SigV4 (Bedrock AgentCore MCPs)")}</Select.Option>
+                    <Select.Option value="true_passthrough">{t("True Passthrough (no LiteLLM auth)")}</Select.Option>
+                    <Select.Option value="oauth_delegate">{t("OAuth Delegate (client-supplied upstream token)")}</Select.Option>
                   </Select>
                 </Form.Item>
                 <TruePassthroughWarning authType={authType} />
@@ -1154,12 +1149,12 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                 </p>
 
                 <Form.Item
-                  label="Command"
+                  label={t("Command")}
                   name="command"
                   rules={[{ required: true, message: "Please enter a command for stdio transport" }]}
                 >
                   <Input
-                    placeholder="e.g., npx"
+                    placeholder={t("e.g., npx")}
                     className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </Form.Item>
@@ -1169,13 +1164,13 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                     mode="tags"
                     size="large"
                     tokenSeparators={[","]}
-                    placeholder="Add args (press enter or comma)"
+                    placeholder={t("Add args (press enter or comma)")}
                     className="rounded-lg"
                   />
                 </Form.Item>
 
                 <Form.Item
-                  label="Environment (JSON object)"
+                  label={t("Environment (JSON object)")}
                   name="env_json"
                   rules={[
                     {
@@ -1209,9 +1204,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
             {!isStdioTransport && shouldShowAuthValueField && (
               <Form.Item
                 label={
-                  <span className="text-sm font-medium text-gray-700 flex items-center">
-                    Authentication Value
-                    <Tooltip title="Token, password, or header value to send with each request for the selected auth type.">
+                  <span className="text-sm font-medium text-gray-700 flex items-center">{t("Authentication Value")}<Tooltip title="Token, password, or header value to send with each request for the selected auth type.">
                       <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                     </Tooltip>
                   </span>
@@ -1227,7 +1220,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                 ]}
               >
                 <Input.Password
-                  placeholder="Enter token or secret (leave blank to keep existing)"
+                  placeholder={t("Enter token or secret (leave blank to keep existing)")}
                   className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                 />
               </Form.Item>
@@ -1240,7 +1233,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                     type="warning"
                     showIcon
                     className="mb-4 rounded-lg"
-                    message="This server has no OAuth flow set"
+                    message={t("This server has no OAuth flow set")}
                     description="Choose Machine-to-Machine (M2M) or Interactive (PKCE) so LiteLLM authenticates it the way you intend, then save. Until it is set, LiteLLM falls back to interactive per-user auth and treats a machine-to-machine credential shape conservatively."
                   />
                 )}
@@ -1263,8 +1256,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
 
             {!isStdioTransport && isAwsSigV4AuthType && (
               <>
-                <p className="text-sm text-gray-500 mb-2">
-                  For MCP servers hosted on AWS Bedrock AgentCore.{" "}
+                <p className="text-sm text-gray-500 mb-2">{t("For MCP servers hosted on AWS Bedrock AgentCore.")}{" "}
                   <a
                     href="https://docs.litellm.ai/docs/mcp_aws_sigv4"
                     target="_blank"
@@ -1276,9 +1268,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                 </p>
                 <Form.Item
                   label={
-                    <span className="text-sm font-medium text-gray-700 flex items-center">
-                      AWS Region
-                      <Tooltip title="AWS region for SigV4 signing (e.g., us-east-1)">
+                    <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Region")}<Tooltip title={t("AWS region for SigV4 signing (e.g., us-east-1)")}>
                         <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>
@@ -1287,15 +1277,13 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                   rules={[]}
                 >
                   <Input
-                    placeholder="us-east-1 (leave blank to keep existing)"
+                    placeholder={t("us-east-1 (leave blank to keep existing)")}
                     className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </Form.Item>
                 <Form.Item
                   label={
-                    <span className="text-sm font-medium text-gray-700 flex items-center">
-                      AWS Service Name
-                      <Tooltip title="AWS service name for SigV4 signing. Defaults to 'bedrock-agentcore'.">
+                    <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Service Name")}<Tooltip title={t("AWS service name for SigV4 signing. Defaults to 'bedrock-agentcore'.")}>
                         <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>
@@ -1303,15 +1291,13 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                   name={["credentials", "aws_service_name"]}
                 >
                   <Input
-                    placeholder="bedrock-agentcore (leave blank to keep existing)"
+                    placeholder={t("bedrock-agentcore (leave blank to keep existing)")}
                     className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </Form.Item>
                 <Form.Item
                   label={
-                    <span className="text-sm font-medium text-gray-700 flex items-center">
-                      AWS Access Key ID
-                      <Tooltip title="Optional. If not provided, falls back to the boto3 credential chain (IAM role, env vars, etc.).">
+                    <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Access Key ID")}<Tooltip title="Optional. If not provided, falls back to the boto3 credential chain (IAM role, env vars, etc.).">
                         <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>
@@ -1320,15 +1306,13 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                   rules={[]}
                 >
                   <Input.Password
-                    placeholder="Leave blank to keep existing"
+                    placeholder={t("Leave blank to keep existing")}
                     className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </Form.Item>
                 <Form.Item
                   label={
-                    <span className="text-sm font-medium text-gray-700 flex items-center">
-                      AWS Secret Access Key
-                      <Tooltip title="Optional. Required if AWS Access Key ID is provided.">
+                    <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Secret Access Key")}<Tooltip title={t("Optional. Required if AWS Access Key ID is provided.")}>
                         <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>
@@ -1337,15 +1321,13 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                   rules={[]}
                 >
                   <Input.Password
-                    placeholder="Leave blank to keep existing"
+                    placeholder={t("Leave blank to keep existing")}
                     className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </Form.Item>
                 <Form.Item
                   label={
-                    <span className="text-sm font-medium text-gray-700 flex items-center">
-                      AWS Session Token
-                      <Tooltip title="Optional. Only needed for temporary STS credentials.">
+                    <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Session Token")}<Tooltip title={t("Optional. Only needed for temporary STS credentials.")}>
                         <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>
@@ -1353,15 +1335,13 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                   name={["credentials", "aws_session_token"]}
                 >
                   <Input.Password
-                    placeholder="Leave blank to keep existing"
+                    placeholder={t("Leave blank to keep existing")}
                     className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </Form.Item>
                 <Form.Item
                   label={
-                    <span className="text-sm font-medium text-gray-700 flex items-center">
-                      AWS Role ARN
-                      <Tooltip title="Optional. IAM role ARN to assume via STS before signing. If set, LiteLLM calls sts:AssumeRole to get temporary credentials.">
+                    <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Role ARN")}<Tooltip title="Optional. IAM role ARN to assume via STS before signing. If set, LiteLLM calls sts:AssumeRole to get temporary credentials.">
                         <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>
@@ -1369,15 +1349,13 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                   name={["credentials", "aws_role_name"]}
                 >
                   <Input
-                    placeholder="Leave blank to keep existing"
+                    placeholder={t("Leave blank to keep existing")}
                     className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </Form.Item>
                 <Form.Item
                   label={
-                    <span className="text-sm font-medium text-gray-700 flex items-center">
-                      AWS Session Name
-                      <Tooltip title="Optional. Session name for the AssumeRole call — appears in CloudTrail logs. Auto-generated if omitted.">
+                    <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Session Name")}<Tooltip title="Optional. Session name for the AssumeRole call — appears in CloudTrail logs. Auto-generated if omitted.">
                         <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>
@@ -1385,7 +1363,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                   name={["credentials", "aws_session_name"]}
                 >
                   <Input
-                    placeholder="Leave blank to keep existing"
+                    placeholder={t("Leave blank to keep existing")}
                     className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </Form.Item>
@@ -1447,8 +1425,8 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
             </div>
 
             <div className="flex justify-end gap-2">
-              <AntdButton onClick={onCancel}>Cancel</AntdButton>
-              <Button type="submit">Save Changes</Button>
+              <AntdButton onClick={onCancel}>{t("Cancel")}</AntdButton>
+              <Button type="submit">{t("Save Changes")}</Button>
             </div>
           </Form>
         </TabPanel>
@@ -1458,8 +1436,8 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
             <MCPServerCostConfig value={costConfig} onChange={setCostConfig} tools={tools} disabled={isLoadingTools} />
 
             <div className="flex justify-end gap-2">
-              <AntdButton onClick={onCancel}>Cancel</AntdButton>
-              <Button onClick={() => form.submit()}>Save Changes</Button>
+              <AntdButton onClick={onCancel}>{t("Cancel")}</AntdButton>
+              <Button onClick={() => form.submit()}>{t("Save Changes")}</Button>
             </div>
           </div>
         </TabPanel>

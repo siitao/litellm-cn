@@ -2,6 +2,7 @@ import { Alert, Card, Descriptions, Input, Modal, Typography, theme } from "antd
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import React, { useState, useEffect } from "react";
 
+import { t } from "@/i18n";
 interface DeleteResourceModalProps {
   isOpen: boolean;
   title: string;
@@ -50,7 +51,7 @@ export default function DeleteResourceModal({
       onCancel={onCancel}
       confirmLoading={confirmLoading}
       okText={confirmLoading ? "Deleting..." : "Delete"}
-      cancelText="Cancel"
+      cancelText={t("Cancel")}
       okButtonProps={{
         danger: true,
         disabled: (!!requiredConfirmation && requiredConfirmationInput !== requiredConfirmation) || confirmLoading,
@@ -89,11 +90,11 @@ export default function DeleteResourceModal({
         {requiredConfirmation && (
           <div className="mb-6 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
             <Text className="block text-base font-medium text-gray-700 dark:text-gray-300 mb-2">
-              <Text>Type </Text>
+              <Text>{t("Type")}</Text>
               <Text strong type="danger">
                 {requiredConfirmation}
               </Text>
-              <Text> to confirm deletion:</Text>
+              <Text>{t("to confirm deletion:")}</Text>
             </Text>
             <Input
               value={requiredConfirmationInput}

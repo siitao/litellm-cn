@@ -3,6 +3,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Button } from "antd";
 import MessageManager from "@/components/molecules/message_manager";
 
+import { t } from "@/i18n";
 interface CreatedKeyDisplayProps {
   apiKey: string;
 }
@@ -16,19 +17,18 @@ const CreatedKeyDisplay: React.FC<CreatedKeyDisplayProps> = ({ apiKey }) => {
 
   const handleCopy = () => {
     setCopied(true);
-    MessageManager.success("Key copied to clipboard");
+    MessageManager.success(t("Key copied to clipboard"));
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
     <div>
-      <p className="mb-2">
-        Please save this secret key somewhere safe and accessible. For security reasons,{" "}
-        <b>you will not be able to view it again</b> through your LiteLLM account. If you lose this secret key, you will
+      <p className="mb-2">{t("Please save this secret key somewhere safe and accessible. For security reasons,")}{" "}
+        <b>{t("you will not be able to view it again")}</b> through your LiteLLM account. If you lose this secret key, you will
         need to generate a new one.
       </p>
 
-      <p className="text-sm text-gray-600 mt-3 mb-1">Virtual Key:</p>
+      <p className="text-sm text-gray-600 mt-3 mb-1">{t("Virtual Key:")}</p>
       <div
         style={{
           background: "#f8f8f8",

@@ -2,6 +2,7 @@
 
 import { getProxyBaseUrl, getGlobalLitellmHeaderName, modelInfoCall } from "@/components/networking";
 
+import { t } from "@/i18n";
 export interface Agent {
   agent_id: string;
   agent_name: string;
@@ -67,7 +68,7 @@ export const fetchAvailableAgents = async (accessToken: string, customBaseUrl?: 
 
     return agents;
   } catch (error) {
-    console.error("Error fetching agents:", error);
+    console.error(t("Error fetching agents:"), error);
     throw error;
   }
 };
@@ -107,7 +108,7 @@ export const fetchAvailableAgentModels = async (
     agentModels.sort((a, b) => a.model_name.localeCompare(b.model_name));
     return agentModels;
   } catch (error) {
-    console.error("Error fetching agent models:", error);
+    console.error(t("Error fetching agent models:"), error);
     throw error;
   }
 };

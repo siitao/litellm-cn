@@ -1,6 +1,7 @@
 import { PromptSpec } from "@/components/networking";
 import { getVersionNumber } from "./prompt_editor_view/utils";
 
+import { t } from "@/i18n";
 export interface ModelGroupInfo {
   model_group: string;
   providers: string[];
@@ -80,7 +81,7 @@ export const extractModel = (prompt: PromptSpec): string | null => {
 
     return null;
   } catch (error) {
-    console.error("Error extracting model:", error);
+    console.error(t("Error extracting model:"), error);
     return null;
   }
 };

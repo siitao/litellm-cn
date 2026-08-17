@@ -13,7 +13,7 @@ export const getCallbackConfigsCall = async (accessToken: string) => {
   try {
     return await apiClient.get(`/callbacks/configs`, { accessToken });
   } catch (error) {
-    console.error("Failed to get callbacks:", error);
+    console.error(t("Failed to get callbacks:"), error);
     throw error;
   }
 };
@@ -43,7 +43,7 @@ export const getAutoRouterClassifierDefaultPromptCall = async (
     });
     return response.system_prompt;
   } catch (error) {
-    console.error("Failed to get the default classifier prompt:", error);
+    console.error(t("Failed to get the default classifier prompt:"), error);
     throw error;
   }
 };
@@ -86,6 +86,7 @@ import {
 } from "@/lib/http/runtime";
 import { serverRootPath, setServerRootPath } from "@/lib/serverRootPath";
 
+import { t } from "@/i18n";
 export { serverRootPath };
 
 export { deriveErrorMessage };
@@ -340,7 +341,7 @@ export const handleError = async (errorData: string | any) => {
     // Convert errorData to string if it isn't already
     const errorString = typeof errorData === "string" ? errorData : JSON.stringify(errorData);
     if (errorString.includes("Authentication Error - Expired Key")) {
-      NotificationsManager.info("UI Session Expired. Logging out.");
+      NotificationsManager.info(t("UI Session Expired. Logging out."));
       lastErrorTime = currentTime;
       clearTokenCookies();
       const browserLocation = getWindowLocation();
@@ -364,7 +365,7 @@ export const getProviderCreateMetadata = async (): Promise<ProviderCreateInfo[]>
 
   if (!response.ok) {
     const errorText = await response.text();
-    console.error("Failed to fetch provider create metadata:", response.status, errorText);
+    console.error(t("Failed to fetch provider create metadata:"), response.status, errorText);
     throw new Error("Failed to load provider configuration");
   }
 
@@ -384,7 +385,7 @@ export const getAgentCreateMetadata = async (): Promise<AgentCreateInfo[]> => {
 
   if (!response.ok) {
     const errorText = await response.text();
-    console.error("Failed to fetch agent create metadata:", response.status, errorText);
+    console.error(t("Failed to fetch agent create metadata:"), response.status, errorText);
     throw new Error("Failed to load agent configuration");
   }
 
@@ -472,7 +473,7 @@ export const modelCostMap = async () => {
     const jsonData = await response.json();
     return jsonData;
   } catch (error) {
-    console.error("Failed to get model cost map:", error);
+    console.error(t("Failed to get model cost map:"), error);
     throw error;
   }
 };
@@ -490,7 +491,7 @@ export const reloadModelCostMap = async (accessToken: string) => {
     const jsonData = await response.json();
     return jsonData;
   } catch (error) {
-    console.error("Failed to reload model cost map:", error);
+    console.error(t("Failed to reload model cost map:"), error);
     throw error;
   }
 };
@@ -510,7 +511,7 @@ export const scheduleModelCostMapReload = async (accessToken: string, hours: num
     const jsonData = await response.json();
     return jsonData;
   } catch (error) {
-    console.error("Failed to schedule model cost map reload:", error);
+    console.error(t("Failed to schedule model cost map reload:"), error);
     throw error;
   }
 };
@@ -528,7 +529,7 @@ export const cancelModelCostMapReload = async (accessToken: string) => {
     const jsonData = await response.json();
     return jsonData;
   } catch (error) {
-    console.error("Failed to cancel model cost map reload:", error);
+    console.error(t("Failed to cancel model cost map reload:"), error);
     throw error;
   }
 };
@@ -552,7 +553,7 @@ export const getModelCostMapSource = async (accessToken: string) => {
     const jsonData = await response.json();
     return jsonData;
   } catch (error) {
-    console.error("Failed to get model cost map source info:", error);
+    console.error(t("Failed to get model cost map source info:"), error);
     throw error;
   }
 };
@@ -573,14 +574,14 @@ export const getModelCostMapReloadStatus = async (accessToken: string) => {
     if (!response.ok) {
       console.error(`Status request failed with status: ${response.status}`);
       const errorText = await response.text();
-      console.error("Error response:", errorText);
+      console.error(t("Error response:"), errorText);
       throw new Error(`HTTP ${response.status}: ${errorText}`);
     }
 
     const jsonData = await response.json();
     return jsonData;
   } catch (error) {
-    console.error("Failed to get model cost map reload status:", error);
+    console.error(t("Failed to get model cost map reload status:"), error);
     throw error;
   }
 };
@@ -601,7 +602,7 @@ export const modelCreateCall = async (accessToken: string, formValues: Model) =>
 
     return data;
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -616,7 +617,7 @@ export const modelDeleteCall = async (accessToken: string, model_id: string) => 
     });
     return data;
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -635,7 +636,7 @@ export const budgetDeleteCall = async (accessToken: string | null, budget_id: st
     });
     return data;
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -654,7 +655,7 @@ export const budgetCreateCall = async (
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -673,7 +674,7 @@ export const budgetUpdateCall = async (
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -692,7 +693,7 @@ export const invitationCreateCall = async (
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -704,7 +705,7 @@ export const alertingSettingsCall = async (accessToken: string) => {
   try {
     return await apiClient.get(`/alerting/settings`, { accessToken });
   } catch (error) {
-    console.error("Failed to get callbacks:", error);
+    console.error(t("Failed to get callbacks:"), error);
     throw error;
   }
 };
@@ -753,7 +754,7 @@ export const keyCreateServiceAccountCall = async (
     if (!response.ok) {
       const errorData = await response.text();
       handleError(errorData);
-      console.error("Error response from the server:", errorData);
+      console.error(t("Error response from the server:"), errorData);
       throw new Error(errorData);
     }
 
@@ -761,7 +762,7 @@ export const keyCreateServiceAccountCall = async (
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -812,7 +813,7 @@ export const keyCreateCall = async (
     if (!response.ok) {
       const errorData = await response.text();
       handleError(errorData);
-      console.error("Error response from the server:", errorData);
+      console.error(t("Error response from the server:"), errorData);
       throw new Error(errorData);
     }
 
@@ -820,7 +821,7 @@ export const keyCreateCall = async (
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -909,7 +910,7 @@ export const userCreateCall = async (
     if (!response.ok) {
       const errorData = await response.text();
       handleError(errorData);
-      console.error("Error response from the server:", errorData);
+      console.error(t("Error response from the server:"), errorData);
       throw new Error(errorData);
     }
 
@@ -917,7 +918,7 @@ export const userCreateCall = async (
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -926,7 +927,7 @@ export const keyDeleteCall = async (accessToken: string, user_key: string) => {
   try {
     return await apiClient.post(`/key/delete`, { accessToken, body: { keys: [user_key] } });
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -935,7 +936,7 @@ export const userDeleteCall = async (accessToken: string, userIds: string[]) => 
   try {
     return await apiClient.post(`/user/delete`, { accessToken, body: { user_ids: userIds } });
   } catch (error) {
-    console.error("Failed to delete user(s):", error);
+    console.error(t("Failed to delete user(s):"), error);
     throw error;
   }
 };
@@ -944,7 +945,7 @@ export const teamDeleteCall = async (accessToken: string, teamID: string) => {
   try {
     return await apiClient.post(`/team/delete`, { accessToken, body: { team_ids: [teamID] } });
   } catch (error) {
-    console.error("Failed to delete key:", error);
+    console.error(t("Failed to delete key:"), error);
     throw error;
   }
 };
@@ -1007,7 +1008,7 @@ export const userListCall = async (
     })) as UserListResponse;
     return data;
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -1044,7 +1045,7 @@ export const userGetInfoV2 = async (accessToken: string, userId?: string): Promi
   try {
     return await apiClient.get(`/v2/user/info`, { accessToken, query: { user_id: userId || undefined } });
   } catch (error) {
-    console.error("Failed to fetch user info v2:", error);
+    console.error(t("Failed to fetch user info v2:"), error);
     throw error;
   }
 };
@@ -1075,7 +1076,7 @@ export const userInfoCall = async (
       query: { user_id: includeUserID ? userID : undefined },
     });
   } catch (error) {
-    console.error("Failed to fetch user data:", error);
+    console.error(t("Failed to fetch user data:"), error);
     throw error;
   }
 };
@@ -1084,7 +1085,7 @@ export const teamInfoCall = async (accessToken: string, teamID: string | null) =
   try {
     return await apiClient.get(`/team/info`, { accessToken, query: { team_id: teamID || undefined } });
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -1122,7 +1123,7 @@ export const v2TeamListCall = async (
       },
     });
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -1148,7 +1149,7 @@ export const teamListCall = async (
       },
     });
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -1182,7 +1183,7 @@ export const organizationListCall = async (
       },
     });
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -1212,7 +1213,7 @@ export const organizationInfoCall = async (accessToken: string, organizationID: 
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -1231,7 +1232,7 @@ export const organizationUpdateCall = async (
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -1259,7 +1260,7 @@ export const organizationDeleteCall = async (accessToken: string, organizationID
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to delete organization:", error);
+    console.error(t("Failed to delete organization:"), error);
     throw error;
   }
 };
@@ -1291,7 +1292,7 @@ export const transformRequestCall = async (accessToken: string, request: object)
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -1538,7 +1539,7 @@ export const getOnboardingCredentials = async (inviteUUID: string) => {
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -1561,7 +1562,7 @@ export const claimOnboardingToken = async (
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to delete key:", error);
+    console.error(t("Failed to delete key:"), error);
     throw error;
   }
 };
@@ -1591,7 +1592,7 @@ export const regenerateKeyCall = async (accessToken: string, keyToRegenerate: st
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to regenerate key:", error);
+    console.error(t("Failed to regenerate key:"), error);
     throw error;
   }
 };
@@ -1676,7 +1677,7 @@ export const modelInfoCall = async (
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -1707,7 +1708,7 @@ export const modelInfoV1Call = async (accessToken: string, modelId: string) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -1781,7 +1782,7 @@ export const modelHubCall = async (accessToken: string) => {
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -1792,7 +1793,7 @@ export const getAllowedIPs = async (accessToken: string) => {
     const data = await apiClient.get(`/get/allowed_ips`, { accessToken });
     return data.data; // Assuming the API returns { data: [...] }
   } catch (error) {
-    console.error("Failed to get allowed IPs:", error);
+    console.error(t("Failed to get allowed IPs:"), error);
     throw error;
   }
 };
@@ -1803,7 +1804,7 @@ export const addAllowedIP = async (accessToken: string, ip: string) => {
     const data = await apiClient.post(`/add/allowed_ip`, { accessToken, body: { ip: ip } });
     return data;
   } catch (error) {
-    console.error("Failed to add allowed IP:", error);
+    console.error(t("Failed to add allowed IP:"), error);
     throw error;
   }
 };
@@ -1814,7 +1815,7 @@ export const deleteAllowedIP = async (accessToken: string, ip: string) => {
     const data = await apiClient.post(`/delete/allowed_ip`, { accessToken, body: { ip: ip } });
     return data;
   } catch (error) {
-    console.error("Failed to delete allowed IP:", error);
+    console.error(t("Failed to delete allowed IP:"), error);
     throw error;
   }
 };
@@ -1829,7 +1830,7 @@ export const updateUsefulLinksCall = async (
       body: { useful_links: useful_links },
     });
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -1859,7 +1860,7 @@ export const modelAvailableCall = async (
       },
     });
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -1869,7 +1870,7 @@ export const teamSpendLogsCall = async (accessToken: string) => {
     const data = await apiClient.get(`/global/spend/teams`, { accessToken });
     return data;
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -1909,7 +1910,7 @@ export const tagsSpendLogsCall = async (
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -1919,7 +1920,7 @@ export const allTagNamesCall = async (accessToken: string) => {
     const data = await apiClient.get(`/global/spend/all_tag_names`, { accessToken });
     return data;
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -1929,7 +1930,7 @@ export const allEndUsersCall = async (accessToken: string) => {
     const data = await apiClient.get(`/customer/list`, { accessToken });
     return data;
   } catch (error) {
-    console.error("Failed to fetch end users:", error);
+    console.error(t("Failed to fetch end users:"), error);
     throw error;
   }
 };
@@ -1945,7 +1946,7 @@ export const userFilterUICall = async (accessToken: string, params: URLSearchPar
       },
     });
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -2034,7 +2035,7 @@ export const uiSpendLogsCall = async ({
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to fetch spend logs:", error);
+    console.error(t("Failed to fetch spend logs:"), error);
     throw error;
   }
 };
@@ -2046,7 +2047,7 @@ export const adminSpendLogsCall = async (accessToken: string) => {
     //NotificationsManager.success("Spend Logs received");
     return data;
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -2074,7 +2075,7 @@ export const adminTopKeysCall = async (accessToken: string) => {
     //NotificationsManager.success("Spend Logs received");
     return data;
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -2095,7 +2096,7 @@ export const adminTopEndUsersCall = async (
     //NotificationsManager.success("Top End users received");
     return data;
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -2114,7 +2115,7 @@ export const adminspendByProvider = async (
     });
     return data;
   } catch (error) {
-    console.error("Failed to fetch spend data:", error);
+    console.error(t("Failed to fetch spend data:"), error);
     throw error;
   }
 };
@@ -2131,7 +2132,7 @@ export const adminGlobalActivity = async (
     });
     return data;
   } catch (error) {
-    console.error("Failed to fetch spend data:", error);
+    console.error(t("Failed to fetch spend data:"), error);
     throw error;
   }
 };
@@ -2167,7 +2168,7 @@ export const adminGlobalActivityPerModel = async (
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to fetch spend data:", error);
+    console.error(t("Failed to fetch spend data:"), error);
     throw error;
   }
 };
@@ -2195,7 +2196,7 @@ export const adminTopModelsCall = async (accessToken: string) => {
     //NotificationsManager.success("Top Models received");
     return data;
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -2227,7 +2228,7 @@ export const keyInfoCall = async (accessToken: string, keys: string[]) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -2259,7 +2260,7 @@ export const testConnectionRequest = async (
     const contentType = response.headers.get("content-type");
     if (!contentType || !contentType.includes("application/json")) {
       const text = await response.text();
-      console.error("Received non-JSON response:", text);
+      console.error(t("Received non-JSON response:"), text);
       throw new Error(
         `Received non-JSON response (${response.status}: ${response.statusText}). Check network tab for details.`,
       );
@@ -2282,7 +2283,7 @@ export const testConnectionRequest = async (
 
     return data;
   } catch (error) {
-    console.error("Model connection test error:", error);
+    console.error(t("Model connection test error:"), error);
     // For network errors or other exceptions, still throw
     throw error;
   }
@@ -2385,7 +2386,7 @@ export const keyInfoV1Call = async (accessToken: string, key: string) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to fetch key info:", error);
+    console.error(t("Failed to fetch key info:"), error);
     throw error;
   }
 };
@@ -2431,7 +2432,7 @@ export const keyListCall = async (
       },
     });
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -2465,7 +2466,7 @@ export const keyAliasesCall = async (
       },
     });
   } catch (error) {
-    console.error("Failed to fetch key aliases:", error);
+    console.error(t("Failed to fetch key aliases:"), error);
     throw error;
   }
 };
@@ -2496,7 +2497,7 @@ export const userDailyActivityAggregatedCall = async (
       },
     });
   } catch (error) {
-    console.error("Failed to fetch aggregated user daily activity:", error);
+    console.error(t("Failed to fetch aggregated user daily activity:"), error);
     throw error;
   }
 };
@@ -2521,7 +2522,7 @@ export const gatewayDailyActivityCall = async (accessToken: string, startTime: D
       },
     });
   } catch (error) {
-    console.error("Failed to fetch gateway daily activity:", error);
+    console.error(t("Failed to fetch gateway daily activity:"), error);
     throw error;
   }
 };
@@ -2562,7 +2563,7 @@ export const teamCreateCall = async (
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -2590,7 +2591,7 @@ export const credentialCreateCall = async (
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -2604,7 +2605,7 @@ export const credentialListCall = async (accessToken: string) => {
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -2623,7 +2624,7 @@ export const credentialGetCall = async (accessToken: string, credentialName: str
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -2634,7 +2635,7 @@ export const credentialDeleteCall = async (accessToken: string, credentialName: 
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to delete key:", error);
+    console.error(t("Failed to delete key:"), error);
     throw error;
   }
 };
@@ -2663,7 +2664,7 @@ export const credentialUpdateCall = async (
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -2705,14 +2706,14 @@ export const keyUpdateCall = async (
     if (!response.ok) {
       const errorData = await response.text();
       handleError(errorData);
-      console.error("Error response from the server:", errorData);
+      console.error(t("Error response from the server:"), errorData);
       throw new Error(errorData);
     }
     const data = await response.json();
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -2737,7 +2738,7 @@ export const teamUpdateCall = async (
     if (!response.ok) {
       const errorData = await response.text();
       handleError(errorData);
-      console.error("Error response from the server:", errorData);
+      console.error(t("Error response from the server:"), errorData);
       NotificationsManager.fromBackend("Failed to update team settings: " + unwrapProxyErrorMessage(errorData));
       throw new Error(errorData);
     }
@@ -2745,7 +2746,7 @@ export const teamUpdateCall = async (
     return data;
     // Handle success - you might want to update some state or UI based on the updated team
   } catch (error) {
-    console.error("Failed to update team:", error);
+    console.error(t("Failed to update team:"), error);
     throw error;
   }
 };
@@ -2780,14 +2781,14 @@ export const modelPatchUpdateCall = async (
     if (!response.ok) {
       const errorData = await response.text();
       handleError(errorData);
-      console.error("Error update from the server:", errorData);
+      console.error(t("Error update from the server:"), errorData);
       throw new Error("Network response was not ok");
     }
     const data = await response.json();
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to update model:", error);
+    console.error(t("Failed to update model:"), error);
     throw error;
   }
 };
@@ -2839,7 +2840,7 @@ export const teamMemberAddCall = async (accessToken: string, teamId: string, for
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -2897,7 +2898,7 @@ export const teamBulkMemberAddCall = async (
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to bulk add team members:", error);
+    console.error(t("Failed to bulk add team members:"), error);
     throw error;
   }
 };
@@ -2965,7 +2966,7 @@ export const teamMemberUpdateCall = async (
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to update team member:", error);
+    console.error(t("Failed to update team member:"), error);
     throw error;
   }
 };
@@ -2991,7 +2992,7 @@ export const teamMemberDeleteCall = async (
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -3018,7 +3019,7 @@ export const organizationMemberAddCall = async (
     if (!response.ok) {
       const errorData = await response.text();
       handleError(errorData);
-      console.error("Error response from the server:", errorData);
+      console.error(t("Error response from the server:"), errorData);
       throw new Error(errorData);
     }
 
@@ -3026,7 +3027,7 @@ export const organizationMemberAddCall = async (
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create organization member:", error);
+    console.error(t("Failed to create organization member:"), error);
     throw error;
   }
 };
@@ -3042,7 +3043,7 @@ export const organizationMemberDeleteCall = async (accessToken: string, organiza
     });
     return data;
   } catch (error) {
-    console.error("Failed to delete organization member:", error);
+    console.error(t("Failed to delete organization member:"), error);
     throw error;
   }
 };
@@ -3061,7 +3062,7 @@ export const organizationMemberUpdateCall = async (
     });
     return data;
   } catch (error) {
-    console.error("Failed to update organization member:", error);
+    console.error(t("Failed to update organization member:"), error);
     throw error;
   }
 };
@@ -3084,7 +3085,7 @@ export const userUpdateUserCall = async (
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -3136,7 +3137,7 @@ export const userBulkUpdateUserCall = async (
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -3166,7 +3167,7 @@ export const serviceHealthCheck = async (accessToken: string, service: string) =
     // You can add additional logic here based on the response if needed
     return data;
   } catch (error) {
-    console.error("Failed to perform health check:", error);
+    console.error(t("Failed to perform health check:"), error);
     throw error;
   }
 };
@@ -3182,7 +3183,7 @@ export const getBudgetList = async (accessToken: string) => {
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to get callbacks:", error);
+    console.error(t("Failed to get callbacks:"), error);
     throw error;
   }
 };
@@ -3197,7 +3198,7 @@ export const getCallbacksCall = async (accessToken: string, userID: string, user
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to get callbacks:", error);
+    console.error(t("Failed to get callbacks:"), error);
     throw error;
   }
 };
@@ -3229,7 +3230,7 @@ export const getGeneralSettingsCall = async (accessToken: string) => {
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to get callbacks:", error);
+    console.error(t("Failed to get callbacks:"), error);
     throw error;
   }
 };
@@ -3239,7 +3240,7 @@ export const getRouterSettingsCall = async (accessToken: string) => {
     const data = await apiClient.get(`/router/settings`, { accessToken });
     return data;
   } catch (error) {
-    console.error("Failed to get router settings:", error);
+    console.error(t("Failed to get router settings:"), error);
     throw error;
   }
 };
@@ -3249,7 +3250,7 @@ export const getCacheSettingsCall = async (accessToken: string) => {
     const data = await apiClient.get(`/cache/settings`, { accessToken });
     return data;
   } catch (error) {
-    console.error("Failed to get cache settings:", error);
+    console.error(t("Failed to get cache settings:"), error);
     throw error;
   }
 };
@@ -3264,7 +3265,7 @@ export const testCacheConnectionCall = async (accessToken: string, cacheSettings
     });
     return data;
   } catch (error) {
-    console.error("Failed to test cache connection:", error);
+    console.error(t("Failed to test cache connection:"), error);
     throw error;
   }
 };
@@ -3279,7 +3280,7 @@ export const updateCacheSettingsCall = async (accessToken: string, cacheSettings
     });
     return data;
   } catch (error) {
-    console.error("Failed to update cache settings:", error);
+    console.error(t("Failed to update cache settings:"), error);
     throw error;
   }
 };
@@ -3290,7 +3291,7 @@ export const getCoordinationRedisSettingsCall = async (
   try {
     return await apiClient.get<CoordinationRedisSettingsResponse>(`/coordination_redis/settings`, { accessToken });
   } catch (error) {
-    console.error("Failed to get coordination redis settings:", error);
+    console.error(t("Failed to get coordination redis settings:"), error);
     throw error;
   }
 };
@@ -3305,7 +3306,7 @@ export const testCoordinationRedisConnectionCall = async (
       body: { settings },
     });
   } catch (error) {
-    console.error("Failed to test coordination redis connection:", error);
+    console.error(t("Failed to test coordination redis connection:"), error);
     throw error;
   }
 };
@@ -3320,7 +3321,7 @@ export const updateCoordinationRedisSettingsCall = async (
       body: { settings },
     });
   } catch (error) {
-    console.error("Failed to update coordination redis settings:", error);
+    console.error(t("Failed to update coordination redis settings:"), error);
     throw error;
   }
 };
@@ -3339,7 +3340,7 @@ export const getPassThroughEndpointsCall = async (accessToken: string, teamId?: 
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to get callbacks:", error);
+    console.error(t("Failed to get callbacks:"), error);
     throw error;
   }
 };
@@ -3370,7 +3371,7 @@ export const getConfigFieldSetting = async (accessToken: string, fieldName: stri
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to set callbacks:", error);
+    console.error(t("Failed to set callbacks:"), error);
     throw error;
   }
 };
@@ -3391,7 +3392,7 @@ export const createPassThroughEndpoint = async (accessToken: string, formValues:
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to set callbacks:", error);
+    console.error(t("Failed to set callbacks:"), error);
     throw error;
   }
 };
@@ -3406,11 +3407,11 @@ export const updateConfigFieldSetting = async (accessToken: string, fieldName: s
     //NotificationsManager.info("Requesting model data");
     const data = await apiClient.post(`/config/field/update`, { accessToken, body: formData });
     //NotificationsManager.info("Received model data");
-    NotificationsManager.success("Successfully updated value!");
+    NotificationsManager.success(t("Successfully updated value!"));
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to set callbacks:", error);
+    console.error(t("Failed to set callbacks:"), error);
     throw error;
   }
 };
@@ -3423,11 +3424,11 @@ export const deleteConfigFieldSetting = async (accessToken: string, fieldName: s
     };
     //NotificationsManager.info("Requesting model data");
     const data = await apiClient.post(`/config/field/delete`, { accessToken, body: formData });
-    NotificationsManager.success("Field reset on proxy");
+    NotificationsManager.success(t("Field reset on proxy"));
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to get callbacks:", error);
+    console.error(t("Failed to get callbacks:"), error);
     throw error;
   }
 };
@@ -3459,7 +3460,7 @@ export const deletePassThroughEndpointsCall = async (accessToken: string, endpoi
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to get callbacks:", error);
+    console.error(t("Failed to get callbacks:"), error);
     throw error;
   }
 };
@@ -3480,7 +3481,7 @@ export const setCallbacksCall = async (accessToken: string, formValues: Record<s
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to set callbacks:", error);
+    console.error(t("Failed to set callbacks:"), error);
     throw error;
   }
 };
@@ -3544,7 +3545,7 @@ export const cachingHealthCheckCall = async (accessToken: string) => {
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to call /cache/ping:", error);
+    console.error(t("Failed to call /cache/ping:"), error);
     throw error;
   }
 };
@@ -3573,7 +3574,7 @@ export const latestHealthChecksCall = async (accessToken: string) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to call /health/latest:", error);
+    console.error(t("Failed to call /health/latest:"), error);
     throw error;
   }
 };
@@ -3589,7 +3590,7 @@ export const getProxyUISettings = async (accessToken: string) => {
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to get callbacks:", error);
+    console.error(t("Failed to get callbacks:"), error);
     throw error;
   }
 };
@@ -3611,14 +3612,14 @@ export const getUISettings = async (accessToken: string) => {
     if (!response.ok) {
       const errorData = await response.json();
       const errorMessage = deriveErrorMessage(errorData);
-      console.error("Failed to get UI settings:", errorMessage);
+      console.error(t("Failed to get UI settings:"), errorMessage);
       return null;
     }
 
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to get UI settings:", error);
+    console.error(t("Failed to get UI settings:"), error);
     return null;
   }
 };
@@ -3631,7 +3632,7 @@ export const getMCPSemanticFilterSettings = async (accessToken: string) => {
     const data = await apiClient.get(`/get/mcp_semantic_filter_settings`, { accessToken });
     return data;
   } catch (error) {
-    console.error("Failed to get MCP semantic filter settings:", error);
+    console.error(t("Failed to get MCP semantic filter settings:"), error);
     throw error;
   }
 };
@@ -3664,7 +3665,7 @@ export const updateMCPSemanticFilterSettings = async (accessToken: string, setti
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to update MCP semantic filter settings:", error);
+    console.error(t("Failed to update MCP semantic filter settings:"), error);
     throw error;
   }
 };
@@ -3724,7 +3725,7 @@ export const testMCPSemanticFilter = async (accessToken: string, model: string, 
       },
     };
   } catch (error) {
-    console.error("Failed to test MCP semantic filter:", error);
+    console.error(t("Failed to test MCP semantic filter:"), error);
     throw error;
   }
 };
@@ -3766,7 +3767,7 @@ export const getGuardrailsList = async (accessToken: string) => {
 
       return await fallbackResponse.json();
     } catch (fallbackError) {
-      console.error("Failed to get guardrails list:", fallbackError);
+      console.error(t("Failed to get guardrails list:"), fallbackError);
       throw fallbackError;
     }
   }
@@ -3857,7 +3858,7 @@ export const getGuardrailsUsageOverview = async (accessToken: string, startDate?
     }
     return response.json();
   } catch (error) {
-    console.error("Failed to get guardrails usage overview:", error);
+    console.error(t("Failed to get guardrails usage overview:"), error);
     throw error;
   }
 };
@@ -3889,7 +3890,7 @@ export const getGuardrailsUsageDetail = async (
     }
     return response.json();
   } catch (error) {
-    console.error("Failed to get guardrails usage detail:", error);
+    console.error(t("Failed to get guardrails usage detail:"), error);
     throw error;
   }
 };
@@ -3930,7 +3931,7 @@ export const getGuardrailsUsageLogs = async (
     }
     return response.json();
   } catch (error) {
-    console.error("Failed to get guardrails usage logs:", error);
+    console.error(t("Failed to get guardrails usage logs:"), error);
     throw error;
   }
 };
@@ -3944,7 +3945,7 @@ export const getPoliciesList = async (accessToken: string) => {
     const data = await apiClient.get(`/policies/list`, { accessToken });
     return data;
   } catch (error) {
-    console.error("Failed to get policies list:", error);
+    console.error(t("Failed to get policies list:"), error);
     throw error;
   }
 };
@@ -4031,7 +4032,7 @@ export const testPoliciesAndGuardrails = async (
 
     return await response.json();
   } catch (error) {
-    console.error("Failed to test policies and guardrails:", error);
+    console.error(t("Failed to test policies and guardrails:"), error);
     throw error;
   }
 };
@@ -4051,7 +4052,7 @@ export const getPolicyTemplates = async (accessToken: string) => {
     const data = await apiClient.get(`/policy/templates`, { accessToken });
     return data;
   } catch (error) {
-    console.error("Failed to get policy templates:", error);
+    console.error(t("Failed to get policy templates:"), error);
     throw error;
   }
 };
@@ -4087,7 +4088,7 @@ export const enrichPolicyTemplate = async (
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to enrich policy template:", error);
+    console.error(t("Failed to enrich policy template:"), error);
     throw error;
   }
 };
@@ -4108,7 +4109,7 @@ export const suggestPolicyTemplates = async (
       },
     });
   } catch (error) {
-    console.error("Failed to suggest policy templates:", error);
+    console.error(t("Failed to suggest policy templates:"), error);
     throw error;
   }
 };
@@ -4123,7 +4124,7 @@ export const testPolicyTemplate = async (accessToken: string, guardrailDefinitio
       },
     });
   } catch (error) {
-    console.error("Failed to test policy template:", error);
+    console.error(t("Failed to test policy template:"), error);
     throw error;
   }
 };
@@ -4279,7 +4280,7 @@ export const createPolicyCall = async (accessToken: string, policyData: any) => 
     const data = await apiClient.post(`/policies`, { accessToken, body: policyData });
     return data;
   } catch (error) {
-    console.error("Failed to create policy:", error);
+    console.error(t("Failed to create policy:"), error);
     throw error;
   }
 };
@@ -4289,7 +4290,7 @@ export const updatePolicyCall = async (accessToken: string, policyId: string, po
     const data = await apiClient.put(`/policies/${policyId}`, { accessToken, body: policyData });
     return data;
   } catch (error) {
-    console.error("Failed to update policy:", error);
+    console.error(t("Failed to update policy:"), error);
     throw error;
   }
 };
@@ -4320,7 +4321,7 @@ export const listPolicyVersions = async (
 
     return await response.json();
   } catch (error) {
-    console.error("Failed to list policy versions:", error);
+    console.error(t("Failed to list policy versions:"), error);
     throw error;
   }
 };
@@ -4353,7 +4354,7 @@ export const createPolicyVersion = async (
 
     return await response.json();
   } catch (error) {
-    console.error("Failed to create policy version:", error);
+    console.error(t("Failed to create policy version:"), error);
     throw error;
   }
 };
@@ -4369,7 +4370,7 @@ export const updatePolicyVersionStatus = async (
       body: { version_status: versionStatus },
     });
   } catch (error) {
-    console.error("Failed to update policy version status:", error);
+    console.error(t("Failed to update policy version status:"), error);
     throw error;
   }
 };
@@ -4379,7 +4380,7 @@ export const deletePolicyCall = async (accessToken: string, policyId: string) =>
     const data = await apiClient.delete(`/policies/${policyId}`, { accessToken });
     return data;
   } catch (error) {
-    console.error("Failed to delete policy:", error);
+    console.error(t("Failed to delete policy:"), error);
     throw error;
   }
 };
@@ -4389,7 +4390,7 @@ export const getPolicyInfo = async (accessToken: string, policyId: string) => {
     const data = await apiClient.get(`/policies/${policyId}`, { accessToken });
     return data;
   } catch (error) {
-    console.error("Failed to get policy info:", error);
+    console.error(t("Failed to get policy info:"), error);
     throw error;
   }
 };
@@ -4401,7 +4402,7 @@ export const getPolicyAttachmentsList = async (accessToken: string) => {
     const data = await apiClient.get(`/policies/attachments/list`, { accessToken });
     return data;
   } catch (error) {
-    console.error("Failed to get policy attachments list:", error);
+    console.error(t("Failed to get policy attachments list:"), error);
     throw error;
   }
 };
@@ -4411,7 +4412,7 @@ export const createPolicyAttachmentCall = async (accessToken: string, attachment
     const data = await apiClient.post(`/policies/attachments`, { accessToken, body: attachmentData });
     return data;
   } catch (error) {
-    console.error("Failed to create policy attachment:", error);
+    console.error(t("Failed to create policy attachment:"), error);
     throw error;
   }
 };
@@ -4439,7 +4440,7 @@ export const deletePolicyAttachmentCall = async (accessToken: string, attachment
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to delete policy attachment:", error);
+    console.error(t("Failed to delete policy attachment:"), error);
     throw error;
   }
 };
@@ -4456,7 +4457,7 @@ export const testPipelineCall = async (
     });
     return data;
   } catch (error) {
-    console.error("Failed to test pipeline:", error);
+    console.error(t("Failed to test pipeline:"), error);
     throw error;
   }
 };
@@ -4484,7 +4485,7 @@ export const getResolvedGuardrails = async (accessToken: string, policyId: strin
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to get resolved guardrails:", error);
+    console.error(t("Failed to get resolved guardrails:"), error);
     throw error;
   }
 };
@@ -4496,7 +4497,7 @@ export const resolvePoliciesCall = async (
   try {
     return await apiClient.post(`/policies/resolve`, { accessToken, body: context });
   } catch (error) {
-    console.error("Failed to resolve policies:", error);
+    console.error(t("Failed to resolve policies:"), error);
     throw error;
   }
 };
@@ -4524,7 +4525,7 @@ export const estimateAttachmentImpactCall = async (accessToken: string, attachme
 
     return await response.json();
   } catch (error) {
-    console.error("Failed to estimate attachment impact:", error);
+    console.error(t("Failed to estimate attachment impact:"), error);
     throw error;
   }
 };
@@ -4533,7 +4534,7 @@ export const getPromptsList = async (accessToken: string, environment?: string):
   try {
     return await apiClient.get(`/prompts/list`, { accessToken, query: { environment: environment || undefined } });
   } catch (error) {
-    console.error("Failed to get prompts list:", error);
+    console.error(t("Failed to get prompts list:"), error);
     throw error;
   }
 };
@@ -4549,7 +4550,7 @@ export const getPromptInfo = async (
       query: { environment: environment || undefined },
     });
   } catch (error) {
-    console.error("Failed to get prompt info:", error);
+    console.error(t("Failed to get prompt info:"), error);
     throw error;
   }
 };
@@ -4585,7 +4586,7 @@ export const getPromptVersions = async (
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to get prompt versions:", error);
+    console.error(t("Failed to get prompt versions:"), error);
     throw error;
   }
 };
@@ -4595,7 +4596,7 @@ export const createPromptCall = async (accessToken: string, promptData: any) => 
     const data = await apiClient.post(`/prompts`, { accessToken, body: promptData });
     return data;
   } catch (error) {
-    console.error("Failed to create prompt:", error);
+    console.error(t("Failed to create prompt:"), error);
     throw error;
   }
 };
@@ -4605,7 +4606,7 @@ export const updatePromptCall = async (accessToken: string, promptId: string, pr
     const data = await apiClient.put(`/prompts/${promptId}`, { accessToken, body: promptData });
     return data;
   } catch (error) {
-    console.error("Failed to update prompt:", error);
+    console.error(t("Failed to update prompt:"), error);
     throw error;
   }
 };
@@ -4615,7 +4616,7 @@ export const deletePromptCall = async (accessToken: string, promptId: string) =>
     const data = await apiClient.delete(`/prompts/${promptId}`, { accessToken });
     return data;
   } catch (error) {
-    console.error("Failed to delete prompt:", error);
+    console.error(t("Failed to delete prompt:"), error);
     throw error;
   }
 };
@@ -4647,7 +4648,7 @@ export const convertPromptFileToJson = async (
 
     return await response.json();
   } catch (error) {
-    console.error("Failed to convert prompt file:", error);
+    console.error(t("Failed to convert prompt file:"), error);
     throw error;
   }
 };
@@ -4676,7 +4677,7 @@ export const createAgentCall = async (accessToken: string, agentData: any) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to create agent:", error);
+    console.error(t("Failed to create agent:"), error);
     throw error;
   }
 };
@@ -4778,7 +4779,7 @@ export const createGuardrailCall = async (accessToken: string, guardrailData: an
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to create guardrail:", error);
+    console.error(t("Failed to create guardrail:"), error);
     throw error;
   }
 };
@@ -4808,7 +4809,7 @@ export const uiSpendLogDetailsCall = async (accessToken: string, logId: string, 
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to fetch log details:", error);
+    console.error(t("Failed to fetch log details:"), error);
     throw error;
   }
 };
@@ -4832,7 +4833,7 @@ export const fetchOpenAPIRegistry = async (accessToken: string) => {
 
     return await response.json();
   } catch (error) {
-    console.error("Failed to fetch OpenAPI registry:", error);
+    console.error(t("Failed to fetch OpenAPI registry:"), error);
     throw error;
   }
 };
@@ -4841,7 +4842,7 @@ export const fetchDiscoverableMCPServers = async (accessToken: string) => {
   try {
     return await apiClient.get(`/v1/mcp/discover`, { accessToken });
   } catch (error) {
-    console.error("Failed to fetch discoverable MCP servers:", error);
+    console.error(t("Failed to fetch discoverable MCP servers:"), error);
     throw error;
   }
 };
@@ -4853,7 +4854,7 @@ export const fetchMCPServers = async (accessToken: string, teamId?: string | nul
       query: { team_id: teamId || undefined, connected_app_view: connectedAppView || undefined },
     });
   } catch (error) {
-    console.error("Failed to fetch MCP servers:", error);
+    console.error(t("Failed to fetch MCP servers:"), error);
     throw error;
   }
 };
@@ -4867,7 +4868,7 @@ export const fetchMCPServerHealth = async (accessToken: string, serverIds?: stri
       },
     });
   } catch (error) {
-    console.error("Failed to fetch MCP server health:", error);
+    console.error(t("Failed to fetch MCP server health:"), error);
     throw error;
   }
 };
@@ -4877,7 +4878,7 @@ export const fetchMCPAccessGroups = async (accessToken: string) => {
     const data = await apiClient.get(`/v1/mcp/access_groups`, { accessToken });
     return data.access_groups || [];
   } catch (error) {
-    console.error("Failed to fetch MCP access groups:", error);
+    console.error(t("Failed to fetch MCP access groups:"), error);
     throw error;
   }
 };
@@ -4918,7 +4919,7 @@ export const createMCPServer = async (
     return data;
     // Handle success - you might want to update some state or UI based on the created key
   } catch (error) {
-    console.error("Failed to create key:", error);
+    console.error(t("Failed to create key:"), error);
     throw error;
   }
 };
@@ -4927,7 +4928,7 @@ export const updateMCPServer = async (accessToken: string, formValues: Record<st
   try {
     return await apiClient.put(`/v1/mcp/server`, { accessToken, body: formValues });
   } catch (error) {
-    console.error("Failed to update MCP server:", error);
+    console.error(t("Failed to update MCP server:"), error);
     throw error;
   }
 };
@@ -4936,7 +4937,7 @@ export const deleteMCPServer = async (accessToken: string, serverId: string) => 
   try {
     await apiClient.delete(`/v1/mcp/server/${serverId}`, { accessToken });
   } catch (error) {
-    console.error("Failed to delete key:", error);
+    console.error(t("Failed to delete key:"), error);
     throw error;
   }
 };
@@ -4945,7 +4946,7 @@ export const fetchMCPToolsets = async (accessToken: string): Promise<any[]> => {
   try {
     return await apiClient.get(`/v1/mcp/toolset`, { accessToken });
   } catch (error) {
-    console.error("Failed to fetch MCP toolsets:", error);
+    console.error(t("Failed to fetch MCP toolsets:"), error);
     throw error;
   }
 };
@@ -4954,7 +4955,7 @@ export const createMCPToolset = async (accessToken: string, formValues: Record<s
   try {
     return await apiClient.post(`/v1/mcp/toolset`, { accessToken, body: formValues });
   } catch (error) {
-    console.error("Failed to create MCP toolset:", error);
+    console.error(t("Failed to create MCP toolset:"), error);
     throw error;
   }
 };
@@ -4963,7 +4964,7 @@ export const updateMCPToolset = async (accessToken: string, formValues: Record<s
   try {
     return await apiClient.put(`/v1/mcp/toolset`, { accessToken, body: formValues });
   } catch (error) {
-    console.error("Failed to update MCP toolset:", error);
+    console.error(t("Failed to update MCP toolset:"), error);
     throw error;
   }
 };
@@ -4972,7 +4973,7 @@ export const deleteMCPToolset = async (accessToken: string, toolsetId: string) =
   try {
     await apiClient.delete(`/v1/mcp/toolset/${toolsetId}`, { accessToken });
   } catch (error) {
-    console.error("Failed to delete MCP toolset:", error);
+    console.error(t("Failed to delete MCP toolset:"), error);
     throw error;
   }
 };
@@ -4981,7 +4982,7 @@ export const registerMCPServer = async (accessToken: string, formValues: Record<
   try {
     return await apiClient.post(`/v1/mcp/server/register`, { accessToken, body: formValues });
   } catch (error) {
-    console.error("Failed to register MCP server:", error);
+    console.error(t("Failed to register MCP server:"), error);
     throw error;
   }
 };
@@ -5004,7 +5005,7 @@ export const fetchMCPSubmissions = async (accessToken: string) => {
     }
     return response.json();
   } catch (error) {
-    console.error("Failed to fetch MCP submissions:", error);
+    console.error(t("Failed to fetch MCP submissions:"), error);
     throw error;
   }
 };
@@ -5026,7 +5027,7 @@ export const approveMCPServer = async (accessToken: string, serverId: string) =>
     }
     return response.json();
   } catch (error) {
-    console.error("Failed to approve MCP server:", error);
+    console.error(t("Failed to approve MCP server:"), error);
     throw error;
   }
 };
@@ -5050,7 +5051,7 @@ export const rejectMCPServer = async (accessToken: string, serverId: string, rev
     }
     return response.json();
   } catch (error) {
-    console.error("Failed to reject MCP server:", error);
+    console.error(t("Failed to reject MCP server:"), error);
     throw error;
   }
 };
@@ -5061,7 +5062,7 @@ export const fetchSearchTools = async (accessToken: string) => {
     const data = await apiClient.get(`/search_tools/list`, { accessToken });
     return data;
   } catch (error) {
-    console.error("Failed to fetch search tools:", error);
+    console.error(t("Failed to fetch search tools:"), error);
     throw error;
   }
 };
@@ -5076,7 +5077,7 @@ export const createSearchTool = async (accessToken: string, formValues: Record<s
     });
     return data;
   } catch (error) {
-    console.error("Failed to create search tool:", error);
+    console.error(t("Failed to create search tool:"), error);
     throw error;
   }
 };
@@ -5091,7 +5092,7 @@ export const updateSearchTool = async (accessToken: string, searchToolId: string
     });
     return data;
   } catch (error) {
-    console.error("Failed to update search tool:", error);
+    console.error(t("Failed to update search tool:"), error);
     throw error;
   }
 };
@@ -5101,7 +5102,7 @@ export const deleteSearchTool = async (accessToken: string, searchToolId: string
     const data = await apiClient.delete(`/search_tools/${searchToolId}`, { accessToken });
     return data;
   } catch (error) {
-    console.error("Failed to delete search tool:", error);
+    console.error(t("Failed to delete search tool:"), error);
     throw error;
   }
 };
@@ -5130,7 +5131,7 @@ export const fetchAvailableSearchProviders = async (accessToken: string) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to fetch available search providers:", error);
+    console.error(t("Failed to fetch available search providers:"), error);
     throw error;
   }
 };
@@ -5145,7 +5146,7 @@ export const testSearchToolConnection = async (accessToken: string, litellmParam
     });
     return data;
   } catch (error) {
-    console.error("Failed to test search tool connection:", error);
+    console.error(t("Failed to test search tool connection:"), error);
     throw error;
   }
 };
@@ -5176,7 +5177,7 @@ export const listMCPTools = async (
   } catch (error) {
     // Network-level failure (no HTTP response). Preserve legacy shape so the
     // caller can render a generic error message without crashing.
-    console.error("Failed to fetch MCP tools (network error):", error);
+    console.error(t("Failed to fetch MCP tools (network error):"), error);
     return {
       tools: [],
       error: "network_error",
@@ -5189,7 +5190,7 @@ export const listMCPTools = async (
   try {
     data = await response.json();
   } catch (parseError) {
-    console.error("Failed to parse MCP tools response:", parseError);
+    console.error(t("Failed to parse MCP tools response:"), parseError);
     return {
       tools: [],
       error: "parse_error",
@@ -5281,7 +5282,7 @@ export const callMCPTool = async (
           errorMessage = errorData.message || errorData.error || errorMessage;
         }
       } catch (parseError) {
-        console.error("Failed to parse JSON error response:", parseError);
+        console.error(t("Failed to parse JSON error response:"), parseError);
         // If JSON parsing fails, use the raw text
         if (responseText) {
           errorMessage = responseText;
@@ -5301,11 +5302,11 @@ export const callMCPTool = async (
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to call MCP tool:", error);
+    console.error(t("Failed to call MCP tool:"), error);
     console.error("Error type:", typeof error);
     if (error instanceof Error) {
-      console.error("Error message:", error.message);
-      console.error("Error stack:", error.stack);
+      console.error(t("Error message:"), error.message);
+      console.error(t("Error stack:"), error.stack);
     }
     throw error;
   }
@@ -5332,7 +5333,7 @@ export const tagCreateCall = async (accessToken: string, formValues: TagNewReque
 
     return await response.json();
   } catch (error) {
-    console.error("Error creating tag:", error);
+    console.error(t("Error creating tag:"), error);
     throw error;
   }
 };
@@ -5358,7 +5359,7 @@ export const tagUpdateCall = async (accessToken: string, formValues: TagUpdateRe
 
     return await response.json();
   } catch (error) {
-    console.error("Error updating tag:", error);
+    console.error(t("Error updating tag:"), error);
     throw error;
   }
 };
@@ -5385,7 +5386,7 @@ export const tagInfoCall = async (accessToken: string, tagNames: string[]): Prom
     const data = await response.json();
     return data as TagInfoResponse;
   } catch (error) {
-    console.error("Error getting tag info:", error);
+    console.error(t("Error getting tag info:"), error);
     throw error;
   }
 };
@@ -5429,7 +5430,7 @@ export const tagListCall = async (
     const data = await response.json();
     return data as TagListResponse;
   } catch (error) {
-    console.error("Error listing tags:", error);
+    console.error(t("Error listing tags:"), error);
     throw error;
   }
 };
@@ -5455,7 +5456,7 @@ export const tagDeleteCall = async (accessToken: string, tagName: string): Promi
 
     return await response.json();
   } catch (error) {
-    console.error("Error deleting tag:", error);
+    console.error(t("Error deleting tag:"), error);
     throw error;
   }
 };
@@ -5465,7 +5466,7 @@ export const getDefaultTeamSettings = async (accessToken: string) => {
     const data = await apiClient.get(`/get/default_team_settings`, { accessToken });
     return data;
   } catch (error) {
-    console.error("Failed to fetch default team settings:", error);
+    console.error(t("Failed to fetch default team settings:"), error);
     throw error;
   }
 };
@@ -5475,7 +5476,7 @@ export const updateDefaultTeamSettings = async (accessToken: string, settings: R
     const data = await apiClient.patch(`/update/default_team_settings`, { accessToken, body: settings });
     return data;
   } catch (error) {
-    console.error("Failed to update default team settings:", error);
+    console.error(t("Failed to update default team settings:"), error);
     throw error;
   }
 };
@@ -5497,14 +5498,14 @@ export const getTeamPermissionsCall = async (accessToken: string, teamId: string
     if (!response.ok) {
       const errorData = await response.json();
       const errorMessage = deriveErrorMessage(errorData);
-      console.error("Available permissions fetch failed:", errorMessage);
+      console.error(t("Available permissions fetch failed:"), errorMessage);
       return { all_available_permissions: [], team_member_permissions: [] };
     }
 
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to get team permissions:", error);
+    console.error(t("Failed to get team permissions:"), error);
     throw error;
   }
 };
@@ -5520,7 +5521,7 @@ export const teamPermissionsUpdateCall = async (accessToken: string, teamId: str
     });
     return data;
   } catch (error) {
-    console.error("Failed to update team permissions:", error);
+    console.error(t("Failed to update team permissions:"), error);
     throw error;
   }
 };
@@ -5566,7 +5567,7 @@ export const sessionSpendLogsCall = async (
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to fetch session logs:", error);
+    console.error(t("Failed to fetch session logs:"), error);
     throw error;
   }
 };
@@ -5591,7 +5592,7 @@ export const vectorStoreCreateCall = async (accessToken: string, formValues: Rec
 
     return await response.json();
   } catch (error) {
-    console.error("Error creating vector store:", error);
+    console.error(t("Error creating vector store:"), error);
     throw error;
   }
 };
@@ -5619,7 +5620,7 @@ export const vectorStoreListCall = async (
 
     return await response.json();
   } catch (error) {
-    console.error("Error listing vector stores:", error);
+    console.error(t("Error listing vector stores:"), error);
     throw error;
   }
 };
@@ -5633,7 +5634,7 @@ export const indexesListCall = async (accessToken: string): Promise<IndexesListR
   try {
     return await apiClient.get<IndexesListResponse>(`/v1/indexes`, { accessToken });
   } catch (error) {
-    console.error("Error listing indexes:", error);
+    console.error(t("Error listing indexes:"), error);
     throw error;
   }
 };
@@ -5658,7 +5659,7 @@ export const vectorStoreDeleteCall = async (accessToken: string, vectorStoreId: 
 
     return await response.json();
   } catch (error) {
-    console.error("Error deleting vector store:", error);
+    console.error(t("Error deleting vector store:"), error);
     throw error;
   }
 };
@@ -5683,7 +5684,7 @@ export const vectorStoreInfoCall = async (accessToken: string, vectorStoreId: st
 
     return await response.json();
   } catch (error) {
-    console.error("Error getting vector store info:", error);
+    console.error(t("Error getting vector store info:"), error);
     throw error;
   }
 };
@@ -5708,7 +5709,7 @@ export const vectorStoreUpdateCall = async (accessToken: string, formValues: Rec
 
     return await response.json();
   } catch (error) {
-    console.error("Error updating vector store:", error);
+    console.error(t("Error updating vector store:"), error);
     throw error;
   }
 };
@@ -5766,7 +5767,7 @@ export const ragIngestCall = async (
 
     return await response.json();
   } catch (error) {
-    console.error("Error ingesting document:", error);
+    console.error(t("Error ingesting document:"), error);
     throw error;
   }
 };
@@ -5792,7 +5793,7 @@ export const getEmailEventSettings = async (accessToken: string): Promise<EmailE
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to get email event settings:", error);
+    console.error(t("Failed to get email event settings:"), error);
     throw error;
   }
 };
@@ -5819,7 +5820,7 @@ export const updateEmailEventSettings = async (accessToken: string, settings: Em
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to update email event settings:", error);
+    console.error(t("Failed to update email event settings:"), error);
     throw error;
   }
 };
@@ -5845,7 +5846,7 @@ export const resetEmailEventSettings = async (accessToken: string) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to reset email event settings:", error);
+    console.error(t("Failed to reset email event settings:"), error);
     throw error;
   }
 };
@@ -5873,7 +5874,7 @@ export const deleteAgentCall = async (accessToken: string, agentId: string) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to delete agent:", error);
+    console.error(t("Failed to delete agent:"), error);
     throw error;
   }
 };
@@ -5902,7 +5903,7 @@ export const makeAgentsPublicCall = async (accessToken: string, agentIds: string
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to make agents public:", error);
+    console.error(t("Failed to make agents public:"), error);
     throw error;
   }
 };
@@ -5931,7 +5932,7 @@ export const makeMCPPublicCall = async (accessToken: string, mcpServerIds: strin
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to make agents public:", error);
+    console.error(t("Failed to make agents public:"), error);
     throw error;
   }
 };
@@ -5957,7 +5958,7 @@ export const deleteGuardrailCall = async (accessToken: string, guardrailId: stri
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to delete guardrail:", error);
+    console.error(t("Failed to delete guardrail:"), error);
     throw error;
   }
 };
@@ -5985,7 +5986,7 @@ export const getGuardrailUISettings = async (accessToken: string) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to get guardrail UI settings:", error);
+    console.error(t("Failed to get guardrail UI settings:"), error);
     throw error;
   }
 };
@@ -6013,7 +6014,7 @@ export const getGuardrailProviderSpecificParams = async (accessToken: string) =>
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to get guardrail provider specific parameters:", error);
+    console.error(t("Failed to get guardrail provider specific parameters:"), error);
     throw error;
   }
 };
@@ -6044,7 +6045,7 @@ export const getCategoryYaml = async (accessToken: string, categoryName: string)
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to get category YAML:", error);
+    console.error(t("Failed to get category YAML:"), error);
     throw error;
   }
 };
@@ -6071,7 +6072,7 @@ export const getMajorAirlines = async (accessToken: string) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to get major airlines:", error);
+    console.error(t("Failed to get major airlines:"), error);
     throw error;
   }
 };
@@ -6098,7 +6099,7 @@ export const getAgentsList = async (accessToken: string, healthCheck: boolean = 
     const data = await response.json();
     return { agents: data };
   } catch (error) {
-    console.error("Failed to get agents list:", error);
+    console.error(t("Failed to get agents list:"), error);
     throw error;
   }
 };
@@ -6124,7 +6125,7 @@ export const getAgentInfo = async (accessToken: string, agentId: string) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to get agent info:", error);
+    console.error(t("Failed to get agent info:"), error);
     throw error;
   }
 };
@@ -6150,7 +6151,7 @@ export const getGuardrailInfo = async (accessToken: string, guardrailId: string)
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to get guardrail info:", error);
+    console.error(t("Failed to get guardrail info:"), error);
     throw error;
   }
 };
@@ -6189,7 +6190,7 @@ export const patchAgentCall = async (
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to update guardrail:", error);
+    console.error(t("Failed to update guardrail:"), error);
     throw error;
   }
 };
@@ -6225,7 +6226,7 @@ export const updateGuardrailCall = async (
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to update guardrail:", error);
+    console.error(t("Failed to update guardrail:"), error);
     throw error;
   }
 };
@@ -6291,7 +6292,7 @@ export const applyGuardrail = async (
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to apply guardrail:", error);
+    console.error(t("Failed to apply guardrail:"), error);
     throw error;
   }
 };
@@ -6371,7 +6372,7 @@ export const testCustomCodeGuardrail = async (
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to test custom code guardrail:", error);
+    console.error(t("Failed to test custom code guardrail:"), error);
     throw error;
   }
 };
@@ -6400,7 +6401,7 @@ export const validateBlockedWordsFile = async (accessToken: string, fileContent:
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to validate blocked words file:", error);
+    console.error(t("Failed to validate blocked words file:"), error);
     throw error;
   }
 };
@@ -6410,7 +6411,7 @@ export const getSSOSettings = async (accessToken: string) => {
     const data = await apiClient.get(`/get/sso_settings`, { accessToken });
     return data;
   } catch (error) {
-    console.error("Failed to fetch SSO configuration:", error);
+    console.error(t("Failed to fetch SSO configuration:"), error);
     throw error;
   }
 };
@@ -6452,7 +6453,7 @@ export const updateSSOSettings = async (accessToken: string, settings: Record<st
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to update SSO configuration:", error);
+    console.error(t("Failed to update SSO configuration:"), error);
     throw error;
   }
 };
@@ -6514,7 +6515,7 @@ export const uiAuditLogsCall = async ({
 
     return await response.json();
   } catch (error) {
-    console.error("Failed to fetch audit logs:", error);
+    console.error(t("Failed to fetch audit logs:"), error);
     throw error;
   }
 };
@@ -6552,7 +6553,7 @@ export const getRemainingUsers = async (
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to fetch remaining users:", error);
+    console.error(t("Failed to fetch remaining users:"), error);
     throw error;
   }
 };
@@ -6592,7 +6593,7 @@ export const getLicenseInfo = async (accessToken: string): Promise<LicenseInfo |
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to fetch license info:", error);
+    console.error(t("Failed to fetch license info:"), error);
     throw error;
   }
 };
@@ -6624,10 +6625,10 @@ export const updatePassThroughEndpoint = async (
     }
 
     const data = await response.json();
-    NotificationsManager.success("Pass through endpoint updated successfully");
+    NotificationsManager.success(t("Pass through endpoint updated successfully"));
     return data;
   } catch (error) {
-    console.error("Failed to update pass through endpoint:", error);
+    console.error(t("Failed to update pass through endpoint:"), error);
     throw error;
   }
 };
@@ -6645,7 +6646,7 @@ export const deleteCallback = async (accessToken: string, callbackName: string) 
     });
     return data;
   } catch (error) {
-    console.error("Failed to delete specific callback:", error);
+    console.error(t("Failed to delete specific callback:"), error);
     throw error;
   }
 };
@@ -6684,7 +6685,7 @@ export const testMCPToolsListRequest = async (
     const contentType = response.headers.get("content-type");
     if (!contentType || !contentType.includes("application/json")) {
       const text = await response.text();
-      console.error("Received non-JSON response:", text);
+      console.error(t("Received non-JSON response:"), text);
       throw new Error(
         `Received non-JSON response (${response.status}: ${response.statusText}). Check network tab for details.`,
       );
@@ -6716,7 +6717,7 @@ export const testMCPToolsListRequest = async (
 
     return data;
   } catch (error) {
-    console.error("MCP tools list test error:", error);
+    console.error(t("MCP tools list test error:"), error);
     // For network errors or other exceptions, still throw
     throw error;
   }
@@ -6899,7 +6900,7 @@ export const vectorStoreSearchCall = async (
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error testing vector store search:", error);
+    console.error(t("Error testing vector store search:"), error);
     throw error;
   }
 };
@@ -6933,7 +6934,7 @@ export const searchToolQueryCall = async (
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error querying search tool:", error);
+    console.error(t("Error querying search tool:"), error);
     throw error;
   }
 };
@@ -6961,7 +6962,7 @@ export const tagDauCall = async (accessToken: string, endDate: Date, tagFilter?:
       },
     });
   } catch (error) {
-    console.error("Failed to fetch DAU:", error);
+    console.error(t("Failed to fetch DAU:"), error);
     throw error;
   }
 };
@@ -6988,7 +6989,7 @@ export const tagWauCall = async (accessToken: string, endDate: Date, tagFilter?:
       },
     });
   } catch (error) {
-    console.error("Failed to fetch WAU:", error);
+    console.error(t("Failed to fetch WAU:"), error);
     throw error;
   }
 };
@@ -7015,7 +7016,7 @@ export const tagMauCall = async (accessToken: string, endDate: Date, tagFilter?:
       },
     });
   } catch (error) {
-    console.error("Failed to fetch MAU:", error);
+    console.error(t("Failed to fetch MAU:"), error);
     throw error;
   }
 };
@@ -7028,7 +7029,7 @@ export const tagDistinctCall = async (accessToken: string) => {
     const data = await apiClient.get(`/tag/distinct`, { accessToken });
     return data;
   } catch (error) {
-    console.error("Failed to fetch distinct tags:", error);
+    console.error(t("Failed to fetch distinct tags:"), error);
     throw error;
   }
 };
@@ -7059,7 +7060,7 @@ export const userAgentSummaryCall = async (
       },
     });
   } catch (error) {
-    console.error("Failed to fetch user agent summary:", error);
+    console.error(t("Failed to fetch user agent summary:"), error);
     throw error;
   }
 };
@@ -7083,7 +7084,7 @@ export const perUserAnalyticsCall = async (
       },
     });
   } catch (error) {
-    console.error("Failed to fetch per-user analytics:", error);
+    console.error(t("Failed to fetch per-user analytics:"), error);
     throw error;
   }
 };
@@ -7269,7 +7270,7 @@ export const getClaudeCodeMarketplace = async () => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to fetch Claude Code marketplace:", error);
+    console.error(t("Failed to fetch Claude Code marketplace:"), error);
     throw error;
   }
 };
@@ -7304,7 +7305,7 @@ export const getClaudeCodePluginsList = async (accessToken: string, enabledOnly:
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to fetch Claude Code plugins list:", error);
+    console.error(t("Failed to fetch Claude Code plugins list:"), error);
     throw error;
   }
 };
@@ -7379,7 +7380,7 @@ export const registerClaudeCodePlugin = async (accessToken: string, pluginData: 
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Failed to register Claude Code plugin:", error);
+    console.error(t("Failed to register Claude Code plugin:"), error);
     throw error;
   }
 };

@@ -17,6 +17,7 @@ import { PluginModeProvider, usePluginMode } from "@/contexts/PluginModeContext"
 import { createApiClient } from "@/lib/http/client";
 import { getProxyBaseUrl } from "@/components/networking";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 const pluginApiClient = createApiClient({ getBaseUrl: () => getProxyBaseUrl() ?? "" });
 
 // Wrapper so PluginModeProvider receives the live accessToken from auth context,
@@ -27,7 +28,8 @@ function PluginModeProviderWithAuth({ children }: { children: React.ReactNode })
 }
 
 export function AgentControlPlaneView() {
-  const { activePlugin } = usePluginMode();
+
+  const { t } = useLanguage();  const { activePlugin } = usePluginMode();
   const activePluginName = activePlugin?.name;
   const agentPlatformUrl = activePlugin?.url ?? "";
   const { accessToken } = useAuth();
@@ -71,8 +73,8 @@ export function AgentControlPlaneView() {
     return (
       <div className="flex flex-1 items-center justify-center text-gray-500">
         <div className="text-center">
-          <p className="text-lg font-medium mb-2">Plugin</p>
-          <p className="text-sm">Configure the plugin URL in settings</p>
+          <p className="text-lg font-medium mb-2">{t("Plugin")}</p>
+          <p className="text-sm">{t("Configure the plugin URL in settings")}</p>
         </div>
       </div>
     );

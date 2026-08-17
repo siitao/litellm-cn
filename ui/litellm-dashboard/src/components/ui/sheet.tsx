@@ -7,6 +7,7 @@ import { cn } from "@/lib/cva.config";
 import { Button } from "@/components/ui/button";
 import { XIcon } from "lucide-react";
 
+import { t } from "@/i18n";
 function Sheet({ ...props }: SheetPrimitive.Root.Props) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />;
 }
@@ -65,7 +66,7 @@ function SheetContent({
             render={<Button variant="ghost" className="absolute top-4 right-4" size="icon-sm" />}
           >
             <XIcon />
-            <span className="sr-only">Close</span>
+            <span className="sr-only">{t("Close")}</span>
           </SheetPrimitive.Close>
         )}
       </SheetPrimitive.Popup>

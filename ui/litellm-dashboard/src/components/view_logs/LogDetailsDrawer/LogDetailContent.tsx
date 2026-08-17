@@ -37,6 +37,7 @@ import {
 import { ToolsSection } from "../ToolsSection";
 import { PrettyMessagesView } from "./PrettyMessagesView";
 
+import { t } from "@/i18n";
 const { Text } = Typography;
 
 export interface LogDetailContentProps {
@@ -103,7 +104,7 @@ export function LogDetailContent({ logEntry, isLoadingDetails = false, accessTok
         <Alert
           type="error"
           showIcon
-          message="Request Failed"
+          message={t("Request Failed")}
           description={<ErrorDescription errorInfo={errorInfo} />}
           className="mb-6"
         />
@@ -118,20 +119,20 @@ export function LogDetailContent({ logEntry, isLoadingDetails = false, accessTok
       <div className="bg-white rounded-lg shadow-sm w-full max-w-full overflow-hidden mb-6">
         <Card title="Request Details" size="small" bordered={false} style={{ marginBottom: 0 }}>
           <Descriptions column={2} size="small">
-            <Descriptions.Item label="Model">{logEntry.model}</Descriptions.Item>
-            <Descriptions.Item label="Provider">{logEntry.custom_llm_provider || "-"}</Descriptions.Item>
-            <Descriptions.Item label="Call Type">{logEntry.call_type}</Descriptions.Item>
-            <Descriptions.Item label="Model ID">
+            <Descriptions.Item label={t("Model")}>{logEntry.model}</Descriptions.Item>
+            <Descriptions.Item label={t("Provider")}>{logEntry.custom_llm_provider || "-"}</Descriptions.Item>
+            <Descriptions.Item label={t("Call Type")}>{logEntry.call_type}</Descriptions.Item>
+            <Descriptions.Item label={t("Model ID")}>
               <TruncatedValue value={logEntry.model_id} />
             </Descriptions.Item>
-            <Descriptions.Item label="API Base">
+            <Descriptions.Item label={t("API Base")}>
               <TruncatedValue value={logEntry.api_base} maxWidth={API_BASE_MAX_WIDTH} />
             </Descriptions.Item>
             {logEntry.requester_ip_address && (
-              <Descriptions.Item label="IP Address">{logEntry.requester_ip_address}</Descriptions.Item>
+              <Descriptions.Item label={t("IP Address")}>{logEntry.requester_ip_address}</Descriptions.Item>
             )}
             {hasGuardrailData && (
-              <Descriptions.Item label="Guardrail">
+              <Descriptions.Item label={t("Guardrail")}>
                 <GuardrailLabel label={primaryGuardrailLabel} maskedCount={totalMaskedEntities} />
               </Descriptions.Item>
             )}
@@ -226,12 +227,12 @@ function ErrorDescription({ errorInfo }: { errorInfo: any }) {
     <div>
       {errorInfo.error_code && (
         <div>
-          <Text strong>Error Code:</Text> {errorInfo.error_code}
+          <Text strong>{t("Error Code:")}</Text> {errorInfo.error_code}
         </div>
       )}
       {errorInfo.error_message && (
         <div>
-          <Text strong>Message:</Text> {errorInfo.error_message}
+          <Text strong>{t("Message:")}</Text> {errorInfo.error_message}
         </div>
       )}
     </div>
@@ -241,9 +242,7 @@ function ErrorDescription({ errorInfo }: { errorInfo: any }) {
 function TagsSection({ tags }: { tags: Record<string, any> }) {
   return (
     <div className="bg-white rounded-lg shadow-sm w-full max-w-full overflow-hidden p-4 mb-6">
-      <Text strong style={{ display: "block", marginBottom: 8, fontSize: 16 }}>
-        Tags
-      </Text>
+      <Text strong style={{ display: "block", marginBottom: 8, fontSize: 16 }}>{t("Tags")}</Text>
       <Space size={SPACING_MEDIUM} wrap>
         {Object.entries(tags).map(([key, value]) => (
           <Tag key={key}>
@@ -302,9 +301,7 @@ function MetricLabel({ label, tooltip, docsUrl }: { label: string; tooltip: stri
               target="_blank"
               rel="noreferrer"
               style={{ color: "#91caff", textDecoration: "underline" }}
-            >
-              Docs
-            </a>
+            >{t("Docs")}</a>
           </>
         }
       >
@@ -337,13 +334,13 @@ function MetricsSection({ logEntry, metadata }: { logEntry: LogEntry; metadata: 
         <Descriptions column={2} size="small">
           {showAnthropicMessagesInputOutput ? (
             <>
-              <Descriptions.Item label="Input Tokens">{formatNumberWithCommas(uncachedInputTokens)}</Descriptions.Item>
-              <Descriptions.Item label="Output Tokens">
+              <Descriptions.Item label={t("Input Tokens")}>{formatNumberWithCommas(uncachedInputTokens)}</Descriptions.Item>
+              <Descriptions.Item label={t("Output Tokens")}>
                 {formatNumberWithCommas(logEntry.completion_tokens)}
               </Descriptions.Item>
             </>
           ) : (
-            <Descriptions.Item label="Tokens">
+            <Descriptions.Item label={t("Tokens")}>
               <TokenFlow
                 prompt={logEntry.prompt_tokens}
                 completion={logEntry.completion_tokens}
@@ -351,19 +348,19 @@ function MetricsSection({ logEntry, metadata }: { logEntry: LogEntry; metadata: 
               />
             </Descriptions.Item>
           )}
-          <Descriptions.Item label="Cost">${formatNumberWithCommas(logEntry.spend || 0, 8)}</Descriptions.Item>
-          <Descriptions.Item label="Duration">
+          <Descriptions.Item label={t("Cost")}>${formatNumberWithCommas(logEntry.spend || 0, 8)}</Descriptions.Item>
+          <Descriptions.Item label={t("Duration")}>
             {logEntry.request_duration_ms != null ? (logEntry.request_duration_ms / 1000).toFixed(3) : "-"} s
           </Descriptions.Item>
           {ttftMs != null && ttftMs > 0 && (
-            <Descriptions.Item label="Time to First Token">{(ttftMs / 1000).toFixed(3)} s</Descriptions.Item>
+            <Descriptions.Item label={t("Time to First Token")}>{(ttftMs / 1000).toFixed(3)} s</Descriptions.Item>
           )}
 
           {showResponseCache && (
             <Descriptions.Item
               label={
                 <MetricLabel
-                  label="Response Cache"
+                  label={t("Response Cache")}
                   tooltip={RESPONSE_CACHE_TOOLTIP}
                   docsUrl={RESPONSE_CACHE_DOCS_URL}
                 />
@@ -376,7 +373,7 @@ function MetricsSection({ logEntry, metadata }: { logEntry: LogEntry; metadata: 
             <Descriptions.Item
               label={
                 <MetricLabel
-                  label="Prompt Cache Read Tokens"
+                  label={t("Prompt Cache Read Tokens")}
                   tooltip={PROMPT_CACHE_READ_TOOLTIP}
                   docsUrl={PROMPT_CACHE_DOCS_URL}
                 />
@@ -389,7 +386,7 @@ function MetricsSection({ logEntry, metadata }: { logEntry: LogEntry; metadata: 
             <Descriptions.Item
               label={
                 <MetricLabel
-                  label="Prompt Cache Creation Tokens"
+                  label={t("Prompt Cache Creation Tokens")}
                   tooltip={PROMPT_CACHE_CREATION_TOOLTIP}
                   docsUrl={PROMPT_CACHE_DOCS_URL}
                 />
@@ -400,12 +397,12 @@ function MetricsSection({ logEntry, metadata }: { logEntry: LogEntry; metadata: 
           )}
 
           {metadata?.litellm_overhead_time_ms !== undefined && metadata.litellm_overhead_time_ms !== null && (
-            <Descriptions.Item label="LiteLLM Overhead">
+            <Descriptions.Item label={t("LiteLLM Overhead")}>
               {metadata.litellm_overhead_time_ms.toFixed(2)} ms
             </Descriptions.Item>
           )}
 
-          <Descriptions.Item label="Retries">
+          <Descriptions.Item label={t("Retries")}>
             {metadata?.attempted_retries !== undefined && metadata?.attempted_retries !== null ? (
               metadata.attempted_retries > 0 ? (
                 <>
@@ -415,17 +412,17 @@ function MetricsSection({ logEntry, metadata }: { logEntry: LogEntry; metadata: 
                     : ""}
                 </>
               ) : (
-                <Tag color="green">None</Tag>
+                <Tag color="green">{t("None")}</Tag>
               )
             ) : (
               "-"
             )}
           </Descriptions.Item>
 
-          <Descriptions.Item label="Start Time">
+          <Descriptions.Item label={t("Start Time")}>
             {moment(logEntry.startTime).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]")}
           </Descriptions.Item>
-          <Descriptions.Item label="End Time">
+          <Descriptions.Item label={t("End Time")}>
             {moment(logEntry.endTime).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]")}
           </Descriptions.Item>
         </Descriptions>
@@ -492,11 +489,9 @@ function RequestResponseSection({
                   }
                 }}
               >
-                <h3 className="text-lg font-medium text-gray-900" style={{ margin: 0 }}>
-                  Request & Response
-                </h3>
+                <h3 className="text-lg font-medium text-gray-900" style={{ margin: 0 }}>{t("Request & Response")}</h3>
                 <Radio.Group size="small" value={viewMode} onChange={(e) => setViewMode(e.target.value)}>
-                  <Radio.Button value="pretty">Pretty</Radio.Button>
+                  <Radio.Button value="pretty">{t("Pretty")}</Radio.Button>
                   <Radio.Button value="json">JSON</Radio.Button>
                 </Radio.Group>
               </div>
@@ -530,7 +525,7 @@ function RequestResponseSection({
                     items={[
                       {
                         key: TAB_REQUEST,
-                        label: "Request",
+                        label: t("Request"),
                         children: (
                           <div style={{ paddingTop: SPACING_XLARGE, paddingBottom: SPACING_XLARGE }}>
                             <JsonViewer data={getRawRequest()} mode="formatted" />
@@ -539,15 +534,13 @@ function RequestResponseSection({
                       },
                       {
                         key: TAB_RESPONSE,
-                        label: "Response",
+                        label: t("Response"),
                         children: (
                           <div style={{ paddingTop: SPACING_XLARGE, paddingBottom: SPACING_XLARGE }}>
                             {hasResponse || hasError ? (
                               <JsonViewer data={getFormattedResponse()} mode="formatted" />
                             ) : (
-                              <div style={{ textAlign: "center", padding: 20, color: "#999", fontStyle: "italic" }}>
-                                Response data not available
-                              </div>
+                              <div style={{ textAlign: "center", padding: 20, color: "#999", fontStyle: "italic" }}>{t("Response data not available")}</div>
                             )}
                           </div>
                         ),
@@ -610,7 +603,7 @@ function MetadataSection({ metadata }: { metadata: Record<string, any> }) {
         items={[
           {
             key: "1",
-            label: <h3 className="text-lg font-medium text-gray-900">Metadata</h3>,
+            label: <h3 className="text-lg font-medium text-gray-900">{t("Metadata")}</h3>,
             children: (
               <div>
                 <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 8 }}>

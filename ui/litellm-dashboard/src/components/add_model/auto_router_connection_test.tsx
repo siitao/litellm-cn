@@ -4,6 +4,7 @@ import { CircleCheck, CircleX, LoaderCircle } from "lucide-react";
 import { testModelGroupConnection, ModelGroupConnectionResult } from "../networking";
 import { AutoRouterTestTarget } from "./build_auto_router_test_targets";
 
+import { t } from "@/i18n";
 interface AutoRouterConnectionTestProps {
   accessToken: string;
   targets: AutoRouterTestTarget[];
@@ -47,9 +48,7 @@ const AutoRouterConnectionTest: React.FC<AutoRouterConnectionTestProps> = ({
 
   if (targets.length === 0) {
     return (
-      <p className="text-sm text-muted-foreground">
-        No complexity tiers are configured yet, so there is nothing to test.
-      </p>
+      <p className="text-sm text-muted-foreground">{t("No complexity tiers are configured yet, so there is nothing to test.")}</p>
     );
   }
 

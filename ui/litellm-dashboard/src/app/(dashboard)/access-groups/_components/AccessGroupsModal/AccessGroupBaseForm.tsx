@@ -5,6 +5,7 @@ import type { FormInstance } from "antd";
 import { Form, Input, Select, Space, Tabs } from "antd";
 import { BotIcon, InfoIcon, LayersIcon, ServerIcon } from "lucide-react";
 
+import { t } from "@/i18n";
 const { TextArea } = Input;
 
 export interface AccessGroupFormValues {
@@ -39,7 +40,7 @@ export function AccessGroupBaseForm({ form, isNameDisabled = false }: AccessGrou
         <div style={{ paddingTop: 16 }}>
           <Form.Item
             name="name"
-            label="Group Name"
+            label={t("Group Name")}
             rules={[
               {
                 required: true,
@@ -49,7 +50,7 @@ export function AccessGroupBaseForm({ form, isNameDisabled = false }: AccessGrou
           >
             <Input placeholder="e.g. Engineering Team" disabled={isNameDisabled} />
           </Form.Item>
-          <Form.Item name="description" label="Description">
+          <Form.Item name="description" label={t("Description")}>
             <TextArea rows={4} placeholder="Describe the purpose of this access group..." />
           </Form.Item>
         </div>
@@ -65,7 +66,7 @@ export function AccessGroupBaseForm({ form, isNameDisabled = false }: AccessGrou
       ),
       children: (
         <div style={{ paddingTop: 16 }}>
-          <Form.Item name="modelIds" label="Allowed Models">
+          <Form.Item name="modelIds" label={t("Allowed Models")}>
             <ModelSelect
               context="global"
               value={form.getFieldValue("modelIds") ?? []}
@@ -86,10 +87,10 @@ export function AccessGroupBaseForm({ form, isNameDisabled = false }: AccessGrou
       ),
       children: (
         <div style={{ paddingTop: 16 }}>
-          <Form.Item name="mcpServerIds" label="Allowed MCP Servers">
+          <Form.Item name="mcpServerIds" label={t("Allowed MCP Servers")}>
             <Select
               mode="multiple"
-              placeholder="Select MCP servers"
+              placeholder={t("Select MCP servers")}
               style={{ width: "100%" }}
               optionFilterProp="label"
               allowClear
@@ -112,10 +113,10 @@ export function AccessGroupBaseForm({ form, isNameDisabled = false }: AccessGrou
       ),
       children: (
         <div style={{ paddingTop: 16 }}>
-          <Form.Item name="agentIds" label="Allowed Agents">
+          <Form.Item name="agentIds" label={t("Allowed Agents")}>
             <Select
               mode="multiple"
-              placeholder="Select agents"
+              placeholder={t("Select agents")}
               style={{ width: "100%" }}
               optionFilterProp="label"
               allowClear

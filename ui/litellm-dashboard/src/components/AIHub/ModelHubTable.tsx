@@ -36,6 +36,7 @@ import { checkTokenValidity } from "@/utils/jwtUtils";
 import { getCookie } from "@/utils/cookieUtils";
 import { getLoginUrl } from "@/utils/returnUrlUtils";
 
+import { t } from "@/i18n";
 interface ModelHubTableProps {
   accessToken: string | null;
   publicPage: boolean;
@@ -127,7 +128,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
             // do nothing
           });
       } catch (error) {
-        console.error("There was an error fetching the model data", error);
+        console.error(t("There was an error fetching the model data"), error);
       } finally {
         setLoading(false);
       }
@@ -141,7 +142,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
         setModelHubData(_modelHubData);
         setPublicPageAllowed(true);
       } catch (error) {
-        console.error("There was an error fetching the public model data", error);
+        console.error(t("There was an error fetching the public model data"), error);
       } finally {
         setLoading(false);
       }
@@ -178,7 +179,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
         }));
         setAgentHubData(agent_card_list);
       } catch (error) {
-        console.error("There was an error fetching the agent data", error);
+        console.error(t("There was an error fetching the agent data"), error);
       } finally {
         setAgentLoading(false);
       }
@@ -202,7 +203,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
         const response = await fetchMCPServers(accessToken);
         setMcpHubData(response);
       } catch (error) {
-        console.error("There was an error fetching the MCP server data", error);
+        console.error(t("There was an error fetching the MCP server data"), error);
       } finally {
         setMcpLoading(false);
       }
@@ -223,7 +224,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
         const response = await getClaudeCodePluginsList(accessToken, enabledOnly);
         setSkillHubData(response.plugins);
       } catch (error) {
-        console.error("Error fetching skill hub data", error);
+        console.error(t("Error fetching skill hub data"), error);
       } finally {
         setSkillLoading(false);
       }
@@ -326,7 +327,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
           const _modelHubData = await modelHubCall(accessToken);
           setModelHubData(_modelHubData.data);
         } catch (error) {
-          console.error("Error refreshing model data:", error);
+          console.error(t("Error refreshing model data:"), error);
         }
       };
       fetchData();
@@ -347,7 +348,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
           }));
           setAgentHubData(agent_card_list);
         } catch (error) {
-          console.error("Error refreshing agent data:", error);
+          console.error(t("Error refreshing agent data:"), error);
         }
       };
       fetchAgentData();
@@ -362,7 +363,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
           const response = await fetchMCPServers(accessToken);
           setMcpHubData(response);
         } catch (error) {
-          console.error("Error refreshing MCP server data:", error);
+          console.error(t("Error refreshing MCP server data:"), error);
         }
       };
       fetchMcpData();
@@ -393,23 +394,21 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
           {/* Header with Title, Description and URL */}
           <div className="flex justify-between items-center mb-6">
             <div className="flex flex-col items-start">
-              <Title className="text-center">AI Hub</Title>
+              <Title className="text-center">{t("AI Hub")}</Title>
               {isAdminRole(userRole || "") ? (
-                <p className="text-sm text-gray-600">
-                  Make models, agents, and MCP servers public for developers to know what&apos;s available.
-                </p>
+                <p className="text-sm text-gray-600">{t("Make models, agents, and MCP servers public for developers to know what&apos;s available.")}</p>
               ) : (
-                <p className="text-sm text-gray-600">A list of all public model names personally available to you.</p>
+                <p className="text-sm text-gray-600">{t("A list of all public model names personally available to you.")}</p>
               )}
             </div>
             <div className="flex items-center space-x-4">
-              <Text>Model Hub URL:</Text>
+              <Text>{t("Model Hub URL:")}</Text>
               <div className="flex items-center bg-gray-200 px-2 py-1 rounded-sm">
                 <Text className="mr-2">{`${getProxyBaseUrl()}/ui/model_hub_table`}</Text>
                 <button
                   onClick={() => void copyToClipboard(`${getProxyBaseUrl()}/ui/model_hub_table`)}
                   className="p-1 hover:bg-gray-300 rounded-sm transition-colors"
-                  title="Copy URL"
+                  title={t("Copy URL")}
                 >
                   <Copy size={16} className="text-gray-600" />
                 </button>
@@ -427,10 +426,10 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
           {/* Tab System for Model Hub, Agent Hub, MCP Hub, and Plugin Marketplace */}
           <TabGroup>
             <TabList className="mb-4">
-              <Tab>Model Hub</Tab>
-              <Tab>Agent Hub</Tab>
-              <Tab>MCP Hub</Tab>
-              <Tab>Skill Hub</Tab>
+              <Tab>{t("Model Hub")}</Tab>
+              <Tab>{t("Agent Hub")}</Tab>
+              <Tab>{t("MCP Hub")}</Tab>
+              <Tab>{t("Skill Hub")}</Tab>
             </TabList>
 
             <TabPanels>
@@ -441,7 +440,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
                   {/* Header with Make Public Button */}
                   {publicPage == false && canModify && (
                     <div className="flex justify-end mb-4">
-                      <Button onClick={() => handleMakePublicPage()}>Select Models to Make Public</Button>
+                      <Button onClick={() => handleMakePublicPage()}>{t("Select Models to Make Public")}</Button>
                     </div>
                   )}
 
@@ -473,8 +472,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
                 </Card>
 
                 <div className="mt-4 text-center space-y-2">
-                  <Text className="text-sm text-gray-600">
-                    Showing {filteredData.length} of {modelHubData?.length || 0} models
+                  <Text className="text-sm text-gray-600">{t("Showing")} {filteredData.length} of {modelHubData?.length || 0} models
                   </Text>
                 </div>
               </TabPanel>
@@ -485,7 +483,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
                   {/* Header with Make Public Button */}
                   {publicPage == false && canModify && (
                     <div className="flex justify-end mb-4">
-                      <Button onClick={() => handleMakeAgentPublicPage()}>Select Agents to Make Public</Button>
+                      <Button onClick={() => handleMakeAgentPublicPage()}>{t("Select Agents to Make Public")}</Button>
                     </div>
                   )}
 
@@ -507,8 +505,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
                 </Card>
 
                 <div className="mt-4 text-center space-y-2">
-                  <Text className="text-sm text-gray-600">
-                    Showing {agentHubData?.length || 0} agent{agentHubData?.length !== 1 ? "s" : ""}
+                  <Text className="text-sm text-gray-600">{t("Showing")} {agentHubData?.length || 0} agent{agentHubData?.length !== 1 ? "s" : ""}
                   </Text>
                 </div>
               </TabPanel>
@@ -519,7 +516,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
                   {/* Header with Make Public Button */}
                   {publicPage == false && canModify && (
                     <div className="flex justify-end mb-4">
-                      <Button onClick={() => handleMakeMcpPublicPage()}>Select MCP Servers to Make Public</Button>
+                      <Button onClick={() => handleMakeMcpPublicPage()}>{t("Select MCP Servers to Make Public")}</Button>
                     </div>
                   )}
 
@@ -535,7 +532,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
                     loadingMessage="Loading MCP servers…"
                     noDataMessage={
                       <HubEmptyState
-                        title="No MCP servers yet"
+                        title={t("No MCP servers yet")}
                         body="MCP servers added to this proxy will appear here."
                       />
                     }
@@ -544,8 +541,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
                 </Card>
 
                 <div className="mt-4 text-center space-y-2">
-                  <Text className="text-sm text-gray-600">
-                    Showing {mcpHubData?.length || 0} MCP server{mcpHubData?.length !== 1 ? "s" : ""}
+                  <Text className="text-sm text-gray-600">{t("Showing")} {mcpHubData?.length || 0} MCP server{mcpHubData?.length !== 1 ? "s" : ""}
                   </Text>
                 </div>
               </TabPanel>
@@ -554,7 +550,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
               <TabPanel>
                 {publicPage == false && canModify && (
                   <div className="flex justify-end mb-4">
-                    <Button onClick={() => setIsMakeSkillPublicModalVisible(true)}>Select Skills to Make Public</Button>
+                    <Button onClick={() => setIsMakeSkillPublicModalVisible(true)}>{t("Select Skills to Make Public")}</Button>
                   </div>
                 )}
                 <SkillHubDashboard
@@ -574,14 +570,14 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
         </div>
       ) : (
         <Card className="mx-auto max-w-xl mt-10">
-          <Text className="text-xl text-center mb-2 text-black">Public Model Hub not enabled.</Text>
-          <p className="text-base text-center text-slate-800">Ask your proxy admin to enable this on their Admin UI.</p>
+          <Text className="text-xl text-center mb-2 text-black">{t("Public Model Hub not enabled.")}</Text>
+          <p className="text-base text-center text-slate-800">{t("Ask your proxy admin to enable this on their Admin UI.")}</p>
         </Card>
       )}
 
       {/* Public Page Modal */}
       <Modal
-        title="Public Model Hub"
+        title={t("Public Model Hub")}
         width={600}
         open={isPublicPageModalVisible}
         footer={null}
@@ -590,13 +586,13 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
       >
         <div className="pt-5 pb-5">
           <div className="flex justify-between mb-4">
-            <Text className="text-base mr-2">Shareable Link:</Text>
+            <Text className="text-base mr-2">{t("Shareable Link:")}</Text>
             <Text className="max-w-sm ml-2 bg-gray-200 pr-2 pl-2 pt-1 pb-1 text-center rounded-sm">
               {`${getProxyBaseUrl()}/ui/model_hub_table`}
             </Text>
           </div>
           <div className="flex justify-end">
-            <Button onClick={goToPublicModelPage}>See Page</Button>
+            <Button onClick={goToPublicModelPage}>{t("See Page")}</Button>
           </div>
         </div>
       </Modal>
@@ -614,18 +610,18 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
           <div className="space-y-6">
             {/* Model Overview */}
             <div>
-              <Text className="text-lg font-semibold mb-4">Model Overview</Text>
+              <Text className="text-lg font-semibold mb-4">{t("Model Overview")}</Text>
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div>
-                  <Text className="font-medium">Model Group:</Text>
+                  <Text className="font-medium">{t("Model Group:")}</Text>
                   <Text>{selectedModel.model_group}</Text>
                 </div>
                 <div>
-                  <Text className="font-medium">Mode:</Text>
+                  <Text className="font-medium">{t("Mode:")}</Text>
                   <Text>{selectedModel.mode || "Not specified"}</Text>
                 </div>
                 <div>
-                  <Text className="font-medium">Providers:</Text>
+                  <Text className="font-medium">{t("Providers:")}</Text>
                   <div className="flex flex-wrap gap-1 mt-1">
                     {selectedModel.providers.map((provider) => (
                       <Badge key={provider} color="blue">
@@ -639,18 +635,18 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
 
             {/* Token and Cost Information */}
             <div>
-              <Text className="text-lg font-semibold mb-4">Token & Cost Information</Text>
+              <Text className="text-lg font-semibold mb-4">{t("Token & Cost Information")}</Text>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Text className="font-medium">Max Input Tokens:</Text>
+                  <Text className="font-medium">{t("Max Input Tokens:")}</Text>
                   <Text>{selectedModel.max_input_tokens?.toLocaleString() || "Not specified"}</Text>
                 </div>
                 <div>
-                  <Text className="font-medium">Max Output Tokens:</Text>
+                  <Text className="font-medium">{t("Max Output Tokens:")}</Text>
                   <Text>{selectedModel.max_output_tokens?.toLocaleString() || "Not specified"}</Text>
                 </div>
                 <div>
-                  <Text className="font-medium">Input Cost per 1M Tokens:</Text>
+                  <Text className="font-medium">{t("Input Cost per 1M Tokens:")}</Text>
                   <Text>
                     {selectedModel.input_cost_per_token
                       ? formatCost(selectedModel.input_cost_per_token)
@@ -658,7 +654,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
                   </Text>
                 </div>
                 <div>
-                  <Text className="font-medium">Output Cost per 1M Tokens:</Text>
+                  <Text className="font-medium">{t("Output Cost per 1M Tokens:")}</Text>
                   <Text>
                     {selectedModel.output_cost_per_token
                       ? formatCost(selectedModel.output_cost_per_token)
@@ -670,14 +666,14 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
 
             {/* Capabilities */}
             <div>
-              <Text className="text-lg font-semibold mb-4">Capabilities</Text>
+              <Text className="text-lg font-semibold mb-4">{t("Capabilities")}</Text>
               <div className="flex flex-wrap gap-2">
                 {(() => {
                   const capabilities = getModelCapabilities(selectedModel);
                   const colors = ["green", "blue", "purple", "orange", "red", "yellow"];
 
                   if (capabilities.length === 0) {
-                    return <Text className="text-gray-500">No special capabilities listed</Text>;
+                    return <Text className="text-gray-500">{t("No special capabilities listed")}</Text>;
                   }
 
                   return capabilities.map((capability, index) => (
@@ -692,17 +688,17 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
             {/* Rate Limits */}
             {(selectedModel.tpm || selectedModel.rpm) && (
               <div>
-                <Text className="text-lg font-semibold mb-4">Rate Limits</Text>
+                <Text className="text-lg font-semibold mb-4">{t("Rate Limits")}</Text>
                 <div className="grid grid-cols-2 gap-4">
                   {selectedModel.tpm && (
                     <div>
-                      <Text className="font-medium">Tokens per Minute:</Text>
+                      <Text className="font-medium">{t("Tokens per Minute:")}</Text>
                       <Text>{selectedModel.tpm.toLocaleString()}</Text>
                     </div>
                   )}
                   {selectedModel.rpm && (
                     <div>
-                      <Text className="font-medium">Requests per Minute:</Text>
+                      <Text className="font-medium">{t("Requests per Minute:")}</Text>
                       <Text>{selectedModel.rpm.toLocaleString()}</Text>
                     </div>
                   )}
@@ -713,7 +709,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
             {/* Supported OpenAI Parameters */}
             {selectedModel.supported_openai_params && (
               <div>
-                <Text className="text-lg font-semibold mb-4">Supported OpenAI Parameters</Text>
+                <Text className="text-lg font-semibold mb-4">{t("Supported OpenAI Parameters")}</Text>
                 <div className="flex flex-wrap gap-2">
                   {selectedModel.supported_openai_params.map((param) => (
                     <Badge key={param} color="green">
@@ -726,7 +722,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
 
             {/* Usage Example */}
             <div>
-              <Text className="text-lg font-semibold mb-4">Usage Example</Text>
+              <Text className="text-lg font-semibold mb-4">{t("Usage Example")}</Text>
               <SyntaxHighlighter language="python" className="text-sm">
                 {`import openai
 
@@ -765,22 +761,22 @@ print(response.choices[0].message.content)`}
           <div className="space-y-6">
             {/* Agent Overview */}
             <div>
-              <Text className="text-lg font-semibold mb-4">Agent Overview</Text>
+              <Text className="text-lg font-semibold mb-4">{t("Agent Overview")}</Text>
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div>
-                  <Text className="font-medium">Name:</Text>
+                  <Text className="font-medium">{t("Name:")}</Text>
                   <Text>{selectedAgent.name}</Text>
                 </div>
                 <div>
-                  <Text className="font-medium">Version:</Text>
+                  <Text className="font-medium">{t("Version:")}</Text>
                   <Badge color="blue">v{selectedAgent.version}</Badge>
                 </div>
                 <div>
-                  <Text className="font-medium">Protocol Version:</Text>
+                  <Text className="font-medium">{t("Protocol Version:")}</Text>
                   <Text>{selectedAgent.protocolVersion}</Text>
                 </div>
                 <div>
-                  <Text className="font-medium">URL:</Text>
+                  <Text className="font-medium">{t("URL:")}</Text>
                   <div className="flex items-center space-x-2">
                     <Text className="truncate">{selectedAgent.url}</Text>
                     <CopyOutlined
@@ -791,7 +787,7 @@ print(response.choices[0].message.content)`}
                 </div>
               </div>
               <div>
-                <Text className="font-medium">Description:</Text>
+                <Text className="font-medium">{t("Description:")}</Text>
                 <Text className="mt-1">{selectedAgent.description}</Text>
               </div>
             </div>
@@ -799,7 +795,7 @@ print(response.choices[0].message.content)`}
             {/* Capabilities */}
             {selectedAgent.capabilities && Object.keys(selectedAgent.capabilities).length > 0 && (
               <div>
-                <Text className="text-lg font-semibold mb-4">Capabilities</Text>
+                <Text className="text-lg font-semibold mb-4">{t("Capabilities")}</Text>
                 <div className="flex flex-wrap gap-2">
                   {Object.entries(selectedAgent.capabilities)
                     .filter(([_, value]) => value === true)
@@ -814,26 +810,26 @@ print(response.choices[0].message.content)`}
 
             {/* Input/Output Modes */}
             <div>
-              <Text className="text-lg font-semibold mb-4">Input/Output Modes</Text>
+              <Text className="text-lg font-semibold mb-4">{t("Input/Output Modes")}</Text>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Text className="font-medium">Input Modes:</Text>
+                  <Text className="font-medium">{t("Input Modes:")}</Text>
                   <div className="flex flex-wrap gap-1 mt-1">
                     {selectedAgent.defaultInputModes?.map((mode) => (
                       <Badge key={mode} color="blue">
                         {mode}
                       </Badge>
-                    )) || <Text>Not specified</Text>}
+                    )) || <Text>{t("Not specified")}</Text>}
                   </div>
                 </div>
                 <div>
-                  <Text className="font-medium">Output Modes:</Text>
+                  <Text className="font-medium">{t("Output Modes:")}</Text>
                   <div className="flex flex-wrap gap-1 mt-1">
                     {selectedAgent.defaultOutputModes?.map((mode) => (
                       <Badge key={mode} color="purple">
                         {mode}
                       </Badge>
-                    )) || <Text>Not specified</Text>}
+                    )) || <Text>{t("Not specified")}</Text>}
                   </div>
                 </div>
               </div>
@@ -842,14 +838,14 @@ print(response.choices[0].message.content)`}
             {/* Skills */}
             {selectedAgent.skills && selectedAgent.skills.length > 0 && (
               <div>
-                <Text className="text-lg font-semibold mb-4">Skills</Text>
+                <Text className="text-lg font-semibold mb-4">{t("Skills")}</Text>
                 <div className="space-y-4">
                   {selectedAgent.skills.map((skill) => (
                     <div key={skill.id} className="border border-gray-200 rounded-sm p-4">
                       <div className="flex justify-between items-start mb-2">
                         <div>
                           <Text className="font-medium text-base">{skill.name}</Text>
-                          <Text className="text-xs text-gray-500">ID: {skill.id}</Text>
+                          <Text className="text-xs text-gray-500">{t("ID:")} {skill.id}</Text>
                         </div>
                         {skill.tags && skill.tags.length > 0 && (
                           <div className="flex flex-wrap gap-1">
@@ -864,7 +860,7 @@ print(response.choices[0].message.content)`}
                       <Text className="text-sm mb-2">{skill.description}</Text>
                       {skill.examples && skill.examples.length > 0 && (
                         <div>
-                          <Text className="text-xs font-medium text-gray-700">Examples:</Text>
+                          <Text className="text-xs font-medium text-gray-700">{t("Examples:")}</Text>
                           <div className="flex flex-wrap gap-1 mt-1">
                             {skill.examples.map((example, idx) => (
                               <Badge key={idx} color="gray" size="xs">
@@ -883,8 +879,8 @@ print(response.choices[0].message.content)`}
             {/* Additional Properties */}
             {selectedAgent.supportsAuthenticatedExtendedCard && (
               <div>
-                <Text className="text-lg font-semibold mb-4">Additional Features</Text>
-                <Badge color="green">Supports Authenticated Extended Card</Badge>
+                <Text className="text-lg font-semibold mb-4">{t("Additional Features")}</Text>
+                <Badge color="green">{t("Supports Authenticated Extended Card")}</Badge>
               </div>
             )}
           </div>
@@ -904,14 +900,14 @@ print(response.choices[0].message.content)`}
           <div className="space-y-6">
             {/* Server Overview */}
             <div>
-              <Text className="text-lg font-semibold mb-4">Server Overview</Text>
+              <Text className="text-lg font-semibold mb-4">{t("Server Overview")}</Text>
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div>
-                  <Text className="font-medium">Server Name:</Text>
+                  <Text className="font-medium">{t("Server Name:")}</Text>
                   <Text>{selectedMcpServer.server_name}</Text>
                 </div>
                 <div>
-                  <Text className="font-medium">Server ID:</Text>
+                  <Text className="font-medium">{t("Server ID:")}</Text>
                   <div className="flex items-center space-x-2">
                     <Text className="text-xs truncate">{selectedMcpServer.server_id}</Text>
                     <CopyOutlined
@@ -922,22 +918,22 @@ print(response.choices[0].message.content)`}
                 </div>
                 {selectedMcpServer.alias && (
                   <div>
-                    <Text className="font-medium">Alias:</Text>
+                    <Text className="font-medium">{t("Alias:")}</Text>
                     <Text>{selectedMcpServer.alias}</Text>
                   </div>
                 )}
                 <div>
-                  <Text className="font-medium">Transport:</Text>
+                  <Text className="font-medium">{t("Transport:")}</Text>
                   <Badge color="blue">{selectedMcpServer.transport}</Badge>
                 </div>
                 <div>
-                  <Text className="font-medium">Auth Type:</Text>
+                  <Text className="font-medium">{t("Auth Type:")}</Text>
                   <Badge color={selectedMcpServer.auth_type === "none" ? "gray" : "green"}>
                     {selectedMcpServer.auth_type}
                   </Badge>
                 </div>
                 <div>
-                  <Text className="font-medium">Status:</Text>
+                  <Text className="font-medium">{t("Status:")}</Text>
                   <Badge
                     color={
                       selectedMcpServer.status === "active" || selectedMcpServer.status === "healthy"
@@ -953,7 +949,7 @@ print(response.choices[0].message.content)`}
               </div>
               {selectedMcpServer.description && (
                 <div className="mt-2">
-                  <Text className="font-medium">Description:</Text>
+                  <Text className="font-medium">{t("Description:")}</Text>
                   <Text className="mt-1">{selectedMcpServer.description}</Text>
                 </div>
               )}
@@ -961,11 +957,11 @@ print(response.choices[0].message.content)`}
 
             {/* Connection Details */}
             <div>
-              <Text className="text-lg font-semibold mb-4">Connection Details</Text>
+              <Text className="text-lg font-semibold mb-4">{t("Connection Details")}</Text>
               <div className="space-y-2">
                 {selectedMcpServer.command && (
                   <div>
-                    <Text className="font-medium">Command:</Text>
+                    <Text className="font-medium">{t("Command:")}</Text>
                     <Text className="text-sm bg-gray-100 p-2 rounded-sm mt-1 font-mono">
                       {selectedMcpServer.command}
                     </Text>
@@ -977,7 +973,7 @@ print(response.choices[0].message.content)`}
             {/* Tools */}
             {selectedMcpServer.allowed_tools && selectedMcpServer.allowed_tools.length > 0 && (
               <div>
-                <Text className="text-lg font-semibold mb-4">Allowed Tools</Text>
+                <Text className="text-lg font-semibold mb-4">{t("Allowed Tools")}</Text>
                 <div className="flex flex-wrap gap-2">
                   {selectedMcpServer.allowed_tools.map((tool, idx) => (
                     <Badge key={idx} color="purple">
@@ -991,7 +987,7 @@ print(response.choices[0].message.content)`}
             {/* Teams */}
             {selectedMcpServer.teams && selectedMcpServer.teams.length > 0 && (
               <div>
-                <Text className="text-lg font-semibold mb-4">Teams</Text>
+                <Text className="text-lg font-semibold mb-4">{t("Teams")}</Text>
                 <div className="flex flex-wrap gap-2">
                   {selectedMcpServer.teams.map((team, idx) => (
                     <Badge key={idx} color="blue">
@@ -1005,7 +1001,7 @@ print(response.choices[0].message.content)`}
             {/* Access Groups */}
             {selectedMcpServer.mcp_access_groups && selectedMcpServer.mcp_access_groups.length > 0 && (
               <div>
-                <Text className="text-lg font-semibold mb-4">Access Groups</Text>
+                <Text className="text-lg font-semibold mb-4">{t("Access Groups")}</Text>
                 <div className="flex flex-wrap gap-2">
                   {selectedMcpServer.mcp_access_groups.map((group, idx) => (
                     <Badge key={idx} color="green">
@@ -1018,34 +1014,34 @@ print(response.choices[0].message.content)`}
 
             {/* Metadata */}
             <div>
-              <Text className="text-lg font-semibold mb-4">Metadata</Text>
+              <Text className="text-lg font-semibold mb-4">{t("Metadata")}</Text>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Text className="font-medium">Created By:</Text>
+                  <Text className="font-medium">{t("Created By:")}</Text>
                   <Text>{selectedMcpServer.created_by}</Text>
                 </div>
                 <div>
-                  <Text className="font-medium">Updated By:</Text>
+                  <Text className="font-medium">{t("Updated By:")}</Text>
                   <Text>{selectedMcpServer.updated_by}</Text>
                 </div>
                 <div>
-                  <Text className="font-medium">Created At:</Text>
+                  <Text className="font-medium">{t("Created At:")}</Text>
                   <Text className="text-sm">{new Date(selectedMcpServer.created_at).toLocaleString()}</Text>
                 </div>
                 <div>
-                  <Text className="font-medium">Updated At:</Text>
+                  <Text className="font-medium">{t("Updated At:")}</Text>
                   <Text className="text-sm">{new Date(selectedMcpServer.updated_at).toLocaleString()}</Text>
                 </div>
                 {selectedMcpServer.last_health_check && (
                   <div>
-                    <Text className="font-medium">Last Health Check:</Text>
+                    <Text className="font-medium">{t("Last Health Check:")}</Text>
                     <Text className="text-sm">{new Date(selectedMcpServer.last_health_check).toLocaleString()}</Text>
                   </div>
                 )}
               </div>
               {selectedMcpServer.health_check_error && (
                 <div className="mt-2 p-2 bg-red-50 rounded-sm">
-                  <Text className="font-medium text-red-700">Health Check Error:</Text>
+                  <Text className="font-medium text-red-700">{t("Health Check Error:")}</Text>
                   <Text className="text-sm text-red-600 mt-1">{selectedMcpServer.health_check_error}</Text>
                 </div>
               )}
@@ -1053,7 +1049,7 @@ print(response.choices[0].message.content)`}
 
             {/* Usage Example */}
             <div>
-              <Text className="text-lg font-semibold mb-4">Usage Example</Text>
+              <Text className="text-lg font-semibold mb-4">{t("Usage Example")}</Text>
               <SyntaxHighlighter language="python" className="text-sm">
                 {`from fastmcp import Client
 import asyncio

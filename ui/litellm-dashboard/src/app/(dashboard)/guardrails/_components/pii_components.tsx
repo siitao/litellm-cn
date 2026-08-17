@@ -17,6 +17,7 @@ import {
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
+import { t } from "@/i18n";
 // Helper functions
 export const formatEntityName = (name: string) => {
   return name.replace(/_/g, " ");
@@ -47,7 +48,7 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({ categories, sele
     <div>
       <div className="mb-2 flex items-center">
         <Filter className="mr-1 size-4 text-muted-foreground" />
-        <span className="font-medium text-muted-foreground">Filter by category</span>
+        <span className="font-medium text-muted-foreground">{t("Filter by category")}</span>
       </div>
       <Combobox items={categoryNames} value={selectedCategories} onValueChange={onChange} multiple>
         <ComboboxChips className="mb-4 w-full">
@@ -62,7 +63,7 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({ categories, sele
           />
         </ComboboxChips>
         <ComboboxContent>
-          <ComboboxEmpty>No matching categories</ComboboxEmpty>
+          <ComboboxEmpty>{t("No matching categories")}</ComboboxEmpty>
           <ComboboxList>
             {(category: string) => (
               <ComboboxItem key={category} value={category}>
@@ -88,7 +89,7 @@ export const QuickActions: React.FC<QuickActionsProps> = ({ onSelectAll, onUnsel
     <div className="mb-6 rounded-lg border border-border bg-muted/40 p-5 shadow-xs">
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center">
-          <span className="text-base font-semibold">Quick Actions</span>
+          <span className="text-base font-semibold">{t("Quick Actions")}</span>
           <Tooltip>
             <TooltipTrigger
               render={
@@ -97,7 +98,7 @@ export const QuickActions: React.FC<QuickActionsProps> = ({ onSelectAll, onUnsel
                 </span>
               }
             />
-            <TooltipContent>Apply action to all PII types at once</TooltipContent>
+            <TooltipContent>{t("Apply action to all PII types at once")}</TooltipContent>
           </Tooltip>
         </div>
         <Button variant="outline" onClick={onUnselectAll} disabled={!hasSelectedEntities}>
@@ -142,12 +143,12 @@ export const PiiEntityList: React.FC<PiiEntityListProps> = ({
   return (
     <div className="overflow-hidden rounded-lg border border-border shadow-xs">
       <div className="flex border-b border-border bg-muted/40 px-5 py-3">
-        <span className="flex-1 font-semibold">PII Type</span>
-        <span className="w-32 text-right font-semibold">Action</span>
+        <span className="flex-1 font-semibold">{t("PII Type")}</span>
+        <span className="w-32 text-right font-semibold">{t("Action")}</span>
       </div>
       <div className="max-h-[400px] overflow-y-auto">
         {entities.length === 0 ? (
-          <div className="py-10 text-center text-muted-foreground">No PII types match your filter criteria</div>
+          <div className="py-10 text-center text-muted-foreground">{t("No PII types match your filter criteria")}</div>
         ) : (
           entities.map((entity) => {
             const isSelected = selectedEntities.includes(entity);
@@ -175,7 +176,7 @@ export const PiiEntityList: React.FC<PiiEntityListProps> = ({
                     onValueChange={(value: string | null) => value && onActionSelect(entity, value)}
                     disabled={!isSelected}
                   >
-                    <SelectTrigger className={`w-[120px] ${isSelected ? "" : "opacity-50"}`} aria-label="Action">
+                    <SelectTrigger className={`w-[120px] ${isSelected ? "" : "opacity-50"}`} aria-label={t("Action")}>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent alignItemWithTrigger={false}>

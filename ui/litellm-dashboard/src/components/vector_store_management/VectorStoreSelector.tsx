@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { VectorStore } from "./types";
 import { vectorStoreListCall } from "../networking";
 import { MultiSelect } from "@/components/shared/MultiSelect";
-interface VectorStoreSelectorProps {
+
+import { t } from "@/i18n";interface VectorStoreSelectorProps {
   onChange: (selectedVectorStores: string[]) => void;
   value?: string[];
   className?: string;
@@ -33,7 +34,7 @@ const VectorStoreSelector: React.FC<VectorStoreSelectorProps> = ({
           setVectorStores(response.data);
         }
       } catch (error) {
-        console.error("Error fetching vector stores:", error);
+        console.error(t("Error fetching vector stores:"), error);
       } finally {
         setLoading(false);
       }

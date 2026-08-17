@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
 import PageVisibilitySettings from "./PageVisibilitySettings";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface SettingRowProps {
   ariaLabel: string;
   checked: boolean;
@@ -46,7 +47,8 @@ function SettingRow({
 }
 
 export default function UISettings() {
-  const { accessToken } = useAuthorized();
+
+  const { t } = useLanguage();  const { accessToken } = useAuthorized();
   const { data, isLoading, isError, error } = useUISettings();
   const { mutate: updateSettings, isPending: isUpdating, error: updateError } = useUpdateUISettings(accessToken);
 
@@ -76,7 +78,7 @@ export default function UISettings() {
       { disable_model_add_for_internal_users: checked },
       {
         onSuccess: () => {
-          NotificationManager.success("UI settings updated successfully");
+          NotificationManager.success(t("UI settings updated successfully"));
         },
         onError: (error) => {
           NotificationManager.fromBackend(error);
@@ -90,7 +92,7 @@ export default function UISettings() {
       { disable_team_admin_delete_team_user: checked },
       {
         onSuccess: () => {
-          NotificationManager.success("UI settings updated successfully");
+          NotificationManager.success(t("UI settings updated successfully"));
         },
         onError: (error) => {
           NotificationManager.fromBackend(error);
@@ -102,7 +104,7 @@ export default function UISettings() {
   const handleUpdatePageVisibility = (settings: { enabled_ui_pages_internal_users: string[] | null }) => {
     updateSettings(settings, {
       onSuccess: () => {
-        NotificationManager.success("Page visibility settings updated successfully");
+        NotificationManager.success(t("Page visibility settings updated successfully"));
       },
       onError: (error) => {
         NotificationManager.fromBackend(error);
@@ -115,7 +117,7 @@ export default function UISettings() {
       { forward_client_headers_to_llm_api: checked },
       {
         onSuccess: () => {
-          NotificationManager.success("UI settings updated successfully");
+          NotificationManager.success(t("UI settings updated successfully"));
         },
         onError: (error) => {
           NotificationManager.fromBackend(error);
@@ -129,7 +131,7 @@ export default function UISettings() {
       { forward_llm_provider_auth_headers: checked },
       {
         onSuccess: () => {
-          NotificationManager.success("UI settings updated successfully");
+          NotificationManager.success(t("UI settings updated successfully"));
         },
         onError: (error) => {
           NotificationManager.fromBackend(error);
@@ -173,7 +175,7 @@ export default function UISettings() {
       { require_auth_for_public_ai_hub: checked },
       {
         onSuccess: () => {
-          NotificationManager.success("UI settings updated successfully");
+          NotificationManager.success(t("UI settings updated successfully"));
         },
         onError: (error) => {
           NotificationManager.fromBackend(error);
@@ -187,7 +189,7 @@ export default function UISettings() {
       { disable_agents_for_internal_users: checked },
       {
         onSuccess: () => {
-          NotificationManager.success("UI settings updated successfully");
+          NotificationManager.success(t("UI settings updated successfully"));
         },
         onError: (error) => {
           NotificationManager.fromBackend(error);
@@ -201,7 +203,7 @@ export default function UISettings() {
       { allow_agents_for_team_admins: checked },
       {
         onSuccess: () => {
-          NotificationManager.success("UI settings updated successfully");
+          NotificationManager.success(t("UI settings updated successfully"));
         },
         onError: (error) => {
           NotificationManager.fromBackend(error);
@@ -215,7 +217,7 @@ export default function UISettings() {
       { disable_vector_stores_for_internal_users: checked },
       {
         onSuccess: () => {
-          NotificationManager.success("UI settings updated successfully");
+          NotificationManager.success(t("UI settings updated successfully"));
         },
         onError: (error) => {
           NotificationManager.fromBackend(error);
@@ -229,7 +231,7 @@ export default function UISettings() {
       { allow_vector_stores_for_team_admins: checked },
       {
         onSuccess: () => {
-          NotificationManager.success("UI settings updated successfully");
+          NotificationManager.success(t("UI settings updated successfully"));
         },
         onError: (error) => {
           NotificationManager.fromBackend(error);
@@ -243,7 +245,7 @@ export default function UISettings() {
       { scope_user_search_to_org: checked },
       {
         onSuccess: () => {
-          NotificationManager.success("UI settings updated successfully");
+          NotificationManager.success(t("UI settings updated successfully"));
         },
         onError: (error) => {
           NotificationManager.fromBackend(error);
@@ -257,7 +259,7 @@ export default function UISettings() {
       { disable_custom_api_keys: checked },
       {
         onSuccess: () => {
-          NotificationManager.success("UI settings updated successfully");
+          NotificationManager.success(t("UI settings updated successfully"));
         },
         onError: (error) => {
           NotificationManager.fromBackend(error);
@@ -270,7 +272,7 @@ export default function UISettings() {
     <Card>
       <CardHeader>
         <CardTitle>
-          <h3>UI Settings</h3>
+          <h3>{t("UI Settings")}</h3>
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -282,7 +284,7 @@ export default function UISettings() {
           </div>
         ) : isError ? (
           <Alert variant="error">
-            <AlertTitle>Could not load UI settings</AlertTitle>
+            <AlertTitle>{t("Could not load UI settings")}</AlertTitle>
             {error instanceof Error && <AlertDescription>{error.message}</AlertDescription>}
           </Alert>
         ) : (
@@ -290,7 +292,7 @@ export default function UISettings() {
             {schema?.description && <p className="text-sm text-foreground">{schema.description}</p>}
             {updateError && (
               <Alert variant="error">
-                <AlertTitle>Could not update UI settings</AlertTitle>
+                <AlertTitle>{t("Could not update UI settings")}</AlertTitle>
                 {updateError instanceof Error && <AlertDescription>{updateError.message}</AlertDescription>}
               </Alert>
             )}
@@ -300,7 +302,7 @@ export default function UISettings() {
               disabled={isUpdating}
               onCheckedChange={handleToggle}
               ariaLabel={property?.description ?? "Disable model add for internal users"}
-              label="Disable model add for internal users"
+              label={t("Disable model add for internal users")}
               description={property?.description}
             />
             <SettingRow
@@ -308,7 +310,7 @@ export default function UISettings() {
               disabled={isUpdating}
               onCheckedChange={handleToggleTeamAdminDelete}
               ariaLabel={disableTeamAdminDeleteProperty?.description ?? "Disable team admin delete team user"}
-              label="Disable team admin delete team user"
+              label={t("Disable team admin delete team user")}
               description={disableTeamAdminDeleteProperty?.description}
             />
             <SettingRow
@@ -316,7 +318,7 @@ export default function UISettings() {
               disabled={isUpdating}
               onCheckedChange={handleToggleRequireAuthForPublicAIHub}
               ariaLabel={requireAuthForPublicAIHubProperty?.description ?? "Require authentication for public AI Hub"}
-              label="Require authentication for public AI Hub"
+              label={t("Require authentication for public AI Hub")}
               description={requireAuthForPublicAIHubProperty?.description}
             />
             <SettingRow
@@ -324,7 +326,7 @@ export default function UISettings() {
               disabled={isUpdating}
               onCheckedChange={handleToggleForwardClientHeaders}
               ariaLabel={forwardClientHeadersProperty?.description ?? "Forward client headers to LLM API"}
-              label="Forward client headers to LLM API"
+              label={t("Forward client headers to LLM API")}
               description={
                 forwardClientHeadersProperty?.description ??
                 "Forwards client headers (Authorization, anthropic-beta, and x-* custom headers) to the upstream LLM. Enable for Claude Code with a Max subscription (forwards the OAuth token) or to pass custom/tracing headers through to the provider. Independent of the BYOK toggle — enable only the one(s) you need."
@@ -335,7 +337,7 @@ export default function UISettings() {
               disabled={isUpdating}
               onCheckedChange={handleToggleForwardLLMProviderAuthHeaders}
               ariaLabel={forwardLLMProviderAuthHeadersProperty?.description ?? "Forward LLM provider auth headers"}
-              label="Forward LLM provider auth headers"
+              label={t("Forward LLM provider auth headers")}
               description={
                 forwardLLMProviderAuthHeadersProperty?.description ??
                 "Forwards provider auth headers (x-api-key, x-goog-api-key, api-key, ocp-apim-subscription-key) to the upstream LLM, overriding any deployment-configured key for that request. Enable for Claude Code BYOK (clients bring their own API key). Independent of the client-headers toggle — enable only the one(s) you need."
@@ -347,7 +349,7 @@ export default function UISettings() {
                 disabled={isUpdating}
                 onCheckedChange={handleToggleEnableProjectsUI}
                 ariaLabel={enableProjectsUIProperty.description ?? "Enable Projects UI"}
-                label="[BETA] Enable Projects (page will refresh)"
+                label={t("[BETA] Enable Projects (page will refresh)")}
                 description={
                   enableProjectsUIProperty.description ??
                   "If enabled, shows the Projects feature in the UI sidebar and the project field in key management."
@@ -359,7 +361,7 @@ export default function UISettings() {
               disabled={isUpdating}
               onCheckedChange={handleToggleEnableChatUI}
               ariaLabel={enableChatUIProperty?.description ?? "Enable Chat page"}
-              label="[BETA] Enable Chat page (page will refresh)"
+              label={t("[BETA] Enable Chat page (page will refresh)")}
               description={
                 enableChatUIProperty?.description ??
                 "If enabled, shows the Chat page in the UI sidebar, letting users chat with an LLM and connect their own MCP server credentials via OAuth."
@@ -372,7 +374,7 @@ export default function UISettings() {
               disabled={isUpdating}
               onCheckedChange={handleToggleDisableAgents}
               ariaLabel={disableAgentsProperty?.description ?? "Disable agents for internal users"}
-              label="Disable agents for internal users"
+              label={t("Disable agents for internal users")}
               description={disableAgentsProperty?.description}
             />
             <SettingRow
@@ -380,7 +382,7 @@ export default function UISettings() {
               disabled={isUpdating || !isAgentsDisabled}
               onCheckedChange={handleToggleAllowAgentsTeamAdmins}
               ariaLabel={allowAgentsTeamAdminsProperty?.description ?? "Allow agents for team admins"}
-              label="Allow agents for team admins"
+              label={t("Allow agents for team admins")}
               description={allowAgentsTeamAdminsProperty?.description}
               indented
               muted={!isAgentsDisabled}
@@ -392,7 +394,7 @@ export default function UISettings() {
               disabled={isUpdating}
               onCheckedChange={handleToggleDisableVectorStores}
               ariaLabel={disableVectorStoresProperty?.description ?? "Disable vector stores for internal users"}
-              label="Disable vector stores for internal users"
+              label={t("Disable vector stores for internal users")}
               description={disableVectorStoresProperty?.description}
             />
             <SettingRow
@@ -400,7 +402,7 @@ export default function UISettings() {
               disabled={isUpdating || !isVectorStoresDisabled}
               onCheckedChange={handleToggleAllowVectorStoresTeamAdmins}
               ariaLabel={allowVectorStoresTeamAdminsProperty?.description ?? "Allow vector stores for team admins"}
-              label="Allow vector stores for team admins"
+              label={t("Allow vector stores for team admins")}
               description={allowVectorStoresTeamAdminsProperty?.description}
               indented
               muted={!isVectorStoresDisabled}
@@ -412,7 +414,7 @@ export default function UISettings() {
               disabled={isUpdating}
               onCheckedChange={handleToggleScopeUserSearch}
               ariaLabel={scopeUserSearchProperty?.description ?? "Scope user search to organization"}
-              label="Scope user search to organization"
+              label={t("Scope user search to organization")}
               description={
                 scopeUserSearchProperty?.description ??
                 "If enabled, the user search endpoint restricts results by organization. When off, any authenticated user can search all users."
@@ -425,7 +427,7 @@ export default function UISettings() {
               disabled={isUpdating}
               onCheckedChange={handleToggleDisableCustomApiKeys}
               ariaLabel={disableCustomApiKeysProperty?.description ?? "Disable custom Virtual key values"}
-              label="Disable custom Virtual key values"
+              label={t("Disable custom Virtual key values")}
               description={
                 disableCustomApiKeysProperty?.description ??
                 "If true, users cannot specify custom key values. All keys must be auto-generated."

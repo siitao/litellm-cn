@@ -5,8 +5,10 @@ import { useDeletedTeams } from "@/app/(dashboard)/hooks/teams/useTeams";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
 import { DeletedTeamsTable } from "./DeletedTeamsTable/DeletedTeamsTable";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 export default function DeletedTeamsPage() {
-  const { premiumUser } = useAuthorized();
+
+  const { t } = useLanguage();  const { premiumUser } = useAuthorized();
   const { data: teamsData, isLoading } = useDeletedTeams(1, 100);
 
   return (
@@ -14,7 +16,7 @@ export default function DeletedTeamsPage() {
       {!premiumUser && (
         <Alert>
           <Info />
-          <AlertTitle>Coming soon to Enterprise</AlertTitle>
+          <AlertTitle>{t("Coming soon to Enterprise")}</AlertTitle>
           <AlertDescription>
             Deleted team auditing is graduating from beta into our Enterprise audit &amp; compliance suite.
           </AlertDescription>

@@ -3,6 +3,7 @@ import { Form, Input, InputNumber, Select, Tooltip } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { MCPTool, InputSchema, InputSchemaProperty } from "./types";
 
+import { t } from "@/i18n";
 const isPlainObject = (value: unknown): value is Record<string, any> =>
   typeof value === "object" && value !== null && !Array.isArray(value);
 
@@ -149,7 +150,7 @@ const MCPToolArgumentsForm = forwardRef<MCPToolArgumentsFormRef, MCPToolArgument
           properties: {
             input: {
               type: "string",
-              description: "Input for this tool",
+              description: t("Input for this tool"),
             },
           },
           required: ["input"],
@@ -192,14 +193,13 @@ const MCPToolArgumentsForm = forwardRef<MCPToolArgumentsFormRef, MCPToolArgument
         <Form form={form} layout="vertical" className={className}>
           <Form.Item
             label={
-              <span className="text-sm font-medium text-gray-700">
-                Input <span className="text-red-500">*</span>
+              <span className="text-sm font-medium text-gray-700">{t("Input")}<span className="text-red-500">*</span>
               </span>
             }
             name="input"
             rules={[{ required: true, message: "Please enter input for this tool" }]}
           >
-            <Input placeholder="Enter input for this tool" />
+            <Input placeholder={t("Enter input for this tool")} />
           </Form.Item>
         </Form>
       );
@@ -208,7 +208,7 @@ const MCPToolArgumentsForm = forwardRef<MCPToolArgumentsFormRef, MCPToolArgument
     if (!actualSchema.properties) {
       return (
         <Form form={form} layout="vertical" className={className}>
-          <div className="py-4 text-center text-sm text-gray-500">No parameters required for this tool.</div>
+          <div className="py-4 text-center text-sm text-gray-500">{t("No parameters required for this tool.")}</div>
         </Form>
       );
     }
@@ -293,8 +293,8 @@ const MCPToolArgumentsForm = forwardRef<MCPToolArgumentsFormRef, MCPToolArgument
                   placeholder={`Select ${key}`}
                   allowClear={!actualSchema.required?.includes(key)}
                   options={[
-                    { value: true, label: "True" },
-                    { value: false, label: "False" },
+                    { value: true, label: t("True")},
+                    { value: false, label: t("False")},
                   ]}
                 />
               ) : prop.type === "object" || prop.type === "array" ? (

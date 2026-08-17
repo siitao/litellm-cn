@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 
+import { t } from "@/i18n";
 const DEFAULT_PROMPT = `Evaluate whether this guardrail's decision was correct.
 Analyze the user input, the guardrail action taken, and determine if it was appropriate.
 
@@ -92,7 +93,7 @@ export function EvaluationSettingsModal({
     <Dialog open={open} onOpenChange={(nextOpen) => !nextOpen && onClose()}>
       <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-[640px]">
         <DialogHeader>
-          <DialogTitle>Evaluation Settings</DialogTitle>
+          <DialogTitle>{t("Evaluation Settings")}</DialogTitle>
           <DialogDescription>
             {guardrailName
               ? `Configure AI evaluation for ${guardrailName}`
@@ -103,12 +104,8 @@ export function EvaluationSettingsModal({
         <div className="space-y-4">
           <div>
             <div className="mb-1.5 flex items-center justify-between">
-              <label htmlFor="evaluation-prompt" className="text-sm font-medium text-foreground">
-                Evaluation Prompt
-              </label>
-              <Button variant="link" size="xs" onClick={handleResetPrompt}>
-                Reset to default
-              </Button>
+              <label htmlFor="evaluation-prompt" className="text-sm font-medium text-foreground">{t("Evaluation Prompt")}</label>
+              <Button variant="link" size="xs" onClick={handleResetPrompt}>{t("Reset to default")}</Button>
             </div>
             <Textarea
               id="evaluation-prompt"
@@ -117,15 +114,11 @@ export function EvaluationSettingsModal({
               rows={6}
               className="field-sizing-fixed font-mono text-sm"
             />
-            <p className="mt-1 text-xs text-muted-foreground">
-              System prompt sent to the evaluation model. Output is structured via response_format.
-            </p>
+            <p className="mt-1 text-xs text-muted-foreground">{t("System prompt sent to the evaluation model. Output is structured via response_format.")}</p>
           </div>
 
           <div>
-            <label htmlFor="evaluation-schema" className="mb-1.5 block text-sm font-medium text-foreground">
-              Response Schema
-            </label>
+            <label htmlFor="evaluation-schema" className="mb-1.5 block text-sm font-medium text-foreground">{t("Response Schema")}</label>
             <p className="mb-1 text-xs text-muted-foreground">response_format: json_schema</p>
             <Textarea
               id="evaluation-schema"
@@ -137,7 +130,7 @@ export function EvaluationSettingsModal({
           </div>
 
           <div>
-            <p className="mb-1.5 text-sm font-medium text-foreground">Model</p>
+            <p className="mb-1.5 text-sm font-medium text-foreground">{t("Model")}</p>
             <SearchSelect
               options={modelSelectOptions}
               value={model ?? undefined}
@@ -149,9 +142,7 @@ export function EvaluationSettingsModal({
         </div>
 
         <DialogFooter className="border-t border-border pt-4">
-          <Button variant="outline" onClick={onClose}>
-            Cancel
-          </Button>
+          <Button variant="outline" onClick={onClose}>{t("Cancel")}</Button>
           <Button onClick={handleRun} disabled={!model}>
             <Play className="size-4" />
             Run Evaluation

@@ -1,6 +1,7 @@
 import React from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
+import { t } from "@/i18n";
 interface RedisTypeSelectorProps {
   redisType: string;
   redisTypeDescriptions: Readonly<Record<string, string>>;
@@ -17,7 +18,7 @@ const REDIS_TYPE_LABELS: Readonly<Record<string, string>> = {
 const RedisTypeSelector: React.FC<RedisTypeSelectorProps> = ({ redisType, redisTypeDescriptions, onTypeChange }) => {
   return (
     <div className="space-y-2">
-      <label className="text-sm font-medium">Redis Type</label>
+      <label className="text-sm font-medium">{t("Redis Type")}</label>
       <Select value={redisType} onValueChange={(value) => value !== null && onTypeChange(value)}>
         <SelectTrigger className="w-full">
           <SelectValue>{REDIS_TYPE_LABELS[redisType] ?? redisType}</SelectValue>

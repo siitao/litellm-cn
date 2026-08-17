@@ -22,23 +22,25 @@ import { MCPServer, MCPSubmissionsSummary } from "@/components/mcp_tools/types";
 import { FIELD_GROUPS, MCP_REQUIRED_FIELD_DEFS, SETTINGS_KEY } from "./MCPStandardsSettings";
 import NotificationsManager from "@/components/molecules/notifications_manager";
 
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/i18n";
 type MCPStatus = "active" | "pending_review" | "rejected";
 
 const STATUS_CONFIG: Record<MCPStatus, { label: string; bg: string; text: string; dot: string }> = {
   active: {
-    label: "Active",
+    label: t("Active"),
     bg: "bg-green-50",
     text: "text-green-700",
     dot: "bg-green-500",
   },
   pending_review: {
-    label: "Pending Review",
+    label: t("Pending Review"),
     bg: "bg-yellow-50",
     text: "text-yellow-700",
     dot: "bg-yellow-500",
   },
   rejected: {
-    label: "Rejected",
+    label: t("Rejected"),
     bg: "bg-red-50",
     text: "text-red-700",
     dot: "bg-red-500",
@@ -73,7 +75,8 @@ type ConfirmDialogProps = {
 };
 
 function ConfirmDialog({ action, serverName, isCurrentlyActive, onConfirm, onCancel }: ConfirmDialogProps) {
-  const [reviewNotes, setReviewNotes] = useState("");
+
+  const { t } = useLanguage();  const [reviewNotes, setReviewNotes] = useState("");
   const isApprove = action === "approve";
   const rejectBody = isCurrentlyActive
     ? "This server is currently live. Rejecting it will immediately remove it from the proxy runtime."
@@ -95,15 +98,14 @@ function ConfirmDialog({ action, serverName, isCurrentlyActive, onConfirm, onCan
         <h3 className="text-base font-semibold text-gray-900 mb-1">
           {isApprove ? "Approve MCP Server" : "Reject MCP Server"}
         </h3>
-        <p className="text-sm text-gray-500 mb-4">
-          Are you sure you want to {action} <span className="font-medium text-gray-700">&quot;{serverName}&quot;</span>?{" "}
+        <p className="text-sm text-gray-500 mb-4">{t("Are you sure you want to")} {action} <span className="font-medium text-gray-700">&quot;{serverName}&quot;</span>?{" "}
           {isApprove
             ? "This will activate the server. The submitting user will see it in their MCP Servers list once approved."
             : rejectBody}
         </p>
         {!isApprove && (
           <textarea
-            placeholder="Reason for rejection (optional)"
+            placeholder={t("Reason for rejection (optional)")}
             value={reviewNotes}
             onChange={(e) => setReviewNotes(e.target.value)}
             className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-700 placeholder-gray-400 focus:outline-hidden focus:ring-1 focus:ring-blue-500 mb-4 resize-none"
@@ -115,9 +117,7 @@ function ConfirmDialog({ action, serverName, isCurrentlyActive, onConfirm, onCan
             type="button"
             onClick={onCancel}
             className="flex-1 border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-medium py-2 rounded-md transition-colors"
-          >
-            Cancel
-          </button>
+          >{t("Cancel")}</button>
           <button
             type="button"
             onClick={() => onConfirm(isApprove ? undefined : reviewNotes || undefined)}
@@ -141,7 +141,8 @@ type SubmissionRulesPanelProps = {
 };
 
 function SubmissionRulesPanel({ requiredFields, onChange, onSave, isSaving }: SubmissionRulesPanelProps) {
-  const [expanded, setExpanded] = useState(false);
+
+  const { t } = useLanguage();  const [expanded, setExpanded] = useState(false);
   const activeLabels = MCP_REQUIRED_FIELD_DEFS.filter((f) => requiredFields.includes(f.key));
 
   const toggle = (key: string) => {
@@ -157,13 +158,13 @@ function SubmissionRulesPanel({ requiredFields, onChange, onSave, isSaving }: Su
       >
         <div className="flex items-center gap-2">
           <SettingsIcon className="h-4 w-4 text-gray-400" />
-          <span className="text-sm font-semibold text-gray-800">Submission Rules</span>
+          <span className="text-sm font-semibold text-gray-800">{t("Submission Rules")}</span>
           {activeLabels.length > 0 ? (
             <span className="text-xs text-gray-500">
               ({activeLabels.length} required field{activeLabels.length !== 1 ? "s" : ""})
             </span>
           ) : (
-            <span className="text-xs text-gray-400 italic">no rules set</span>
+            <span className="text-xs text-gray-400 italic">{t("no rules set")}</span>
           )}
         </div>
         <div className="flex items-center gap-3">
@@ -240,9 +241,7 @@ function SubmissionRulesPanel({ requiredFields, onChange, onSave, isSaving }: Su
               type="button"
               onClick={() => setExpanded(false)}
               className="px-4 py-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 border border-gray-200 rounded-md hover:bg-gray-50 transition-colors"
-            >
-              Cancel
-            </button>
+            >{t("Cancel")}</button>
           </div>
         </div>
       )}
@@ -258,7 +257,8 @@ type MCPServerCardProps = {
 };
 
 function MCPServerCard({ server, onApprove, onReject, requiredFields }: MCPServerCardProps) {
-  const approvalStatus = (server.approval_status ?? "active") as MCPStatus;
+
+  const { t } = useLanguage();  const approvalStatus = (server.approval_status ?? "active") as MCPStatus;
   const statusCfg = STATUS_CONFIG[approvalStatus] ?? STATUS_CONFIG["active"];
 
   const checks = MCP_REQUIRED_FIELD_DEFS.filter((f) => requiredFields.includes(f.key)).map((f) => ({
@@ -296,18 +296,16 @@ function MCPServerCard({ server, onApprove, onReject, requiredFields }: MCPServe
               </div>
             )}
             <div className="flex items-center gap-3 mt-1.5 text-xs text-gray-400">
-              <span>
-                Transport: <span className="text-gray-600">{server.transport ?? "sse"}</span>
+              <span>{t("Transport:")}<span className="text-gray-600">{server.transport ?? "sse"}</span>
               </span>
               <span>·</span>
-              <span>
-                Submitted by: <span className="text-gray-600">{server.submitted_by ?? "—"}</span>
+              <span>{t("Submitted by:")}<span className="text-gray-600">{server.submitted_by ?? "—"}</span>
               </span>
               <span>·</span>
               <span>{formatDate(server.submitted_at)}</span>
             </div>
             {approvalStatus === "rejected" && server.review_notes && (
-              <p className="text-xs text-red-600 mt-1.5">Rejection reason: {server.review_notes}</p>
+              <p className="text-xs text-red-600 mt-1.5">{t("Rejection reason:")} {server.review_notes}</p>
             )}
           </div>
           {/* Approve/Reject when no checks panel (no rules configured) */}
@@ -318,17 +316,13 @@ function MCPServerCard({ server, onApprove, onReject, requiredFields }: MCPServe
                   type="button"
                   onClick={onApprove}
                   className="text-xs bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-md transition-colors font-medium"
-                >
-                  Approve
-                </button>
+                >{t("Approve")}</button>
               )}
               <button
                 type="button"
                 onClick={onReject}
                 className="text-xs border border-red-300 text-red-600 hover:bg-red-50 px-3 py-1.5 rounded-md transition-colors font-medium"
-              >
-                Reject
-              </button>
+              >{t("Reject")}</button>
             </div>
           )}
           {checks.length === 0 && approvalStatus === "rejected" && (
@@ -337,9 +331,7 @@ function MCPServerCard({ server, onApprove, onReject, requiredFields }: MCPServe
                 type="button"
                 onClick={onApprove}
                 className="text-xs bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-md transition-colors font-medium"
-              >
-                Re-approve
-              </button>
+              >{t("Re-approve")}</button>
             </div>
           )}
         </div>
@@ -377,27 +369,21 @@ function MCPServerCard({ server, onApprove, onReject, requiredFields }: MCPServe
                   type="button"
                   onClick={onApprove}
                   className="text-xs bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md transition-colors font-medium"
-                >
-                  Approve
-                </button>
+                >{t("Approve")}</button>
               )}
               {approvalStatus === "rejected" && (
                 <button
                   type="button"
                   onClick={onApprove}
                   className="text-xs bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md transition-colors font-medium"
-                >
-                  Re-approve
-                </button>
+                >{t("Re-approve")}</button>
               )}
               {approvalStatus !== "rejected" && (
                 <button
                   type="button"
                   onClick={onReject}
                   className="text-xs border border-red-300 text-red-600 hover:bg-red-50 bg-white px-3 py-1.5 rounded-md transition-colors font-medium"
-                >
-                  Reject
-                </button>
+                >{t("Reject")}</button>
               )}
             </div>
           </div>
@@ -436,7 +422,8 @@ interface MCPSubmissionsTabProps {
 }
 
 export function MCPSubmissionsTab({ accessToken }: MCPSubmissionsTabProps) {
-  const [summary, setSummary] = useState<MCPSubmissionsSummary>({
+
+  const { t } = useLanguage();  const [summary, setSummary] = useState<MCPSubmissionsSummary>({
     total: 0,
     pending_review: 0,
     active: 0,
@@ -496,7 +483,7 @@ export function MCPSubmissionsTab({ accessToken }: MCPSubmissionsTabProps) {
     setIsSavingRules(true);
     try {
       await updateConfigFieldSetting(accessToken, SETTINGS_KEY, requiredFields);
-      NotificationsManager.success("Submission rules saved");
+      NotificationsManager.success(t("Submission rules saved"));
     } catch {
       NotificationsManager.fromBackend("Failed to save submission rules");
     } finally {
@@ -574,18 +561,18 @@ export function MCPSubmissionsTab({ accessToken }: MCPSubmissionsTabProps) {
           onChange={(e) => setStatusFilter(e.target.value as typeof statusFilter)}
           className="border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-700 focus:outline-hidden focus:ring-1 focus:ring-blue-500 focus:border-blue-500 bg-white"
         >
-          <option value="all">All Status</option>
-          <option value="pending_review">Pending Review</option>
-          <option value="active">Active</option>
-          <option value="rejected">Rejected</option>
+          <option value="all">{t("All Status")}</option>
+          <option value="pending_review">{t("Pending Review")}</option>
+          <option value="active">{t("Active")}</option>
+          <option value="rejected">{t("Rejected")}</option>
         </select>
       </div>
 
       <div className="space-y-3">
-        {isLoading && <div className="text-center py-12 text-gray-500 text-sm">Loading submissions…</div>}
+        {isLoading && <div className="text-center py-12 text-gray-500 text-sm">{t("Loading submissions…")}</div>}
         {error && <div className="text-center py-12 text-red-600 text-sm">{error}</div>}
         {!isLoading && !error && filtered.length === 0 && (
-          <div className="text-center py-12 text-gray-400 text-sm">No MCP server submissions match your filters.</div>
+          <div className="text-center py-12 text-gray-400 text-sm">{t("No MCP server submissions match your filters.")}</div>
         )}
         {!isLoading &&
           !error &&

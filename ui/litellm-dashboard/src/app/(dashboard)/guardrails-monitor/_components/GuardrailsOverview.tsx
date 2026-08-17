@@ -11,6 +11,7 @@ import { EvaluationSettingsModal } from "./EvaluationSettingsModal";
 import { MetricCard } from "@/components/GuardrailsMonitor/MetricCard";
 import { ScoreChart } from "./ScoreChart";
 
+import { t } from "@/i18n";
 interface GuardrailsOverviewProps {
   accessToken?: string | null;
   startDate: string;
@@ -114,14 +115,14 @@ export function GuardrailsOverview({
       ),
     },
     {
-      header: ({ column }) => <DataTableSortHeader column={column} title="Requests" />,
+      header: ({ column }) => <DataTableSortHeader column={column} title={t("Requests")} />,
       accessorKey: "requestsEvaluated",
       meta: { numeric: true },
       sortDescFirst: false,
       cell: ({ row }) => row.original.requestsEvaluated.toLocaleString(),
     },
     {
-      header: ({ column }) => <DataTableSortHeader column={column} title="Fail Rate" />,
+      header: ({ column }) => <DataTableSortHeader column={column} title={t("Fail Rate")} />,
       accessorKey: "failRate",
       meta: { numeric: true },
       sortDescFirst: false,
@@ -141,7 +142,7 @@ export function GuardrailsOverview({
       ),
     },
     {
-      header: ({ column }) => <DataTableSortHeader column={column} title="Avg. latency added" />,
+      header: ({ column }) => <DataTableSortHeader column={column} title={t("Avg. latency added")} />,
       accessorKey: "avgLatency",
       meta: { numeric: true },
       sortDescFirst: false,
@@ -199,12 +200,12 @@ export function GuardrailsOverview({
         <div>
           <div className="flex items-center gap-2 mb-1">
             <Shield className="size-5 text-indigo-500" />
-            <h1 className="text-xl font-semibold text-gray-900">Guardrails Monitor</h1>
+            <h1 className="text-xl font-semibold text-gray-900">{t("Guardrails Monitor")}</h1>
           </div>
-          <p className="text-sm text-gray-500">Monitor guardrail performance across all requests</p>
+          <p className="text-sm text-gray-500">{t("Monitor guardrail performance across all requests")}</p>
         </div>
         <div className="flex items-center gap-3">
-          <Button variant="outline" title="Coming soon">
+          <Button variant="outline" title={t("Coming soon")}>
             <Download className="size-4" />
             Export Data
           </Button>
@@ -214,19 +215,19 @@ export function GuardrailsOverview({
       <div className="mb-6 grid grid-cols-[repeat(auto-fit,minmax(7rem,1fr))] gap-4">
         <MetricCard label="Total Evaluations" value={metrics.totalRequests.toLocaleString()} />
         <MetricCard
-          label="Blocked Requests"
+          label={t("Blocked Requests")}
           value={metrics.totalBlocked.toLocaleString()}
           valueColor="text-red-600"
           icon={<TriangleAlert className="size-4 text-red-400" />}
         />
         <MetricCard
-          label="Pass Rate"
+          label={t("Pass Rate")}
           value={`${metrics.passRate}%`}
           valueColor="text-green-600"
           icon={<TrendingUp className="size-4 text-green-400" />}
         />
         <MetricCard
-          label="Avg. latency added"
+          label={t("Avg. latency added")}
           value={`${metrics.avgLatency}ms`}
           valueColor={
             metrics.avgLatency > 150 ? "text-red-600" : metrics.avgLatency > 50 ? "text-amber-600" : "text-green-600"
@@ -247,7 +248,7 @@ export function GuardrailsOverview({
                 <UiLoadingSpinner className="size-4 text-primary" />
               </span>
             )}
-            {error && <span className="text-sm text-red-600">Failed to load data. Try again.</span>}
+            {error && <span className="text-sm text-red-600">{t("Failed to load data. Try again.")}</span>}
           </div>
         )}
         <DataTable
@@ -266,17 +267,15 @@ export function GuardrailsOverview({
           toolbar={() => (
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h5 className="mb-0 text-base font-semibold text-gray-900">Guardrail Performance</h5>
-                <p className="text-xs text-gray-500 mt-0.5">
-                  Click a guardrail to view details, logs, and configuration
-                </p>
+                <h5 className="mb-0 text-base font-semibold text-gray-900">{t("Guardrail Performance")}</h5>
+                <p className="text-xs text-gray-500 mt-0.5">{t("Click a guardrail to view details, logs, and configuration")}</p>
               </div>
               <div className="flex items-center gap-2">
                 <Button
                   variant="outline"
                   size="icon"
                   onClick={() => setEvaluationModalOpen(true)}
-                  title="Evaluation settings"
+                  title={t("Evaluation settings")}
                 >
                   <Settings className="size-4" />
                 </Button>

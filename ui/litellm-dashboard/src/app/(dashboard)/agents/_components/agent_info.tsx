@@ -17,6 +17,7 @@ import { detectAgentType, parseDynamicAgentForForm } from "./agent_type_utils";
 import AgentCardDiscovery, { DiscoveredAgentCardSelection } from "./agent_card_discovery";
 import { buildDiscoveryRequest, overlayDiscoveredCardParams } from "./agent_discovery_utils";
 
+import { t } from "@/i18n";
 interface AgentInfoViewProps {
   agentId: string;
   onClose: () => void;
@@ -45,7 +46,7 @@ const AgentInfoView: React.FC<AgentInfoViewProps> = ({ agentId, onClose, accessT
         const metadata = await getAgentCreateMetadata();
         setAgentTypeMetadata(metadata);
       } catch (error) {
-        console.error("Error fetching agent metadata:", error);
+        console.error(t("Error fetching agent metadata:"), error);
       }
     };
     fetchMetadata();
@@ -79,8 +80,8 @@ const AgentInfoView: React.FC<AgentInfoViewProps> = ({ agentId, onClose, accessT
         }
       }
     } catch (error) {
-      console.error("Error fetching agent info:", error);
-      MessageManager.error("Failed to load agent information");
+      console.error(t("Error fetching agent info:"), error);
+      MessageManager.error(t("Failed to load agent information"));
     } finally {
       setIsLoading(false);
     }
@@ -160,12 +161,12 @@ const AgentInfoView: React.FC<AgentInfoViewProps> = ({ agentId, onClose, accessT
       }
 
       await patchAgentCall(accessToken, agentId, updateData);
-      MessageManager.success("Agent updated successfully");
+      MessageManager.success(t("Agent updated successfully"));
       setIsEditing(false);
       fetchAgentInfo();
     } catch (error) {
-      console.error("Error updating agent:", error);
-      MessageManager.error("Failed to update agent");
+      console.error(t("Error updating agent:"), error);
+      MessageManager.error(t("Failed to update agent"));
     } finally {
       setIsSaving(false);
     }
@@ -184,10 +185,8 @@ const AgentInfoView: React.FC<AgentInfoViewProps> = ({ agentId, onClose, accessT
   if (!agent) {
     return (
       <div className="p-4">
-        <div className="text-center">Agent not found</div>
-        <TremorButton onClick={onClose} className="mt-4">
-          Back to Agents List
-        </TremorButton>
+        <div className="text-center">{t("Agent not found")}</div>
+        <TremorButton onClick={onClose} className="mt-4">{t("Back to Agents List")}</TremorButton>
       </div>
     );
   }
@@ -218,66 +217,64 @@ const AgentInfoView: React.FC<AgentInfoViewProps> = ({ agentId, onClose, accessT
   return (
     <div className="p-4">
       <div>
-        <TremorButton icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">
-          Back to Agents
-        </TremorButton>
+        <TremorButton icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">{t("Back to Agents")}</TremorButton>
         <Title>{agent.agent_name || "Unnamed Agent"}</Title>
         <Text className="text-gray-500 font-mono">{agent.agent_id}</Text>
       </div>
 
       <TabGroup>
         <TabList className="mb-4">
-          <Tab key="overview">Overview</Tab>
-          {isAdmin ? <Tab key="settings">Settings</Tab> : <></>}
+          <Tab key="overview">{t("Overview")}</Tab>
+          {isAdmin ? <Tab key="settings">{t("Settings")}</Tab> : <></>}
         </TabList>
 
         <TabPanels>
           {/* Overview Panel */}
           <TabPanel>
             <Descriptions bordered column={1}>
-              <Descriptions.Item label="Agent ID">{agent.agent_id}</Descriptions.Item>
-              <Descriptions.Item label="Agent Name">{agent.agent_name}</Descriptions.Item>
-              <Descriptions.Item label="Display Name">{agent.agent_card_params?.name || "-"}</Descriptions.Item>
-              <Descriptions.Item label="Description">{agent.agent_card_params?.description || "-"}</Descriptions.Item>
+              <Descriptions.Item label={t("Agent ID")}>{agent.agent_id}</Descriptions.Item>
+              <Descriptions.Item label={t("Agent Name")}>{agent.agent_name}</Descriptions.Item>
+              <Descriptions.Item label={t("Display Name")}>{agent.agent_card_params?.name || "-"}</Descriptions.Item>
+              <Descriptions.Item label={t("Description")}>{agent.agent_card_params?.description || "-"}</Descriptions.Item>
               <Descriptions.Item label="URL">{agent.agent_card_params?.url || "-"}</Descriptions.Item>
-              <Descriptions.Item label="Version">{agent.agent_card_params?.version || "-"}</Descriptions.Item>
-              <Descriptions.Item label="Protocol Version">
+              <Descriptions.Item label={t("Version")}>{agent.agent_card_params?.version || "-"}</Descriptions.Item>
+              <Descriptions.Item label={t("Protocol Version")}>
                 {agent.agent_card_params?.protocolVersion || "-"}
               </Descriptions.Item>
-              <Descriptions.Item label="Streaming">
+              <Descriptions.Item label={t("Streaming")}>
                 {agent.agent_card_params?.capabilities?.streaming ? "Yes" : "No"}
               </Descriptions.Item>
               {agent.agent_card_params?.capabilities?.pushNotifications && (
-                <Descriptions.Item label="Push Notifications">Yes</Descriptions.Item>
+                <Descriptions.Item label={t("Push Notifications")}>{t("Yes")}</Descriptions.Item>
               )}
               {agent.agent_card_params?.capabilities?.stateTransitionHistory && (
-                <Descriptions.Item label="State Transition History">Yes</Descriptions.Item>
+                <Descriptions.Item label={t("State Transition History")}>Yes</Descriptions.Item>
               )}
-              <Descriptions.Item label="Skills">
+              <Descriptions.Item label={t("Skills")}>
                 {agent.agent_card_params?.skills?.length || 0} configured
               </Descriptions.Item>
               {agent.litellm_params?.model && (
-                <Descriptions.Item label="Model">{agent.litellm_params.model}</Descriptions.Item>
+                <Descriptions.Item label={t("Model")}>{agent.litellm_params.model}</Descriptions.Item>
               )}
               {agent.litellm_params?.make_public !== undefined && (
-                <Descriptions.Item label="Make Public">
+                <Descriptions.Item label={t("Make Public")}>
                   {agent.litellm_params.make_public ? "Yes" : "No"}
                 </Descriptions.Item>
               )}
               {agent.agent_card_params?.iconUrl && (
-                <Descriptions.Item label="Icon URL">{agent.agent_card_params.iconUrl}</Descriptions.Item>
+                <Descriptions.Item label={t("Icon URL")}>{agent.agent_card_params.iconUrl}</Descriptions.Item>
               )}
               {agent.agent_card_params?.documentationUrl && (
-                <Descriptions.Item label="Documentation URL">
+                <Descriptions.Item label={t("Documentation URL")}>
                   {agent.agent_card_params.documentationUrl}
                 </Descriptions.Item>
               )}
-              <Descriptions.Item label="TPM Limit">{agent.tpm_limit ?? "Unlimited"}</Descriptions.Item>
-              <Descriptions.Item label="RPM Limit">{agent.rpm_limit ?? "Unlimited"}</Descriptions.Item>
-              <Descriptions.Item label="Session TPM Limit">{agent.session_tpm_limit ?? "Unlimited"}</Descriptions.Item>
-              <Descriptions.Item label="Session RPM Limit">{agent.session_rpm_limit ?? "Unlimited"}</Descriptions.Item>
-              <Descriptions.Item label="Created At">{formatDate(agent.created_at)}</Descriptions.Item>
-              <Descriptions.Item label="Updated At">{formatDate(agent.updated_at)}</Descriptions.Item>
+              <Descriptions.Item label={t("TPM Limit")}>{agent.tpm_limit ?? "Unlimited"}</Descriptions.Item>
+              <Descriptions.Item label={t("RPM Limit")}>{agent.rpm_limit ?? "Unlimited"}</Descriptions.Item>
+              <Descriptions.Item label={t("Session TPM Limit")}>{agent.session_tpm_limit ?? "Unlimited"}</Descriptions.Item>
+              <Descriptions.Item label={t("Session RPM Limit")}>{agent.session_rpm_limit ?? "Unlimited"}</Descriptions.Item>
+              <Descriptions.Item label={t("Created At")}>{formatDate(agent.created_at)}</Descriptions.Item>
+              <Descriptions.Item label={t("Updated At")}>{formatDate(agent.updated_at)}</Descriptions.Item>
             </Descriptions>
 
             <AgentVirtualKeys keys={agentKeys} isLoading={keysLoading} onKeyClick={setSelectedKey} />
@@ -288,22 +285,22 @@ const AgentInfoView: React.FC<AgentInfoViewProps> = ({ agentId, onClose, accessT
                 (agent.object_permission.mcp_tool_permissions &&
                   Object.keys(agent.object_permission.mcp_tool_permissions).length > 0)) && (
                 <div style={{ marginTop: 24 }}>
-                  <Title>MCP Tool Permissions</Title>
+                  <Title>{t("MCP Tool Permissions")}</Title>
                   <Descriptions bordered column={1} style={{ marginTop: 16 }}>
                     {agent.object_permission.mcp_servers && agent.object_permission.mcp_servers.length > 0 && (
-                      <Descriptions.Item label="MCP Servers">
+                      <Descriptions.Item label={t("MCP Servers")}>
                         {agent.object_permission.mcp_servers.join(", ")}
                       </Descriptions.Item>
                     )}
                     {agent.object_permission.mcp_access_groups &&
                       agent.object_permission.mcp_access_groups.length > 0 && (
-                        <Descriptions.Item label="MCP Access Groups">
+                        <Descriptions.Item label={t("MCP Access Groups")}>
                           {agent.object_permission.mcp_access_groups.join(", ")}
                         </Descriptions.Item>
                       )}
                     {agent.object_permission.mcp_tool_permissions &&
                       Object.keys(agent.object_permission.mcp_tool_permissions).length > 0 && (
-                        <Descriptions.Item label="Tool permissions per server">
+                        <Descriptions.Item label={t("Tool permissions per server")}>
                           <div className="space-y-1">
                             {Object.entries(agent.object_permission.mcp_tool_permissions).map(([serverId, tools]) => (
                               <div key={serverId}>
@@ -322,23 +319,23 @@ const AgentInfoView: React.FC<AgentInfoViewProps> = ({ agentId, onClose, accessT
 
             {agent.agent_card_params?.skills && agent.agent_card_params.skills.length > 0 && (
               <div style={{ marginTop: 24 }}>
-                <Title>Skills</Title>
+                <Title>{t("Skills")}</Title>
                 <Descriptions bordered column={1} style={{ marginTop: 16 }}>
                   {agent.agent_card_params.skills.map((skill: any, index: number) => (
                     <Descriptions.Item label={skill.name || `Skill ${index + 1}`} key={index}>
                       <div>
                         <div>
-                          <strong>ID:</strong> {skill.id}
+                          <strong>{t("ID:")}</strong> {skill.id}
                         </div>
                         <div>
-                          <strong>Description:</strong> {skill.description}
+                          <strong>{t("Description:")}</strong> {skill.description}
                         </div>
                         <div>
-                          <strong>Tags:</strong> {Array.isArray(skill.tags) ? skill.tags.join(", ") : skill.tags}
+                          <strong>{t("Tags:")}</strong> {Array.isArray(skill.tags) ? skill.tags.join(", ") : skill.tags}
                         </div>
                         {skill.examples && skill.examples.length > 0 && (
                           <div>
-                            <strong>Examples:</strong>{" "}
+                            <strong>{t("Examples:")}</strong>{" "}
                             {Array.isArray(skill.examples) ? skill.examples.join(", ") : skill.examples}
                           </div>
                         )}
@@ -355,22 +352,20 @@ const AgentInfoView: React.FC<AgentInfoViewProps> = ({ agentId, onClose, accessT
             <TabPanel>
               <Card>
                 <div className="flex justify-between items-center mb-4">
-                  <Title>Agent Settings</Title>
+                  <Title>{t("Agent Settings")}</Title>
                   {!isEditing && (
                     <TremorButton
                       onClick={() => {
                         setAppliedDiscoveredSelection(null);
                         setIsEditing(true);
                       }}
-                    >
-                      Edit Settings
-                    </TremorButton>
+                    >{t("Edit Settings")}</TremorButton>
                   )}
                 </div>
 
                 {isEditing ? (
                   <Form form={form} layout="vertical" onFinish={handleUpdate}>
-                    <Form.Item label="Agent ID">
+                    <Form.Item label={t("Agent ID")}>
                       <Input value={agent.agent_id} disabled />
                     </Form.Item>
 
@@ -394,21 +389,21 @@ const AgentInfoView: React.FC<AgentInfoViewProps> = ({ agentId, onClose, accessT
                     )}
 
                     <Divider />
-                    <Title className="mb-4">Rate Limits</Title>
+                    <Title className="mb-4">{t("Rate Limits")}</Title>
                     <div className="grid grid-cols-2 gap-4">
                       <Form.Item label="TPM Limit" name="tpm_limit">
-                        <InputNumber className="w-full" min={0} placeholder="Unlimited" />
+                        <InputNumber className="w-full" min={0} placeholder={t("Unlimited")} />
                       </Form.Item>
                       <Form.Item label="RPM Limit" name="rpm_limit">
-                        <InputNumber className="w-full" min={0} placeholder="Unlimited" />
+                        <InputNumber className="w-full" min={0} placeholder={t("Unlimited")} />
                       </Form.Item>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <Form.Item label="Session TPM Limit" name="session_tpm_limit">
-                        <InputNumber className="w-full" min={0} placeholder="Unlimited" />
+                        <InputNumber className="w-full" min={0} placeholder={t("Unlimited")} />
                       </Form.Item>
                       <Form.Item label="Session RPM Limit" name="session_rpm_limit">
-                        <InputNumber className="w-full" min={0} placeholder="Unlimited" />
+                        <InputNumber className="w-full" min={0} placeholder={t("Unlimited")} />
                       </Form.Item>
                     </div>
 
@@ -419,14 +414,12 @@ const AgentInfoView: React.FC<AgentInfoViewProps> = ({ agentId, onClose, accessT
                           setIsEditing(false);
                           fetchAgentInfo();
                         }}
-                      >
-                        Cancel
-                      </AntButton>
-                      <TremorButton loading={isSaving}>Save Changes</TremorButton>
+                      >{t("Cancel")}</AntButton>
+                      <TremorButton loading={isSaving}>{t("Save Changes")}</TremorButton>
                     </div>
                   </Form>
                 ) : (
-                  <Text>Click &quot;Edit Settings&quot; to modify agent configuration.</Text>
+                  <Text>{t("Click &quot;Edit Settings&quot; to modify agent configuration.")}</Text>
                 )}
               </Card>
             </TabPanel>

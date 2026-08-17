@@ -8,6 +8,7 @@ import { DataTable } from "@/components/shared/DataTable";
 import { getPassThroughEndpointsTableColumns } from "./PassThroughEndpointsTableColumns";
 import type { passThroughItem } from "./PassThroughSettings";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface PassThroughEndpointsTableProps {
   endpoints: passThroughItem[];
   isLoading: boolean;
@@ -16,13 +17,14 @@ interface PassThroughEndpointsTableProps {
 }
 
 function EmptyState() {
-  return (
+
+  const { t } = useLanguage();  return (
     <div className="flex flex-col items-center gap-1 py-6">
       <div className="mb-1 flex size-10 items-center justify-center rounded-lg bg-muted">
         <Waypoints className="size-5 text-muted-foreground" />
       </div>
-      <div className="text-sm font-medium text-foreground">No pass-through endpoints configured</div>
-      <div className="text-sm text-muted-foreground">Add a pass-through endpoint to route custom paths.</div>
+      <div className="text-sm font-medium text-foreground">{t("No pass-through endpoints configured")}</div>
+      <div className="text-sm text-muted-foreground">{t("Add a pass-through endpoint to route custom paths.")}</div>
     </div>
   );
 }

@@ -15,6 +15,7 @@ import {
 } from "@/components/claude_code_plugins/helpers";
 import { PluginAuthor, PluginSource, SkillRegisterRequest } from "@/components/claude_code_plugins/types";
 
+import { t } from "@/i18n";
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -105,46 +106,46 @@ const AddPluginForm: React.FC<AddPluginFormProps> = ({ visible, onClose, accessT
 
   const handleSubmit = async (values: AddPluginFormValues) => {
     if (!accessToken) {
-      MessageManager.error("No access token available");
+      MessageManager.error(t("No access token available"));
       return;
     }
 
     if (!urlPreview) {
-      MessageManager.error("Please enter a valid repository URL");
+      MessageManager.error(t("Please enter a valid repository URL"));
       return;
     }
 
     if (!validatePluginName(values.name)) {
-      MessageManager.error("Skill name must be kebab-case (lowercase letters, numbers, and hyphens only)");
+      MessageManager.error(t("Skill name must be kebab-case (lowercase letters, numbers, and hyphens only)"));
       return;
     }
 
     if (values.version && !isValidSemanticVersion(values.version)) {
-      MessageManager.error("Version must be in semantic versioning format (e.g., 1.0.0)");
+      MessageManager.error(t("Version must be in semantic versioning format (e.g., 1.0.0)"));
       return;
     }
 
     if (values.authorEmail && !isValidEmail(values.authorEmail)) {
-      MessageManager.error("Invalid email format");
+      MessageManager.error(t("Invalid email format"));
       return;
     }
 
     if (values.homepage && !isValidUrl(values.homepage)) {
-      MessageManager.error("Invalid homepage URL format");
+      MessageManager.error(t("Invalid homepage URL format"));
       return;
     }
 
     setIsSubmitting(true);
     try {
       await registerClaudeCodePlugin(accessToken, buildRegisterRequest(values, urlPreview.parsed));
-      MessageManager.success("Skill registered successfully");
+      MessageManager.success(t("Skill registered successfully"));
       form.resetFields();
       setUrlPreview(null);
       setUrlEncodesSubdir(false);
       onSuccess();
       onClose();
     } catch (error) {
-      console.error("Error registering skill:", error);
+      console.error(t("Error registering skill:"), error);
       MessageManager.error(error instanceof Error && error.message ? error.message : "Failed to register skill");
     } finally {
       setIsSubmitting(false);
@@ -163,7 +164,7 @@ const AddPluginForm: React.FC<AddPluginFormProps> = ({ visible, onClose, accessT
       <Form form={form} layout="vertical" onFinish={handleSubmit} className="mt-4">
         {/* Smart URL Input */}
         <Form.Item
-          label="Repository URL"
+          label={t("Repository URL")}
           name="skillUrl"
           rules={[{ required: true, message: "Please enter a repository URL" }]}
           tooltip="Paste an HTTPS git repository URL from GitHub, GitLab, Bitbucket, or a self-hosted host. E.g. github.com/org/repo, gitlab.com/org/repo, or github.com/org/repo/tree/main/my-skill"
@@ -177,7 +178,7 @@ const AddPluginForm: React.FC<AddPluginFormProps> = ({ visible, onClose, accessT
 
         {/* Optional subfolder for monorepos */}
         <Form.Item
-          label="Subfolder path (Optional)"
+          label={t("Subfolder path (Optional)")}
           name="subPath"
           rules={[
             {
@@ -204,14 +205,13 @@ const AddPluginForm: React.FC<AddPluginFormProps> = ({ visible, onClose, accessT
 
         {/* Parsed preview */}
         {urlPreview && (
-          <div className="mb-4 px-3 py-2 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-700">
-            Detected: {urlPreview.label}
+          <div className="mb-4 px-3 py-2 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-700">{t("Detected:")} {urlPreview.label}
           </div>
         )}
 
         {/* Skill Name */}
         <Form.Item
-          label="Skill Name"
+          label={t("Skill Name")}
           name="name"
           rules={[
             { required: true, message: "Please enter skill name" },
@@ -220,7 +220,7 @@ const AddPluginForm: React.FC<AddPluginFormProps> = ({ visible, onClose, accessT
               message: "Name must be kebab-case (lowercase, numbers, hyphens only)",
             },
           ]}
-          tooltip="Unique identifier in kebab-case format (e.g., my-skill)"
+          tooltip={t("Unique identifier in kebab-case format (e.g., my-skill)")}
         >
           <Input placeholder="my-skill" className="rounded-lg" />
         </Form.Item>
@@ -228,17 +228,17 @@ const AddPluginForm: React.FC<AddPluginFormProps> = ({ visible, onClose, accessT
         {/* Domain and Namespace — side by side */}
         <div className="flex gap-4">
           <Form.Item
-            label="Domain (Optional)"
+            label={t("Domain (Optional)")}
             name="domain"
-            tooltip="Top-level grouping in the Skill Hub (e.g., Productivity)"
+            tooltip={t("Top-level grouping in the Skill Hub (e.g., Productivity)")}
             className="flex-1"
           >
             <Input placeholder="Productivity" className="rounded-lg" />
           </Form.Item>
           <Form.Item
-            label="Namespace (Optional)"
+            label={t("Namespace (Optional)")}
             name="namespace"
-            tooltip="Sub-grouping within domain (e.g., workflows)"
+            tooltip={t("Sub-grouping within domain (e.g., workflows)")}
             className="flex-1"
           >
             <Input placeholder="workflows" className="rounded-lg" />
@@ -246,12 +246,12 @@ const AddPluginForm: React.FC<AddPluginFormProps> = ({ visible, onClose, accessT
         </div>
 
         {/* Description */}
-        <Form.Item label="Description (Optional)" name="description" tooltip="Brief description of what the skill does">
+        <Form.Item label="Description (Optional)" name="description" tooltip={t("Brief description of what the skill does")}>
           <TextArea rows={3} placeholder="A skill that helps with..." maxLength={500} className="rounded-lg" />
         </Form.Item>
 
         {/* Category */}
-        <Form.Item label="Category (Optional)" name="category" tooltip="Select a category or enter a custom one">
+        <Form.Item label="Category (Optional)" name="category" tooltip={t("Select a category or enter a custom one")}>
           <Select
             placeholder="Select or type a category"
             allowClear
@@ -268,26 +268,26 @@ const AddPluginForm: React.FC<AddPluginFormProps> = ({ visible, onClose, accessT
         </Form.Item>
 
         {/* Keywords */}
-        <Form.Item label="Keywords (Optional)" name="keywords" tooltip="Comma-separated list of keywords for search">
+        <Form.Item label="Keywords (Optional)" name="keywords" tooltip={t("Comma-separated list of keywords for search")}>
           <Input placeholder="search, web, api" className="rounded-lg" />
         </Form.Item>
 
         {/* Version */}
-        <Form.Item label="Version (Optional)" name="version" tooltip="Semantic version (e.g., 1.0.0)">
+        <Form.Item label="Version (Optional)" name="version" tooltip={t("Semantic version (e.g., 1.0.0)")}>
           <Input placeholder="1.0.0" className="rounded-lg" />
         </Form.Item>
 
         {/* Author Name */}
-        <Form.Item label="Author Name (Optional)" name="authorName" tooltip="Name of the skill author or organization">
+        <Form.Item label="Author Name (Optional)" name="authorName" tooltip={t("Name of the skill author or organization")}>
           <Input placeholder="Your Name or Organization" className="rounded-lg" />
         </Form.Item>
 
         {/* Author Email */}
         <Form.Item
-          label="Author Email (Optional)"
+          label={t("Author Email (Optional)")}
           name="authorEmail"
           rules={[{ type: "email", message: "Please enter a valid email" }]}
-          tooltip="Contact email for the skill author"
+          tooltip={t("Contact email for the skill author")}
         >
           <Input type="email" placeholder="author@example.com" className="rounded-lg" />
         </Form.Item>
@@ -295,9 +295,7 @@ const AddPluginForm: React.FC<AddPluginFormProps> = ({ visible, onClose, accessT
         {/* Submit Buttons */}
         <Form.Item className="mb-0 mt-6">
           <div className="flex justify-end gap-2">
-            <Button variant="secondary" onClick={handleCancel} disabled={isSubmitting}>
-              Cancel
-            </Button>
+            <Button variant="secondary" onClick={handleCancel} disabled={isSubmitting}>{t("Cancel")}</Button>
             <Button type="submit" loading={isSubmitting}>
               {isSubmitting ? "Adding..." : "Add Skill"}
             </Button>

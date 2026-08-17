@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 
 import { CellTooltip } from "./cell_tooltip";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface ModelsCellProps {
   models: string[] | null | undefined;
   maxVisible?: number;
@@ -24,21 +25,20 @@ const formatModel = (model: string): string => {
 };
 
 export function ModelsCell({ models, maxVisible = 3, allowedRoutes, keyType }: ModelsCellProps) {
-  if (!Array.isArray(models) || models.length === 0) {
+
+  const { t } = useLanguage();  if (!Array.isArray(models) || models.length === 0) {
     const scope = deriveKeyModelScope(allowedRoutes, keyType);
     if (!scope.hasModelAccess) {
       return (
         <CellTooltip
           content={`Scoped to ${scope.label} routes; this key cannot call any models`}
           trigger={
-            <Badge variant="secondary" className="cursor-default">
-              No model access
-            </Badge>
+            <Badge variant="secondary" className="cursor-default">{t("No model access")}</Badge>
           }
         />
       );
     }
-    return <Badge variant="secondary">All Proxy Models</Badge>;
+    return <Badge variant="secondary">{t("All Proxy Models")}</Badge>;
   }
 
   const visible = models.slice(0, maxVisible);

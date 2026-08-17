@@ -2,13 +2,12 @@ import React from "react";
 import { Form, Input, Select, Switch, Tooltip } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 
+import { t } from "@/i18n";
 const OpenApiByokFields: React.FC = () => (
   <>
     <Form.Item
       label={
-        <span className="text-sm font-medium text-gray-700 flex items-center gap-2">
-          BYOK (Bring Your Own Key)
-          <Tooltip title="When enabled, each user provides their own API key for this service. Keys are stored per-user and never shared.">
+        <span className="text-sm font-medium text-gray-700 flex items-center gap-2">{t("BYOK (Bring Your Own Key)")}<Tooltip title="When enabled, each user provides their own API key for this service. Keys are stored per-user and never shared.">
             <InfoCircleOutlined className="text-blue-400 hover:text-blue-600 cursor-help" />
           </Tooltip>
         </span>
@@ -27,8 +26,7 @@ const OpenApiByokFields: React.FC = () => (
             {getFieldValue("auth_type") && getFieldValue("auth_type") !== "none" && (
               <div className="mb-4 p-3 bg-blue-50 rounded-lg text-sm text-blue-700 flex items-start gap-2">
                 <InfoCircleOutlined className="mt-0.5 shrink-0" />
-                <span>
-                  User keys will be sent as:{" "}
+                <span>{t("User keys will be sent as:")}{" "}
                   <code className="font-mono bg-blue-100 px-1 rounded-sm">
                     {getFieldValue("auth_type") === "bearer_token" && "Authorization: Bearer {key}"}
                     {getFieldValue("auth_type") === "token" && "Authorization: token {key}"}
@@ -43,17 +41,12 @@ const OpenApiByokFields: React.FC = () => (
             {!getFieldValue("auth_type") && (
               <div className="mb-4 p-3 bg-yellow-50 rounded-lg text-sm text-yellow-700 flex items-start gap-2">
                 <InfoCircleOutlined className="mt-0.5 shrink-0" />
-                <span>
-                  Set the <strong>Authentication Type</strong> below to specify how user keys are sent (e.g., Bearer
-                  Token, API Key header).
-                </span>
+                <span>{t("Set the")}<strong>{t("Authentication Type")}</strong>{t("below to specify how user keys are sent (e.g., Bearer Token, API Key header).")}</span>
               </div>
             )}
             <Form.Item
               label={
-                <span className="text-sm font-medium text-gray-700">
-                  Access Description
-                  <Tooltip title="List of permissions shown to users in the connection modal (e.g. 'Create and manage Jira issues')">
+                <span className="text-sm font-medium text-gray-700">{t("Access Description")}<Tooltip title="List of permissions shown to users in the connection modal (e.g. 'Create and manage Jira issues')">
                     <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                   </Tooltip>
                 </span>
@@ -62,7 +55,7 @@ const OpenApiByokFields: React.FC = () => (
             >
               <Select
                 mode="tags"
-                placeholder="Add access description items (press Enter after each)"
+                placeholder={t("Add access description items (press Enter after each)")}
                 className="w-full"
                 tokenSeparators={[","]}
               />
@@ -70,9 +63,7 @@ const OpenApiByokFields: React.FC = () => (
 
             <Form.Item
               label={
-                <span className="text-sm font-medium text-gray-700">
-                  API Key Help URL
-                  <Tooltip title="Optional link shown to users to help them find their API key">
+                <span className="text-sm font-medium text-gray-700">{t("API Key Help URL")}<Tooltip title={t("Optional link shown to users to help them find their API key")}>
                     <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                   </Tooltip>
                 </span>

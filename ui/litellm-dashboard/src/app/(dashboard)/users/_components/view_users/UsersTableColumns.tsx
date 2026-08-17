@@ -121,7 +121,7 @@ export const getUsersTableColumns = ({
     },
     {
       id: "status",
-      meta: { title: "Status", skeleton: "badge" },
+      meta: { title: t("Status"), skeleton: "badge" },
       header: t("users.col_status"),
       size: 110,
       enableSorting: false,
@@ -203,7 +203,7 @@ export const getUsersTableColumns = ({
     {
       id: "key_count",
       accessorKey: "key_count",
-      meta: { title: "Virtual Keys", skeleton: "badge" },
+      meta: { title: t("Virtual Keys"), skeleton: "badge" },
       header: t("users.col_virtual_keys"),
       size: 120,
       enableSorting: false,
@@ -229,7 +229,7 @@ export const getUsersTableColumns = ({
     {
       id: "created_at",
       accessorKey: "created_at",
-      meta: { title: "Created At" },
+      meta: { title: t("Created At")},
       header: ({ column }) => <DataTableSortHeader column={column} title={t("users.col_created_at")} variant="header-cycle" />,
       size: 130,
       enableSorting: true,
@@ -238,7 +238,7 @@ export const getUsersTableColumns = ({
     {
       id: "updated_at",
       accessorKey: "updated_at",
-      meta: { title: "Updated At" },
+      meta: { title: t("Updated At")},
       header: t("users.col_updated_at"),
       size: 130,
       enableSorting: false,
@@ -247,7 +247,7 @@ export const getUsersTableColumns = ({
     {
       id: "actions",
       meta: { title: t("common.actions"), className: "text-right", headerClassName: "text-right" },
-      header: () => <span className="sr-only">Actions</span>,
+      header: () => <span className="sr-only">{t("Actions")}</span>,
       size: 60,
       enableSorting: false,
       enableHiding: false,

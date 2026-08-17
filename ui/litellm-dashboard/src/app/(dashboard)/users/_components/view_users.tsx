@@ -104,7 +104,7 @@ const ViewUserDashboard: React.FC<ViewUserDashboardProps> = ({
         let available_model_names = model_available["data"].map((element: { id: string }) => element.id);
         setUserModels(available_model_names);
       } catch (error) {
-        console.error("Error fetching user models:", error);
+        console.error(t("Error fetching user models:"), error);
       }
     };
 
@@ -191,9 +191,9 @@ const ViewUserDashboard: React.FC<ViewUserDashboardProps> = ({
           return { ...previousData, users: updatedUsers };
         });
 
-        NotificationsManager.success("User deleted successfully");
+        NotificationsManager.success(t("User deleted successfully"));
       } catch (error) {
-        console.error("Error deleting user:", error);
+        console.error(t("Error deleting user:"), error);
         NotificationsManager.fromBackend("Failed to delete user");
       } finally {
         setIsDeleteModalOpen(false);
@@ -234,7 +234,7 @@ const ViewUserDashboard: React.FC<ViewUserDashboardProps> = ({
 
       NotificationsManager.success(`User ${editedUser.user_id} updated successfully`);
     } catch (error) {
-      console.error("There was an error updating the user", error);
+      console.error(t("There was an error updating the user"), error);
     }
     setSelectedUser(null);
     setEditModalVisible(false);
@@ -421,7 +421,7 @@ const ViewUserDashboard: React.FC<ViewUserDashboardProps> = ({
               <div
                 className="flex h-64 items-center justify-center"
                 role="status"
-                aria-label="Loading default user settings"
+                aria-label={t("Loading default user settings")}
               >
                 <div className="w-full max-w-lg space-y-3">
                   <Skeleton className="h-5 w-1/3" />
@@ -450,18 +450,18 @@ const ViewUserDashboard: React.FC<ViewUserDashboardProps> = ({
 
       <DeleteResourceModal
         isOpen={isDeleteModalOpen}
-        title="Delete User?"
-        message="Are you sure you want to delete this user? This action cannot be undone."
+        title={t("Delete User?")}
+        message={t("Are you sure you want to delete this user? This action cannot be undone.")}
         resourceInformationTitle="User Information"
         resourceInformation={[
-          { label: "Email", value: userToDelete?.user_email },
-          { label: "User ID", value: userToDelete?.user_id, code: true },
+          { label: t("Email"), value: userToDelete?.user_email },
+          { label: t("User ID"), value: userToDelete?.user_id, code: true },
           {
-            label: "Global Proxy Role",
+            label: t("Global Proxy Role"),
             value:
               (userToDelete && possibleUIRoles?.[userToDelete.user_role]?.ui_label) || userToDelete?.user_role || "-",
           },
-          { label: "Total Spend (USD)", value: userToDelete?.spend?.toFixed(2) },
+          { label: t("Total Spend (USD)"), value: userToDelete?.spend?.toFixed(2) },
         ]}
         onCancel={cancelDelete}
         onOk={confirmDelete}

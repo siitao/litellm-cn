@@ -25,6 +25,7 @@ import {
 } from "./AllModelsTable";
 import { ACCESS_GROUPS_COLUMN_ID, MODEL_NAME_COLUMN_ID, toServerSortField } from "./ModelsTableColumns";
 
+import { t } from "@/i18n";
 const SEARCH_DEBOUNCE_WAIT_MS = 200;
 const DEFAULT_PAGE_SIZE = 50;
 const DEFAULT_PAGINATION: PaginationState = { pageIndex: 0, pageSize: DEFAULT_PAGE_SIZE };
@@ -190,7 +191,7 @@ const AllModelsTab = ({
 
   const teamOptions = useMemo(
     () => [
-      { value: PERSONAL_TEAM_VALUE, label: "Personal" },
+      { value: PERSONAL_TEAM_VALUE, label: t("Personal")},
       ...(teams ?? [])
         .filter((team) => team.team_id)
         .map((team) => ({ value: team.team_id, label: team.team_alias ? team.team_alias : team.team_id })),
@@ -213,11 +214,11 @@ const AllModelsTab = ({
     try {
       setDeleteLoading(true);
       await modelDeleteCall(accessToken, deleteModalModelId);
-      NotificationsManager.success("Model deleted successfully");
+      NotificationsManager.success(t("Model deleted successfully"));
       queryClient.invalidateQueries({ queryKey: ["models", "list"] });
       refetchModels();
     } catch (error) {
-      console.error("Error deleting model:", error);
+      console.error(t("Error deleting model:"), error);
       NotificationsManager.fromBackend(error);
     } finally {
       setDeleteLoading(false);
@@ -236,7 +237,7 @@ const AllModelsTab = ({
         // on this key — no need to also call refetchModels() (would double-fetch).
         queryClient.invalidateQueries({ queryKey: ["models", "list"] });
       } catch (error) {
-        console.error("Error toggling model pause state:", error);
+        console.error(t("Error toggling model pause state:"), error);
         NotificationsManager.fromBackend(error);
       } finally {
         setPausingModelId(null);
@@ -299,19 +300,14 @@ const AllModelsTab = ({
           <div className="flex items-start gap-2 px-1 text-xs text-muted-foreground">
             <Info className="mt-0.5 size-3.5 shrink-0" />
             {selectedTeamValue === PERSONAL_TEAM_VALUE ? (
-              <span>
-                To access these models, create a Virtual Key without selecting a team on the{" "}
-                <a href="/public?login=success&page=api-keys" className="font-medium text-blue-600 hover:underline">
-                  Virtual Keys page
-                </a>
+              <span>{t("To access these models, create a Virtual Key without selecting a team on the")}{" "}
+                <a href="/public?login=success&page=api-keys" className="font-medium text-blue-600 hover:underline">{t("Virtual Keys page")}</a>
                 .
               </span>
             ) : (
               <span>
                 To access these models, create a Virtual Key and select Team as &quot;{teamAccessLabel}&quot; on the{" "}
-                <a href="/public?login=success&page=api-keys" className="font-medium text-blue-600 hover:underline">
-                  Virtual Keys page
-                </a>
+                <a href="/public?login=success&page=api-keys" className="font-medium text-blue-600 hover:underline">{t("Virtual Keys page")}</a>
                 .
               </span>
             )}
@@ -321,27 +317,27 @@ const AllModelsTab = ({
 
       <DeleteResourceModal
         isOpen={!!deleteModalModelId}
-        title="Delete Model"
+        title={t("Delete Model")}
         alertMessage="This action cannot be undone."
-        message="Are you sure you want to delete this model?"
+        message={t("Are you sure you want to delete this model?")}
         resourceInformationTitle="Model Information"
         resourceInformation={
           modelToDelete
             ? [
                 {
-                  label: "Model Name",
+                  label: t("Model Name"),
                   value: modelToDelete.model_name || "Not Set",
                 },
                 {
-                  label: "LiteLLM Model Name",
+                  label: t("LiteLLM Model Name"),
                   value: modelToDelete.litellm_model_name || "Not Set",
                 },
                 {
-                  label: "Provider",
+                  label: t("Provider"),
                   value: modelToDelete.provider || "Not Set",
                 },
                 {
-                  label: "Created By",
+                  label: t("Created By"),
                   value: modelToDelete.model_info?.created_by || "Not Set",
                 },
               ]

@@ -6,6 +6,7 @@ import type { UploadFile, UploadProps } from "antd";
 import { convertPromptFileToJson, createPromptCall } from "@/components/networking";
 import NotificationsManager from "@/components/molecules/notifications_manager";
 
+import { t } from "@/i18n";
 const { Option } = Select;
 
 interface AddPromptFormProps {
@@ -66,7 +67,7 @@ const AddPromptForm: React.FC<AddPromptFormProps> = ({ visible, onClose, accessT
             },
           };
         } catch (conversionError) {
-          console.error("Error converting prompt file:", conversionError);
+          console.error(t("Error converting prompt file:"), conversionError);
           NotificationsManager.fromBackend("Failed to convert prompt file to JSON");
           setLoading(false);
           return;
@@ -76,15 +77,15 @@ const AddPromptForm: React.FC<AddPromptFormProps> = ({ visible, onClose, accessT
       // Create the prompt
       try {
         await createPromptCall(accessToken, promptData);
-        NotificationsManager.success("Prompt created successfully!");
+        NotificationsManager.success(t("Prompt created successfully!"));
         handleCancel();
         onSuccess();
       } catch (createError) {
-        console.error("Error creating prompt:", createError);
+        console.error(t("Error creating prompt:"), createError);
         NotificationsManager.fromBackend("Failed to create prompt");
       }
     } catch (error) {
-      console.error("Form validation error:", error);
+      console.error(t("Form validation error:"), error);
     } finally {
       setLoading(false);
     }
@@ -109,22 +110,18 @@ const AddPromptForm: React.FC<AddPromptFormProps> = ({ visible, onClose, accessT
 
   return (
     <Modal
-      title="Add New Prompt"
+      title={t("Add New Prompt")}
       open={visible}
       onCancel={handleCancel}
       footer={[
-        <Button key="cancel" onClick={handleCancel}>
-          Cancel
-        </Button>,
-        <Button key="submit" loading={loading} onClick={handleSubmit}>
-          Create Prompt
-        </Button>,
+        <Button key="cancel" onClick={handleCancel}>{t("Cancel")}</Button>,
+        <Button key="submit" loading={loading} onClick={handleSubmit}>{t("Create Prompt")}</Button>,
       ]}
       width={600}
     >
       <Form form={form} layout="vertical" requiredMark={false}>
         <Form.Item
-          label="Prompt ID"
+          label={t("Prompt ID")}
           name="prompt_id"
           rules={[
             { required: true, message: "Please enter a prompt ID" },
@@ -134,7 +131,7 @@ const AddPromptForm: React.FC<AddPromptFormProps> = ({ visible, onClose, accessT
             },
           ]}
         >
-          <TextInput placeholder="Enter unique prompt ID (e.g., my_prompt_id)" />
+          <TextInput placeholder={t("Enter unique prompt ID (e.g., my_prompt_id)")} />
         </Form.Item>
 
         <Form.Item label="Prompt Integration" name="prompt_integration" initialValue="dotprompt">
@@ -148,9 +145,9 @@ const AddPromptForm: React.FC<AddPromptFormProps> = ({ visible, onClose, accessT
             <Divider />
             <Form.Item label="Prompt File" extra="Upload a .prompt file that follows the Dotprompt specification">
               <Upload {...uploadProps}>
-                <Button icon={<UploadOutlined />}>Select .prompt File</Button>
+                <Button icon={<UploadOutlined />}>{t("Select .prompt File")}</Button>
               </Upload>
-              {fileList.length > 0 && <div className="mt-2 text-sm text-gray-600">Selected: {fileList[0].name}</div>}
+              {fileList.length > 0 && <div className="mt-2 text-sm text-gray-600">{t("Selected:")} {fileList[0].name}</div>}
             </Form.Item>
           </>
         )}

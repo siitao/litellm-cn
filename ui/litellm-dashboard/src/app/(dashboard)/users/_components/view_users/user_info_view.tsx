@@ -138,7 +138,7 @@ export default function UserInfoView({
         const availableModels = modelDataResponse.data.map((model: any) => model.id);
         setUserModels(availableModels);
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error(t("Error fetching user data:"), error);
         NotificationsManager.fromBackend("Failed to fetch user data");
       } finally {
         setIsLoading(false);
@@ -162,7 +162,7 @@ export default function UserInfoView({
         })),
       );
     } catch (error) {
-      console.error("Error fetching teams:", error);
+      console.error(t("Error fetching teams:"), error);
     } finally {
       setIsLoadingTeams(false);
     }
@@ -184,7 +184,7 @@ export default function UserInfoView({
         user_id: userId,
       };
       await teamMemberAddCall(accessToken, selectedTeamId, member);
-      NotificationsManager.success("User added to team successfully");
+      NotificationsManager.success(t("User added to team successfully"));
       setIsAddTeamModalOpen(false);
       // Re-fetch user data to refresh teams
       const data = await userGetInfoV2(accessToken, userId);
@@ -203,7 +203,7 @@ export default function UserInfoView({
         setTeamDetails([]);
       }
     } catch (error: any) {
-      console.error("Error adding user to team:", error);
+      console.error(t("Error adding user to team:"), error);
       NotificationsManager.fromBackend(error?.message || "Failed to add user to team");
     } finally {
       setIsAddingTeam(false);
@@ -224,7 +224,7 @@ export default function UserInfoView({
         user_id: userId,
       };
       await teamMemberDeleteCall(accessToken, teamToRemove.team_id, member);
-      NotificationsManager.success("User removed from team successfully");
+      NotificationsManager.success(t("User removed from team successfully"));
       setIsRemoveTeamModalOpen(false);
       setTeamToRemove(null);
       // Re-fetch user data to refresh teams
@@ -244,7 +244,7 @@ export default function UserInfoView({
         setTeamDetails([]);
       }
     } catch (error: any) {
-      console.error("Error removing user from team:", error);
+      console.error(t("Error removing user from team:"), error);
       NotificationsManager.fromBackend(error?.message || "Failed to remove user from team");
     } finally {
       setIsRemovingTeam(false);
@@ -278,13 +278,13 @@ export default function UserInfoView({
       if (!accessToken) return;
       setIsDeletingUser(true);
       await userDeleteCall(accessToken, [userId]);
-      NotificationsManager.success("User deleted successfully");
+      NotificationsManager.success(t("User deleted successfully"));
       if (onDelete) {
         onDelete();
       }
       onClose();
     } catch (error) {
-      console.error("Error deleting user:", error);
+      console.error(t("Error deleting user:"), error);
       NotificationsManager.fromBackend("Failed to delete user");
     } finally {
       setIsDeleteModalOpen(false);
@@ -327,10 +327,10 @@ export default function UserInfoView({
           : userData.object_permission,
       });
 
-      NotificationsManager.success("User updated successfully");
+      NotificationsManager.success(t("User updated successfully"));
       setIsEditing(false);
     } catch (error) {
-      console.error("Error updating user:", error);
+      console.error(t("Error updating user:"), error);
       NotificationsManager.fromBackend("Failed to update user");
     }
   };
@@ -385,9 +385,7 @@ export default function UserInfoView({
     <div className="p-4">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <Button icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">
-            Back to Users
-          </Button>
+          <Button icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">{t("Back to Users")}</Button>
           <Title>{userData.user_email || "User"}</Title>
           <div className="flex items-center cursor-pointer">
             <Text className="text-gray-500 font-mono">{userData.user_id}</Text>
@@ -406,17 +404,13 @@ export default function UserInfoView({
         </div>
         {userRole && rolesWithWriteAccess.includes(userRole) && (
           <div className="flex items-center space-x-2">
-            <Button icon={RefreshIcon} variant="secondary" onClick={handleResetPassword} className="flex items-center">
-              Reset Password
-            </Button>
+            <Button icon={RefreshIcon} variant="secondary" onClick={handleResetPassword} className="flex items-center">{t("Reset Password")}</Button>
             <Button
               icon={TrashIcon}
               variant="secondary"
               onClick={() => setIsDeleteModalOpen(true)}
               className="flex items-center text-red-500 border-red-500 hover:text-red-600 hover:border-red-600"
-            >
-              Delete User
-            </Button>
+            >{t("Delete User")}</Button>
           </div>
         )}
       </div>
@@ -454,7 +448,7 @@ export default function UserInfoView({
           <TabPanel>
             <Grid numItems={1} numItemsSm={2} numItemsLg={3} className="gap-6">
               <Card>
-                <Text>Spend</Text>
+                <Text>{t("Spend")}</Text>
                 <div className="mt-2">
                   <Title>${formatNumberWithCommas(userData.spend || 0, 2)}</Title>
                   <Text>
@@ -468,9 +462,7 @@ export default function UserInfoView({
                 <div className="flex justify-between items-center mb-2">
                   <Text>{t("teams.title")}</Text>
                   {isProxyAdmin && (
-                    <Button icon={PlusIcon} variant="light" size="xs" onClick={handleOpenAddTeamModal}>
-                      Add Team
-                    </Button>
+                    <Button icon={PlusIcon} variant="light" size="xs" onClick={handleOpenAddTeamModal}>{t("Add Team")}</Button>
                   )}
                 </div>
                 <div className="mt-2">
@@ -479,8 +471,8 @@ export default function UserInfoView({
                       <Table>
                         <TableHead>
                           <TableRow>
-                            <TableHeaderCell>Team Name</TableHeaderCell>
-                            {isProxyAdmin && <TableHeaderCell className="text-right">Actions</TableHeaderCell>}
+                            <TableHeaderCell>{t("Team Name")}</TableHeaderCell>
+                            {isProxyAdmin && <TableHeaderCell className="text-right">{t("Actions")}</TableHeaderCell>}
                           </TableRow>
                         </TableHead>
                         <TableBody>
@@ -512,9 +504,7 @@ export default function UserInfoView({
                     </Button>
                   )}
                   {isTeamsExpanded && teamDetails.length > 20 && (
-                    <Button variant="light" size="xs" className="mt-2" onClick={() => setIsTeamsExpanded(false)}>
-                      Show Less
-                    </Button>
+                    <Button variant="light" size="xs" className="mt-2" onClick={() => setIsTeamsExpanded(false)}>{t("Show Less")}</Button>
                   )}
                 </div>
               </Card>
@@ -576,7 +566,7 @@ export default function UserInfoView({
                   </div>
 
                   <div>
-                    <Text className="font-medium">Email</Text>
+                    <Text className="font-medium">{t("Email")}</Text>
                     <Text>{userData.user_email || "Not Set"}</Text>
                   </div>
 
@@ -586,12 +576,12 @@ export default function UserInfoView({
                   </div>
 
                   <div>
-                    <Text className="font-medium">Global Proxy Role</Text>
+                    <Text className="font-medium">{t("Global Proxy Role")}</Text>
                     <Text>{userData.user_role || "Not Set"}</Text>
                   </div>
 
                   <div>
-                    <Text className="font-medium">Created</Text>
+                    <Text className="font-medium">{t("Created")}</Text>
                     <Text>{userData.created_at ? new Date(userData.created_at).toLocaleString() : "Unknown"}</Text>
                   </div>
 
@@ -630,7 +620,7 @@ export default function UserInfoView({
                   </div>
 
                   <div>
-                    <Text className="font-medium">Metadata</Text>
+                    <Text className="font-medium">{t("Metadata")}</Text>
                     <pre className="bg-gray-100 p-2 rounded-sm text-xs overflow-auto mt-1">
                       {JSON.stringify(userData.metadata || {}, null, 2)}
                     </pre>
@@ -663,14 +653,14 @@ export default function UserInfoView({
       {/* Delete Team Member Modal */}
       <DeleteResourceModal
         isOpen={isRemoveTeamModalOpen}
-        title="Remove from Team"
+        title={t("Remove from Team")}
         alertMessage="Removing this user from the team will also delete any keys the user created for this team."
-        message="Are you sure you want to remove this user from the team? This action cannot be undone."
+        message={t("Are you sure you want to remove this user from the team? This action cannot be undone.")}
         resourceInformationTitle="Team Membership"
         resourceInformation={[
-          { label: "Team", value: teamToRemove?.team_alias || teamToRemove?.team_id },
+          { label: t("Team"), value: teamToRemove?.team_alias || teamToRemove?.team_id },
           { label: t("users.user_id"), value: userData?.user_id, code: true },
-          { label: "Email", value: userData?.user_email },
+          { label: t("Email"), value: userData?.user_email },
         ]}
         onCancel={handleRemoveTeamCancel}
         onOk={handleRemoveTeamConfirm}
@@ -679,7 +669,7 @@ export default function UserInfoView({
 
       {/* Add to Team Modal */}
       <Modal
-        title="Add User to Team"
+        title={t("Add User to Team")}
         open={isAddTeamModalOpen}
         onCancel={() => setIsAddTeamModalOpen(false)}
         footer={null}
@@ -692,7 +682,7 @@ export default function UserInfoView({
               showSearch
               value={selectedTeamId || undefined}
               onChange={setSelectedTeamId}
-              placeholder="Select a team"
+              placeholder={t("Select a team")}
               filterOption={(input, option) => {
                 const team = availableTeamsForAdd.find((t) => t.team_id === option?.value);
                 if (!team) return false;
@@ -708,16 +698,16 @@ export default function UserInfoView({
             </AntdSelect>
           </Form.Item>
 
-          <Form.Item label="Member Role">
+          <Form.Item label={t("Member Role")}>
             <AntdSelect value={selectedRole} onChange={setSelectedRole}>
               <AntdSelect.Option value="user">
-                <Tooltip title="Can view team info, but not manage it">
+                <Tooltip title={t("Can view team info, but not manage it")}>
                   <span className="font-medium">user</span>
                   <span className="ml-2 text-gray-500 text-sm">- Can view team info, but not manage it</span>
                 </Tooltip>
               </AntdSelect.Option>
               <AntdSelect.Option value="admin">
-                <Tooltip title="Can create team keys, add members, and manage settings">
+                <Tooltip title={t("Can create team keys, add members, and manage settings")}>
                   <span className="font-medium">admin</span>
                   <span className="ml-2 text-gray-500 text-sm">
                     - Can create team keys, add members, and manage settings

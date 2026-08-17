@@ -47,7 +47,7 @@ const UIThemeSettings: React.FC<UIThemeSettingsProps> = ({ userID, userRole, acc
         setFaviconUrl(data.values?.favicon_url || null);
       }
     } catch (error) {
-      console.error("Error fetching theme settings:", error);
+      console.error(t("Error fetching theme settings:"), error);
     }
   };
 
@@ -68,14 +68,14 @@ const UIThemeSettings: React.FC<UIThemeSettingsProps> = ({ userID, userRole, acc
         }),
       });
       if (response.ok) {
-        NotificationsManager.success("Theme settings updated successfully!");
+        NotificationsManager.success(t("Theme settings updated successfully!"));
         setLogoUrl(logoUrlInput || null);
         setFaviconUrl(faviconUrlInput || null);
       } else {
         throw new Error("Failed to update settings");
       }
     } catch (error) {
-      console.error("Error updating theme settings:", error);
+      console.error(t("Error updating theme settings:"), error);
       NotificationsManager.fromBackend("Failed to update theme settings");
     } finally {
       setLoading(false);
@@ -100,12 +100,12 @@ const UIThemeSettings: React.FC<UIThemeSettingsProps> = ({ userID, userRole, acc
         body: JSON.stringify({ logo_url: null, favicon_url: null }),
       });
       if (response.ok) {
-        NotificationsManager.success("Theme settings reset to default!");
+        NotificationsManager.success(t("Theme settings reset to default!"));
       } else {
         throw new Error("Failed to reset");
       }
     } catch (error) {
-      console.error("Error resetting theme settings:", error);
+      console.error(t("Error resetting theme settings:"), error);
       NotificationsManager.fromBackend("Failed to reset theme settings");
     } finally {
       setLoading(false);
@@ -139,9 +139,7 @@ const UIThemeSettings: React.FC<UIThemeSettingsProps> = ({ userID, userRole, acc
                 setLogoUrl(event.target.value || null);
               }}
             />
-            <p className="mt-1 text-xs text-muted-foreground">
-              Enter a URL for your custom logo or leave empty for default
-            </p>
+            <p className="mt-1 text-xs text-muted-foreground">{t("Enter a URL for your custom logo or leave empty for default")}</p>
           </div>
           <div>
             <Label htmlFor="ui-theme-favicon-url" className="mb-2">
@@ -156,9 +154,7 @@ const UIThemeSettings: React.FC<UIThemeSettingsProps> = ({ userID, userRole, acc
                 setFaviconUrl(event.target.value || null);
               }}
             />
-            <p className="mt-1 text-xs text-muted-foreground">
-              Enter a URL for your custom favicon (.ico, .png, or .svg) or leave empty for default
-            </p>
+            <p className="mt-1 text-xs text-muted-foreground">{t("Enter a URL for your custom favicon (.ico, .png, or .svg) or leave empty for default")}</p>
           </div>
           <div className="flex gap-3 pt-4">
             <Button onClick={handleSave} disabled={loading}>

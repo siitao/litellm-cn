@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Input, Select, Tooltip } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 
+import { t } from "@/i18n";
 interface TokenExchangeFormFieldsProps {
   isEditing?: boolean;
 }
@@ -25,7 +26,7 @@ const TokenExchangeFormFields: React.FC<TokenExchangeFormFieldsProps> = ({ isEdi
       <Form.Item
         label={
           <FieldLabel
-            label="Profile"
+            label={t("Profile")}
             tooltip="Token-exchange wire dialect. RFC 8693 is the standard token-exchange grant. Microsoft Entra OBO uses Entra's On-Behalf-Of dialect (the RFC 7523 jwt-bearer grant with requested_token_use=on_behalf_of) and carries the target resource in a scope like api://<app-id>/.default."
           />
         }
@@ -34,17 +35,17 @@ const TokenExchangeFormFields: React.FC<TokenExchangeFormFieldsProps> = ({ isEdi
       >
         <Select className="rounded-lg" size="large">
           <Select.Option value="rfc8693">
-            <span className="font-medium">RFC 8693 (standard)</span>
+            <span className="font-medium">{t("RFC 8693 (standard)")}</span>
           </Select.Option>
           <Select.Option value="entra_obo">
-            <span className="font-medium">Microsoft Entra OBO</span>
+            <span className="font-medium">{t("Microsoft Entra OBO")}</span>
           </Select.Option>
         </Select>
       </Form.Item>
       <Form.Item
         label={
           <FieldLabel
-            label="Token Exchange Endpoint (optional)"
+            label={t("Token Exchange Endpoint (optional)")}
             tooltip="RFC 8693 token endpoint. The proxy exchanges the user's incoming token here for a scoped token used to call the upstream MCP server. Leave blank to auto-discover it from the upstream's protected-resource metadata (RFC 9728 then RFC 8414)."
           />
         }
@@ -55,8 +56,8 @@ const TokenExchangeFormFields: React.FC<TokenExchangeFormFieldsProps> = ({ isEdi
       <Form.Item
         label={
           <FieldLabel
-            label="Client ID"
-            tooltip="OAuth2 client ID used to authenticate to the token exchange endpoint."
+            label={t("Client ID")}
+            tooltip={t("OAuth2 client ID used to authenticate to the token exchange endpoint.")}
           />
         }
         name={["credentials", "client_id"]}
@@ -67,8 +68,8 @@ const TokenExchangeFormFields: React.FC<TokenExchangeFormFieldsProps> = ({ isEdi
       <Form.Item
         label={
           <FieldLabel
-            label="Client Secret"
-            tooltip="OAuth2 client secret used to authenticate to the token exchange endpoint."
+            label={t("Client Secret")}
+            tooltip={t("OAuth2 client secret used to authenticate to the token exchange endpoint.")}
           />
         }
         name={["credentials", "client_secret"]}
@@ -86,7 +87,7 @@ const TokenExchangeFormFields: React.FC<TokenExchangeFormFieldsProps> = ({ isEdi
                   <Form.Item
                     label={
                       <FieldLabel
-                        label="Audience (optional)"
+                        label={t("Audience (optional)")}
                         tooltip="Target audience for the exchanged token (RFC 8693 audience). Identifies the upstream MCP server the token is for."
                       />
                     }
@@ -97,7 +98,7 @@ const TokenExchangeFormFields: React.FC<TokenExchangeFormFieldsProps> = ({ isEdi
                   <Form.Item
                     label={
                       <FieldLabel
-                        label="Subject Token Type (optional)"
+                        label={t("Subject Token Type (optional)")}
                         tooltip="Type of the user's incoming token (RFC 8693 subject_token_type). Defaults to urn:ietf:params:oauth:token-type:access_token."
                       />
                     }

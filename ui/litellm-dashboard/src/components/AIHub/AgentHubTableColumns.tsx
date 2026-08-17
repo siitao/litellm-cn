@@ -17,6 +17,8 @@ import {
 import { cn } from "@/lib/cva.config";
 import { copyToClipboard } from "@/utils/dataUtils";
 
+import { t } from "@/i18n";
+import { useLanguage } from "@/contexts/LanguageContext";
 export interface AgentHubData {
   agent_id?: string;
   protocolVersion: string;
@@ -48,10 +50,11 @@ interface AgentHubRowActionsProps {
 }
 
 function AgentHubRowActions({ agent, onAgentClick }: AgentHubRowActionsProps) {
-  return (
+
+  const { t } = useLanguage();  return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open agent actions"
+        aria-label={t("Open agent actions")}
         data-testid={`agent-hub-actions-${agent.agent_id || agent.name}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -82,8 +85,8 @@ export const getAgentHubTableColumns = ({ onAgentClick }: AgentHubTableColumnsDe
   {
     id: "name",
     accessorKey: "name",
-    meta: { title: "Agent Name" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Agent Name" />,
+    meta: { title: t("Agent Name")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Agent Name")} />,
     size: 200,
     enableSorting: true,
     sortingFn: "alphanumeric",
@@ -94,8 +97,8 @@ export const getAgentHubTableColumns = ({ onAgentClick }: AgentHubTableColumnsDe
   {
     id: "description",
     accessorKey: "description",
-    meta: { title: "Description", className: "hidden md:table-cell" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Description" />,
+    meta: { title: t("Description"), className: "hidden md:table-cell" },
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Description")} />,
     size: 240,
     enableSorting: true,
     sortingFn: "alphanumeric",
@@ -108,8 +111,8 @@ export const getAgentHubTableColumns = ({ onAgentClick }: AgentHubTableColumnsDe
   {
     id: "version",
     accessorKey: "version",
-    meta: { title: "Version", skeleton: "badge", className: "hidden lg:table-cell" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Version" />,
+    meta: { title: t("Version"), skeleton: "badge", className: "hidden lg:table-cell" },
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Version")} />,
     size: 100,
     enableSorting: true,
     sortingFn: "alphanumeric",
@@ -122,8 +125,8 @@ export const getAgentHubTableColumns = ({ onAgentClick }: AgentHubTableColumnsDe
   {
     id: "protocolVersion",
     accessorKey: "protocolVersion",
-    meta: { title: "Protocol", className: "hidden lg:table-cell" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Protocol" />,
+    meta: { title: t("Protocol"), className: "hidden lg:table-cell" },
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Protocol")} />,
     size: 100,
     enableSorting: true,
     sortingFn: "alphanumeric",
@@ -131,7 +134,7 @@ export const getAgentHubTableColumns = ({ onAgentClick }: AgentHubTableColumnsDe
   },
   {
     id: "skills",
-    meta: { title: "Skills", skeleton: "chips" },
+    meta: { title: t("Skills"), skeleton: "chips" },
     header: "Skills",
     size: 180,
     enableSorting: false,
@@ -158,7 +161,7 @@ export const getAgentHubTableColumns = ({ onAgentClick }: AgentHubTableColumnsDe
   },
   {
     id: "capabilities",
-    meta: { title: "Capabilities", skeleton: "chips" },
+    meta: { title: t("Capabilities"), skeleton: "chips" },
     header: "Capabilities",
     size: 160,
     enableSorting: false,
@@ -182,7 +185,7 @@ export const getAgentHubTableColumns = ({ onAgentClick }: AgentHubTableColumnsDe
   },
   {
     id: "io_modes",
-    meta: { title: "I/O Modes", skeleton: "twoLine", className: "hidden xl:table-cell" },
+    meta: { title: t("I/O Modes"), skeleton: "twoLine", className: "hidden xl:table-cell" },
     header: "I/O Modes",
     size: 150,
     enableSorting: false,
@@ -192,10 +195,10 @@ export const getAgentHubTableColumns = ({ onAgentClick }: AgentHubTableColumnsDe
       return (
         <div className="flex flex-col gap-0.5 text-xs">
           <span>
-            <span className="font-medium">In:</span> {inputModes.join(", ") || "-"}
+            <span className="font-medium">{t("In:")}</span> {inputModes.join(", ") || "-"}
           </span>
           <span>
-            <span className="font-medium">Out:</span> {outputModes.join(", ") || "-"}
+            <span className="font-medium">{t("Out:")}</span> {outputModes.join(", ") || "-"}
           </span>
         </div>
       );
@@ -204,8 +207,8 @@ export const getAgentHubTableColumns = ({ onAgentClick }: AgentHubTableColumnsDe
   {
     id: "is_public",
     accessorKey: "is_public",
-    meta: { title: "Public", skeleton: "badge", className: "hidden md:table-cell" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Public" />,
+    meta: { title: t("Public"), skeleton: "badge", className: "hidden md:table-cell" },
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Public")} />,
     size: 100,
     enableSorting: true,
     sortingFn: (rowA, rowB) => {
@@ -221,7 +224,7 @@ export const getAgentHubTableColumns = ({ onAgentClick }: AgentHubTableColumnsDe
   {
     id: "actions",
     meta: { className: "text-right", headerClassName: "text-right" },
-    header: () => <span className="sr-only">Actions</span>,
+    header: () => <span className="sr-only">{t("Actions")}</span>,
     size: 64,
     enableSorting: false,
     enableHiding: false,

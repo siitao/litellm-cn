@@ -1,5 +1,6 @@
 import { Tag, Typography } from "antd";
 
+import { t } from "@/i18n";
 const { Text } = Typography;
 
 const DEFAULT_USER_ID = "default_user_id";
@@ -15,7 +16,7 @@ interface DefaultProxyAdminTagProps {
  */
 export default function DefaultProxyAdminTag({ userId }: DefaultProxyAdminTagProps) {
   if (userId === DEFAULT_USER_ID) {
-    return <Tag color="blue">Default Proxy Admin</Tag>;
+    return <Tag color="blue">{t("Default Proxy Admin")}</Tag>;
   }
 
   return <Text>{userId}</Text>;

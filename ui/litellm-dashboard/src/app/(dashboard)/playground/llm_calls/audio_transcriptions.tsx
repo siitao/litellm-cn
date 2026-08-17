@@ -2,6 +2,7 @@ import openai from "openai";
 import { getProxyBaseUrl } from "@/components/networking";
 import NotificationManager from "@/components/molecules/notifications_manager";
 
+import { t } from "@/i18n";
 export async function makeOpenAIAudioTranscriptionRequest(
   audioFile: File,
   updateUI: (transcription: string, model: string) => void,
@@ -50,7 +51,7 @@ export async function makeOpenAIAudioTranscriptionRequest(
       throw new Error("No transcription text in response");
     }
   } catch (error: any) {
-    console.error("Error making audio transcription request:", error);
+    console.error(t("Error making audio transcription request:"), error);
 
     if (signal?.aborted) {
     } else {

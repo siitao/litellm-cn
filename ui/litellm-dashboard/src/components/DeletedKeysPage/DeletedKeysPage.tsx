@@ -7,8 +7,10 @@ import { useDeletedKeys } from "@/app/(dashboard)/hooks/keys/useKeys";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
 import { DeletedKeysTable } from "./DeletedKeysTable/DeletedKeysTable";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 export default function DeletedKeysPage() {
-  const { premiumUser } = useAuthorized();
+
+  const { t } = useLanguage();  const { premiumUser } = useAuthorized();
   const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 50 });
 
   const { data: keysData, isLoading } = useDeletedKeys(pagination.pageIndex + 1, pagination.pageSize);
@@ -18,7 +20,7 @@ export default function DeletedKeysPage() {
       {!premiumUser && (
         <Alert>
           <Info />
-          <AlertTitle>Coming soon to Enterprise</AlertTitle>
+          <AlertTitle>{t("Coming soon to Enterprise")}</AlertTitle>
           <AlertDescription>
             Deleted key auditing is graduating from beta into our Enterprise audit &amp; compliance suite.
           </AlertDescription>

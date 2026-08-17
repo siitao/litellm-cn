@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { CHAT_ATTACHMENT_ACCEPT, validateChatAttachment } from "./uploadValidation";
 
+import { t } from "@/i18n";
 interface ChatImageUploadProps {
   chatUploadedImage: File | null;
   chatImagePreviewUrl: string | null;
@@ -55,7 +56,7 @@ const ChatImageUpload: React.FC<ChatImageUploadProps> = ({ chatUploadedImage, on
               variant="ghost"
               size="icon-sm"
               disabled={disabled}
-              aria-label="Attach image or PDF"
+              aria-label={t("Attach image or PDF")}
               className="text-gray-400 hover:text-gray-600"
               onClick={() => inputRef.current?.click()}
             />
@@ -63,7 +64,7 @@ const ChatImageUpload: React.FC<ChatImageUploadProps> = ({ chatUploadedImage, on
         >
           <Paperclip className="size-4" />
         </TooltipTrigger>
-        <TooltipContent>Attach image or PDF</TooltipContent>
+        <TooltipContent>{t("Attach image or PDF")}</TooltipContent>
       </Tooltip>
     </>
   );

@@ -14,6 +14,7 @@ import { AddFallbacksModal } from "./AddFallbacksModal";
 import { FallbackGroup } from "./FallbackGroupConfig";
 import { FallbackSelectionForm } from "./FallbackSelectionForm";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 export type FallbackEntry = { [modelName: string]: string[] };
 export type Fallbacks = FallbackEntry[];
 
@@ -24,7 +25,8 @@ interface AddFallbacksProps {
 }
 
 export default function AddFallbacks({ accessToken, value = [], onChange }: AddFallbacksProps) {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const { t } = useLanguage();  const [isModalVisible, setIsModalVisible] = useState(false);
   const [modelInfo, setModelInfo] = useState<ModelGroup[]>([]);
   const [modalKey, setModalKey] = useState(0); // Key to force remount of form when modal opens
   const [isSaving, setIsSaving] = useState(false);
@@ -56,7 +58,7 @@ export default function AddFallbacks({ accessToken, value = [], onChange }: AddF
         const uniqueModels = await fetchAvailableModels(accessToken);
         setModelInfo(uniqueModels);
       } catch (error) {
-        console.error("Error fetching model info for fallbacks:", error);
+        console.error(t("Error fetching model info for fallbacks:"), error);
       }
     };
     if (isModalVisible) {
@@ -108,7 +110,7 @@ export default function AddFallbacks({ accessToken, value = [], onChange }: AddF
         handleCancel();
       } catch (error) {
         // Error handling is done in handleFallbacksChange, so we don't need to show another notification here
-        console.error("Error saving fallbacks:", error);
+        console.error(t("Error saving fallbacks:"), error);
       } finally {
         setIsSaving(false);
       }
@@ -123,9 +125,7 @@ export default function AddFallbacks({ accessToken, value = [], onChange }: AddF
         className="mx-auto"
         onClick={() => setIsModalVisible(true)}
         icon={() => <span className="mr-1">+</span>}
-      >
-        Add Fallbacks
-      </TremorButton>
+      >{t("Add Fallbacks")}</TremorButton>
       <AddFallbacksModal open={isModalVisible} onCancel={handleCancel}>
         <FallbackSelectionForm
           key={modalKey}
@@ -138,9 +138,7 @@ export default function AddFallbacks({ accessToken, value = [], onChange }: AddF
         {/* Footer with Cancel and Save buttons */}
         {groups.length > 0 && (
           <div className="flex items-center justify-end space-x-3 pt-6 mt-6 border-t border-gray-100">
-            <Button type="default" onClick={handleCancel} disabled={isSaving}>
-              Cancel
-            </Button>
+            <Button type="default" onClick={handleCancel} disabled={isSaving}>{t("Cancel")}</Button>
             <Button
               type="default"
               onClick={handleSaveAll}

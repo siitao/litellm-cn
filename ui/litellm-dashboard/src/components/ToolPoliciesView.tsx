@@ -5,6 +5,7 @@ import useCan from "@/app/(dashboard)/hooks/useCan";
 import { ToolDetail } from "@/components/ToolDetail";
 import { ToolPoliciesPanel } from "@/components/ToolPolicies/ToolPoliciesPanel";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 type View = { type: "overview" } | { type: "detail"; toolName: string };
 
 interface ToolPoliciesViewProps {
@@ -12,7 +13,8 @@ interface ToolPoliciesViewProps {
 }
 
 export default function ToolPoliciesView({ accessToken }: ToolPoliciesViewProps) {
-  const canViewToolPolicies = useCan("viewToolPolicies");
+
+  const { t } = useLanguage();  const canViewToolPolicies = useCan("viewToolPolicies");
   const [view, setView] = useState<View>({ type: "overview" });
 
   const handleSelectTool = (toolName: string) => {
@@ -26,8 +28,8 @@ export default function ToolPoliciesView({ accessToken }: ToolPoliciesViewProps)
   if (!canViewToolPolicies) {
     return (
       <div className="p-6 w-full min-w-0 flex-1">
-        <h1 className="text-2xl font-semibold text-gray-900 mb-2">Tool Policies</h1>
-        <p className="text-sm text-gray-500">Tool Policies is only available to admin users.</p>
+        <h1 className="text-2xl font-semibold text-gray-900 mb-2">{t("Tool Policies")}</h1>
+        <p className="text-sm text-gray-500">{t("Tool Policies is only available to admin users.")}</p>
       </div>
     );
   }

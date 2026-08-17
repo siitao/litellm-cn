@@ -12,6 +12,7 @@ import ExportTypeSelector from "./ExportTypeSelector";
 import type { EntityUsageExportModalProps, ExportFormat, ExportScope } from "./types";
 import { handleExportCSV, handleExportJSON } from "./utils";
 
+import { t } from "@/i18n";
 const EntityUsageExportModal: React.FC<EntityUsageExportModalProps> = ({
   isOpen,
   onClose,
@@ -44,7 +45,7 @@ const EntityUsageExportModal: React.FC<EntityUsageExportModalProps> = ({
       }
       onClose();
     } catch (error) {
-      console.error("Error exporting data:", error);
+      console.error(t("Error exporting data:"), error);
       NotificationsManager.fromBackend("Failed to export data");
     } finally {
       setIsExporting(false);
@@ -84,9 +85,7 @@ const EntityUsageExportModal: React.FC<EntityUsageExportModalProps> = ({
               </>
             ) : (
               <>
-                <Button variant="outline" onClick={onClose} disabled={isExporting}>
-                  Cancel
-                </Button>
+                <Button variant="outline" onClick={onClose} disabled={isExporting}>{t("Cancel")}</Button>
                 <Button onClick={() => handleExport()} disabled={isExporting}>
                   {isExporting && <Loader2 className="animate-spin" />}
                   {isExporting ? "Exporting..." : `Export ${exportFormat.toUpperCase()}`}

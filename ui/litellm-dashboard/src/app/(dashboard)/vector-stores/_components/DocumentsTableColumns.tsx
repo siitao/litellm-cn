@@ -15,11 +15,12 @@ import { DocumentUpload } from "@/components/vector_store_management/types";
 import { cn } from "@/lib/cva.config";
 import { copyToClipboard } from "@/utils/dataUtils";
 
+import { t } from "@/i18n";
 const STATUS_CONFIG: Record<DocumentUpload["status"], { tone: StatusTone; label: string }> = {
-  uploading: { tone: "info", label: "Uploading" },
-  done: { tone: "success", label: "Ready" },
-  error: { tone: "error", label: "Error" },
-  removed: { tone: "neutral", label: "Removed" },
+  uploading: { tone: "info", label: t("Uploading")},
+  done: { tone: "success", label: t("Ready")},
+  error: { tone: "error", label: t("Error")},
+  removed: { tone: "neutral", label: t("Removed")},
 };
 
 function formatFileSize(bytes?: number): string {
@@ -33,7 +34,7 @@ function DocumentRowActions({ document, onRemove }: { document: DocumentUpload; 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open document actions"
+        aria-label={t("Open document actions")}
         data-testid={`document-actions-${document.uid}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -68,7 +69,7 @@ export const getDocumentsTableColumns = ({ onRemove }: DocumentsTableColumnsDeps
   {
     id: "name",
     accessorKey: "name",
-    meta: { title: "Name" },
+    meta: { title: t("Name")},
     header: "Name",
     enableSorting: false,
     cell: ({ row }) => (
@@ -85,7 +86,7 @@ export const getDocumentsTableColumns = ({ onRemove }: DocumentsTableColumnsDeps
   {
     id: "status",
     accessorKey: "status",
-    meta: { title: "Status", skeleton: "badge" },
+    meta: { title: t("Status"), skeleton: "badge" },
     header: "Status",
     size: 150,
     enableSorting: false,
@@ -97,7 +98,7 @@ export const getDocumentsTableColumns = ({ onRemove }: DocumentsTableColumnsDeps
   {
     id: "actions",
     meta: { className: "text-right", headerClassName: "text-right" },
-    header: () => <span className="sr-only">Actions</span>,
+    header: () => <span className="sr-only">{t("Actions")}</span>,
     size: 64,
     enableSorting: false,
     enableHiding: false,

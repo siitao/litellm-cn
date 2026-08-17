@@ -8,6 +8,7 @@ import { AutoRouterRoutingTestResult, testAutoRouterRouting } from "../networkin
 import { ComplexityRouterConfigPayload } from "./build_complexity_router_config";
 import { buildAutoRouterRoutingTestRequest } from "./build_auto_router_routing_test_request";
 
+import { t } from "@/i18n";
 interface AutoRouterRoutingTestProps {
   accessToken: string;
   config: ComplexityRouterConfigPayload;
@@ -54,7 +55,7 @@ const AutoRouterRoutingTest: React.FC<AutoRouterRoutingTestProps> = ({
       <Textarea
         value={prompt}
         onChange={(event) => setPrompt(event.target.value)}
-        placeholder="Paste a prompt an end user would send"
+        placeholder={t("Paste a prompt an end user would send")}
         rows={4}
         data-testid="auto-router-routing-test-prompt"
       />
@@ -74,7 +75,7 @@ const AutoRouterRoutingTest: React.FC<AutoRouterRoutingTestProps> = ({
           className="rounded-md border border-destructive/40 bg-destructive/10 p-3 text-sm text-destructive"
           data-testid="auto-router-routing-test-error"
         >
-          <p className="font-medium">Could not route this prompt</p>
+          <p className="font-medium">{t("Could not route this prompt")}</p>
           <p>{state.error}</p>
         </div>
       )}
@@ -82,7 +83,7 @@ const AutoRouterRoutingTest: React.FC<AutoRouterRoutingTestProps> = ({
       {state.status === "done" && (
         <div data-testid="auto-router-routing-test-result">
           <div className="flex items-center gap-2 py-2 text-sm">
-            <span className="text-muted-foreground">Routed to</span>
+            <span className="text-muted-foreground">{t("Routed to")}</span>
             <Badge variant="secondary" data-testid="auto-router-routing-test-routed-model">
               {state.result.routed_model}
             </Badge>

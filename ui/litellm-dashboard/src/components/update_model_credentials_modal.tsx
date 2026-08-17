@@ -3,6 +3,7 @@ import { useState } from "react";
 import { modelPatchUpdateCall } from "./networking";
 import NotificationsManager from "./molecules/notifications_manager";
 
+import { t } from "@/i18n";
 const { Text } = Typography;
 
 interface UpdateModelCredentialsModalProps {
@@ -41,12 +42,12 @@ export default function UpdateModelCredentialsModal({
         { litellm_params: { api_key: apiKey }, model_info: { id: modelId } },
         modelId,
       );
-      NotificationsManager.success("API key updated");
+      NotificationsManager.success(t("API key updated"));
       form.resetFields();
       onUpdated();
       onCancel();
     } catch (error) {
-      console.error("Error updating API key:", error);
+      console.error(t("Error updating API key:"), error);
       NotificationsManager.fromBackend("Failed to update API key");
     } finally {
       setIsSaving(false);
@@ -70,12 +71,8 @@ export default function UpdateModelCredentialsModal({
           <Input.Password placeholder="Enter the new API key" autoComplete="new-password" />
         </Form.Item>
         <div className="flex justify-end items-center mt-4">
-          <Button onClick={close} style={{ marginRight: 10 }}>
-            Cancel
-          </Button>
-          <Button type="primary" htmlType="submit" loading={isSaving}>
-            Update API Key
-          </Button>
+          <Button onClick={close} style={{ marginRight: 10 }}>{t("Cancel")}</Button>
+          <Button type="primary" htmlType="submit" loading={isSaving}>{t("Update API Key")}</Button>
         </div>
       </Form>
     </Modal>

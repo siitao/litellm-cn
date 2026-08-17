@@ -2,6 +2,7 @@ import openai from "openai";
 import { getProxyBaseUrl } from "@/components/networking";
 import NotificationManager from "@/components/molecules/notifications_manager";
 
+import { t } from "@/i18n";
 export async function makeOpenAIImageEditsRequest(
   imageFiles: File | File[],
   prompt: string,
@@ -66,7 +67,7 @@ export async function makeOpenAIImageEditsRequest(
       NotificationManager.success(`Successfully processed ${results.length} images`);
     }
   } catch (error: any) {
-    console.error("Error making image edit request:", error);
+    console.error(t("Error making image edit request:"), error);
 
     if (signal?.aborted) {
     } else {

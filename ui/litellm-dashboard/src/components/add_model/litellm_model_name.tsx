@@ -4,6 +4,7 @@ import { TextInput, Text } from "@tremor/react";
 import { Row, Col } from "antd";
 import { Providers } from "../provider_info_helpers";
 
+import { t } from "@/i18n";
 interface LiteLLMModelNameFieldProps {
   selectedProvider: Providers;
   providerModels: string[];
@@ -101,8 +102,8 @@ const LiteLLMModelNameField: React.FC<LiteLLMModelNameFieldProps> = ({
   return (
     <>
       <Form.Item
-        label="LiteLLM Model Name(s)"
-        tooltip="The model name LiteLLM will send to the LLM API"
+        label={t("LiteLLM Model Name(s)")}
+        tooltip={t("The model name LiteLLM will send to the LLM API")}
         className="mb-0"
       >
         <Form.Item
@@ -130,13 +131,13 @@ const LiteLLMModelNameField: React.FC<LiteLLMModelNameFieldProps> = ({
               mode="multiple"
               allowClear
               showSearch
-              placeholder="Select models"
+              placeholder={t("Select models")}
               onChange={handleModelChange}
               optionFilterProp="children"
               filterOption={(input, option) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase())}
               options={[
                 {
-                  label: "Custom Model Name (Enter below)",
+                  label: t("Custom Model Name (Enter below)"),
                   value: "custom",
                 },
                 {

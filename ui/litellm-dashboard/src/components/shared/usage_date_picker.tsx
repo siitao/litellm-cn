@@ -1,6 +1,7 @@
 import React, { useCallback, useState, useRef } from "react";
 import { DateRangePicker, DateRangePickerValue, Text } from "@tremor/react";
 
+import { t } from "@/i18n";
 interface UsageDatePickerProps {
   value: DateRangePickerValue;
   onValueChange: (value: DateRangePickerValue) => void;
@@ -119,7 +120,7 @@ const UsageDatePicker: React.FC<UsageDatePickerProps> = ({
             enableSelect={true}
             value={value}
             onValueChange={handleDateChange} // Only triggers on actual selection
-            placeholder="Select date range"
+            placeholder={t("Select date range")}
             enableClear={false}
             style={{ zIndex: 100 }}
           />
@@ -139,7 +140,7 @@ const UsageDatePicker: React.FC<UsageDatePickerProps> = ({
               <div className="w-3 h-3 bg-green-500 text-white rounded-full flex items-center justify-center text-xs">
                 ✓
               </div>
-              <span className="text-xs">Selected</span>
+              <span className="text-xs">{t("Selected")}</span>
             </div>
           </div>
         )}

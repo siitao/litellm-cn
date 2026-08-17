@@ -5,6 +5,7 @@
 import { Typography, Table } from "antd";
 import { ParsedTool, ParameterRow } from "./types";
 
+import { t } from "@/i18n";
 const { Text } = Typography;
 
 interface FormattedToolViewProps {
@@ -25,7 +26,7 @@ export function FormattedToolView({ tool }: FormattedToolViewProps) {
 
   const columns = [
     {
-      title: "Parameter",
+      title: t("Parameter"),
       dataIndex: "name",
       key: "name",
       render: (name: string, record: ParameterRow) => (
@@ -36,7 +37,7 @@ export function FormattedToolView({ tool }: FormattedToolViewProps) {
       ),
     },
     {
-      title: "Type",
+      title: t("Type"),
       dataIndex: "type",
       key: "type",
       render: (type: string) => (
@@ -46,7 +47,7 @@ export function FormattedToolView({ tool }: FormattedToolViewProps) {
       ),
     },
     {
-      title: "Description",
+      title: t("Description"),
       dataIndex: "description",
       key: "description",
       render: (desc: string) => <Text type="secondary">{desc}</Text>,
@@ -79,9 +80,7 @@ export function FormattedToolView({ tool }: FormattedToolViewProps) {
               display: "block",
               marginBottom: 8,
             }}
-          >
-            Parameters
-          </Text>
+          >{t("Parameters")}</Text>
           <Table dataSource={parameterRows} columns={columns} pagination={false} size="small" bordered />
         </div>
       )}
@@ -96,9 +95,7 @@ export function FormattedToolView({ tool }: FormattedToolViewProps) {
               display: "block",
               marginBottom: 8,
             }}
-          >
-            Called With
-          </Text>
+          >{t("Called With")}</Text>
           <div
             style={{
               background: "#f6ffed",

@@ -5,6 +5,7 @@ import { MCPServer, MCPUserEnvVarsStatus } from "@/components/mcp_tools/types";
 import { getMCPUserEnvVars, storeMCPUserEnvVars } from "@/components/networking";
 import NotificationsManager from "@/components/molecules/notifications_manager";
 
+import { t } from "@/i18n";
 const { Text, Title } = Typography;
 
 interface UserEnvVarsModalProps {
@@ -38,7 +39,7 @@ const UserEnvVarsModal: React.FC<UserEnvVarsModalProps> = ({ server, open, acces
   const saveMutation = useMutation({
     mutationFn: (values: Record<string, string>) => storeMCPUserEnvVars(accessToken!, server!.server_id, values),
     onSuccess: (saved) => {
-      NotificationsManager.success("Credentials saved");
+      NotificationsManager.success(t("Credentials saved"));
       onSaved?.(saved);
       onClose();
     },
@@ -73,10 +74,8 @@ const UserEnvVarsModal: React.FC<UserEnvVarsModalProps> = ({ server, open, acces
       title={
         <div>
           <div className="flex items-center gap-2">
-            <Title level={5} style={{ margin: 0 }}>
-              Set your credentials
-            </Title>
-            <Tag color="blue">Per-user</Tag>
+            <Title level={5} style={{ margin: 0 }}>{t("Set your credentials")}</Title>
+            <Tag color="blue">{t("Per-user")}</Tag>
           </div>
           <Text type="secondary" className="text-xs">
             {displayName}
@@ -90,9 +89,9 @@ const UserEnvVarsModal: React.FC<UserEnvVarsModalProps> = ({ server, open, acces
             <Spin />
           </div>
         ) : isError ? (
-          <Alert type="error" showIcon message="Failed to load env vars" />
+          <Alert type="error" showIcon message={t("Failed to load env vars")} />
         ) : required.length === 0 ? (
-          <Alert type="info" showIcon message="No per-user fields configured for this server." />
+          <Alert type="info" showIcon message={t("No per-user fields configured for this server.")} />
         ) : (
           <>
             <Text className="text-sm text-gray-600 block">
@@ -108,7 +107,7 @@ const UserEnvVarsModal: React.FC<UserEnvVarsModalProps> = ({ server, open, acces
                   label={
                     <span className="flex items-center gap-2">
                       <span className="font-mono text-sm font-semibold">{spec.name}</span>
-                      {spec.is_set && <Tag color="green">Set</Tag>}
+                      {spec.is_set && <Tag color="green">{t("Set")}</Tag>}
                     </span>
                   }
                   extra={spec.description || undefined}
@@ -123,12 +122,8 @@ const UserEnvVarsModal: React.FC<UserEnvVarsModalProps> = ({ server, open, acces
                 </Form.Item>
               ))}
               <div className="flex items-center justify-end gap-2 pt-2 border-t border-gray-100">
-                <Button onClick={onClose} disabled={isSaving}>
-                  Cancel
-                </Button>
-                <Button type="primary" htmlType="submit" loading={isSaving}>
-                  Save Credentials
-                </Button>
+                <Button onClick={onClose} disabled={isSaving}>{t("Cancel")}</Button>
+                <Button type="primary" htmlType="submit" loading={isSaving}>{t("Save Credentials")}</Button>
               </div>
             </Form>
           </>

@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import NotificationsManager from "../molecules/notifications_manager";
 import { getPermissionInfo } from "./permission_definitions";
 
+import { t } from "@/i18n";
 interface MemberPermissionsProps {
   teamId: string;
   accessToken: string | null;
@@ -31,7 +32,7 @@ const MemberPermissions: React.FC<MemberPermissionsProps> = ({ teamId, accessTok
       setHasChanges(false);
     } catch (error) {
       NotificationsManager.fromBackend("Failed to load permissions");
-      console.error("Error fetching permissions:", error);
+      console.error(t("Error fetching permissions:"), error);
     } finally {
       setLoading(false);
     }
@@ -54,11 +55,11 @@ const MemberPermissions: React.FC<MemberPermissionsProps> = ({ teamId, accessTok
       if (!accessToken) return;
       setSaving(true);
       await teamPermissionsUpdateCall(accessToken, teamId, selectedPermissions);
-      NotificationsManager.success("Permissions updated successfully");
+      NotificationsManager.success(t("Permissions updated successfully"));
       setHasChanges(false);
     } catch (error) {
       NotificationsManager.fromBackend("Failed to update permissions");
-      console.error("Error updating permissions:", error);
+      console.error(t("Error updating permissions:"), error);
     } finally {
       setSaving(false);
     }
@@ -77,32 +78,26 @@ const MemberPermissions: React.FC<MemberPermissionsProps> = ({ teamId, accessTok
   return (
     <Card className="bg-white shadow-md rounded-md p-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-4 mb-6">
-        <Title className="mb-2 sm:mb-0">Member Permissions</Title>
+        <Title className="mb-2 sm:mb-0">{t("Member Permissions")}</Title>
         {canEditTeam && hasChanges && (
           <div className="flex gap-3">
-            <Button icon={<ReloadOutlined />} onClick={handleReset}>
-              Reset
-            </Button>
-            <Button onClick={handleSave} loading={saving} type="primary" icon={<SaveOutlined />}>
-              Save Changes
-            </Button>
+            <Button icon={<ReloadOutlined />} onClick={handleReset}>{t("Reset")}</Button>
+            <Button onClick={handleSave} loading={saving} type="primary" icon={<SaveOutlined />}>{t("Save Changes")}</Button>
           </div>
         )}
       </div>
 
-      <Text className="mb-6 text-gray-600">Control what team members can do when they are not team admins.</Text>
+      <Text className="mb-6 text-gray-600">{t("Control what team members can do when they are not team admins.")}</Text>
 
       {hasPermissions ? (
         <div className="overflow-x-auto">
           <Table className=" min-w-full">
             <TableHead>
               <TableRow>
-                <TableHeaderCell>Method</TableHeaderCell>
-                <TableHeaderCell>Endpoint</TableHeaderCell>
-                <TableHeaderCell>Description</TableHeaderCell>
-                <TableHeaderCell className="sticky right-0 bg-white shadow-[-4px_0_4px_-4px_rgba(0,0,0,0.1)] text-center">
-                  Allow Access
-                </TableHeaderCell>
+                <TableHeaderCell>{t("Method")}</TableHeaderCell>
+                <TableHeaderCell>{t("Endpoint")}</TableHeaderCell>
+                <TableHeaderCell>{t("Description")}</TableHeaderCell>
+                <TableHeaderCell className="sticky right-0 bg-white shadow-[-4px_0_4px_-4px_rgba(0,0,0,0.1)] text-center">{t("Allow Access")}</TableHeaderCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -138,7 +133,7 @@ const MemberPermissions: React.FC<MemberPermissionsProps> = ({ teamId, accessTok
         </div>
       ) : (
         <div className="py-12">
-          <Empty description="No permissions available" />
+          <Empty description={t("No permissions available")} />
         </div>
       )}
     </Card>

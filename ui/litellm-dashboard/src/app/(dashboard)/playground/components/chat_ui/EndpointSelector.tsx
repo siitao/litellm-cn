@@ -2,6 +2,7 @@ import { SearchSelect } from "@/components/shared/SearchSelect";
 import React from "react";
 import { ENDPOINT_OPTIONS } from "./chatConstants";
 
+import { t } from "@/i18n";
 interface EndpointSelectorProps {
   endpointType: string; // Accept string to avoid type conflicts
   onEndpointChange: (value: string) => void;
@@ -15,7 +16,7 @@ const EndpointSelector: React.FC<EndpointSelectorProps> = ({ endpointType, onEnd
         value={endpointType}
         onValueChange={onEndpointChange}
         options={ENDPOINT_OPTIONS}
-        placeholder="Select an endpoint"
+        placeholder={t("Select an endpoint")}
       />
     </div>
   );

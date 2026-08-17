@@ -11,6 +11,7 @@ import { CollapsibleMessage } from "./CollapsibleMessage";
 import { HistoryTree } from "./HistoryTree";
 import { SimpleMessageBlock } from "./SimpleMessageBlock";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface InputCardProps {
   messages: ParsedMessage[];
   promptTokens?: number;
@@ -18,7 +19,8 @@ interface InputCardProps {
 }
 
 export function InputCard({ messages, promptTokens, inputCost }: InputCardProps) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const { t } = useLanguage();  const [isCollapsed, setIsCollapsed] = useState(false);
 
   if (messages.length === 0) {
     return null;
@@ -33,7 +35,7 @@ export function InputCard({ messages, promptTokens, inputCost }: InputCardProps)
   const handleCopy = () => {
     const content = lastMessage?.content || "";
     navigator.clipboard.writeText(content);
-    MessageManager.success("Input copied");
+    MessageManager.success(t("Input copied"));
   };
 
   return (

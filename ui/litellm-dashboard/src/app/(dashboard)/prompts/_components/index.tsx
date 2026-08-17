@@ -20,13 +20,14 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { t } from "@/i18n";
 
 const ALL_ENVIRONMENTS_LABEL = "All Environments";
 
 const ENVIRONMENT_OPTIONS = [
-  { label: "Development", value: "development" },
-  { label: "Staging", value: "staging" },
-  { label: "Production", value: "production" },
+  { label: t("Development"), value: "development" },
+  { label: t("Staging"), value: "staging" },
+  { label: t("Production"), value: "production" },
 ];
 
 // SelectValue falls back to the raw value unless the root can map it to a label.
@@ -63,7 +64,7 @@ const PromptsPanel: React.FC<PromptsProps> = ({ accessToken, userRole }) => {
       const response: ListPromptsResponse = await getPromptsList(accessToken, selectedEnvironment);
       setPromptsList(response.prompts);
     } catch (error) {
-      console.error("Error fetching prompts:", error);
+      console.error(t("Error fetching prompts:"), error);
     } finally {
       setIsLoading(false);
     }
@@ -126,7 +127,7 @@ const PromptsPanel: React.FC<PromptsProps> = ({ accessToken, userRole }) => {
       NotificationsManager.success(`Prompt "${promptToDelete.name}" deleted successfully`);
       fetchPrompts(); // Refresh the list
     } catch (error) {
-      console.error("Error deleting prompt:", error);
+      console.error(t("Error deleting prompt:"), error);
       NotificationsManager.fromBackend("Failed to delete prompt");
     } finally {
       setIsDeleting(false);
@@ -220,15 +221,12 @@ const PromptsPanel: React.FC<PromptsProps> = ({ accessToken, userRole }) => {
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>{t("prompts.delete_title")}</AlertDialogTitle>
-              <AlertDialogDescription>
-                Are you sure you want to delete prompt: {promptToDelete.name} ? This action cannot be undone.
+              <AlertDialogDescription>{t("Are you sure you want to delete prompt:")} {promptToDelete.name} ? This action cannot be undone.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
-              <Button variant="destructive" onClick={handleDeleteConfirm} disabled={isDeleting}>
-                Delete
-              </Button>
+              <AlertDialogCancel disabled={isDeleting}>{t("Cancel")}</AlertDialogCancel>
+              <Button variant="destructive" onClick={handleDeleteConfirm} disabled={isDeleting}>{t("Delete")}</Button>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

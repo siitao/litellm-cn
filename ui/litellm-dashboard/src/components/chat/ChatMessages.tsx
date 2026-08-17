@@ -14,6 +14,7 @@ import MCPEventsDisplay from "@/components/chat_ui/MCPEventsDisplay";
 import ResponseMetrics from "@/components/chat_ui/ResponseMetrics";
 import { ChatMessage } from "./types";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 const REDACTED_KEY_PATTERNS = /token|key|secret|password|auth/i;
 
 function redactSensitiveValues(obj: Record<string, unknown>): Record<string, unknown> {
@@ -74,7 +75,8 @@ interface UserBubbleProps {
 }
 
 function UserBubble({ message, onEdit, isStreaming }: UserBubbleProps) {
-  const [hovered, setHovered] = useState(false);
+
+  const { t } = useLanguage();  const [hovered, setHovered] = useState(false);
   const [editing, setEditing] = useState(false);
   const [editValue, setEditValue] = useState(message.content);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -131,12 +133,8 @@ function UserBubble({ message, onEdit, isStreaming }: UserBubbleProps) {
                 setEditValue(message.content);
                 setEditing(false);
               }}
-            >
-              Cancel
-            </Button>
-            <Button size="sm" onClick={handleSave} disabled={!editValue.trim()}>
-              Save & Send
-            </Button>
+            >{t("Cancel")}</Button>
+            <Button size="sm" onClick={handleSave} disabled={!editValue.trim()}>{t("Save & Send")}</Button>
           </div>
         </div>
       </div>
@@ -169,7 +167,7 @@ function UserBubble({ message, onEdit, isStreaming }: UserBubbleProps) {
                 }
               />
               <TooltipContent>
-                <p>Edit message</p>
+                <p>{t("Edit message")}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -346,7 +344,8 @@ interface ToolCardProps {
 }
 
 function ToolCard({ message }: ToolCardProps) {
-  const redactedArgs = message.toolArgs ? redactSensitiveValues(message.toolArgs) : undefined;
+
+  const { t } = useLanguage();  const redactedArgs = message.toolArgs ? redactSensitiveValues(message.toolArgs) : undefined;
   const [open, setOpen] = useState(false);
 
   return (
@@ -359,9 +358,7 @@ function ToolCard({ message }: ToolCardProps) {
         <CollapsibleContent className="border border-t-0 rounded-b-lg px-3 py-2 bg-muted/30">
           {redactedArgs !== undefined && (
             <div className={message.toolResult ? "mb-3" : ""}>
-              <div className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-                Arguments
-              </div>
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">{t("Arguments")}</div>
               <pre className="m-0 p-2 bg-muted rounded-md text-xs font-mono whitespace-pre-wrap break-words text-foreground">
                 {JSON.stringify(redactedArgs, null, 2)}
               </pre>
@@ -369,9 +366,7 @@ function ToolCard({ message }: ToolCardProps) {
           )}
           {message.toolResult && (
             <div>
-              <div className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-                Result
-              </div>
+              <div className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">{t("Result")}</div>
               <div className="text-[13px] text-foreground whitespace-pre-wrap break-words font-mono">
                 {message.toolResult}
               </div>

@@ -71,6 +71,7 @@ import NumericalInput from "./shared/numerical_input";
 import { Tag } from "./tag_management/types";
 import { getDisplayModelName } from "./view_model/model_name_display";
 
+import { t } from "@/i18n";
 interface ModelInfoViewProps {
   modelId: string;
   onClose: () => void;
@@ -97,23 +98,23 @@ interface PtuEditField {
 const PTU_EDIT_FIELDS: PtuEditField[] = [
   {
     name: PTU_COUNT_FIELD,
-    label: "PTU Count",
+    label: t("PTU Count"),
     input: "number",
-    placeholder: "e.g. 15",
+    placeholder: t("e.g. 15"),
     isCount: true,
     pairedWith: PTU_RATE_FIELD,
   },
   {
     name: PTU_RATE_FIELD,
-    label: "Cost per PTU / Hour (USD)",
+    label: t("Cost per PTU / Hour (USD)"),
     input: "number",
-    placeholder: "e.g. 2.00",
+    placeholder: t("e.g. 2.00"),
     isRate: true,
     pairedWith: PTU_COUNT_FIELD,
   },
   {
     name: PTU_START_FIELD,
-    label: "PTU Effective From (UTC)",
+    label: t("PTU Effective From (UTC)"),
     input: "datetime",
     isStart: true,
     windowPeer: PTU_END_FIELD,
@@ -121,7 +122,7 @@ const PTU_EDIT_FIELDS: PtuEditField[] = [
   },
   {
     name: PTU_END_FIELD,
-    label: "PTU Effective To (UTC)",
+    label: t("PTU Effective To (UTC)"),
     input: "datetime",
     windowPeer: PTU_START_FIELD,
     bound: "end",
@@ -332,7 +333,7 @@ export default function ModelInfoView({
         const guardrailNames = response.guardrails.map((g: { guardrail_name: string }) => g.guardrail_name);
         setGuardrailsList(guardrailNames);
       } catch (error) {
-        console.error("Failed to fetch guardrails:", error);
+        console.error(t("Failed to fetch guardrails:"), error);
       }
     };
 
@@ -342,7 +343,7 @@ export default function ModelInfoView({
         const response = await tagListCall(accessToken);
         setTagsList(response);
       } catch (error) {
-        console.error("Failed to fetch tags:", error);
+        console.error(t("Failed to fetch tags:"), error);
       }
     };
 
@@ -352,7 +353,7 @@ export default function ModelInfoView({
         const response = await credentialListCall(accessToken);
         setCredentialsList(response.credentials || []);
       } catch (error) {
-        console.error("Failed to fetch credentials:", error);
+        console.error(t("Failed to fetch credentials:"), error);
       }
     };
 
@@ -372,9 +373,9 @@ export default function ModelInfoView({
         custom_llm_provider: localModelData.litellm_params?.custom_llm_provider,
       },
     };
-    NotificationsManager.info("Storing credential..");
+    NotificationsManager.info(t("Storing credential.."));
     let credentialResponse = await credentialCreateCall(accessToken, credentialItem);
-    NotificationsManager.success("Credential stored successfully");
+    NotificationsManager.success(t("Credential stored successfully"));
   };
 
   const handleModelUpdate = async (values: any) => {
@@ -532,11 +533,11 @@ export default function ModelInfoView({
         onModelUpdate(updatedModelData);
       }
 
-      NotificationsManager.success("Model settings updated successfully");
+      NotificationsManager.success(t("Model settings updated successfully"));
       setIsDirty(false);
       setIsEditing(false);
     } catch (error) {
-      console.error("Error updating model:", error);
+      console.error(t("Error updating model:"), error);
       NotificationsManager.fromBackend("Failed to update model settings");
     } finally {
       setIsSaving(false);
@@ -547,9 +548,7 @@ export default function ModelInfoView({
   if (isLoadingModel) {
     return (
       <div className="p-4">
-        <TremorButton icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">
-          Back to Models
-        </TremorButton>
+        <TremorButton icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">{t("Back to Models")}</TremorButton>
         <Text>Loading...</Text>
       </div>
     );
@@ -559,10 +558,8 @@ export default function ModelInfoView({
   if (!modelData) {
     return (
       <div className="p-4">
-        <TremorButton icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">
-          Back to Models
-        </TremorButton>
-        <Text>Model not found</Text>
+        <TremorButton icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">{t("Back to Models")}</TremorButton>
+        <Text>{t("Model not found")}</Text>
       </div>
     );
   }
@@ -572,7 +569,7 @@ export default function ModelInfoView({
     if (isComplexityRouterModel) {
       const targets = buildComplexityRouterTestTargets(localModelData ?? modelData);
       if (targets.length === 0) {
-        NotificationsManager.warning("No complexity tiers are configured yet, so there is nothing to test.");
+        NotificationsManager.warning(t("No complexity tiers are configured yet, so there is nothing to test."));
         return;
       }
       setAutoRouterTestTargets(targets);
@@ -602,15 +599,15 @@ export default function ModelInfoView({
       );
 
       if (response.status === "success") {
-        NotificationsManager.success("Connection test successful!");
+        NotificationsManager.success(t("Connection test successful!"));
       } else {
         throw new Error(response?.result?.error || response?.message || "Unknown error");
       }
     } catch (error) {
       if (error instanceof Error) {
-        NotificationsManager.error("Error testing connection: " + truncateString(error.message, 100));
+        NotificationsManager.error(t("Error testing connection: ") + truncateString(error.message, 100));
       } else {
-        NotificationsManager.error("Error testing connection: " + String(error));
+        NotificationsManager.error(t("Error testing connection: ") + String(error));
       }
     }
   };
@@ -620,7 +617,7 @@ export default function ModelInfoView({
       setDeleteLoading(true);
       if (!accessToken) return;
       await modelDeleteCall(accessToken, modelId);
-      NotificationsManager.success("Model deleted successfully");
+      NotificationsManager.success(t("Model deleted successfully"));
 
       if (onModelUpdate) {
         onModelUpdate({
@@ -631,7 +628,7 @@ export default function ModelInfoView({
 
       onClose();
     } catch (error) {
-      console.error("Error deleting the model:", error);
+      console.error(t("Error deleting the model:"), error);
       NotificationsManager.fromBackend("Failed to delete model");
     } finally {
       setDeleteLoading(false);
@@ -661,10 +658,8 @@ export default function ModelInfoView({
     <div className="p-4">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <TremorButton icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">
-            Back to Models
-          </TremorButton>
-          <Title>Public Model Name: {getDisplayModelName(modelData)}</Title>
+          <TremorButton icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">{t("Back to Models")}</TremorButton>
+          <Title>{t("Public Model Name:")} {getDisplayModelName(modelData)}</Title>
           <div className="flex items-center cursor-pointer">
             <Text className="text-gray-500 font-mono">{modelData.model_info.id}</Text>
             <Button
@@ -687,9 +682,7 @@ export default function ModelInfoView({
               onClick={handleTestConnection}
               className="flex items-center gap-2"
               data-testid="test-connection-button"
-            >
-              Test Connection
-            </Button>
+            >{t("Test Connection")}</Button>
           )}
 
           {!isAnyAutoRouter && (
@@ -700,9 +693,7 @@ export default function ModelInfoView({
                 className="flex items-center"
                 disabled={!canEditModel}
                 data-testid="update-api-key-button"
-              >
-                Update API Key
-              </Button>
+              >{t("Update API Key")}</Button>
 
               <Button
                 icon={<KeyIcon className="h-4 w-4" />}
@@ -710,9 +701,7 @@ export default function ModelInfoView({
                 className="flex items-center"
                 disabled={!isAdmin}
                 data-testid="reuse-credentials-button"
-              >
-                Re-use Credentials
-              </Button>
+              >{t("Re-use Credentials")}</Button>
             </>
           )}
           <Button
@@ -730,8 +719,8 @@ export default function ModelInfoView({
 
       <TabGroup>
         <TabList className="mb-6">
-          <Tab>Overview</Tab>
-          <Tab>Raw JSON</Tab>
+          <Tab>{t("Overview")}</Tab>
+          <Tab>{t("Raw JSON")}</Tab>
         </TabList>
 
         <TabPanels>
@@ -739,14 +728,14 @@ export default function ModelInfoView({
             {/* Overview Grid */}
             <Grid numItems={1} numItemsSm={2} numItemsLg={3} className="gap-6 mb-6">
               <Card>
-                <Text>Provider</Text>
+                <Text>{t("Provider")}</Text>
                 <div className="mt-2 flex items-center space-x-2">
                   {modelData.provider && <Logo provider={modelData.provider} className="w-4 h-4" />}
                   <Title>{modelData.provider || "Not Set"}</Title>
                 </div>
               </Card>
               <Card>
-                <Text>LiteLLM Model</Text>
+                <Text>{t("LiteLLM Model")}</Text>
                 <div className="mt-2 overflow-hidden">
                   <Tooltip title={modelData.litellm_model_name || "Not Set"}>
                     <div className="break-all text-sm font-medium leading-relaxed cursor-pointer">
@@ -756,10 +745,10 @@ export default function ModelInfoView({
                 </div>
               </Card>
               <Card>
-                <Text>Pricing</Text>
+                <Text>{t("Pricing")}</Text>
                 <div className="mt-2">
-                  <Text>Input: ${modelData.input_cost}/1M tokens</Text>
-                  <Text>Output: ${modelData.output_cost}/1M tokens</Text>
+                  <Text>{t("Input: $")}{modelData.input_cost}/1M tokens</Text>
+                  <Text>{t("Output: $")}{modelData.output_cost}/1M tokens</Text>
                 </div>
               </Card>
             </Grid>
@@ -774,8 +763,7 @@ export default function ModelInfoView({
                     strokeWidth="2"
                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
-                </svg>
-                Created At{" "}
+                </svg>{t("Created At")}{" "}
                 {modelData.model_info.created_at
                   ? new Date(modelData.model_info.created_at).toLocaleDateString("en-US", {
                       month: "short",
@@ -792,29 +780,24 @@ export default function ModelInfoView({
                     strokeWidth="2"
                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                   />
-                </svg>
-                Created By {modelData.model_info.created_by || "Not Set"}
+                </svg>{t("Created By")} {modelData.model_info.created_by || "Not Set"}
               </div>
             </div>
 
             {/* Settings Card */}
             <Card>
               <div className="flex justify-between items-center mb-4">
-                <Title>Model Settings</Title>
+                <Title>{t("Model Settings")}</Title>
                 <div className="flex gap-2">
                   {isAutoRouterModel && canEditModel && !isEditing && (
-                    <TremorButton onClick={() => setIsAutoRouterModalOpen(true)} className="flex items-center">
-                      Edit Auto Router
-                    </TremorButton>
+                    <TremorButton onClick={() => setIsAutoRouterModalOpen(true)} className="flex items-center">{t("Edit Auto Router")}</TremorButton>
                   )}
                   {canEditModel ? (
                     !isEditing && (
-                      <TremorButton onClick={() => setIsEditing(true)} className="flex items-center">
-                        Edit Settings
-                      </TremorButton>
+                      <TremorButton onClick={() => setIsEditing(true)} className="flex items-center">{t("Edit Settings")}</TremorButton>
                     )
                   ) : (
-                    <Tooltip title="Only DB models can be edited. You must be an admin or the creator of the model to edit it.">
+                    <Tooltip title={t("Only DB models can be edited. You must be an admin or the creator of the model to edit it.")}>
                       <InfoCircleOutlined />
                     </Tooltip>
                   )}
@@ -893,10 +876,10 @@ export default function ModelInfoView({
                   <div className="space-y-4">
                     <div className="space-y-4">
                       <div>
-                        <Text className="font-medium">Model Name</Text>
+                        <Text className="font-medium">{t("Model Name")}</Text>
                         {isEditing ? (
                           <Form.Item name="model_name" className="mb-0">
-                            <TextInput placeholder="Enter model name" />
+                            <TextInput placeholder={t("Enter model name")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded-sm">{localModelData.model_name}</div>
@@ -904,10 +887,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">LiteLLM Model Name</Text>
+                        <Text className="font-medium">{t("LiteLLM Model Name")}</Text>
                         {isEditing ? (
                           <Form.Item name="litellm_model_name" className="mb-0">
-                            <TextInput placeholder="Enter LiteLLM model name" />
+                            <TextInput placeholder={t("Enter LiteLLM model name")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded-sm">{localModelData.litellm_model_name}</div>
@@ -915,10 +898,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">Input Cost (per 1M tokens)</Text>
+                        <Text className="font-medium">{t("Input Cost (per 1M tokens)")}</Text>
                         {isEditing ? (
                           <Form.Item name="input_cost" className="mb-0">
-                            <NumericalInput placeholder="Enter input cost" />
+                            <NumericalInput placeholder={t("Enter input cost")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded-sm">
@@ -932,10 +915,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">Output Cost (per 1M tokens)</Text>
+                        <Text className="font-medium">{t("Output Cost (per 1M tokens)")}</Text>
                         {isEditing ? (
                           <Form.Item name="output_cost" className="mb-0">
-                            <NumericalInput placeholder="Enter output cost" />
+                            <NumericalInput placeholder={t("Enter output cost")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded-sm">
@@ -990,14 +973,14 @@ export default function ModelInfoView({
                         })}
 
                       <div>
-                        <Text className="font-medium">Cache Read Cost (per 1M tokens)</Text>
+                        <Text className="font-medium">{t("Cache Read Cost (per 1M tokens)")}</Text>
                         {isEditing ? (
                           <Form.Item
                             name="cache_read_cost"
                             className="mb-0"
-                            tooltip="If left blank on save, defaults to Input Cost."
+                            tooltip={t("If left blank on save, defaults to Input Cost.")}
                           >
-                            <NumericalInput placeholder="Defaults to Input Cost if blank" />
+                            <NumericalInput placeholder={t("Defaults to Input Cost if blank")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded-sm">
@@ -1013,14 +996,14 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">Cache Write Cost (per 1M tokens)</Text>
+                        <Text className="font-medium">{t("Cache Write Cost (per 1M tokens)")}</Text>
                         {isEditing ? (
                           <Form.Item
                             name="cache_write_cost"
                             className="mb-0"
                             tooltip="If left blank on save, defaults to Input Cost (backend falls back to input_cost_per_token)."
                           >
-                            <NumericalInput placeholder="Defaults to Input Cost if blank" />
+                            <NumericalInput placeholder={t("Defaults to Input Cost if blank")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded-sm">
@@ -1036,10 +1019,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">API Base</Text>
+                        <Text className="font-medium">{t("API Base")}</Text>
                         {isEditing ? (
                           <Form.Item name="api_base" className="mb-0">
-                            <TextInput placeholder="Enter API base" />
+                            <TextInput placeholder={t("Enter API base")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded-sm">
@@ -1049,10 +1032,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">Custom LLM Provider</Text>
+                        <Text className="font-medium">{t("Custom LLM Provider")}</Text>
                         {isEditing ? (
                           <Form.Item name="custom_llm_provider" className="mb-0">
-                            <TextInput placeholder="Enter custom LLM provider" />
+                            <TextInput placeholder={t("Enter custom LLM provider")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded-sm">
@@ -1062,10 +1045,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">Organization</Text>
+                        <Text className="font-medium">{t("Organization")}</Text>
                         {isEditing ? (
                           <Form.Item name="organization" className="mb-0">
-                            <TextInput placeholder="Enter organization" />
+                            <TextInput placeholder={t("Enter organization")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded-sm">
@@ -1075,10 +1058,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">TPM (Tokens per Minute)</Text>
+                        <Text className="font-medium">{t("TPM (Tokens per Minute)")}</Text>
                         {isEditing ? (
                           <Form.Item name="tpm" className="mb-0">
-                            <NumericalInput placeholder="Enter TPM" />
+                            <NumericalInput placeholder={t("Enter TPM")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded-sm">
@@ -1088,10 +1071,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">RPM (Requests per Minute)</Text>
+                        <Text className="font-medium">{t("RPM (Requests per Minute)")}</Text>
                         {isEditing ? (
                           <Form.Item name="rpm" className="mb-0">
-                            <NumericalInput placeholder="Enter RPM" />
+                            <NumericalInput placeholder={t("Enter RPM")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded-sm">
@@ -1101,10 +1084,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">Max Retries</Text>
+                        <Text className="font-medium">{t("Max Retries")}</Text>
                         {isEditing ? (
                           <Form.Item name="max_retries" className="mb-0">
-                            <NumericalInput placeholder="Enter max retries" />
+                            <NumericalInput placeholder={t("Enter max retries")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded-sm">
@@ -1114,10 +1097,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">Timeout (seconds)</Text>
+                        <Text className="font-medium">{t("Timeout (seconds)")}</Text>
                         {isEditing ? (
                           <Form.Item name="timeout" className="mb-0">
-                            <NumericalInput placeholder="Enter timeout" />
+                            <NumericalInput placeholder={t("Enter timeout")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded-sm">
@@ -1127,10 +1110,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">Stream Timeout (seconds)</Text>
+                        <Text className="font-medium">{t("Stream Timeout (seconds)")}</Text>
                         {isEditing ? (
                           <Form.Item name="stream_timeout" className="mb-0">
-                            <NumericalInput placeholder="Enter stream timeout" />
+                            <NumericalInput placeholder={t("Enter stream timeout")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded-sm">
@@ -1140,7 +1123,7 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">Model Access Groups</Text>
+                        <Text className="font-medium">{t("Model Access Groups")}</Text>
                         {isEditing ? (
                           <Form.Item name="model_access_group" className="mb-0">
                             <Select
@@ -1187,9 +1170,7 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">
-                          Guardrails
-                          <Tooltip title="Apply safety guardrails to this model to filter content or enforce policies">
+                        <Text className="font-medium">{t("Guardrails")}<Tooltip title={t("Apply safety guardrails to this model to filter content or enforce policies")}>
                             <a
                               href="https://docs.litellm.ai/docs/proxy/guardrails/quick_start"
                               target="_blank"
@@ -1248,9 +1229,7 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">
-                          Attached Knowledge Bases (RAG)
-                          <Tooltip title="Vector stores used for RAG. Every request to this model will automatically retrieve context from these knowledge bases.">
+                        <Text className="font-medium">{t("Attached Knowledge Bases (RAG)")}<Tooltip title="Vector stores used for RAG. Every request to this model will automatically retrieve context from these knowledge bases.">
                             <a
                               href="https://docs.litellm.ai/docs/completion/knowledgebase"
                               target="_blank"
@@ -1266,7 +1245,7 @@ export default function ModelInfoView({
                             <VectorStoreSelector
                               onChange={() => {}}
                               accessToken={accessToken || ""}
-                              placeholder="Select knowledge bases (optional)"
+                              placeholder={t("Select knowledge bases (optional)")}
                             />
                           </Form.Item>
                         ) : (
@@ -1300,7 +1279,7 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">Tags</Text>
+                        <Text className="font-medium">{t("Tags")}</Text>
                         {isEditing ? (
                           <Form.Item name="tags" className="mb-0">
                             <Select
@@ -1347,18 +1326,18 @@ export default function ModelInfoView({
                         )}
                       </div>
                       <div>
-                        <Text className="font-medium">Existing Credentials</Text>
+                        <Text className="font-medium">{t("Existing Credentials")}</Text>
                         {isEditing ? (
                           <Form.Item name="litellm_credential_name" className="mb-0">
                             <Select
                               showSearch
-                              placeholder="Select or search for existing credentials"
+                              placeholder={t("Select or search for existing credentials")}
                               optionFilterProp="children"
                               filterOption={(input, option) =>
                                 (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
                               }
                               options={[
-                                { value: "", label: "None" },
+                                { value: "", label: t("None")},
                                 ...credentialsList.map((credential) => ({
                                   value: credential.credential_name,
                                   label: credential.credential_name,
@@ -1376,12 +1355,12 @@ export default function ModelInfoView({
 
                       {isWildcardModel && (
                         <div>
-                          <Text className="font-medium">Health Check Model</Text>
+                          <Text className="font-medium">{t("Health Check Model")}</Text>
                           {isEditing ? (
                             <Form.Item name="health_check_model" className="mb-0">
                               <Select
                                 showSearch
-                                placeholder="Select existing health check model"
+                                placeholder={t("Select existing health check model")}
                                 optionFilterProp="children"
                                 allowClear
                                 options={(() => {
@@ -1420,17 +1399,16 @@ export default function ModelInfoView({
                         />
                       ) : (
                         <div>
-                          <Text className="font-medium">Cache Control</Text>
+                          <Text className="font-medium">{t("Cache Control")}</Text>
                           <div className="mt-1 p-2 bg-gray-50 rounded-sm">
                             {localModelData.litellm_params?.cache_control_injection_points ? (
                               <div>
-                                <p>Enabled</p>
+                                <p>{t("Enabled")}</p>
                                 <div className="mt-2">
                                   {localModelData.litellm_params.cache_control_injection_points.map(
                                     (point: any, i: number) => (
-                                      <div key={i} className="text-sm text-gray-600 mb-1">
-                                        Location: {point.location},{point.role && <span> Role: {point.role}</span>}
-                                        {point.index !== undefined && <span> Index: {point.index}</span>}
+                                      <div key={i} className="text-sm text-gray-600 mb-1">{t("Location:")} {point.location},{point.role && <span>{t("Role:")} {point.role}</span>}
+                                        {point.index !== undefined && <span>{t("Index:")} {point.index}</span>}
                                       </div>
                                     ),
                                   )}
@@ -1444,7 +1422,7 @@ export default function ModelInfoView({
                       )}
 
                       <div>
-                        <Text className="font-medium">Model Info</Text>
+                        <Text className="font-medium">{t("Model Info")}</Text>
                         {isEditing ? (
                           <Form.Item name="model_info" className="mb-0">
                             <Input.TextArea
@@ -1462,9 +1440,7 @@ export default function ModelInfoView({
                         )}
                       </div>
                       <div>
-                        <Text className="font-medium">
-                          LiteLLM Params
-                          <Tooltip title="Optional litellm params used for making a litellm.completion() call. Some params are automatically added by LiteLLM.">
+                        <Text className="font-medium">{t("LiteLLM Params")}<Tooltip title="Optional litellm params used for making a litellm.completion() call. Some params are automatically added by LiteLLM.">
                             <a
                               href="https://docs.litellm.ai/docs/completion/input"
                               target="_blank"
@@ -1495,7 +1471,7 @@ export default function ModelInfoView({
                         )}
                       </div>
                       <div>
-                        <Text className="font-medium">Team ID</Text>
+                        <Text className="font-medium">{t("Team ID")}</Text>
                         <div className="mt-1 p-2 bg-gray-50 rounded-sm">
                           {modelData.model_info.team_id || "Not Set"}
                         </div>
@@ -1512,12 +1488,8 @@ export default function ModelInfoView({
                             setIsEditing(false);
                           }}
                           disabled={isSaving}
-                        >
-                          Cancel
-                        </TremorButton>
-                        <TremorButton variant="primary" onClick={() => form.submit()} loading={isSaving}>
-                          Save Changes
-                        </TremorButton>
+                        >{t("Cancel")}</TremorButton>
+                        <TremorButton variant="primary" onClick={() => form.submit()} loading={isSaving}>{t("Save Changes")}</TremorButton>
                       </div>
                     )}
                   </div>
@@ -1546,19 +1518,19 @@ export default function ModelInfoView({
         resourceInformationTitle="Model Information"
         resourceInformation={[
           {
-            label: "Model Name",
+            label: t("Model Name"),
             value: modelData?.model_name || "Not Set",
           },
           {
-            label: "LiteLLM Model Name",
+            label: t("LiteLLM Model Name"),
             value: modelData?.litellm_model_name || "Not Set",
           },
           {
-            label: "Provider",
+            label: t("Provider"),
             value: modelData?.provider || "Not Set",
           },
           {
-            label: "Created By",
+            label: t("Created By"),
             value: modelData?.model_info?.created_by || "Not Set",
           },
         ]}
@@ -1579,7 +1551,7 @@ export default function ModelInfoView({
         <Modal
           open={isCredentialModalOpen}
           onCancel={() => setIsCredentialModalOpen(false)}
-          title="Using Existing Credential"
+          title={t("Using Existing Credential")}
         >
           <Text>{modelData.litellm_params.litellm_credential_name}</Text>
         </Modal>
@@ -1608,13 +1580,11 @@ export default function ModelInfoView({
       />
 
       <Modal
-        title="Connection Test Results"
+        title={t("Connection Test Results")}
         open={isAutoRouterTestModalOpen}
         onCancel={() => setIsAutoRouterTestModalOpen(false)}
         footer={[
-          <Button key="close" onClick={() => setIsAutoRouterTestModalOpen(false)}>
-            Close
-          </Button>,
+          <Button key="close" onClick={() => setIsAutoRouterTestModalOpen(false)}>{t("Close")}</Button>,
         ]}
         width={700}
       >

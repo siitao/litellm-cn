@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
+import { t } from "@/i18n";
 interface GlobalRetryPolicyObject {
   [retryPolicyKey: string]: number;
 }
@@ -79,7 +80,7 @@ const ModelRetrySettingsTab = ({
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3">
-        <Label htmlFor="retry-policy-scope">Retry Policy Scope:</Label>
+        <Label htmlFor="retry-policy-scope">{t("Retry Policy Scope:")}</Label>
         <div className="w-48">
           <Select
             value={isGlobalScope ? "global" : selectedModelGroup || availableModelGroups[0]}
@@ -89,7 +90,7 @@ const ModelRetrySettingsTab = ({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="global">Global Default</SelectItem>
+              <SelectItem value="global">{t("Global Default")}</SelectItem>
               {availableModelGroups.map((group) => (
                 <SelectItem key={group} value={group}>
                   {group}
@@ -102,17 +103,13 @@ const ModelRetrySettingsTab = ({
 
       {isGlobalScope ? (
         <div>
-          <h2 className="text-lg font-semibold">Global Retry Policy</h2>
-          <p className="text-sm text-muted-foreground">
-            Default retry settings applied to all model groups unless overridden
-          </p>
+          <h2 className="text-lg font-semibold">{t("Global Retry Policy")}</h2>
+          <p className="text-sm text-muted-foreground">{t("Default retry settings applied to all model groups unless overridden")}</p>
         </div>
       ) : (
         <div>
-          <h2 className="text-lg font-semibold">Retry Policy for {selectedModelGroup}</h2>
-          <p className="text-sm text-muted-foreground">
-            Model-specific retry settings. Falls back to global defaults if not set.
-          </p>
+          <h2 className="text-lg font-semibold">{t("Retry Policy for")} {selectedModelGroup}</h2>
+          <p className="text-sm text-muted-foreground">{t("Model-specific retry settings. Falls back to global defaults if not set.")}</p>
         </div>
       )}
       <table className="w-full">
@@ -142,9 +139,7 @@ const ModelRetrySettingsTab = ({
                     onChange={(event) => handleRetryCountChange(retryPolicyKey, event.currentTarget.value)}
                   />
                   {!isGlobalScope && hasOverride && (
-                    <Button variant="ghost" size="xs" onClick={() => setModelOverride(retryPolicyKey, null)}>
-                      Reset
-                    </Button>
+                    <Button variant="ghost" size="xs" onClick={() => setModelOverride(retryPolicyKey, null)}>{t("Reset")}</Button>
                   )}
                 </td>
               </tr>

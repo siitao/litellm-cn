@@ -3,6 +3,7 @@ import { Tag } from "./types";
 import { tagListCall } from "../networking";
 import { MultiSelect } from "@/components/shared/MultiSelect";
 
+import { t } from "@/i18n";
 interface TagSelectorProps {
   onChange: (selectedTags: string[]) => void;
   value?: string[];
@@ -22,7 +23,7 @@ const TagSelector: React.FC<TagSelectorProps> = ({ onChange, value, className, a
         const response = await tagListCall(accessToken);
         setTags(Object.values(response));
       } catch (error) {
-        console.error("Error fetching tags:", error);
+        console.error(t("Error fetching tags:"), error);
       } finally {
         setLoading(false);
       }
@@ -33,7 +34,7 @@ const TagSelector: React.FC<TagSelectorProps> = ({ onChange, value, className, a
 
   return (
     <MultiSelect
-      placeholder="Select or create tags"
+      placeholder={t("Select or create tags")}
       onValueChange={onChange}
       value={value}
       loading={loading}

@@ -3,6 +3,7 @@ import React from "react";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
 import { useModelCostMap } from "../../hooks/models/useModelCostMap";
 
+import { t } from "@/i18n";
 const PriceDataManagementTab = () => {
   const { accessToken } = useAuthorized();
   const { refetch: refetchModelCostMap } = useModelCostMap();
@@ -11,10 +12,8 @@ const PriceDataManagementTab = () => {
     <div>
       <div className="p-6">
         <div className="mb-6">
-          <h2 className="text-lg font-semibold">Price Data Management</h2>
-          <p className="text-sm text-muted-foreground">
-            Manage model pricing data and configure automatic reload schedules
-          </p>
+          <h2 className="text-lg font-semibold">{t("Price Data Management")}</h2>
+          <p className="text-sm text-muted-foreground">{t("Manage model pricing data and configure automatic reload schedules")}</p>
         </div>
         <PriceDataReload
           accessToken={accessToken}

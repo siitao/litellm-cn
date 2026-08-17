@@ -30,6 +30,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { UiLoadingSpinner } from "@/components/ui/ui-loading-spinner";
 
+import { t } from "@/i18n";
 // Code templates
 const CODE_TEMPLATES = {
   empty: {
@@ -212,11 +213,11 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
             type: "function",
             function: {
               name: "get_weather",
-              description: "Get the current weather in a location",
+              description: t("Get the current weather in a location"),
               parameters: {
                 type: "object",
                 properties: {
-                  location: { type: "string", description: "City name" },
+                  location: { type: "string", description: t("City name")},
                 },
                 required: ["location"],
               },
@@ -261,11 +262,11 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
             type: "function",
             function: {
               name: "read_wiki_structure",
-              description: "Read the structure of a GitHub repository (MCP tool passed as OpenAI tool)",
+              description: t("Read the structure of a GitHub repository (MCP tool passed as OpenAI tool)"),
               parameters: {
                 type: "object",
                 properties: {
-                  repoName: { type: "string", description: "Repository name, e.g. BerriAI/litellm" },
+                  repoName: { type: "string", description: t("Repository name, e.g. BerriAI/litellm")},
                 },
                 required: ["repoName"],
               },
@@ -340,7 +341,7 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
       setCopiedPrimitive(primitive);
       setTimeout(() => setCopiedPrimitive(null), 2000);
     } catch (err) {
-      console.error("Failed to copy:", err);
+      console.error(t("Failed to copy:"), err);
     }
   };
 
@@ -398,7 +399,7 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
         }
 
         await updateGuardrailCall(accessToken, editData.guardrail_id, updateData);
-        NotificationsManager.success("Custom code guardrail updated successfully");
+        NotificationsManager.success(t("Custom code guardrail updated successfully"));
       } else {
         // Create new guardrail
         const guardrailData = {
@@ -413,12 +414,12 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
         };
 
         await createGuardrailCall(accessToken, guardrailData);
-        NotificationsManager.success("Custom code guardrail created successfully");
+        NotificationsManager.success(t("Custom code guardrail created successfully"));
       }
       onSuccess();
       onClose();
     } catch (error) {
-      console.error("Failed to save guardrail:", error);
+      console.error(t("Failed to save guardrail:"), error);
       NotificationsManager.fromBackend(
         `Failed to ${isEditMode ? "update" : "create"} guardrail: ` +
           (error instanceof Error ? error.message : String(error)),
@@ -484,7 +485,7 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
         setTestResult({ error: "Unknown error occurred" });
       }
     } catch (error) {
-      console.error("Failed to test custom code:", error);
+      console.error(t("Failed to test custom code:"), error);
       setTestResult({
         error: error instanceof Error ? error.message : "Failed to test custom code",
       });
@@ -503,21 +504,21 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
           <DialogTitle className="text-xl font-semibold">
             {isEditMode ? "Edit Custom Guardrail" : "Create Custom Guardrail"}
           </DialogTitle>
-          <DialogDescription>Define custom logic using Python-like syntax</DialogDescription>
+          <DialogDescription>{t("Define custom logic using Python-like syntax")}</DialogDescription>
         </DialogHeader>
 
         {/* Top Controls */}
         <div className="flex items-center gap-4 border-b border-border py-4">
           <div className="max-w-[200px] flex-1">
-            <label className="mb-1 block text-xs font-medium text-muted-foreground">Guardrail Name</label>
+            <label className="mb-1 block text-xs font-medium text-muted-foreground">{t("Guardrail Name")}</label>
             <Input
               value={guardrailName}
               onChange={(e) => setGuardrailName(e.target.value)}
-              placeholder="e.g., block-pii-custom"
+              placeholder={t("e.g., block-pii-custom")}
             />
           </div>
           <div className="w-[280px]">
-            <label className="mb-1 block text-xs font-medium text-muted-foreground">Mode (can select multiple)</label>
+            <label className="mb-1 block text-xs font-medium text-muted-foreground">{t("Mode (can select multiple)")}</label>
             <Combobox
               items={MODE_OPTIONS}
               value={selectedModeOptions}
@@ -536,7 +537,7 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
                 />
               </ComboboxChips>
               <ComboboxContent>
-                <ComboboxEmpty>No matching modes</ComboboxEmpty>
+                <ComboboxEmpty>{t("No matching modes")}</ComboboxEmpty>
                 <ComboboxList>
                   {(option: ModeOption) => (
                     <ComboboxItem key={option.value} value={option}>
@@ -548,13 +549,13 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
             </Combobox>
           </div>
           <div className="w-[180px]">
-            <label className="mb-1 block text-xs font-medium text-muted-foreground">Template</label>
+            <label className="mb-1 block text-xs font-medium text-muted-foreground">{t("Template")}</label>
             <Select
               items={TEMPLATE_ITEMS}
               value={selectedTemplate}
               onValueChange={(value: string | null) => value && handleTemplateChange(value)}
             >
-              <SelectTrigger className="w-full" aria-label="Template">
+              <SelectTrigger className="w-full" aria-label={t("Template")}>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent alignItemWithTrigger={false}>
@@ -573,15 +574,15 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
                   className="flex w-full items-center gap-1 rounded-sm px-2 py-1.5 text-xs text-primary hover:bg-accent"
                 >
                   <Users className="size-3.5" />
-                  <span>Browse Community templates</span>
+                  <span>{t("Browse Community templates")}</span>
                   <ExternalLink className="size-2.5" />
                 </button>
               </SelectContent>
             </Select>
           </div>
           <div className="flex items-center gap-2 pt-5">
-            <span className="text-sm text-muted-foreground">Default On</span>
-            <Switch checked={defaultOn} onCheckedChange={setDefaultOn} aria-label="Default On" />
+            <span className="text-sm text-muted-foreground">{t("Default On")}</span>
+            <Switch checked={defaultOn} onCheckedChange={setDefaultOn} aria-label={t("Default On")} />
           </div>
         </div>
 
@@ -590,8 +591,8 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
           {/* Code Editor */}
           <div className="flex min-w-0 flex-1 flex-col">
             <div className="mb-2 flex shrink-0 items-center justify-between">
-              <span className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">Python Logic</span>
-              <span className="text-xs text-muted-foreground">Restricted environment (no imports)</span>
+              <span className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">{t("Python Logic")}</span>
+              <span className="text-xs text-muted-foreground">{t("Restricted environment (no imports)")}</span>
             </div>
             <div
               className="relative rounded-lg overflow-hidden border border-gray-700 bg-[#1e1e1e] shrink-0"
@@ -644,30 +645,24 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
                 <div className="space-y-3">
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <label className="block text-xs font-medium text-muted-foreground">Test Input (JSON)</label>
+                      <label className="block text-xs font-medium text-muted-foreground">{t("Test Input (JSON)")}</label>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs text-muted-foreground">Load example:</span>
+                        <span className="text-xs text-muted-foreground">{t("Load example:")}</span>
                         <button
                           type="button"
                           onClick={() => setTestInput(JSON.stringify(TEST_INPUT_EXAMPLES.pre_call.data, null, 2))}
                           className="px-2 py-1 text-xs rounded-sm border border-orange-200 bg-orange-50 text-orange-700 hover:bg-orange-100 transition-colors"
-                        >
-                          Pre-call
-                        </button>
+                        >{t("Pre-call")}</button>
                         <button
                           type="button"
                           onClick={() => setTestInput(JSON.stringify(TEST_INPUT_EXAMPLES.pre_mcp_call.data, null, 2))}
                           className="px-2 py-1 text-xs rounded-sm border border-purple-200 bg-purple-50 text-purple-700 hover:bg-purple-100 transition-colors"
-                        >
-                          Pre MCP
-                        </button>
+                        >{t("Pre MCP")}</button>
                         <button
                           type="button"
                           onClick={() => setTestInput(JSON.stringify(TEST_INPUT_EXAMPLES.post_call.data, null, 2))}
                           className="px-2 py-1 text-xs rounded-sm border border-green-200 bg-green-50 text-green-700 hover:bg-green-100 transition-colors"
-                        >
-                          Post-call
-                        </button>
+                        >{t("Post-call")}</button>
                       </div>
                     </div>
                     <div className="mb-2 rounded-sm border border-border bg-muted/40 p-2 text-xs text-muted-foreground">
@@ -764,10 +759,8 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
                   <Users className="size-5 text-blue-600" />
                 </div>
                 <div>
-                  <div className="text-sm font-medium">Built a useful guardrail?</div>
-                  <div className="text-xs text-muted-foreground">
-                    Share it with the community and help others build faster
-                  </div>
+                  <div className="text-sm font-medium">{t("Built a useful guardrail?")}</div>
+                  <div className="text-xs text-muted-foreground">{t("Share it with the community and help others build faster")}</div>
                 </div>
               </div>
               <Button size="sm" onClick={() => window.open("https://github.com/BerriAI/litellm-guardrails", "_blank")}>
@@ -781,9 +774,9 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
           <div className="w-[300px] shrink-0 overflow-auto border-l border-border pl-6">
             <div className="mb-3 flex items-center gap-2">
               <Code className="size-4 text-muted-foreground" />
-              <span className="font-semibold">Available Primitives</span>
+              <span className="font-semibold">{t("Available Primitives")}</span>
             </div>
-            <p className="mb-3 text-xs text-muted-foreground">Click to copy functions to clipboard</p>
+            <p className="mb-3 text-xs text-muted-foreground">{t("Click to copy functions to clipboard")}</p>
 
             <div className="space-y-2">
               {Object.entries(PRIMITIVES).map(([category, primitives]) => (
@@ -828,11 +821,9 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
 
         {/* Footer */}
         <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
-          <span className="text-xs text-muted-foreground">Changes are auto-saved to local draft</span>
+          <span className="text-xs text-muted-foreground">{t("Changes are auto-saved to local draft")}</span>
           <div className="flex items-center gap-3">
-            <Button variant="secondary" onClick={onClose}>
-              Cancel
-            </Button>
+            <Button variant="secondary" onClick={onClose}>{t("Cancel")}</Button>
             <Button onClick={handleSave} disabled={isSaving || !guardrailName.trim()} aria-busy={isSaving}>
               {isSaving ? <UiLoadingSpinner className="size-4" /> : <Save />}
               {isEditMode ? "Update Guardrail" : "Save Guardrail"}

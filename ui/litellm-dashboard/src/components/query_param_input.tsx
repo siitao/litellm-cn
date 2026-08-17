@@ -4,6 +4,7 @@ import { Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
+import { t } from "@/i18n";
 interface QueryParamInputProps {
   value?: Record<string, string>;
   onChange?: (value: Record<string, string>) => void;
@@ -34,12 +35,12 @@ const QueryParamInput: React.FC<QueryParamInputProps> = ({ value = {}, onChange 
       {pairs.map(([key, val], index) => (
         <div key={index} className="flex items-center gap-2">
           <Input
-            placeholder="Parameter Name (e.g., version)"
+            placeholder={t("Parameter Name (e.g., version)")}
             value={key}
             onChange={(e) => handleChange(index, e.target.value, val)}
           />
           <Input
-            placeholder="Parameter Value (e.g., v1)"
+            placeholder={t("Parameter Value (e.g., v1)")}
             value={val}
             onChange={(e) => handleChange(index, key, e.target.value)}
           />

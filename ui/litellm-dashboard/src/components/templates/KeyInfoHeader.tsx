@@ -20,6 +20,7 @@ import {
 import LabeledField from "../common_components/LabeledField";
 import DefaultProxyAdminTag from "../common_components/DefaultProxyAdminTag";
 
+import { t } from "@/i18n";
 const { Title, Text } = Typography;
 
 export interface KeyInfoData {
@@ -56,9 +57,7 @@ function UserField({ userAlias, userEmail, userId }: { userAlias?: string | null
       <Text type="secondary">
         <UserOutlined />
       </Text>
-      <Text type="secondary" style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: "0.05em" }}>
-        User
-      </Text>
+      <Text type="secondary" style={{ fontSize: 12, textTransform: "uppercase", letterSpacing: "0.05em" }}>{t("User")}</Text>
     </Space>
   );
 
@@ -80,9 +79,9 @@ function UserField({ userAlias, userEmail, userId }: { userAlias?: string | null
   const popoverContent = (
     <div className="flex flex-col gap-2 text-xs min-w-[200px] max-w-[300px]">
       {[
-        { label: "User Alias", value: userAlias ?? null },
-        { label: "User Email", value: userEmail || null },
-        { label: "User ID", value: userId || null },
+        { label: t("User Alias"), value: userAlias ?? null },
+        { label: t("User Email"), value: userEmail || null },
+        { label: t("User ID"), value: userId || null },
       ].map(({ label, value }) => (
         <div key={label} className="flex flex-col min-w-0">
           <span className="text-gray-400">{label}</span>
@@ -150,14 +149,14 @@ export function KeyInfoHeader({
     ...(onToggleBlocked
       ? [
           isBlocked
-            ? { key: "unblock", label: "Unblock Key", icon: <CheckCircleOutlined /> }
-            : { key: "block", label: "Block Key", icon: <StopOutlined />, danger: true },
+            ? { key: "unblock", label: t("Unblock Key"), icon: <CheckCircleOutlined /> }
+            : { key: "block", label: t("Block Key"), icon: <StopOutlined />, danger: true },
         ]
       : []),
     ...(onResetSpend
-      ? [{ key: "reset-spend", label: "Reset Spend", icon: <TransactionOutlined />, danger: true }]
+      ? [{ key: "reset-spend", label: t("Reset Spend"), icon: <TransactionOutlined />, danger: true }]
       : []),
-    { key: "delete", label: "Delete Key", icon: <DeleteOutlined />, danger: true },
+    { key: "delete", label: t("Delete Key"), icon: <DeleteOutlined />, danger: true },
   ];
 
   const handleDestructiveActionClick: MenuProps["onClick"] = ({ key }) => {
@@ -170,9 +169,7 @@ export function KeyInfoHeader({
     <div>
       {onCreateNew && (
         <div style={{ marginBottom: 16 }}>
-          <Button type="primary" icon={<PlusOutlined />} onClick={onCreateNew}>
-            Create New Key
-          </Button>
+          <Button type="primary" icon={<PlusOutlined />} onClick={onCreateNew}>{t("Create New Key")}</Button>
         </div>
       )}
 
@@ -189,29 +186,24 @@ export function KeyInfoHeader({
               {data.keyName}
             </Title>
             {isBlocked && (
-              <Tag color="red" icon={<StopOutlined />}>
-                Blocked
-              </Tag>
+              <Tag color="red" icon={<StopOutlined />}>{t("Blocked")}</Tag>
             )}
           </Space>
-          <Text type="secondary" copyable={{ text: data.keyId, tooltips: ["Copy Key ID", "Copied!"] }}>
-            Key ID: {data.keyId}
+          <Text type="secondary" copyable={{ text: data.keyId, tooltips: ["Copy Key ID", "Copied!"] }}>{t("Key ID:")} {data.keyId}
           </Text>
         </div>
         {canModifyKey && (
           <Space>
             <Tooltip title={regenerateTooltip || ""}>
               <span>
-                <Button icon={<SyncOutlined />} onClick={onRegenerate} disabled={regenerateDisabled}>
-                  Regenerate Key
-                </Button>
+                <Button icon={<SyncOutlined />} onClick={onRegenerate} disabled={regenerateDisabled}>{t("Regenerate Key")}</Button>
               </span>
             </Tooltip>
             <Dropdown
               menu={{ items: destructiveActionItems, onClick: handleDestructiveActionClick }}
               trigger={["click"]}
             >
-              <Button icon={<MoreOutlined />} aria-label="More key actions" />
+              <Button icon={<MoreOutlined />} aria-label={t("More key actions")} />
             </Dropdown>
           </Space>
         )}
@@ -228,7 +220,7 @@ export function KeyInfoHeader({
         <Space direction="vertical" size={16}>
           <LabeledField label="Created At" value={data.createdAt} icon={<CalendarOutlined />} />
           <LabeledField
-            label="Created By"
+            label={t("Created By")}
             value={data.createdBy}
             icon={<SafetyCertificateOutlined />}
             truncate

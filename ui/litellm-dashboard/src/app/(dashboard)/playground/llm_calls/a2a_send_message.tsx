@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { getProxyBaseUrl, getGlobalLitellmHeaderName } from "@/components/networking";
 import { A2ATaskMetadata } from "@/components/chat_ui/types";
 
+import { t } from "@/i18n";
 interface A2AMessagePart {
   kind: "text";
   text: string;
@@ -228,7 +229,7 @@ export const makeA2ASendMessageRequest = async (
     if (signal?.aborted) {
       return;
     }
-    console.error("A2A send message error:", error);
+    console.error(t("A2A send message error:"), error);
     throw error;
   }
 };
@@ -408,7 +409,7 @@ export const makeA2AStreamMessageRequest = async (
     if (signal?.aborted) {
       return;
     }
-    console.error("A2A stream message error:", error);
+    console.error(t("A2A stream message error:"), error);
     throw error;
   }
 };

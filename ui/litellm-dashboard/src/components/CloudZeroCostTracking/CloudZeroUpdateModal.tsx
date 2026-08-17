@@ -5,6 +5,7 @@ import MessageManager from "@/components/molecules/message_manager";
 import { useEffect } from "react";
 import { CloudZeroSettings } from "./types";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface CloudZeroUpdateModalProps {
   open: boolean;
   onOk: () => void;
@@ -13,7 +14,8 @@ interface CloudZeroUpdateModalProps {
 }
 
 export default function CloudZeroUpdateModal({ open, onOk, onCancel, settings }: CloudZeroUpdateModalProps) {
-  const { accessToken } = useAuthorized();
+
+  const { t } = useLanguage();  const { accessToken } = useAuthorized();
   const [form] = Form.useForm();
   const updateMutation = useCloudZeroUpdateSettings(accessToken || "");
 
@@ -40,7 +42,7 @@ export default function CloudZeroUpdateModal({ open, onOk, onCancel, settings }:
         },
         {
           onSuccess: () => {
-            MessageManager.success("CloudZero integration updated successfully");
+            MessageManager.success(t("CloudZero integration updated successfully"));
             form.resetFields();
             onOk();
           },
@@ -67,13 +69,13 @@ export default function CloudZeroUpdateModal({ open, onOk, onCancel, settings }:
 
   return (
     <Modal
-      title="Edit CloudZero Integration"
+      title={t("Edit CloudZero Integration")}
       open={open}
       onOk={handleSubmit}
       onCancel={handleCancel}
       confirmLoading={updateMutation.isPending}
       okText={updateMutation.isPending ? "Updating..." : "Update"}
-      cancelText="Cancel"
+      cancelText={t("Cancel")}
       okButtonProps={{
         disabled: updateMutation.isPending,
       }}
@@ -83,24 +85,24 @@ export default function CloudZeroUpdateModal({ open, onOk, onCancel, settings }:
     >
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         <Form.Item
-          label="CloudZero API Key"
+          label={t("CloudZero API Key")}
           name="api_key"
           rules={[{ required: false, message: "Please enter your CloudZero API key" }]}
-          tooltip="Leave empty to keep the existing API key"
+          tooltip={t("Leave empty to keep the existing API key")}
         >
-          <Input.Password placeholder="Leave empty to keep existing" />
+          <Input.Password placeholder={t("Leave empty to keep existing")} />
         </Form.Item>
         <Form.Item
-          label="Connection ID"
+          label={t("Connection ID")}
           name="connection_id"
           rules={[{ required: true, message: "Please enter your CloudZero connection ID" }]}
         >
-          <Input placeholder="Enter your CloudZero connection ID" />
+          <Input placeholder={t("Enter your CloudZero connection ID")} />
         </Form.Item>
         <Form.Item
-          label="Timezone"
+          label={t("Timezone")}
           name="timezone"
-          tooltip="Timezone for date handling (defaults to UTC if not provided)"
+          tooltip={t("Timezone for date handling (defaults to UTC if not provided)")}
         >
           <Input placeholder="UTC" />
         </Form.Item>

@@ -34,6 +34,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
+import { t } from "@/i18n";
 interface EditAutoRouterModalProps {
   isVisible: boolean;
   onCancel: () => void;
@@ -207,7 +208,7 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
         const response = await modelAvailableCall(accessToken, "", "", false, null, true, true);
         setModelAccessGroups(response["data"].map((model: any) => model["id"]));
       } catch (error) {
-        console.error("Error fetching model access groups:", error);
+        console.error(t("Error fetching model access groups:"), error);
       }
     };
 
@@ -217,7 +218,7 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
         const uniqueModels = await fetchAvailableModels(accessToken);
         setModelInfo(uniqueModels);
       } catch (error) {
-        console.error("Error fetching model info:", error);
+        console.error(t("Error fetching model info:"), error);
       }
     };
 
@@ -322,7 +323,7 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
         model_access_group: modelData.model_info?.access_groups || [],
       });
     } catch (error) {
-      console.error("Error parsing auto router config:", error);
+      console.error(t("Error parsing auto router config:"), error);
       NotificationsManager.fromBackend("Error loading auto router configuration");
     }
   };
@@ -390,7 +391,7 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
           modelData.model_info.id,
         );
 
-        NotificationsManager.success("Auto router configuration updated successfully");
+        NotificationsManager.success(t("Auto router configuration updated successfully"));
         onSuccess({
           ...modelData,
           model_name: values.auto_router_name,
@@ -430,11 +431,11 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
         model_info: updatedModelInfo,
       };
 
-      NotificationsManager.success("Auto router configuration updated successfully");
+      NotificationsManager.success(t("Auto router configuration updated successfully"));
       onSuccess(updatedModelData);
       onCancel();
     } catch (error) {
-      console.error("Error updating auto router:", error);
+      console.error(t("Error updating auto router:"), error);
       NotificationsManager.fromBackend("Failed to update auto router configuration");
     } finally {
       setLoading(false);
@@ -450,7 +451,7 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
     <Dialog open={isVisible} onOpenChange={(open) => !open && onCancel()}>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-4xl">
         <DialogHeader>
-          <DialogTitle>Edit Auto Router Configuration</DialogTitle>
+          <DialogTitle>{t("Edit Auto Router Configuration")}</DialogTitle>
           <DialogDescription>
             Edit the auto router configuration including routing logic, default models, and access settings.
           </DialogDescription>
@@ -459,11 +460,11 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
         <Form form={form} layout="vertical" className="space-y-4">
           {/* Auto Router Name */}
           <Form.Item
-            label="Auto Router Name"
+            label={t("Auto Router Name")}
             name="auto_router_name"
             rules={[{ required: true, message: "Auto router name is required" }]}
           >
-            <TextInput placeholder="e.g., auto_router_1, smart_routing" />
+            <TextInput placeholder={t("e.g., auto_router_1, smart_routing")} />
           </Form.Item>
 
           {isComplexityRouterModel ? (
@@ -505,26 +506,26 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
 
               {/* Default Model */}
               <Form.Item
-                label="Default Model"
+                label={t("Default Model")}
                 name="auto_router_default_model"
                 rules={[{ required: true, message: "Default model is required" }]}
               >
                 <AntdSelect
-                  placeholder="Select a default model"
-                  options={[...modelOptions, { value: "custom", label: "Enter custom model name" }]}
+                  placeholder={t("Select a default model")}
+                  options={[...modelOptions, { value: "custom", label: t("Enter custom model name")}]}
                   showSearch={true}
                 />
               </Form.Item>
 
               {/* Embedding Model */}
               <Form.Item
-                label="Embedding Model"
+                label={t("Embedding Model")}
                 name="auto_router_embedding_model"
                 rules={[{ required: true, message: "Embedding model is required" }]}
               >
                 <AntdSelect
-                  placeholder="Select an embedding model"
-                  options={[...modelOptions, { value: "custom", label: "Enter custom model name" }]}
+                  placeholder={t("Select an embedding model")}
+                  options={[...modelOptions, { value: "custom", label: t("Enter custom model name")}]}
                   showSearch={true}
                 />
               </Form.Item>
@@ -534,9 +535,9 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
           {/* Model Access Groups - Admin only */}
           {userRole === "Admin" && (
             <Form.Item
-              label="Model Access Groups"
+              label={t("Model Access Groups")}
               name="model_access_group"
-              tooltip="Control who can access this auto router"
+              tooltip={t("Control who can access this auto router")}
             >
               <AntdSelect
                 mode="tags"
@@ -556,11 +557,9 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
         </Form>
 
         <DialogFooter>
-          <Button onClick={onCancel}>Cancel</Button>
+          <Button onClick={onCancel}>{t("Cancel")}</Button>
           <Tooltip title={submitBlockedReason}>
-            <Button loading={loading} disabled={submitBlockedReason !== null} onClick={handleSubmit}>
-              Save Changes
-            </Button>
+            <Button loading={loading} disabled={submitBlockedReason !== null} onClick={handleSubmit}>{t("Save Changes")}</Button>
           </Tooltip>
         </DialogFooter>
       </DialogContent>

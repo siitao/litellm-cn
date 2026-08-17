@@ -2,7 +2,8 @@ import React from "react";
 import { Form, Input, InputNumber, Button as Button2 } from "antd";
 import { TrashIcon, CheckCircleIcon } from "@heroicons/react/outline";
 import { Button, Badge, Icon, Text, TableRow, TableCell, Switch } from "@tremor/react";
-interface AlertingSetting {
+
+import { t } from "@/i18n";interface AlertingSetting {
   field_name: string;
   field_description: string;
   field_type: string;
@@ -118,24 +119,20 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
           )}
           <TableCell>
             {value.stored_in_db == true ? (
-              <Badge icon={CheckCircleIcon} className="text-white">
-                In DB
-              </Badge>
+              <Badge icon={CheckCircleIcon} className="text-white">{t("In DB")}</Badge>
             ) : value.stored_in_db == false ? (
-              <Badge className="text-gray bg-white outline-solid">In Config</Badge>
+              <Badge className="text-gray bg-white outline-solid">{t("In Config")}</Badge>
             ) : (
-              <Badge className="text-gray bg-white outline-solid">Not Set</Badge>
+              <Badge className="text-gray bg-white outline-solid">{t("Not Set")}</Badge>
             )}
           </TableCell>
           <TableCell>
-            <Icon icon={TrashIcon} color="red" onClick={() => handleResetField(value.field_name, index)}>
-              Reset
-            </Icon>
+            <Icon icon={TrashIcon} color="red" onClick={() => handleResetField(value.field_name, index)}>{t("Reset")}</Icon>
           </TableCell>
         </TableRow>
       ))}
       <div>
-        <Button2 htmlType="submit">Update Settings</Button2>
+        <Button2 htmlType="submit">{t("Update Settings")}</Button2>
       </div>
     </Form>
   );

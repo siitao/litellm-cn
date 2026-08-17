@@ -40,7 +40,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ visible, possibleUIRoles,
   }
 
   return (
-    <Modal open={visible} onCancel={handleCancel} footer={null} title={"Edit User " + user.user_id} width={1000}>
+    <Modal open={visible} onCancel={handleCancel} footer={null} title={t("Edit User ") + user.user_id} width={1000}>
       <Form
         form={form}
         onFinish={handleEditSubmit}
@@ -77,8 +77,8 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ visible, possibleUIRoles,
           <Form.Item
             label={t("users.col_spend")}
             name="spend"
-            tooltip="(float) - Spend of all LLM calls completed by this user"
-            help="Across all keys (including keys with team_id)."
+            tooltip={t("(float) - Spend of all LLM calls completed by this user")}
+            help={t("Across all keys (including keys with team_id).")}
           >
             <InputNumber min={0} step={0.01} />
           </Form.Item>
@@ -86,8 +86,8 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ visible, possibleUIRoles,
           <Form.Item
             label={t("users.col_budget")}
             name="max_budget"
-            tooltip="(float) - Maximum budget of this user"
-            help="Maximum budget of this user."
+            tooltip={t("(float) - Maximum budget of this user")}
+            help={t("Maximum budget of this user.")}
           >
             <NumericalInput min={0} step={0.01} />
           </Form.Item>

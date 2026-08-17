@@ -6,6 +6,7 @@ import { Tooltip } from "antd";
 import { getOpenAPISchema } from "../networking";
 import { formatLabel } from "@/utils/textUtils";
 
+import { t } from "@/i18n";
 interface SchemaProperty {
   type?: string;
   title?: string;
@@ -129,7 +130,7 @@ const SchemaFormFields: React.FC<SchemaFormFieldsProps> = ({
 
         form.setFieldsValue(defaultFormValues);
       } catch (error) {
-        console.error("Schema fetch error:", error);
+        console.error(t("Schema fetch error:"), error);
         setError(error instanceof Error ? error.message : "Failed to fetch schema");
       }
     };
@@ -200,7 +201,7 @@ const SchemaFormFields: React.FC<SchemaFormFieldsProps> = ({
     } else if (type === "number" || type === "integer") {
       inputComponent = <InputNumber style={{ width: "100%" }} precision={type === "integer" ? 0 : undefined} />;
     } else if (key === "duration") {
-      inputComponent = <TextInput placeholder="eg: 30s, 30h, 30d" />;
+      inputComponent = <TextInput placeholder={t("eg: 30s, 30h, 30d")} />;
     } else {
       inputComponent = <TextInput placeholder={tooltip || ""} />;
     }
@@ -221,7 +222,7 @@ const SchemaFormFields: React.FC<SchemaFormFieldsProps> = ({
   };
 
   if (error) {
-    return <div className="text-red-500">Error: {error}</div>;
+    return <div className="text-red-500">{t("Error:")} {error}</div>;
   }
 
   if (!schemaProperties?.properties) {

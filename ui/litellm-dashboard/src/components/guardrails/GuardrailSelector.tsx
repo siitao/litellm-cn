@@ -3,6 +3,7 @@ import { Guardrail } from "./types";
 import { getGuardrailsList } from "../networking";
 import { MultiSelect } from "@/components/shared/MultiSelect";
 
+import { t } from "@/i18n";
 interface GuardrailSelectorProps {
   onChange: (selectedGuardrails: string[]) => void;
   value?: string[];
@@ -26,7 +27,7 @@ const GuardrailSelector: React.FC<GuardrailSelectorProps> = ({ onChange, value, 
           setGuardrails(response.guardrails);
         }
       } catch (error) {
-        console.error("Error fetching guardrails:", error);
+        console.error(t("Error fetching guardrails:"), error);
       } finally {
         setLoading(false);
       }

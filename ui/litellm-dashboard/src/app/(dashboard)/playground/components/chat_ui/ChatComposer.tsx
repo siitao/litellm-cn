@@ -5,6 +5,7 @@ import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupTextarea } fro
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/cva.config";
 
+import { t } from "@/i18n";
 interface ChatComposerProps {
   value: string;
   onChange: (value: string) => void;
@@ -104,7 +105,7 @@ export function ChatComposer({
               <InputGroupButton
                 type="button"
                 size="icon-sm"
-                aria-label="Stop request"
+                aria-label={t("Stop request")}
                 data-testid="chat-stop-button"
                 className="size-8 rounded-xl bg-foreground text-background hover:bg-foreground/90"
                 onClick={onCancel}
@@ -115,7 +116,7 @@ export function ChatComposer({
               <InputGroupButton
                 type="button"
                 size="icon-sm"
-                aria-label="Send message"
+                aria-label={t("Send message")}
                 data-testid="chat-send-button"
                 disabled={submitDisabled || isLoading}
                 onClick={submitIfAllowed}

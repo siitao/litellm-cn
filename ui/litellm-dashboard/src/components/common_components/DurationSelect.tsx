@@ -1,5 +1,6 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
+import { t } from "@/i18n";
 interface DurationSelectProps {
   className?: string;
   value?: string;
@@ -7,9 +8,9 @@ interface DurationSelectProps {
 }
 
 const DURATION_OPTIONS = [
-  { value: "24h", label: "Daily" },
-  { value: "7d", label: "Weekly" },
-  { value: "30d", label: "Monthly" },
+  { value: "24h", label: t("Daily")},
+  { value: "7d", label: t("Weekly")},
+  { value: "30d", label: t("Monthly")},
 ];
 
 export default function DurationSelect({ className, value, onChange }: DurationSelectProps) {
@@ -24,7 +25,7 @@ export default function DurationSelect({ className, value, onChange }: DurationS
       }}
     >
       <SelectTrigger className={className}>
-        <SelectValue placeholder="Select duration" />
+        <SelectValue placeholder={t("Select duration")} />
       </SelectTrigger>
       <SelectContent>
         {DURATION_OPTIONS.map((option) => (

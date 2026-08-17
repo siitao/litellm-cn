@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/cva.config";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface OrganizationBudget {
   max_budget?: number | null;
   tpm_limit?: number | null;
@@ -26,11 +27,12 @@ const getOrganizationBudget = (organization: Organization): OrganizationBudget =
   (organization.litellm_budget_table ?? {}) as OrganizationBudget;
 
 function OrganizationLimitsCell({ organization }: { organization: Organization }) {
-  const { tpm_limit, rpm_limit } = getOrganizationBudget(organization);
+
+  const { t } = useLanguage();  const { tpm_limit, rpm_limit } = getOrganizationBudget(organization);
   return (
     <div className="flex flex-col text-xs text-muted-foreground">
-      <span>TPM: {tpm_limit ? tpm_limit : "Unlimited"}</span>
-      <span>RPM: {rpm_limit ? rpm_limit : "Unlimited"}</span>
+      <span>{t("TPM:")} {tpm_limit ? tpm_limit : "Unlimited"}</span>
+      <span>{t("RPM:")} {rpm_limit ? rpm_limit : "Unlimited"}</span>
     </div>
   );
 }
@@ -42,10 +44,11 @@ interface OrganizationRowActionsProps {
 }
 
 function OrganizationRowActions({ organization, onEditClick, onDeleteClick }: OrganizationRowActionsProps) {
-  return (
+
+  const { t } = useLanguage();  return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open organization actions"
+        aria-label={t("Open organization actions")}
         data-testid={`organization-actions-${organization.organization_id}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -91,7 +94,7 @@ export const getOrganizationsTableColumns = ({
     id: "organization_id",
     accessorKey: "organization_id",
     meta: { title: t("orgs.col_org_id") },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Organization ID" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Organization ID")} />,
     size: 220,
     enableSorting: true,
     cell: ({ row }) => (
@@ -107,7 +110,7 @@ export const getOrganizationsTableColumns = ({
     id: "organization_alias",
     accessorKey: "organization_alias",
     meta: { title: t("orgs.col_org_name") },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Organization Name" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Organization Name")} />,
     size: 200,
     enableSorting: true,
     cell: ({ row }) => {
@@ -124,7 +127,7 @@ export const getOrganizationsTableColumns = ({
     accessorKey: "created_at",
     sortingFn: "datetime",
     meta: { title: t("orgs.col_created") },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Created" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Created")} />,
     size: 130,
     enableSorting: true,
     cell: ({ row }) => <DateCell value={row.original.created_at} precision="date" />,
@@ -133,14 +136,14 @@ export const getOrganizationsTableColumns = ({
     id: "spend",
     accessorKey: "spend",
     meta: { title: t("orgs.col_spend") },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Spend (USD)" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Spend (USD)")} />,
     size: 120,
     enableSorting: true,
     cell: ({ row }) => <MoneyCell value={row.original.spend} decimals={4} />,
   },
   {
     id: "max_budget",
-    meta: { title: "Budget (USD)" },
+    meta: { title: t("Budget (USD)")},
     header: "Budget (USD)",
     size: 120,
     enableSorting: false,
@@ -150,7 +153,7 @@ export const getOrganizationsTableColumns = ({
   },
   {
     id: "models",
-    meta: { title: "Models", skeleton: "chips" },
+    meta: { title: t("Models"), skeleton: "chips" },
     header: "Models",
     size: 260,
     enableSorting: false,
@@ -158,7 +161,7 @@ export const getOrganizationsTableColumns = ({
   },
   {
     id: "limits",
-    meta: { title: "TPM / RPM Limits" },
+    meta: { title: t("TPM / RPM Limits")},
     header: "TPM / RPM Limits",
     size: 150,
     enableSorting: false,
@@ -166,7 +169,7 @@ export const getOrganizationsTableColumns = ({
   },
   {
     id: "members",
-    meta: { title: "Members" },
+    meta: { title: t("Members")},
     header: "Members",
     size: 100,
     enableSorting: false,
@@ -175,7 +178,7 @@ export const getOrganizationsTableColumns = ({
   {
     id: "actions",
     meta: { className: "text-right", headerClassName: "text-right" },
-    header: () => <span className="sr-only">Actions</span>,
+    header: () => <span className="sr-only">{t("Actions")}</span>,
     size: 64,
     enableSorting: false,
     enableHiding: false,

@@ -9,6 +9,7 @@ import { Policy } from "@/components/policies/types";
 
 import { getPolicyTableColumns, PolicyRow } from "./PolicyTableColumns";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 /** One row per DB policy name plus one row per config policy, so a config policy never hides same-named DB versions; primaryPolicy is used for display and for Edit (FlowBuilder loads all versions) */
 function groupPoliciesByName(policies: Policy[]): PolicyRow[] {
   const dbPolicies = policies.filter((policy) => policy.definition_location !== "config");
@@ -38,15 +39,14 @@ interface PolicyTableProps {
 const DEFAULT_SORTING: SortingState = [{ id: "policy_name", desc: false }];
 
 function EmptyState() {
-  return (
+
+  const { t } = useLanguage();  return (
     <div className="flex flex-col items-center gap-1 py-6">
       <div className="mb-1 flex size-10 items-center justify-center rounded-lg bg-muted">
         <Inbox className="size-5 text-muted-foreground" />
       </div>
-      <div className="text-sm font-medium text-foreground">No policies found</div>
-      <div className="text-sm text-muted-foreground">
-        Create a policy to bundle guardrails and apply them across teams.
-      </div>
+      <div className="text-sm font-medium text-foreground">{t("No policies found")}</div>
+      <div className="text-sm text-muted-foreground">{t("Create a policy to bundle guardrails and apply them across teams.")}</div>
     </div>
   );
 }

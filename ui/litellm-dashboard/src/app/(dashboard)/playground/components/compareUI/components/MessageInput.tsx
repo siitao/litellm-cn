@@ -3,6 +3,7 @@ import { ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
+import { t } from "@/i18n";
 interface MessageInputProps {
   value: string;
   onChange: (value: string) => void;
@@ -43,7 +44,7 @@ export function MessageInput({ value, onChange, onSend, disabled, hasAttachment,
           size="icon-sm"
           variant="outline"
           className="rounded-full"
-          aria-label="Send message"
+          aria-label={t("Send message")}
         >
           <ArrowUp />
         </Button>

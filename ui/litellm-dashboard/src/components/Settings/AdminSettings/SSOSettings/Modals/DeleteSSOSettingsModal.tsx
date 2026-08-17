@@ -6,6 +6,7 @@ import NotificationsManager from "../../../../molecules/notifications_manager";
 import { parseErrorMessage } from "../../../../shared/errorUtils";
 import { detectSSOProvider } from "../utils";
 
+import { t } from "@/i18n";
 interface DeleteSSOSettingsModalProps {
   isVisible: boolean;
   onCancel: () => void;
@@ -42,7 +43,7 @@ const DeleteSSOSettingsModal: React.FC<DeleteSSOSettingsModalProps> = ({ isVisib
 
     await editSSOSettings(clearSettings, {
       onSuccess: () => {
-        NotificationsManager.success("SSO settings cleared successfully");
+        NotificationsManager.success(t("SSO settings cleared successfully"));
         onCancel();
         onSuccess();
       },
@@ -55,12 +56,12 @@ const DeleteSSOSettingsModal: React.FC<DeleteSSOSettingsModalProps> = ({ isVisib
   return (
     <DeleteResourceModal
       isOpen={isVisible}
-      title="Confirm Clear SSO Settings"
+      title={t("Confirm Clear SSO Settings")}
       alertMessage="This action cannot be undone."
       message="Are you sure you want to clear all SSO settings? Users will no longer be able to login using SSO after this change."
       resourceInformationTitle="SSO Settings"
       resourceInformation={[
-        { label: "Provider", value: (ssoSettings?.values && detectSSOProvider(ssoSettings?.values)) || "Generic" },
+        { label: t("Provider"), value: (ssoSettings?.values && detectSSOProvider(ssoSettings?.values)) || "Generic" },
       ]}
       onCancel={onCancel}
       onOk={handleClearSSO}

@@ -7,6 +7,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import React, { useState } from "react";
 import { TopModelData } from "../types";
 
+import { t } from "@/i18n";
 interface KeyModelUsageViewProps {
   topModels: TopModelData[];
 }
@@ -59,21 +60,17 @@ const KeyModelUsageView: React.FC<KeyModelUsageViewProps> = ({ topModels }) => {
   return (
     <Card className="mt-4">
       <CardHeader>
-        <CardTitle className="text-base font-semibold">Model Usage</CardTitle>
+        <CardTitle className="text-base font-semibold">{t("Model Usage")}</CardTitle>
         <CardAction>
           <div className="flex space-x-2">
             <button
               onClick={() => setViewMode("table")}
               className={`px-3 py-1 text-sm rounded-md ${viewMode === "table" ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-700"}`}
-            >
-              Table
-            </button>
+            >{t("Table")}</button>
             <button
               onClick={() => setViewMode("chart")}
               className={`px-3 py-1 text-sm rounded-md ${viewMode === "chart" ? "bg-blue-100 text-blue-700" : "bg-gray-100 text-gray-700"}`}
-            >
-              Chart
-            </button>
+            >{t("Chart")}</button>
           </div>
         </CardAction>
       </CardHeader>

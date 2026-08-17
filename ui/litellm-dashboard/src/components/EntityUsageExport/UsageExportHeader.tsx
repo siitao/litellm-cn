@@ -19,6 +19,7 @@ import EntityUsageExportModal from "./EntityUsageExportModal";
 import type { EntitySpendData, EntityType } from "./types";
 import type { Team } from "@/components/key_team_helpers/key_list";
 
+import { t } from "@/i18n";
 interface UsageExportHeaderProps {
   dateValue: DateRangePickerValue;
   entityType: EntityType;
@@ -59,7 +60,7 @@ const UsageExportHeader: React.FC<UsageExportHeaderProps> = ({
 
   const filterList = (
     <ComboboxContent>
-      <ComboboxEmpty>No options found</ComboboxEmpty>
+      <ComboboxEmpty>{t("No options found")}</ComboboxEmpty>
       <ComboboxList>
         {(value: string) => (
           <ComboboxItem key={value} value={value}>

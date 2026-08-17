@@ -6,6 +6,7 @@ import PassThroughInfoView from "../pass_through_info";
 import NotificationsManager from "../molecules/notifications_manager";
 import { PassThroughEndpointsTable } from "./PassThroughEndpointsTable";
 
+import { t } from "@/i18n";
 interface PassThroughSettingsProps {
   accessToken: string | null;
   userRole: string | null;
@@ -74,9 +75,9 @@ const PassThroughSettings: React.FC<PassThroughSettingsProps> = ({ accessToken, 
       const updatedSettings = generalSettings.filter((setting) => setting.id !== endpointToDelete);
       setGeneralSettings(updatedSettings);
 
-      NotificationsManager.success("Endpoint deleted successfully.");
+      NotificationsManager.success(t("Endpoint deleted successfully."));
     } catch (error) {
-      console.error("Error deleting the endpoint:", error);
+      console.error(t("Error deleting the endpoint:"), error);
       NotificationsManager.fromBackend("Error deleting the endpoint: " + error);
     }
 
@@ -97,7 +98,7 @@ const PassThroughSettings: React.FC<PassThroughSettingsProps> = ({ accessToken, 
     const selectedEndpoint = generalSettings.find((endpoint) => endpoint.id === selectedEndpointId);
 
     if (!selectedEndpoint) {
-      return <div>Endpoint not found</div>;
+      return <div>{t("Endpoint not found")}</div>;
     }
 
     return (
@@ -115,8 +116,8 @@ const PassThroughSettings: React.FC<PassThroughSettingsProps> = ({ accessToken, 
   return (
     <div>
       <div className="mb-4">
-        <h2 className="text-lg font-semibold text-foreground">Pass Through Endpoints</h2>
-        <p className="text-sm text-muted-foreground">Configure and manage your pass-through endpoints</p>
+        <h2 className="text-lg font-semibold text-foreground">{t("Pass Through Endpoints")}</h2>
+        <p className="text-sm text-muted-foreground">{t("Configure and manage your pass-through endpoints")}</p>
       </div>
 
       <AddPassThroughEndpoint
@@ -148,22 +149,16 @@ const PassThroughSettings: React.FC<PassThroughSettingsProps> = ({ accessToken, 
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
                   <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <h3 className="text-lg leading-6 font-medium text-gray-900">Delete Pass-Through Endpoint</h3>
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">{t("Delete Pass-Through Endpoint")}</h3>
                     <div className="mt-2">
-                      <p className="text-sm text-gray-500">
-                        Are you sure you want to delete this pass-through endpoint? This action cannot be undone.
-                      </p>
+                      <p className="text-sm text-gray-500">{t("Are you sure you want to delete this pass-through endpoint? This action cannot be undone.")}</p>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <Button variant="destructive" onClick={confirmDelete} className="ml-2">
-                  Delete
-                </Button>
-                <Button variant="outline" onClick={cancelDelete}>
-                  Cancel
-                </Button>
+                <Button variant="destructive" onClick={confirmDelete} className="ml-2">{t("Delete")}</Button>
+                <Button variant="outline" onClick={cancelDelete}>{t("Cancel")}</Button>
               </div>
             </div>
           </div>

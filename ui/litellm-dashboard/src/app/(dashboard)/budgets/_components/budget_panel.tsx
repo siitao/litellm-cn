@@ -62,13 +62,13 @@ const BudgetPanel: React.FC<BudgetSettingsPageProps> = ({ accessToken }) => {
     }
     try {
       await deleteBudget.mutateAsync(selectedBudget.budget_id);
-      NotificationsManager.success("Budget deleted.");
+      NotificationsManager.success(t("Budget deleted."));
     } catch (error) {
-      console.error("Error deleting budget:", error);
+      console.error(t("Error deleting budget:"), error);
       if (typeof NotificationsManager.fromBackend === "function") {
         NotificationsManager.fromBackend("Failed to delete budget");
       } else {
-        NotificationsManager.info("Failed to delete budget");
+        NotificationsManager.info(t("Failed to delete budget"));
       }
     } finally {
       setIsDeleteModalVisible(false);
@@ -99,9 +99,7 @@ const BudgetPanel: React.FC<BudgetSettingsPageProps> = ({ accessToken }) => {
             </>
           )}
           <TabsList variant="line">
-            <TabsTrigger value="budgets" className="flex-none px-4">
-              Budgets
-            </TabsTrigger>
+            <TabsTrigger value="budgets" className="flex-none px-4">{t("Budgets")}</TabsTrigger>
             <TabsTrigger value="examples" className="flex-none px-4">
               {t("budgets.tab_examples")}
             </TabsTrigger>
@@ -125,12 +123,12 @@ const BudgetPanel: React.FC<BudgetSettingsPageProps> = ({ accessToken }) => {
             />
             <DeleteResourceModal
               isOpen={isDeleteModalVisible}
-              title="Delete Budget?"
-              message="Are you sure you want to delete this budget? This action cannot be undone."
+              title={t("Delete Budget?")}
+              message={t("Are you sure you want to delete this budget? This action cannot be undone.")}
               resourceInformationTitle="Budget Information"
               resourceInformation={[
-                { label: "Budget ID", value: selectedBudget?.budget_id, code: true },
-                { label: "Max Budget", value: selectedBudget?.max_budget },
+                { label: t("Budget ID"), value: selectedBudget?.budget_id, code: true },
+                { label: t("Max Budget"), value: selectedBudget?.max_budget },
                 { label: "TPM", value: selectedBudget?.tpm_limit },
                 { label: "RPM", value: selectedBudget?.rpm_limit },
               ]}

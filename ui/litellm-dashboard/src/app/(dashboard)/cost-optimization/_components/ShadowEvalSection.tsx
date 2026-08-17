@@ -27,6 +27,7 @@ import {
   type ShadowEvalSlice,
 } from "./useShadowEval";
 
+import { t } from "@/i18n";
 const pct = (value: number): string => `${value.toFixed(1)}%`;
 
 const MIN_TURNS_FOR_CONFIDENCE = 30;
@@ -92,13 +93,13 @@ const VerdictBar: React.FC<{ results: NonNullable<ShadowEvalJob["results"]> }> =
   const routerWins = results.overall_shadow_win_rate_pct;
   const ties = results.overall_tie_rate_pct;
   const segments = [
-    { label: "Router won", value: routerWins, fill: "bg-emerald-500" },
-    { label: "Tie", value: ties, fill: "bg-emerald-200" },
-    { label: "Current model won", value: Math.max(0, 100 - routerWins - ties), fill: "bg-muted-foreground/30" },
+    { label: t("Router won"), value: routerWins, fill: "bg-emerald-500" },
+    { label: t("Tie"), value: ties, fill: "bg-emerald-200" },
+    { label: t("Current model won"), value: Math.max(0, 100 - routerWins - ties), fill: "bg-muted-foreground/30" },
   ];
   return (
     <div className="space-y-2 border-b px-6 py-4">
-      <div className="flex h-2 w-full overflow-hidden rounded-full" role="img" aria-label="Verdict breakdown">
+      <div className="flex h-2 w-full overflow-hidden rounded-full" role="img" aria-label={t("Verdict breakdown")}>
         {segments
           .filter((segment) => segment.value > 0)
           .map((segment) => (
@@ -132,9 +133,7 @@ const ResultsBody: React.FC<{ job: ShadowEvalJob; resultsError?: boolean }> = ({
   return (
     <>
       <div className="flex flex-col gap-1 border-b px-6 py-4">
-        <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
-          Router matched or beat your current model
-        </p>
+        <p className="text-[11px] uppercase tracking-wide text-muted-foreground">{t("Router matched or beat your current model")}</p>
         <p className="text-3xl font-semibold text-foreground">
           {pct(results.overall_shadow_win_rate_pct + results.overall_tie_rate_pct)}
         </p>
@@ -168,8 +167,7 @@ const JobResults: React.FC<{
         <div className="flex items-center gap-3">
           <StatusBadge status={job.status} />
           <div>
-            <p className="text-sm font-medium text-foreground">
-              Shadowing {job.shadow_percentage}% via <span className="font-mono text-xs">{job.router_name}</span>
+            <p className="text-sm font-medium text-foreground">{t("Shadowing")} {job.shadow_percentage}% via <span className="font-mono text-xs">{job.router_name}</span>
             </p>
             <p className="text-xs text-muted-foreground">
               {(job.judged_count ?? 0).toLocaleString()} of {job.max_turns.toLocaleString()} turns judged ·{" "}
@@ -185,8 +183,7 @@ const JobResults: React.FC<{
         )}
       </div>
       {(job.error_count ?? 0) > 0 && job.last_error != null && (
-        <p className="border-b bg-red-50 px-6 py-2 text-xs text-destructive">
-          Last failure: <span className="font-mono">{job.last_error}</span>
+        <p className="border-b bg-red-50 px-6 py-2 text-xs text-destructive">{t("Last failure:")}<span className="font-mono">{job.last_error}</span>
         </p>
       )}
       <ResultsBody job={job} resultsError={resultsError} />
@@ -271,8 +268,8 @@ const KeySelect: React.FC<{ value: string; onChange: (token: string) => void }> 
       hasNextPage={hasNextPage}
       isFetchingNextPage={isFetchingNextPage}
       isLoading={isPending}
-      placeholder="Search keys by alias"
-      emptyText="No matching keys"
+      placeholder={t("Search keys by alias")}
+      emptyText={t("No matching keys")}
       errorText={isError ? "Keys could not be loaded. Refresh the page to retry." : undefined}
     />
   );
@@ -319,7 +316,7 @@ const StartForm: React.FC = () => {
   return (
     <Card size="sm">
       <CardHeader>
-        <CardTitle className="text-sm font-medium text-foreground">Start a shadow eval</CardTitle>
+        <CardTitle className="text-sm font-medium text-foreground">{t("Start a shadow eval")}</CardTitle>
         <p className="text-xs text-muted-foreground">
           Duplicates a sampled slice of the key&apos;s traffic through the auto-router and has an LLM judge compare both
           answers blind. The router&apos;s answers are never served to users; judge calls bill to the shadowed key.
@@ -330,13 +327,13 @@ const StartForm: React.FC = () => {
           <Field label="Key to shadow" htmlFor="shadow-eval-key">
             <KeySelect value={apiKeyId} onChange={setApiKeyId} />
           </Field>
-          <Field label="Auto-router">
+          <Field label={t("Auto-router")}>
             <SearchSelect
               options={routerOptions}
               value={routerName}
               onValueChange={setRouterName}
-              placeholder="Select an auto-router"
-              emptyText="No auto-routers configured"
+              placeholder={t("Select an auto-router")}
+              emptyText={t("No auto-routers configured")}
             />
           </Field>
           <Field label="Traffic sampled" htmlFor="shadow-eval-pct">
@@ -355,11 +352,11 @@ const StartForm: React.FC = () => {
             </div>
             <div>
               {percentage.trim() !== "" && !percentageValid && (
-                <p className="text-xs text-destructive">Enter a value from 0.1 to 100</p>
+                <p className="text-xs text-destructive">{t("Enter a value from 0.1 to 100")}</p>
               )}
             </div>
           </Field>
-          <Field label="Duration">
+          <Field label={t("Duration")}>
             <Select value={durationDays} onValueChange={(v: string | null) => setDurationDays(v ?? "7")}>
               <SelectTrigger className="w-full">
                 <SelectValue>{DURATION_OPTIONS.find((o) => o.value === durationDays)?.label}</SelectValue>
@@ -373,7 +370,7 @@ const StartForm: React.FC = () => {
               </SelectContent>
             </Select>
           </Field>
-          <Field label="Turn budget">
+          <Field label={t("Turn budget")}>
             <div className="flex items-center gap-2">
               <Input
                 type="number"
@@ -383,10 +380,10 @@ const StartForm: React.FC = () => {
                 value={maxTurns}
                 onChange={(e) => setMaxTurns(e.target.value)}
               />
-              <span className="text-sm text-muted-foreground">turns judged, max</span>
+              <span className="text-sm text-muted-foreground">{t("turns judged, max")}</span>
             </div>
             {maxTurns.trim() !== "" && !maxTurnsValid && (
-              <p className="text-xs text-destructive">Enter a value from 1 to 2000</p>
+              <p className="text-xs text-destructive">{t("Enter a value from 1 to 2000")}</p>
             )}
           </Field>
           <Field label="Judge model" className="sm:col-span-2">
@@ -394,8 +391,8 @@ const StartForm: React.FC = () => {
               options={judgeModelOptions}
               value={judgeModel}
               onValueChange={setJudgeModel}
-              placeholder="Select a judge model"
-              emptyText="No chat models available"
+              placeholder={t("Select a judge model")}
+              emptyText={t("No chat models available")}
             />
           </Field>
         </div>
@@ -460,7 +457,7 @@ const PreviousJobs: React.FC<{ jobs: readonly ShadowEvalJob[] }> = ({ jobs }) =>
         onClick={() => setOpen((prev) => !prev)}
         className="flex w-full items-center justify-between gap-3 px-6 py-3 text-left hover:bg-muted/50"
       >
-        <span className="text-sm font-medium text-foreground">Previous evaluations ({jobs.length})</span>
+        <span className="text-sm font-medium text-foreground">{t("Previous evaluations (")}{jobs.length})</span>
         <span className="text-xs text-muted-foreground">{open ? "Hide" : "Show"}</span>
       </button>
       {open && (
@@ -504,7 +501,7 @@ const ShadowEvalSection: React.FC = () => {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-baseline gap-2">
-        <h2 className="text-xl font-semibold text-foreground">Shadow eval</h2>
+        <h2 className="text-xl font-semibold text-foreground">{t("Shadow eval")}</h2>
         <p className="text-sm text-muted-foreground">
           Would the auto-router have answered as well as the models you use today? Find out on your real traffic, before
           switching anything.
@@ -512,7 +509,7 @@ const ShadowEvalSection: React.FC = () => {
       </div>
 
       {error != null && (
-        <p className="text-sm text-destructive">Existing evaluations could not be loaded. Refresh the page to retry.</p>
+        <p className="text-sm text-destructive">{t("Existing evaluations could not be loaded. Refresh the page to retry.")}</p>
       )}
 
       {isPending && error == null && <p className="text-sm text-muted-foreground">Loading evaluations...</p>}

@@ -4,6 +4,7 @@ import CodeBlock from "@/components/CodeBlock";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DocLink from "./DocLink";
 
+import { t } from "@/i18n";
 interface ApiRefProps {
   proxySettings: {
     PROXY_BASE_URL?: string;
@@ -25,7 +26,7 @@ const APIReferenceView: React.FC<ApiRefProps> = ({ proxySettings }) => {
       <div className="mb-5">
         {/* Header row with Docs link on the right */}
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-foreground">OpenAI Compatible Proxy: API Reference</h1>
+          <h1 className="text-2xl font-semibold text-foreground">{t("OpenAI Compatible Proxy: API Reference")}</h1>
           <DocLink className="ml-3 shrink-0" href="https://docs.litellm.ai/docs/proxy/user_keys" />
         </div>
 
@@ -36,15 +37,9 @@ const APIReferenceView: React.FC<ApiRefProps> = ({ proxySettings }) => {
 
         <Tabs defaultValue="openai">
           <TabsList variant="line" className="border-b rounded-none w-full justify-start h-auto p-0">
-            <TabsTrigger value="openai" className="rounded-none px-4 py-2 flex-none">
-              OpenAI Python SDK
-            </TabsTrigger>
-            <TabsTrigger value="llamaindex" className="rounded-none px-4 py-2 flex-none">
-              LlamaIndex
-            </TabsTrigger>
-            <TabsTrigger value="langchain" className="rounded-none px-4 py-2 flex-none">
-              Langchain Py
-            </TabsTrigger>
+            <TabsTrigger value="openai" className="rounded-none px-4 py-2 flex-none">{t("OpenAI Python SDK")}</TabsTrigger>
+            <TabsTrigger value="llamaindex" className="rounded-none px-4 py-2 flex-none">{t("LlamaIndex")}</TabsTrigger>
+            <TabsTrigger value="langchain" className="rounded-none px-4 py-2 flex-none">{t("Langchain Py")}</TabsTrigger>
           </TabsList>
           <TabsContent value="openai">
             <CodeBlock
@@ -122,10 +117,10 @@ chat = ChatOpenAI(
 
 messages = [
     SystemMessage(
-        content="You are a helpful assistant that im using to make a test request to."
+        content={t("You are a helpful assistant that im using to make a test request to.")}
     ),
     HumanMessage(
-        content="test from litellm. tell me why it's amazing in 1 sentence"
+        content={t("test from litellm. tell me why it's amazing in 1 sentence")}
     ),
 ]
 response = chat(messages)

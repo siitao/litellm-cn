@@ -7,6 +7,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { PolicyAttachment } from "@/components/policies/types";
 import { estimateAttachmentImpactCall } from "@/components/networking";
 
+import { t } from "@/i18n";
 interface ImpactResult {
   affected_keys_count: number;
   affected_teams_count: number;
@@ -37,7 +38,7 @@ const ImpactPopover: React.FC<{ attachment: PolicyAttachment; accessToken: strin
       setImpact(data);
       setLoaded(true);
     } catch (error) {
-      console.error("Failed to load impact:", error);
+      console.error(t("Failed to load impact:"), error);
     } finally {
       setLoading(false);
     }
@@ -55,19 +56,19 @@ const ImpactPopover: React.FC<{ attachment: PolicyAttachment; accessToken: strin
             render={
               <PopoverTrigger
                 render={
-                  <Button variant="ghost" size="icon-xs" aria-label="View blast radius">
+                  <Button variant="ghost" size="icon-xs" aria-label={t("View blast radius")}>
                     <Eye />
                   </Button>
                 }
               />
             }
           />
-          <TooltipContent>View blast radius</TooltipContent>
+          <TooltipContent>{t("View blast radius")}</TooltipContent>
         </Tooltip>
       </TooltipProvider>
 
       <PopoverContent className="w-72 gap-2">
-        <PopoverTitle>Blast Radius</PopoverTitle>
+        <PopoverTitle>{t("Blast Radius")}</PopoverTitle>
         {loading ? (
           <div className="flex items-center justify-center gap-2 py-2 text-xs text-muted-foreground">
             <Loader2 className="size-3.5 animate-spin" aria-hidden="true" />
@@ -76,7 +77,7 @@ const ImpactPopover: React.FC<{ attachment: PolicyAttachment; accessToken: strin
         ) : impact ? (
           <div className="text-xs">
             {impact.affected_keys_count === -1 ? (
-              <p className="font-medium text-foreground">Global scope — affects all keys and teams</p>
+              <p className="font-medium text-foreground">{t("Global scope — affects all keys and teams")}</p>
             ) : (
               <>
                 <p className="mb-1">
@@ -86,7 +87,7 @@ const ImpactPopover: React.FC<{ attachment: PolicyAttachment; accessToken: strin
                 </p>
                 {impact.sample_keys.length > 0 && (
                   <div className="mb-1 flex flex-wrap items-center gap-1">
-                    <span className="text-muted-foreground">Keys:</span>
+                    <span className="text-muted-foreground">{t("Keys:")}</span>
                     {impact.sample_keys.map((key: string) => (
                       <Badge key={key} variant="secondary" className="px-1.5 py-0 text-[10px] font-normal">
                         {key}
@@ -96,7 +97,7 @@ const ImpactPopover: React.FC<{ attachment: PolicyAttachment; accessToken: strin
                 )}
                 {impact.sample_teams.length > 0 && (
                   <div className="flex flex-wrap items-center gap-1">
-                    <span className="text-muted-foreground">Teams:</span>
+                    <span className="text-muted-foreground">{t("Teams:")}</span>
                     {impact.sample_teams.map((team: string) => (
                       <Badge key={team} variant="secondary" className="px-1.5 py-0 text-[10px] font-normal">
                         {team}
@@ -105,13 +106,13 @@ const ImpactPopover: React.FC<{ attachment: PolicyAttachment; accessToken: strin
                   </div>
                 )}
                 {impact.affected_keys_count === 0 && impact.affected_teams_count === 0 && (
-                  <p className="text-muted-foreground">No keys or teams currently affected</p>
+                  <p className="text-muted-foreground">{t("No keys or teams currently affected")}</p>
                 )}
               </>
             )}
           </div>
         ) : (
-          <p className="text-xs text-muted-foreground">Click to load</p>
+          <p className="text-xs text-muted-foreground">{t("Click to load")}</p>
         )}
       </PopoverContent>
     </Popover>

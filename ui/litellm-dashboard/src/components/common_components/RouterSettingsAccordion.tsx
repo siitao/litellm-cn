@@ -9,6 +9,7 @@ import { FallbackSelectionForm } from "../Settings/RouterSettings/Fallbacks/Fall
 import { FallbackGroup } from "../Settings/RouterSettings/Fallbacks/FallbackGroupConfig";
 import { fetchAvailableModels, fetchAvailableModelsForTeam, ModelGroup } from "@/components/llm_calls/fetch_models";
 
+import { t } from "@/i18n";
 export interface RouterSettingsAccordionValue {
   router_settings: {
     routing_strategy?: string | null;
@@ -346,8 +347,8 @@ const RouterSettingsAccordion = forwardRef<RouterSettingsAccordionRef, RouterSet
       <div className="w-full">
         <TabGroup className="w-full">
           <TabList variant="line" defaultValue="1" className="px-8 pt-4">
-            <Tab value="1">Loadbalancing</Tab>
-            <Tab value="2">Fallbacks</Tab>
+            <Tab value="1">{t("Loadbalancing")}</Tab>
+            <Tab value="2">{t("Fallbacks")}</Tab>
           </TabList>
           <TabPanels className="px-8 py-6">
             <TabPanel>

@@ -3,6 +3,7 @@ import { Button, DateRangePickerValue, Text } from "@tremor/react";
 import moment from "moment";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
+import { t } from "@/i18n";
 interface AdvancedDatePickerProps {
   value: DateRangePickerValue;
   onValueChange: (value: DateRangePickerValue) => void;
@@ -19,7 +20,7 @@ interface RelativeTimeOption {
 
 const relativeTimeOptions: RelativeTimeOption[] = [
   {
-    label: "Today",
+    label: t("Today"),
     shortLabel: "today",
     getValue: () => ({
       from: moment().startOf("day").toDate(),
@@ -27,7 +28,7 @@ const relativeTimeOptions: RelativeTimeOption[] = [
     }),
   },
   {
-    label: "Last 7 days",
+    label: t("Last 7 days"),
     shortLabel: "7d",
     getValue: () => ({
       from: moment().subtract(7, "days").startOf("day").toDate(),
@@ -35,7 +36,7 @@ const relativeTimeOptions: RelativeTimeOption[] = [
     }),
   },
   {
-    label: "Last 30 days",
+    label: t("Last 30 days"),
     shortLabel: "30d",
     getValue: () => ({
       from: moment().subtract(30, "days").startOf("day").toDate(),
@@ -43,7 +44,7 @@ const relativeTimeOptions: RelativeTimeOption[] = [
     }),
   },
   {
-    label: "Month to date",
+    label: t("Month to date"),
     shortLabel: "MTD",
     getValue: () => ({
       from: moment().startOf("month").toDate(),
@@ -51,7 +52,7 @@ const relativeTimeOptions: RelativeTimeOption[] = [
     }),
   },
   {
-    label: "Year to date",
+    label: t("Year to date"),
     shortLabel: "YTD",
     getValue: () => ({
       from: moment().startOf("year").toDate(),
@@ -304,7 +305,7 @@ const AdvancedDatePicker: React.FC<AdvancedDatePickerProps> = ({
               {/* Left side - Relative time options */}
               <div className="w-1/2 border-r border-gray-200">
                 <div className="p-3 border-b border-gray-200">
-                  <span className="text-sm font-semibold text-gray-900">Relative time</span>
+                  <span className="text-sm font-semibold text-gray-900">{t("Relative time")}</span>
                 </div>
                 <div className="h-[350px] overflow-y-auto">
                   {relativeTimeOptions.map((option) => {
@@ -338,14 +339,14 @@ const AdvancedDatePicker: React.FC<AdvancedDatePickerProps> = ({
                 <div className="p-3.5 border-b border-gray-200">
                   <div className="flex items-center gap-2">
                     <CalendarOutlined className="text-gray-600" />
-                    <span className="text-sm font-semibold text-gray-900">Start and end dates</span>
+                    <span className="text-sm font-semibold text-gray-900">{t("Start and end dates")}</span>
                   </div>
                 </div>
 
                 <div className="p-6 space-y-6 pb-20">
                   {/* Start date */}
                   <div>
-                    <label className="text-sm text-gray-700 mb-1 block">Start date</label>
+                    <label className="text-sm text-gray-700 mb-1 block">{t("Start date")}</label>
                     <input
                       type="date"
                       value={startDate}
@@ -360,7 +361,7 @@ const AdvancedDatePicker: React.FC<AdvancedDatePickerProps> = ({
 
                   {/* End date */}
                   <div>
-                    <label className="text-sm text-gray-700 mb-1 block">End date</label>
+                    <label className="text-sm text-gray-700 mb-1 block">{t("End date")}</label>
                     <input
                       type="date"
                       value={endDate}
@@ -394,11 +395,11 @@ const AdvancedDatePicker: React.FC<AdvancedDatePickerProps> = ({
                   {tempValue.from && tempValue.to && validation.isValid && (
                     <div className="bg-blue-50 p-3 rounded-md space-y-1">
                       <div className="text-xs text-blue-800">
-                        <span className="font-medium">From:</span>{" "}
+                        <span className="font-medium">{t("From:")}</span>{" "}
                         {moment(tempValue.from).format("MMM D, YYYY [at] HH:mm:ss")}
                       </div>
                       <div className="text-xs text-blue-800">
-                        <span className="font-medium">To:</span>{" "}
+                        <span className="font-medium">{t("To:")}</span>{" "}
                         {moment(tempValue.to).format("MMM D, YYYY [at] HH:mm:ss")}
                       </div>
                     </div>
@@ -407,12 +408,8 @@ const AdvancedDatePicker: React.FC<AdvancedDatePickerProps> = ({
 
                 <div className="absolute bottom-4 right-4">
                   <div className="flex gap-2">
-                    <Button variant="secondary" onClick={handleCancel}>
-                      Cancel
-                    </Button>
-                    <Button onClick={handleApply} disabled={!tempValue.from || !tempValue.to || !validation.isValid}>
-                      Apply
-                    </Button>
+                    <Button variant="secondary" onClick={handleCancel}>{t("Cancel")}</Button>
+                    <Button onClick={handleApply} disabled={!tempValue.from || !tempValue.to || !validation.isValid}>{t("Apply")}</Button>
                   </div>
                 </div>
               </div>

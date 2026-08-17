@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import MessageManager from "@/components/molecules/message_manager";
 import { FallbackGroup, FallbackGroupConfig } from "./FallbackGroupConfig";
 
+import { t } from "@/i18n";
 interface FallbackSelectionFormProps {
   groups: FallbackGroup[];
   onGroupsChange: (groups: FallbackGroup[]) => void;
@@ -61,7 +62,7 @@ export function FallbackSelectionForm({
 
   const handleRemoveGroup = (targetId: string) => {
     if (groups.length === 1) {
-      MessageManager.warning("At least one group is required");
+      MessageManager.warning(t("At least one group is required"));
       return;
     }
     const newGroups = groups.filter((g) => g.id !== targetId);
@@ -97,10 +98,8 @@ export function FallbackSelectionForm({
   if (groups.length === 0) {
     return (
       <div className="text-center py-12 bg-gray-50 rounded-lg border border-dashed border-gray-300">
-        <p className="text-gray-500 mb-4">No fallback groups configured</p>
-        <Button variant="primary" onClick={handleAddGroup} icon={() => <Plus className="w-4 h-4" />}>
-          Create First Group
-        </Button>
+        <p className="text-gray-500 mb-4">{t("No fallback groups configured")}</p>
+        <Button variant="primary" onClick={handleAddGroup} icon={() => <Plus className="w-4 h-4" />}>{t("Create First Group")}</Button>
       </div>
     );
   }

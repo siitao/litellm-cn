@@ -7,6 +7,7 @@ import {
   ComplianceCheckRequest,
 } from "@/components/networking";
 
+import { t } from "@/i18n";
 interface CompliancePanelProps {
   accessToken: string | null;
   logEntry: {
@@ -169,7 +170,7 @@ const CompliancePanel: React.FC<CompliancePanelProps> = ({ accessToken, logEntry
 
   return (
     <div>
-      <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">Regulatory Compliance</h4>
+      <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">{t("Regulatory Compliance")}</h4>
       <div className="space-y-3">
         <ComplianceCard title="EU AI Act" data={euAiActData} loading={euAiActLoading} error={euAiActError} />
         <ComplianceCard title="GDPR" data={gdprData} loading={gdprLoading} error={gdprError} />

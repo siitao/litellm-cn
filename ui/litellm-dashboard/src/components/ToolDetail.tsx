@@ -28,6 +28,7 @@ import {
   type ToolPolicyOverrideRow,
 } from "@/components/networking";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface ToolDetailProps {
   toolName: string;
   onBack: () => void;
@@ -57,7 +58,8 @@ function getDefaultLogsDateRange(): { start: string; end: string } {
 }
 
 export function ToolDetail({ toolName, onBack, accessToken }: ToolDetailProps) {
-  const queryClient = useQueryClient();
+
+  const { t } = useLanguage();  const queryClient = useQueryClient();
   const [overrideSaving, setOverrideSaving] = useState(false);
   const [inputPolicySaving, setInputPolicySaving] = useState(false);
   const [outputPolicySaving, setOutputPolicySaving] = useState(false);
@@ -223,7 +225,7 @@ export function ToolDetail({ toolName, onBack, accessToken }: ToolDetailProps) {
           <ArrowLeft />
           Back to Tool Policies
         </Button>
-        <p className="text-destructive">Failed to load tool details.</p>
+        <p className="text-destructive">{t("Failed to load tool details.")}</p>
       </div>
     );
   }
@@ -256,7 +258,7 @@ export function ToolDetail({ toolName, onBack, accessToken }: ToolDetailProps) {
             <dl className="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground">
               {tool.user_agent && (
                 <div className="flex items-center gap-1.5">
-                  <dt className="font-medium whitespace-nowrap">User Agent:</dt>
+                  <dt className="font-medium whitespace-nowrap">{t("User Agent:")}</dt>
                   <dd className="max-w-[40ch] truncate font-mono" title={tool.user_agent}>
                     {tool.user_agent}
                   </dd>
@@ -264,13 +266,13 @@ export function ToolDetail({ toolName, onBack, accessToken }: ToolDetailProps) {
               )}
               {tool.created_at && (
                 <div className="flex items-center gap-1.5">
-                  <dt className="font-medium whitespace-nowrap">First Discovered:</dt>
+                  <dt className="font-medium whitespace-nowrap">{t("First Discovered:")}</dt>
                   <dd>{new Date(tool.created_at).toLocaleString()}</dd>
                 </div>
               )}
               {tool.last_used_at && (
                 <div className="flex items-center gap-1.5">
-                  <dt className="font-medium whitespace-nowrap">Last Used:</dt>
+                  <dt className="font-medium whitespace-nowrap">{t("Last Used:")}</dt>
                   <dd>{new Date(tool.last_used_at).toLocaleString()}</dd>
                 </div>
               )}
@@ -283,7 +285,7 @@ export function ToolDetail({ toolName, onBack, accessToken }: ToolDetailProps) {
         {/* Two-panel policy layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <section className="rounded-lg border border-border bg-card p-5 shadow-xs">
-            <h2 className="mb-1 text-sm font-semibold">Input Policy</h2>
+            <h2 className="mb-1 text-sm font-semibold">{t("Input Policy")}</h2>
             <p className="mb-3 text-xs text-muted-foreground">
               {inputDesc ?? "Controls what data this tool is allowed to accept."}
             </p>
@@ -300,7 +302,7 @@ export function ToolDetail({ toolName, onBack, accessToken }: ToolDetailProps) {
           </section>
 
           <section className="rounded-lg border border-border bg-card p-5 shadow-xs">
-            <h2 className="mb-1 text-sm font-semibold">Output Policy</h2>
+            <h2 className="mb-1 text-sm font-semibold">{t("Output Policy")}</h2>
             <p className="mb-3 text-xs text-muted-foreground">
               {outputDesc ?? "Controls how this tool's output is trusted by downstream tools."}
             </p>
@@ -319,7 +321,7 @@ export function ToolDetail({ toolName, onBack, accessToken }: ToolDetailProps) {
 
         {overrides.length > 0 && (
           <section className="rounded-lg border border-border bg-card p-5 shadow-xs">
-            <h2 className="mb-3 text-sm font-semibold">Blocked for team or key</h2>
+            <h2 className="mb-3 text-sm font-semibold">{t("Blocked for team or key")}</h2>
             <ul className="divide-y divide-border rounded-md border border-border">
               {overrides.map((ov) => (
                 <li key={ov.override_id} className="flex items-center justify-between px-3 py-2.5 text-sm">
@@ -329,9 +331,7 @@ export function ToolDetail({ toolName, onBack, accessToken }: ToolDetailProps) {
                     {ov.key_hash ? `Key: ${ov.key_alias || ov.key_hash.substring(0, 8)}` : ""}
                     {!ov.team_id && !ov.key_hash ? "—" : ""}
                   </span>
-                  <Button variant="link" size="sm" disabled={overrideSaving} onClick={() => handleRemoveOverride(ov)}>
-                    Remove
-                  </Button>
+                  <Button variant="link" size="sm" disabled={overrideSaving} onClick={() => handleRemoveOverride(ov)}>{t("Remove")}</Button>
                 </li>
               ))}
             </ul>
@@ -339,10 +339,10 @@ export function ToolDetail({ toolName, onBack, accessToken }: ToolDetailProps) {
         )}
 
         <section className="rounded-lg border border-border bg-card p-5 shadow-xs">
-          <h2 className="mb-3 text-sm font-semibold">Block for team or key</h2>
+          <h2 className="mb-3 text-sm font-semibold">{t("Block for team or key")}</h2>
           <div className="flex max-w-md flex-col gap-4">
             <div>
-              <span className="mb-2 block text-sm font-medium">Scope</span>
+              <span className="mb-2 block text-sm font-medium">{t("Scope")}</span>
               <div className="flex items-center gap-6">
                 <label className="flex cursor-pointer items-center gap-2 text-sm">
                   <input
@@ -378,7 +378,7 @@ export function ToolDetail({ toolName, onBack, accessToken }: ToolDetailProps) {
                 >
                   <ComboboxInput placeholder="Select key" showClear className="w-full min-w-50" />
                   <ComboboxContent>
-                    <ComboboxEmpty>No keys found</ComboboxEmpty>
+                    <ComboboxEmpty>{t("No keys found")}</ComboboxEmpty>
                     <ComboboxList>
                       {(item: KeyItem) => (
                         <ComboboxItem key={item.value} value={item}>
@@ -394,8 +394,7 @@ export function ToolDetail({ toolName, onBack, accessToken }: ToolDetailProps) {
               variant="destructive"
               disabled={overrideSaving || (blockScope === "team" ? !blockTeamId : !blockKey?.token)}
               onClick={handleAddOverride}
-            >
-              Block for {blockScope}
+            >{t("Block for")} {blockScope}
             </Button>
           </div>
         </section>

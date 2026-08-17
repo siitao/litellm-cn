@@ -8,6 +8,7 @@ import langfuseLogo from "../../public/assets/logos/langfuse.png";
 import langsmithLogo from "../../public/assets/logos/langsmith.png";
 import openmeterLogo from "../../public/assets/logos/openmeter.png";
 import otelLogo from "../../public/assets/logos/otel.png";
+import { t } from "@/i18n";
 
 interface CallbackConfig {
   id: string;
@@ -28,7 +29,7 @@ export const CALLBACK_CONFIGS: CallbackConfig[] = [
       arize_api_key: "password",
       arize_space_id: "password",
     },
-    description: "Arize Logging Integration",
+    description: t("Arize Logging Integration"),
   },
   {
     id: "braintrust",
@@ -39,7 +40,7 @@ export const CALLBACK_CONFIGS: CallbackConfig[] = [
       braintrust_api_key: "password",
       braintrust_project_name: "text",
     },
-    description: "Braintrust Logging Integration",
+    description: t("Braintrust Logging Integration"),
   },
   {
     id: "custom_callback_api",
@@ -49,7 +50,7 @@ export const CALLBACK_CONFIGS: CallbackConfig[] = [
       custom_callback_api_url: "text",
       custom_callback_api_headers: "text",
     },
-    description: "Custom Callback API Logging Integration",
+    description: t("Custom Callback API Logging Integration"),
   },
   {
     id: "galileo",
@@ -64,7 +65,7 @@ export const CALLBACK_CONFIGS: CallbackConfig[] = [
       GALILEO_USERNAME: "text",
       GALILEO_PASSWORD: "password",
     },
-    description: "Galileo AI Observability Integration",
+    description: t("Galileo AI Observability Integration"),
   },
   {
     id: "datadog",
@@ -75,7 +76,7 @@ export const CALLBACK_CONFIGS: CallbackConfig[] = [
       dd_api_key: "password",
       dd_site: "text",
     },
-    description: "Datadog Logging Integration",
+    description: t("Datadog Logging Integration"),
   },
   {
     id: "lago",
@@ -86,7 +87,7 @@ export const CALLBACK_CONFIGS: CallbackConfig[] = [
       lago_api_url: "text",
       lago_api_key: "password",
     },
-    description: "Lago Billing Logging Integration",
+    description: t("Lago Billing Logging Integration"),
   },
   {
     id: "langfuse",
@@ -98,7 +99,7 @@ export const CALLBACK_CONFIGS: CallbackConfig[] = [
       langfuse_secret_key: "password",
       langfuse_host: "text",
     },
-    description: "Langfuse v2 Logging Integration",
+    description: t("Langfuse v2 Logging Integration"),
   },
   {
     id: "langfuse_otel",
@@ -110,7 +111,7 @@ export const CALLBACK_CONFIGS: CallbackConfig[] = [
       langfuse_secret_key: "password",
       langfuse_host: "text",
     },
-    description: "Langfuse v3 OTEL Logging Integration",
+    description: t("Langfuse v3 OTEL Logging Integration"),
   },
   {
     id: "langsmith",
@@ -123,7 +124,7 @@ export const CALLBACK_CONFIGS: CallbackConfig[] = [
       langsmith_base_url: "text",
       langsmith_sampling_rate: "number",
     },
-    description: "Langsmith Logging Integration",
+    description: t("Langsmith Logging Integration"),
   },
   {
     id: "openmeter",
@@ -134,7 +135,7 @@ export const CALLBACK_CONFIGS: CallbackConfig[] = [
       openmeter_api_key: "password",
       openmeter_base_url: "text",
     },
-    description: "OpenMeter Logging Integration",
+    description: t("OpenMeter Logging Integration"),
   },
   {
     id: "otel",
@@ -145,7 +146,7 @@ export const CALLBACK_CONFIGS: CallbackConfig[] = [
       otel_endpoint: "text",
       otel_headers: "text",
     },
-    description: "OpenTelemetry Logging Integration",
+    description: t("OpenTelemetry Logging Integration"),
   },
   {
     id: "s3",
@@ -158,7 +159,7 @@ export const CALLBACK_CONFIGS: CallbackConfig[] = [
       aws_secret_access_key: "password",
       aws_region: "text",
     },
-    description: "S3 Bucket (AWS) Logging Integration",
+    description: t("S3 Bucket (AWS) Logging Integration"),
   },
   {
     id: "SQS",
@@ -171,7 +172,7 @@ export const CALLBACK_CONFIGS: CallbackConfig[] = [
       aws_secret_access_key: "password",
       aws_region: "text",
     },
-    description: "SQS Queue (AWS) Logging Integration",
+    description: t("SQS Queue (AWS) Logging Integration"),
   },
 ];
 

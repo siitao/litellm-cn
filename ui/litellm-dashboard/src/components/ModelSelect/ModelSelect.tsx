@@ -6,13 +6,14 @@ import { Select, Skeleton, Tooltip } from "antd";
 import { Organization, Team } from "../networking";
 import { splitWildcardModels } from "./modelUtils";
 
+import { t } from "@/i18n";
 const MODEL_SELECT_ALL_PROXY_MODELS_SPECIAL_VALUE = {
-  label: "All Proxy Models",
+  label: t("All Proxy Models"),
   value: "all-proxy-models",
 } as const;
 
 const MODEL_SELECT_NO_DEFAULT_MODELS_SPECIAL_VALUE = {
-  label: "No Default Models",
+  label: t("No Default Models"),
   value: "no-default-models",
 } as const;
 
@@ -143,13 +144,13 @@ export const ModelSelect = (props: ModelSelectProps) => {
         ...(includeSpecialOptions
           ? [
               {
-                label: <span>Special Options</span>,
-                title: "Special Options",
+                label: <span>{t("Special Options")}</span>,
+                title: t("Special Options"),
                 options: [
                   ...(shouldShowAllProxyModels
                     ? [
                         {
-                          label: <span>All Proxy Models</span>,
+                          label: <span>{t("All Proxy Models")}</span>,
                           value: MODEL_SELECT_ALL_PROXY_MODELS_SPECIAL_VALUE.value,
                           disabled:
                             value.length > 0 &&
@@ -161,7 +162,7 @@ export const ModelSelect = (props: ModelSelectProps) => {
                       ]
                     : []),
                   {
-                    label: <span>No Default Models</span>,
+                    label: <span>{t("No Default Models")}</span>,
                     value: MODEL_SELECT_NO_DEFAULT_MODELS_SPECIAL_VALUE.value,
                     disabled:
                       value.length > 0 &&
@@ -175,8 +176,8 @@ export const ModelSelect = (props: ModelSelectProps) => {
         ...(wildcard.length > 0
           ? [
               {
-                label: <span>Wildcard Options</span>,
-                title: "Wildcard Options",
+                label: <span>{t("Wildcard Options")}</span>,
+                title: t("Wildcard Options"),
                 options: wildcard.map((model) => {
                   const provider = model.replace("/*", "");
                   const capitalizedProvider = provider.charAt(0).toUpperCase() + provider.slice(1);
@@ -191,8 +192,8 @@ export const ModelSelect = (props: ModelSelectProps) => {
             ]
           : []),
         {
-          label: <span>Models</span>,
-          title: "Models",
+          label: <span>{t("Models")}</span>,
+          title: t("Models"),
           options: regular.map((model) => ({
             label: <span>{model}</span>,
             value: model,
@@ -201,7 +202,7 @@ export const ModelSelect = (props: ModelSelectProps) => {
         },
       ]}
       mode="multiple"
-      placeholder="Select Models"
+      placeholder={t("Select Models")}
       allowClear
       maxTagCount="responsive"
       maxTagPlaceholder={(omittedValues) => (

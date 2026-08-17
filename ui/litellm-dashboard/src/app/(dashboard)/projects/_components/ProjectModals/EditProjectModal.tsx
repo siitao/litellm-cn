@@ -7,6 +7,7 @@ import { useUpdateProject, ProjectUpdateParams } from "@/app/(dashboard)/hooks/p
 import { ProjectBaseForm, ProjectFormValues } from "./ProjectBaseForm";
 import { buildProjectApiParams } from "./projectFormUtils";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface EditProjectModalProps {
   isOpen: boolean;
   project: ProjectResponse;
@@ -15,7 +16,8 @@ interface EditProjectModalProps {
 }
 
 export function EditProjectModal({ isOpen, project, onClose, onSuccess }: EditProjectModalProps) {
-  const [form] = Form.useForm<ProjectFormValues>();
+
+  const { t } = useLanguage();  const [form] = Form.useForm<ProjectFormValues>();
   const updateMutation = useUpdateProject();
 
   // Populate form with existing project data when modal opens
@@ -72,7 +74,7 @@ export function EditProjectModal({ isOpen, project, onClose, onSuccess }: EditPr
         { projectId: project.project_id, params },
         {
           onSuccess: () => {
-            MessageManager.success("Project updated successfully");
+            MessageManager.success(t("Project updated successfully"));
             onSuccess?.();
             onClose();
           },
@@ -82,34 +84,28 @@ export function EditProjectModal({ isOpen, project, onClose, onSuccess }: EditPr
         },
       );
     } catch (error) {
-      console.error("Validation failed:", error);
+      console.error(t("Validation failed:"), error);
     }
   };
 
   return (
     <Modal
       title={
-        <Typography.Text strong style={{ fontSize: 18 }}>
-          Edit Project
-        </Typography.Text>
+        <Typography.Text strong style={{ fontSize: 18 }}>{t("Edit Project")}</Typography.Text>
       }
       open={isOpen}
       onCancel={onClose}
       width={720}
       destroyOnHidden
       footer={[
-        <Button key="cancel" onClick={onClose}>
-          Cancel
-        </Button>,
+        <Button key="cancel" onClick={onClose}>{t("Cancel")}</Button>,
         <Button
           key="submit"
           type="primary"
           icon={<SaveOutlined />}
           loading={updateMutation.isPending}
           onClick={handleSubmit}
-        >
-          Save Changes
-        </Button>,
+        >{t("Save Changes")}</Button>,
       ]}
     >
       <ProjectBaseForm form={form} />

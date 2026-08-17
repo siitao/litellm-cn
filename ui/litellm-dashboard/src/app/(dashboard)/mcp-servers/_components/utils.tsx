@@ -1,5 +1,6 @@
 import { MCPEnvVar, MCPEnvVarScope } from "@/components/mcp_tools/types";
 
+import { t } from "@/i18n";
 export const extractMCPToken = (url: string): { token: string | null; baseUrl: string } => {
   try {
     const mcpIndex = url.indexOf("/mcp/");
@@ -19,7 +20,7 @@ export const extractMCPToken = (url: string): { token: string | null; baseUrl: s
       baseUrl: baseUrl,
     };
   } catch (error) {
-    console.error("Error parsing MCP URL:", error);
+    console.error(t("Error parsing MCP URL:"), error);
     return { token: null, baseUrl: url };
   }
 };

@@ -4,6 +4,7 @@ import { Modal, Form, Spin, Select } from "antd";
 import { getGlobalLitellmHeaderName } from "@/components/networking";
 import NotificationsManager from "./molecules/notifications_manager";
 
+import { t } from "@/i18n";
 interface CloudZeroExportModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -62,7 +63,7 @@ const CloudZeroExportModal: React.FC<CloudZeroExportModalProps> = ({ isOpen, onC
         NotificationsManager.fromBackend(`Failed to load existing settings: ${errorData.error || "Unknown error"}`);
       }
     } catch (error) {
-      console.error("Error loading CloudZero settings:", error);
+      console.error(t("Error loading CloudZero settings:"), error);
       NotificationsManager.fromBackend("Failed to load existing settings");
     } finally {
       setSettingsLoading(false);
@@ -110,7 +111,7 @@ const CloudZeroExportModal: React.FC<CloudZeroExportModalProps> = ({ isOpen, onC
         return false;
       }
     } catch (error) {
-      console.error("Error saving CloudZero settings:", error);
+      console.error(t("Error saving CloudZero settings:"), error);
       NotificationsManager.fromBackend("Failed to save CloudZero settings");
       return false;
     } finally {
@@ -147,7 +148,7 @@ const CloudZeroExportModal: React.FC<CloudZeroExportModalProps> = ({ isOpen, onC
         NotificationsManager.fromBackend(data.error || "Failed to export to CloudZero");
       }
     } catch (error) {
-      console.error("Error exporting to CloudZero:", error);
+      console.error(t("Error exporting to CloudZero:"), error);
       NotificationsManager.fromBackend("Failed to export to CloudZero");
     } finally {
       setExportLoading(false);
@@ -161,7 +162,7 @@ const CloudZeroExportModal: React.FC<CloudZeroExportModalProps> = ({ isOpen, onC
       NotificationsManager.info("CSV export functionality coming soon!");
       onClose();
     } catch (error) {
-      console.error("Error exporting CSV:", error);
+      console.error(t("Error exporting CSV:"), error);
       NotificationsManager.fromBackend("Failed to export CSV");
     } finally {
       setExportLoading(false);
@@ -203,7 +204,7 @@ const CloudZeroExportModal: React.FC<CloudZeroExportModalProps> = ({ isOpen, onC
               (e.target as HTMLImageElement).style.display = "none";
             }}
           />
-          <span>Export to CloudZero</span>
+          <span>{t("Export to CloudZero")}</span>
         </div>
       ),
     },
@@ -219,7 +220,7 @@ const CloudZeroExportModal: React.FC<CloudZeroExportModalProps> = ({ isOpen, onC
               d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
             />
           </svg>
-          <span>Export to CSV</span>
+          <span>{t("Export to CSV")}</span>
         </div>
       ),
     },
@@ -230,7 +231,7 @@ const CloudZeroExportModal: React.FC<CloudZeroExportModalProps> = ({ isOpen, onC
       <div className="space-y-4">
         {/* Export Type Selection */}
         <div>
-          <Text className="font-medium mb-2 block">Export Destination</Text>
+          <Text className="font-medium mb-2 block">{t("Export Destination")}</Text>
           <Select value={exportType} onChange={setExportType} options={exportOptions} className="w-full" size="large" />
         </div>
 
@@ -245,7 +246,7 @@ const CloudZeroExportModal: React.FC<CloudZeroExportModalProps> = ({ isOpen, onC
               <>
                 {existingSettings && (
                   <Callout
-                    title="Existing CloudZero Configuration"
+                    title={t("Existing CloudZero Configuration")}
                     icon={() => (
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path
@@ -259,8 +260,7 @@ const CloudZeroExportModal: React.FC<CloudZeroExportModalProps> = ({ isOpen, onC
                     color="green"
                     className="mb-4"
                   >
-                    <Text>
-                      API Key: {existingSettings.api_key_masked}
+                    <Text>{t("API Key:")} {existingSettings.api_key_masked}
                       <br />
                       Connection ID: {existingSettings.connection_id}
                     </Text>
@@ -270,19 +270,19 @@ const CloudZeroExportModal: React.FC<CloudZeroExportModalProps> = ({ isOpen, onC
                 {!existingSettings && (
                   <Form form={form} layout="vertical">
                     <Form.Item
-                      label="CloudZero API Key"
+                      label={t("CloudZero API Key")}
                       name="api_key"
                       rules={[{ required: true, message: "Please enter your CloudZero API key" }]}
                     >
-                      <TextInput type="password" placeholder="Enter your CloudZero API key" />
+                      <TextInput type="password" placeholder={t("Enter your CloudZero API key")} />
                     </Form.Item>
 
                     <Form.Item
-                      label="Connection ID"
+                      label={t("Connection ID")}
                       name="connection_id"
                       rules={[{ required: true, message: "Please enter the CloudZero connection ID" }]}
                     >
-                      <TextInput placeholder="Enter CloudZero connection ID" />
+                      <TextInput placeholder={t("Enter CloudZero connection ID")} />
                     </Form.Item>
                   </Form>
                 )}
@@ -294,7 +294,7 @@ const CloudZeroExportModal: React.FC<CloudZeroExportModalProps> = ({ isOpen, onC
         {/* CSV Export Info */}
         {exportType === "csv" && (
           <Callout
-            title="CSV Export"
+            title={t("CSV Export")}
             icon={() => (
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -302,15 +302,13 @@ const CloudZeroExportModal: React.FC<CloudZeroExportModalProps> = ({ isOpen, onC
             )}
             color="blue"
           >
-            <Text>Export your usage data as a CSV file for analysis in spreadsheet applications.</Text>
+            <Text>{t("Export your usage data as a CSV file for analysis in spreadsheet applications.")}</Text>
           </Callout>
         )}
 
         {/* Action Buttons */}
         <div className="flex justify-end space-x-2 pt-4">
-          <Button variant="secondary" onClick={handleModalClose}>
-            Cancel
-          </Button>
+          <Button variant="secondary" onClick={handleModalClose}>{t("Cancel")}</Button>
           <Button onClick={handleExport} loading={loading || exportLoading} disabled={loading || exportLoading}>
             {exportType === "cloudzero" ? "Export to CloudZero" : "Export CSV"}
           </Button>

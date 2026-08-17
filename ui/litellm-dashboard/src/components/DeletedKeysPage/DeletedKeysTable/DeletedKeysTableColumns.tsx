@@ -6,6 +6,7 @@ import { DataTableSortHeader } from "@/components/shared/DataTable";
 import { DateCell, IdCell, MoneyCell } from "@/components/shared/table_cells";
 import { DeletedKeyResponse } from "@/app/(dashboard)/hooks/keys/useKeys";
 
+import { t } from "@/i18n";
 function TruncatedTextCell({ value }: { value: string | null | undefined }) {
   if (!value) {
     return <span className="text-muted-foreground">-</span>;
@@ -21,7 +22,7 @@ export const getDeletedKeysTableColumns = (): ColumnDef<DeletedKeyResponse>[] =>
   {
     id: "token",
     accessorKey: "token",
-    meta: { title: "Key ID" },
+    meta: { title: t("Key ID")},
     header: "Key ID",
     size: 150,
     enableSorting: false,
@@ -30,7 +31,7 @@ export const getDeletedKeysTableColumns = (): ColumnDef<DeletedKeyResponse>[] =>
   {
     id: "key_alias",
     accessorKey: "key_alias",
-    meta: { title: "Key Alias" },
+    meta: { title: t("Key Alias")},
     header: "Key Alias",
     size: 150,
     enableSorting: false,
@@ -49,7 +50,7 @@ export const getDeletedKeysTableColumns = (): ColumnDef<DeletedKeyResponse>[] =>
   {
     id: "team_alias",
     accessorKey: "team_alias",
-    meta: { title: "Team Alias" },
+    meta: { title: t("Team Alias")},
     header: "Team Alias",
     size: 120,
     enableSorting: false,
@@ -58,8 +59,8 @@ export const getDeletedKeysTableColumns = (): ColumnDef<DeletedKeyResponse>[] =>
   {
     id: "spend",
     accessorKey: "spend",
-    meta: { title: "Spend (USD)", numeric: true },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Spend (USD)" />,
+    meta: { title: t("Spend (USD)"), numeric: true },
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Spend (USD)")} />,
     size: 100,
     enableSorting: true,
     cell: ({ row }) => <MoneyCell value={row.original.spend} decimals={4} />,
@@ -67,7 +68,7 @@ export const getDeletedKeysTableColumns = (): ColumnDef<DeletedKeyResponse>[] =>
   {
     id: "max_budget",
     accessorKey: "max_budget",
-    meta: { title: "Budget (USD)", numeric: true },
+    meta: { title: t("Budget (USD)"), numeric: true },
     header: "Budget (USD)",
     size: 110,
     enableSorting: false,
@@ -76,7 +77,7 @@ export const getDeletedKeysTableColumns = (): ColumnDef<DeletedKeyResponse>[] =>
   {
     id: "user_email",
     accessorKey: "user_email",
-    meta: { title: "User Email" },
+    meta: { title: t("User Email")},
     header: "User Email",
     size: 160,
     enableSorting: false,
@@ -85,7 +86,7 @@ export const getDeletedKeysTableColumns = (): ColumnDef<DeletedKeyResponse>[] =>
   {
     id: "user_id",
     accessorKey: "user_id",
-    meta: { title: "User ID" },
+    meta: { title: t("User ID")},
     header: "User ID",
     size: 120,
     enableSorting: false,
@@ -94,8 +95,8 @@ export const getDeletedKeysTableColumns = (): ColumnDef<DeletedKeyResponse>[] =>
   {
     id: "created_at",
     accessorKey: "created_at",
-    meta: { title: "Created At" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Created At" />,
+    meta: { title: t("Created At")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Created At")} />,
     size: 120,
     enableSorting: true,
     cell: ({ row }) => <DateCell value={row.original.created_at} precision="date" />,
@@ -103,7 +104,7 @@ export const getDeletedKeysTableColumns = (): ColumnDef<DeletedKeyResponse>[] =>
   {
     id: "created_by",
     accessorKey: "created_by",
-    meta: { title: "Created By" },
+    meta: { title: t("Created By")},
     header: "Created By",
     size: 120,
     enableSorting: false,
@@ -112,8 +113,8 @@ export const getDeletedKeysTableColumns = (): ColumnDef<DeletedKeyResponse>[] =>
   {
     id: "deleted_at",
     accessorKey: "deleted_at",
-    meta: { title: "Deleted At" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Deleted At" />,
+    meta: { title: t("Deleted At")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Deleted At")} />,
     size: 120,
     enableSorting: true,
     cell: ({ row }) => <DateCell value={row.original.deleted_at} precision="date" />,
@@ -121,7 +122,7 @@ export const getDeletedKeysTableColumns = (): ColumnDef<DeletedKeyResponse>[] =>
   {
     id: "deleted_by",
     accessorKey: "deleted_by",
-    meta: { title: "Deleted By" },
+    meta: { title: t("Deleted By")},
     header: "Deleted By",
     size: 120,
     enableSorting: false,

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { UiLoadingSpinner } from "@/components/ui/ui-loading-spinner";
 
+import { t } from "@/i18n";
 interface SearchConnectionTestProps {
   litellmParams: Record<string, any>;
   accessToken: string;
@@ -30,7 +31,7 @@ const SearchConnectionTest: React.FC<SearchConnectionTestProps> = ({ litellmPara
         const result = await testSearchToolConnection(accessToken, litellmParams);
         setTestResult(result);
         if (result.status === "success") {
-          NotificationsManager.success("Connection test successful!");
+          NotificationsManager.success(t("Connection test successful!"));
         }
       } catch (error) {
         setTestResult({
@@ -83,8 +84,7 @@ const SearchConnectionTest: React.FC<SearchConnectionTestProps> = ({ litellmPara
       <div className="rounded-lg bg-card p-6">
         <div className="flex flex-col items-center justify-center px-5 py-8">
           <UiLoadingSpinner className="mb-4 size-8 text-primary" />
-          <p className="text-base text-foreground">
-            Testing connection to {litellmParams.search_provider || "search provider"}...
+          <p className="text-base text-foreground">{t("Testing connection to")} {litellmParams.search_provider || "search provider"}...
           </p>
         </div>
       </div>
@@ -101,16 +101,14 @@ const SearchConnectionTest: React.FC<SearchConnectionTestProps> = ({ litellmPara
         <div className="flex items-center justify-center px-5 py-8">
           <CheckCircle2 className="size-6 text-emerald-600" />
           <div className="ml-3">
-            <p className="text-lg font-medium text-emerald-600">
-              Connection to {litellmParams.search_provider} successful!
+            <p className="text-lg font-medium text-emerald-600">{t("Connection to")} {litellmParams.search_provider} successful!
             </p>
             {testResult.test_query && (
-              <p className="mt-2 text-sm text-muted-foreground">
-                Test query: <code className="rounded bg-muted px-1.5 py-0.5">{testResult.test_query}</code>
+              <p className="mt-2 text-sm text-muted-foreground">{t("Test query:")}<code className="rounded bg-muted px-1.5 py-0.5">{testResult.test_query}</code>
               </p>
             )}
             {testResult.results_count !== undefined && (
-              <p className="text-sm text-muted-foreground">Results retrieved: {testResult.results_count}</p>
+              <p className="text-sm text-muted-foreground">{t("Results retrieved:")} {testResult.results_count}</p>
             )}
           </div>
         </div>
@@ -118,13 +116,12 @@ const SearchConnectionTest: React.FC<SearchConnectionTestProps> = ({ litellmPara
         <div>
           <div className="mb-5 flex items-center">
             <AlertTriangle className="mr-3 size-6 text-destructive" />
-            <p className="text-lg font-medium text-destructive">
-              Connection to {litellmParams.search_provider || "search provider"} failed
+            <p className="text-lg font-medium text-destructive">{t("Connection to")} {litellmParams.search_provider || "search provider"} failed
             </p>
           </div>
 
           <div className="mb-5 rounded-lg border border-destructive/30 bg-destructive/10 p-4">
-            <p className="mb-2 font-semibold text-foreground">Error: </p>
+            <p className="mb-2 font-semibold text-foreground">{t("Error:")}</p>
             <p className="text-sm leading-relaxed text-destructive">{errorMessage}</p>
 
             {testResult.error_type && (
@@ -149,7 +146,7 @@ const SearchConnectionTest: React.FC<SearchConnectionTestProps> = ({ litellmPara
 
           {showDetails && (
             <div className="mb-5">
-              <p className="mb-2 text-[15px] font-semibold text-foreground">Full Error Details</p>
+              <p className="mb-2 text-[15px] font-semibold text-foreground">{t("Full Error Details")}</p>
               <pre className="max-h-52 overflow-auto rounded-lg border border-border bg-muted p-4 text-[13px] leading-relaxed break-words whitespace-pre-wrap">
                 {testResult.message}
               </pre>
@@ -157,12 +154,12 @@ const SearchConnectionTest: React.FC<SearchConnectionTestProps> = ({ litellmPara
           )}
 
           <div className="rounded-lg border border-amber-200 border-l-4 border-l-amber-500 bg-amber-50 p-4">
-            <p className="mb-2 font-semibold text-amber-700">Troubleshooting tips:</p>
+            <p className="mb-2 font-semibold text-amber-700">{t("Troubleshooting tips:")}</p>
             <ul className="my-2 list-disc pl-5 text-amber-800">
-              <li className="mb-1.5">Verify your API key is correct and active</li>
-              <li className="mb-1.5">Check if the search provider service is operational</li>
-              <li className="mb-1.5">Ensure you have sufficient credits/quota with the provider</li>
-              <li className="mb-1.5">Review the provider&apos;s documentation for any additional requirements</li>
+              <li className="mb-1.5">{t("Verify your API key is correct and active")}</li>
+              <li className="mb-1.5">{t("Check if the search provider service is operational")}</li>
+              <li className="mb-1.5">{t("Ensure you have sufficient credits/quota with the provider")}</li>
+              <li className="mb-1.5">{t("Review the provider&apos;s documentation for any additional requirements")}</li>
             </ul>
           </div>
         </div>

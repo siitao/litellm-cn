@@ -8,6 +8,7 @@ import EscalationKeywords from "./EscalationKeywords";
 import KeywordTierRules, { KeywordTierRule } from "./KeywordTierRules";
 import SemanticKeywordMatching from "./SemanticKeywordMatching";
 
+import { t } from "@/i18n";
 const { Text } = Typography;
 
 export const DEFAULT_CLASSIFIER_TIMEOUT_MS = 3000;
@@ -39,21 +40,21 @@ export const NEW_CLASSIFIER_CLASSIFICATION_RUBRIC: ClassificationRubric = "agent
 export const CLASSIFICATION_RUBRIC_DESCRIPTIONS: Record<ClassificationRubric, { label: string; description: string }> =
   {
     legacy: {
-      label: "Legacy (uncalibrated)",
+      label: t("Legacy (uncalibrated)"),
       description:
         "The rubric as it shipped before calibration examples, with no worked examples at all. Routers created " +
         "before this setting existed use it, so their tier decisions and spend are unchanged. It over-routes " +
         "ordinary engineering to the most expensive tier.",
     },
     agentic: {
-      label: "Agentic",
+      label: t("Agentic"),
       description:
         "Anchors routine installs, builds, multi-file edits, and standard debugging at " +
         "Medium, so ordinary engineering does not route to your most expensive tier. Suits agent, terminal, and " +
         "coding-assistant traffic, and mixed traffic.",
     },
     chat: {
-      label: "Chat",
+      label: t("Chat"),
       description:
         "Drops the engineering examples, for a router serving only conversational traffic that never sees those " +
         "requests.",
@@ -130,23 +131,23 @@ export const TIER_DESCRIPTIONS: Record<
   { label: string; description: string; examples: string }
 > = {
   SIMPLE: {
-    label: "Simple",
-    description: "Basic questions, greetings, simple factual queries",
+    label: t("Simple"),
+    description: t("Basic questions, greetings, simple factual queries"),
     examples: '"Hello!", "What is Python?", "Thanks!"',
   },
   MEDIUM: {
-    label: "Medium",
-    description: "Standard queries requiring some reasoning or explanation",
+    label: t("Medium"),
+    description: t("Standard queries requiring some reasoning or explanation"),
     examples: '"Explain how REST APIs work", "Debug this error"',
   },
   COMPLEX: {
-    label: "Complex",
-    description: "Technical, multi-part requests requiring deep knowledge",
+    label: t("Complex"),
+    description: t("Technical, multi-part requests requiring deep knowledge"),
     examples: '"Design a microservices architecture", "Implement a rate limiter"',
   },
   REASONING: {
-    label: "Reasoning",
-    description: "Chain-of-thought, analysis, explicit reasoning requests",
+    label: t("Reasoning"),
+    description: t("Chain-of-thought, analysis, explicit reasoning requests"),
     examples: '"Think step by step...", "Analyze the pros and cons..."',
   },
 };
@@ -205,9 +206,7 @@ const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({
   return (
     <div className="w-full max-w-none">
       <Space align="center" style={{ marginBottom: 16 }}>
-        <Typography.Title level={4} style={{ margin: 0 }}>
-          Complexity Tier Configuration
-        </Typography.Title>
+        <Typography.Title level={4} style={{ margin: 0 }}>{t("Complexity Tier Configuration")}</Typography.Title>
         <Tooltip title="Map each complexity tier to one or more models. Simple queries use cheaper/faster models, complex queries use more capable models.">
           <InfoCircleOutlined className="text-gray-400" />
         </Tooltip>
@@ -241,12 +240,10 @@ const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({
                   <Tooltip title={tierInfo.description}>
                     <InfoCircleOutlined className="text-gray-400" />
                   </Tooltip>
-                  <Text type="secondary" style={{ fontSize: 12 }}>
-                    Tier {index + 1} of {TIER_KEYS.length} &middot; {tier}
+                  <Text type="secondary" style={{ fontSize: 12 }}>{t("Tier")} {index + 1} of {TIER_KEYS.length} &middot; {tier}
                   </Text>
                 </div>
-                <Text type="secondary" style={{ display: "block", marginBottom: 8, fontSize: 12 }}>
-                  Examples: {tierInfo.examples}
+                <Text type="secondary" style={{ display: "block", marginBottom: 8, fontSize: 12 }}>{t("Examples:")} {tierInfo.examples}
                 </Text>
                 <Input
                   value={value.tier_labels?.[tier] ?? ""}
@@ -273,8 +270,7 @@ const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({
                   </Text>
                 )}
                 {tierMissing && (
-                  <Text type="danger" style={{ fontSize: 12 }}>
-                    The {label} tier is required
+                  <Text type="danger" style={{ fontSize: 12 }}>{t("The")} {label} tier is required
                   </Text>
                 )}
               </div>
@@ -292,9 +288,7 @@ const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({
           {
             key: "classifier",
             label: (
-              <Text strong style={{ color: "#374151" }}>
-                Advanced: Classification Method
-              </Text>
+              <Text strong style={{ color: "#374151" }}>{t("Advanced: Classification Method")}</Text>
             ),
             children: (
               <ClassificationMethodConfig
@@ -311,18 +305,14 @@ const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({
           {
             key: "adaptive",
             label: (
-              <Text strong style={{ color: "#374151" }}>
-                Advanced: Adaptive Routing
-              </Text>
+              <Text strong style={{ color: "#374151" }}>{t("Advanced: Adaptive Routing")}</Text>
             ),
             children: <AdaptiveRoutingConfig value={value} onChange={onChange} />,
           },
           {
             key: "affinity",
             label: (
-              <Text strong style={{ color: "#374151" }}>
-                Advanced: Affinity
-              </Text>
+              <Text strong style={{ color: "#374151" }}>{t("Advanced: Affinity")}</Text>
             ),
             children: (
               <>
@@ -330,9 +320,9 @@ const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({
                   <Switch
                     checked={value.deployment_affinity ?? DEFAULT_DEPLOYMENT_AFFINITY}
                     onChange={(deploymentAffinity) => onChange({ ...value, deployment_affinity: deploymentAffinity })}
-                    aria-label="Pin a session to one deployment per model group"
+                    aria-label={t("Pin a session to one deployment per model group")}
                   />
-                  <Text strong>Pin a session to one deployment per model group</Text>
+                  <Text strong>{t("Pin a session to one deployment per model group")}</Text>
                 </div>
                 <Text type="secondary" style={{ display: "block", fontSize: 12, marginBottom: 12 }}>
                   Keeps a session on the same deployment within a group, so provider prompt caches stay warm. Turn off
@@ -342,9 +332,9 @@ const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({
                   <Switch
                     checked={value.session_affinity ?? DEFAULT_SESSION_AFFINITY}
                     onChange={(sessionAffinity) => onChange({ ...value, session_affinity: sessionAffinity })}
-                    aria-label="Pin a session to its first model"
+                    aria-label={t("Pin a session to its first model")}
                   />
-                  <Text strong>Pin a session to its first model</Text>
+                  <Text strong>{t("Pin a session to its first model")}</Text>
                 </div>
                 <Text type="secondary" style={{ display: "block", fontSize: 12 }}>
                   Keeps a session on its first turn&apos;s model instead of re-classifying each turn. Also pins the
@@ -356,9 +346,7 @@ const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({
           {
             key: "response",
             label: (
-              <Text strong style={{ color: "#374151" }}>
-                Advanced: Response Format
-              </Text>
+              <Text strong style={{ color: "#374151" }}>{t("Advanced: Response Format")}</Text>
             ),
             children: (
               <>
@@ -367,11 +355,9 @@ const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({
                     checked={value.return_raw_model_name ?? false}
                     onChange={(returnRawModelName) => onChange({ ...value, return_raw_model_name: returnRawModelName })}
                   />
-                  <Text strong>Return raw model name</Text>
+                  <Text strong>{t("Return raw model name")}</Text>
                 </div>
-                <Text type="secondary" style={{ display: "block", fontSize: 12 }}>
-                  Return the resolved underlying model name in responses instead of the autorouter alias.
-                </Text>
+                <Text type="secondary" style={{ display: "block", fontSize: 12 }}>{t("Return the resolved underlying model name in responses instead of the autorouter alias.")}</Text>
               </>
             ),
           },
@@ -380,9 +366,7 @@ const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({
                 {
                   key: "escalation",
                   label: (
-                    <Text strong style={{ color: "#374151" }}>
-                      Advanced: Escalation Keywords
-                    </Text>
+                    <Text strong style={{ color: "#374151" }}>{t("Advanced: Escalation Keywords")}</Text>
                   ),
                   children: <EscalationKeywords keywords={escalationKeywords} onChange={onEscalationKeywordsChange} />,
                 },
@@ -393,9 +377,7 @@ const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({
                 {
                   key: "keyword-semantic",
                   label: (
-                    <Text strong style={{ color: "#374151" }}>
-                      Advanced: Keyword/Semantic Matching
-                    </Text>
+                    <Text strong style={{ color: "#374151" }}>{t("Advanced: Keyword/Semantic Matching")}</Text>
                   ),
                   children: (
                     <>

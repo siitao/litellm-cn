@@ -7,6 +7,7 @@ import { Select, Tooltip } from "antd";
 import { AlertCircle, ArrowDown, X } from "lucide-react";
 import React from "react";
 
+import { t } from "@/i18n";
 export interface FallbackGroup {
   id: string;
   primaryModel: string | null;
@@ -68,13 +69,12 @@ export function FallbackGroupConfig({
     <div className="flex flex-col gap-8 py-4">
       {/* Primary Model Section */}
       <div className="relative">
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
-          Primary Model <span className="text-red-500">*</span>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">{t("Primary Model")}<span className="text-red-500">*</span>
         </label>
         <Select
           className="w-full h-12"
           size="large"
-          placeholder="Select primary model"
+          placeholder={t("Select primary model")}
           value={group.primaryModel}
           onChange={handlePrimaryChange}
           disabled={disablePrimaryModel}
@@ -86,7 +86,7 @@ export function FallbackGroupConfig({
         {!disablePrimaryModel && !group.primaryModel && (
           <div className="mt-2 flex items-center gap-2 text-amber-600 text-xs bg-amber-50 p-2 rounded-sm">
             <AlertCircle className="w-4 h-4" />
-            <span>Select a model to begin configuring fallbacks</span>
+            <span>{t("Select a model to begin configuring fallbacks")}</span>
           </div>
         )}
       </div>
@@ -103,8 +103,7 @@ export function FallbackGroupConfig({
       <div
         className={`transition-opacity duration-300 ${!group.primaryModel ? "opacity-50 pointer-events-none" : "opacity-100"}`}
       >
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
-          Fallback Chain <span className="text-red-500">*</span>
+        <label className="block text-sm font-semibold text-gray-700 mb-2">{t("Fallback Chain")}<span className="text-red-500">*</span>
           <span className="text-xs text-gray-500 font-normal ml-2">(Max {maxFallbacks} fallbacks at a time)</span>
         </label>
 
@@ -163,8 +162,8 @@ export function FallbackGroupConfig({
           <div className="space-y-2 min-h-[100px]">
             {group.fallbackModels.length === 0 ? (
               <div className="h-32 border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center text-gray-400">
-                <span className="text-sm">No fallback models selected</span>
-                <span className="text-xs mt-1">Add models from the dropdown above</span>
+                <span className="text-sm">{t("No fallback models selected")}</span>
+                <span className="text-xs mt-1">{t("Add models from the dropdown above")}</span>
               </div>
             ) : (
               group.fallbackModels.map((modelValue, index) => {

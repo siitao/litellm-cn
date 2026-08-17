@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
+import { t } from "@/i18n";
 interface ToolModalProps {
   visible: boolean;
   initialJson: string;
@@ -54,7 +55,7 @@ const ToolModal: React.FC<ToolModalProps> = ({ visible, initialJson, onSave, onC
     <Dialog open={visible} onOpenChange={(open) => !open && handleClose()}>
       <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-3xl">
         <DialogHeader>
-          <DialogTitle>Add Tool</DialogTitle>
+          <DialogTitle>{t("Add Tool")}</DialogTitle>
         </DialogHeader>
         <div className="space-y-3">
           {error && (
@@ -66,7 +67,7 @@ const ToolModal: React.FC<ToolModalProps> = ({ visible, initialJson, onSave, onC
             </div>
           )}
           <textarea
-            aria-label="Tool JSON"
+            aria-label={t("Tool JSON")}
             value={json}
             onChange={(e) => setJson(e.target.value)}
             className="w-full min-h-[400px] px-4 py-3 border border-input rounded-lg text-sm font-mono focus:outline-hidden focus:ring-2 focus:ring-ring resize-none"
@@ -74,10 +75,8 @@ const ToolModal: React.FC<ToolModalProps> = ({ visible, initialJson, onSave, onC
           />
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button onClick={handleSave}>Add</Button>
+          <Button variant="outline" onClick={handleClose}>{t("Cancel")}</Button>
+          <Button onClick={handleSave}>{t("Add")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -10,6 +10,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
+import { t } from "@/i18n";
+import { useLanguage } from "@/contexts/LanguageContext";
 const LOGS_QUERY_KEY = "chat-user-logs";
 const PAGE_SIZE = 50;
 
@@ -98,8 +100,9 @@ function StatusBadge({ status }: { status?: string }) {
 }
 
 function JsonBlock({ value }: { value: unknown }) {
-  if (value == null || value === "") {
-    return <p className="m-0 text-xs text-muted-foreground">Not available</p>;
+
+  const { t } = useLanguage();  if (value == null || value === "") {
+    return <p className="m-0 text-xs text-muted-foreground">{t("Not available")}</p>;
   }
   const text = typeof value === "string" ? value : JSON.stringify(value, null, 2);
   return (
@@ -140,9 +143,7 @@ function LogsError({ onRetry }: { onRetry: () => void }) {
     <div className="flex flex-col items-center gap-3 rounded-lg border border-dashed py-12 text-center text-sm text-muted-foreground">
       <AlertCircle className="h-6 w-6 text-destructive/70" />
       Failed to load your logs
-      <Button variant="outline" size="sm" onClick={onRetry}>
-        Retry
-      </Button>
+      <Button variant="outline" size="sm" onClick={onRetry}>{t("Retry")}</Button>
     </div>
   );
 }
@@ -153,12 +154,12 @@ function LogsTable({ rows, onRowClick }: { rows: LogRow[]; onRowClick: (row: Log
       <Table>
         <TableHeader>
           <TableRow className="bg-muted/50">
-            <TableHead className="text-[11px] font-medium uppercase tracking-wide">Time</TableHead>
-            <TableHead className="text-[11px] font-medium uppercase tracking-wide">Model</TableHead>
-            <TableHead className="text-[11px] font-medium uppercase tracking-wide">Status</TableHead>
-            <TableHead className="text-right text-[11px] font-medium uppercase tracking-wide">Tokens</TableHead>
-            <TableHead className="text-right text-[11px] font-medium uppercase tracking-wide">Duration</TableHead>
-            <TableHead className="text-right text-[11px] font-medium uppercase tracking-wide">Cost</TableHead>
+            <TableHead className="text-[11px] font-medium uppercase tracking-wide">{t("Time")}</TableHead>
+            <TableHead className="text-[11px] font-medium uppercase tracking-wide">{t("Model")}</TableHead>
+            <TableHead className="text-[11px] font-medium uppercase tracking-wide">{t("Status")}</TableHead>
+            <TableHead className="text-right text-[11px] font-medium uppercase tracking-wide">{t("Tokens")}</TableHead>
+            <TableHead className="text-right text-[11px] font-medium uppercase tracking-wide">{t("Duration")}</TableHead>
+            <TableHead className="text-right text-[11px] font-medium uppercase tracking-wide">{t("Cost")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -199,35 +200,35 @@ function LogDetailDialog({
     <Dialog open={!!log} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
-          <DialogTitle>Request details</DialogTitle>
+          <DialogTitle>{t("Request details")}</DialogTitle>
           <DialogDescription className="break-all font-mono text-xs">{log?.request_id}</DialogDescription>
         </DialogHeader>
         {log && (
           <div className="flex flex-col gap-4">
             <div className="grid grid-cols-2 gap-3">
               <div className="rounded-md border bg-card p-3">
-                <div className="mb-0.5 text-xs text-muted-foreground">Model</div>
+                <div className="mb-0.5 text-xs text-muted-foreground">{t("Model")}</div>
                 <div className="text-sm text-foreground">{log.model || "-"}</div>
               </div>
               <div className="rounded-md border bg-card p-3">
-                <div className="mb-0.5 text-xs text-muted-foreground">Cost</div>
+                <div className="mb-0.5 text-xs text-muted-foreground">{t("Cost")}</div>
                 <div className="text-sm text-foreground">{formatCost(log.spend)}</div>
               </div>
               <div className="rounded-md border bg-card p-3">
-                <div className="mb-0.5 text-xs text-muted-foreground">Tokens</div>
+                <div className="mb-0.5 text-xs text-muted-foreground">{t("Tokens")}</div>
                 <div className="text-sm text-foreground">
                   {formatTokens(log.total_tokens)} ({formatTokens(log.prompt_tokens)} in /{" "}
                   {formatTokens(log.completion_tokens)} out)
                 </div>
               </div>
               <div className="rounded-md border bg-card p-3">
-                <div className="mb-0.5 text-xs text-muted-foreground">Duration</div>
+                <div className="mb-0.5 text-xs text-muted-foreground">{t("Duration")}</div>
                 <div className="text-sm text-foreground">{formatDuration(log)}</div>
               </div>
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Request</div>
+              <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{t("Request")}</div>
               {isLoading ? (
                 <Skeleton className="h-16 w-full" />
               ) : (
@@ -235,7 +236,7 @@ function LogDetailDialog({
               )}
             </div>
             <div className="flex flex-col gap-1.5">
-              <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Response</div>
+              <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{t("Response")}</div>
               {isLoading ? <Skeleton className="h-16 w-full" /> : <JsonBlock value={details?.response} />}
             </div>
           </div>
@@ -296,12 +297,8 @@ const LogsPanel: React.FC<Props> = ({ accessToken, userId }) => {
           </p>
           {totalPages > 1 && (
             <div className="flex gap-1">
-              <Button variant="outline" size="sm" disabled={page <= 1} onClick={() => setPage((p) => p - 1)}>
-                Previous
-              </Button>
-              <Button variant="outline" size="sm" disabled={page >= totalPages} onClick={() => setPage((p) => p + 1)}>
-                Next
-              </Button>
+              <Button variant="outline" size="sm" disabled={page <= 1} onClick={() => setPage((p) => p - 1)}>{t("Previous")}</Button>
+              <Button variant="outline" size="sm" disabled={page >= totalPages} onClick={() => setPage((p) => p + 1)}>{t("Next")}</Button>
             </div>
           )}
         </div>
@@ -313,8 +310,8 @@ const LogsPanel: React.FC<Props> = ({ accessToken, userId }) => {
     <div className="w-full">
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <h2 className="mb-0.5 text-base font-semibold tracking-tight text-foreground">Your Logs</h2>
-          <p className="m-0 text-sm text-muted-foreground">Request logs for your account only</p>
+          <h2 className="mb-0.5 text-base font-semibold tracking-tight text-foreground">{t("Your Logs")}</h2>
+          <p className="m-0 text-sm text-muted-foreground">{t("Request logs for your account only")}</p>
         </div>
         <div className="flex gap-1">
           {TIME_RANGE_OPTIONS.map((opt) => (

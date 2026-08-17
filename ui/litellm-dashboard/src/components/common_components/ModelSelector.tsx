@@ -5,6 +5,7 @@ import { RobotOutlined } from "@ant-design/icons";
 import { useDebouncedCallback } from "@tanstack/react-pacer/debouncer";
 import { fetchAvailableModels, ModelGroup } from "@/components/llm_calls/fetch_models";
 
+import { t } from "@/i18n";
 const MODEL_SELECT_DEBOUNCE_MS = 500;
 
 interface ModelSelectorProps {
@@ -49,7 +50,7 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
           setModelInfo(uniqueModels);
         }
       } catch (error) {
-        console.error("Error fetching model info:", error);
+        console.error(t("Error fetching model info:"), error);
       }
     };
 
@@ -94,7 +95,7 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
             label: model_group,
             key: index,
           })),
-          { value: "custom", label: "Enter custom model", key: "custom" },
+          { value: "custom", label: t("Enter custom model"), key: "custom" },
         ]}
         style={{ width: "100%", ...style }}
         showSearch={true}
@@ -104,7 +105,7 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
       {showCustomModelInput && (
         <TextInput
           className="mt-2"
-          placeholder="Enter custom model name"
+          placeholder={t("Enter custom model name")}
           onValueChange={debouncedSelect}
           disabled={disabled}
         />

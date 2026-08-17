@@ -5,6 +5,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { formatNumberWithCommas } from "@/utils/dataUtils";
 
+import { t } from "@/i18n";
 type TopModel = {
   key: string;
   spend: number;
@@ -61,7 +62,7 @@ export default function TopModelView({ topModels, topModelsLimit, setTopModelsLi
     <>
       <div className="mb-4 flex justify-between items-center">
         <Tabs value={String(topModelsLimit)} onValueChange={(value: string) => setTopModelsLimit(Number(value))}>
-          <TabsList aria-label="Number of models to show">
+          <TabsList aria-label={t("Number of models to show")}>
             {TOP_MODEL_LIMITS.map((limit) => (
               <TabsTrigger key={limit} value={String(limit)} className="flex-none px-3">
                 {limit}
@@ -70,13 +71,9 @@ export default function TopModelView({ topModels, topModelsLimit, setTopModelsLi
           </TabsList>
         </Tabs>
         <Tabs value={modelViewMode} onValueChange={(value: string) => setModelViewMode(value as "chart" | "table")}>
-          <TabsList aria-label="Top model view mode">
-            <TabsTrigger value="table" className="flex-none px-3">
-              Table View
-            </TabsTrigger>
-            <TabsTrigger value="chart" className="flex-none px-3">
-              Chart View
-            </TabsTrigger>
+          <TabsList aria-label={t("Top model view mode")}>
+            <TabsTrigger value="table" className="flex-none px-3">{t("Table View")}</TabsTrigger>
+            <TabsTrigger value="chart" className="flex-none px-3">{t("Chart View")}</TabsTrigger>
           </TabsList>
         </Tabs>
       </div>

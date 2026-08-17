@@ -5,6 +5,7 @@ import { AccessGroupBaseForm, AccessGroupFormValues } from "./AccessGroupBaseFor
 import { useEditAccessGroup, AccessGroupUpdateParams } from "@/app/(dashboard)/hooks/accessGroups/useEditAccessGroup";
 import { AccessGroupResponse } from "@/app/(dashboard)/hooks/accessGroups/useAccessGroups";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface AccessGroupEditModalProps {
   visible: boolean;
   accessGroup: AccessGroupResponse;
@@ -13,7 +14,8 @@ interface AccessGroupEditModalProps {
 }
 
 export function AccessGroupEditModal({ visible, accessGroup, onCancel, onSuccess }: AccessGroupEditModalProps) {
-  const [form] = Form.useForm<AccessGroupFormValues>();
+
+  const { t } = useLanguage();  const [form] = Form.useForm<AccessGroupFormValues>();
   const editMutation = useEditAccessGroup();
 
   // Populate the form with initial values whenever the modal opens or the data changes
@@ -45,7 +47,7 @@ export function AccessGroupEditModal({ visible, accessGroup, onCancel, onSuccess
           { accessGroupId: accessGroup.access_group_id, params },
           {
             onSuccess: () => {
-              MessageManager.success("Access group updated successfully");
+              MessageManager.success(t("Access group updated successfully"));
               onSuccess?.();
               onCancel();
             },
@@ -57,13 +59,13 @@ export function AccessGroupEditModal({ visible, accessGroup, onCancel, onSuccess
 
   return (
     <Modal
-      title="Edit Access Group"
+      title={t("Edit Access Group")}
       open={visible}
       onOk={handleOk}
       onCancel={onCancel}
       width={700}
-      okText="Save Changes"
-      cancelText="Cancel"
+      okText={t("Save Changes")}
+      cancelText={t("Cancel")}
       confirmLoading={editMutation.isPending}
       destroyOnHidden
     >

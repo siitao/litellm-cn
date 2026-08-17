@@ -8,6 +8,7 @@ import { useModelDashboardData } from "@/app/(dashboard)/models-and-endpoints/us
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
 import NotificationsManager from "@/components/molecules/notifications_manager";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface RetryPolicyObject {
   [key: string]: { [retryPolicyKey: string]: number } | undefined;
 }
@@ -23,7 +24,8 @@ interface RouterSettings {
 }
 
 export default function ModelRetrySettingsPanel() {
-  const { accessToken, userId: userID, userRole } = useAuthorized();
+
+  const { t } = useLanguage();  const { accessToken, userId: userID, userRole } = useAuthorized();
   const { availableModelGroups } = useModelDashboardData();
   const updateRetryPolicy = useUpdateRetryPolicy(accessToken);
 
@@ -40,7 +42,7 @@ export default function ModelRetrySettingsPanel() {
       const info = await getCallbacksCall(accessToken, userID, userRole);
       return info.router_settings;
     } catch (error) {
-      console.error("Error fetching router settings:", error);
+      console.error(t("Error fetching router settings:"), error);
       return null;
     }
   }, [accessToken, userID, userRole]);
@@ -69,7 +71,7 @@ export default function ModelRetrySettingsPanel() {
       { retry_policy: globalRetryPolicy, model_group_retry_policy: modelGroupRetryPolicy },
       {
         onSuccess: () => {
-          NotificationsManager.success("Retry settings saved successfully");
+          NotificationsManager.success(t("Retry settings saved successfully"));
           void fetchRetrySettings().then((routerSettings) => {
             if (routerSettings) {
               applyRetrySettings(routerSettings);

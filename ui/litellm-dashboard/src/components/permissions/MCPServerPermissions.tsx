@@ -6,6 +6,7 @@ import { fetchMCPServers, fetchMCPToolsets } from "../networking";
 import { MCPServer, MCPToolset } from "../mcp_tools/types";
 import { ALL_PROXY_MCP_SERVERS_SENTINEL, NO_MCP_SERVERS_SENTINEL } from "../mcp_tools/constants";
 
+import { t } from "@/i18n";
 interface MCPServerPermissionsProps {
   mcpServers: string[];
   mcpAccessGroups?: string[];
@@ -62,7 +63,7 @@ export function MCPServerPermissions({
             setMCPServerDetails(response.data);
           }
         } catch (error) {
-          console.error("Error fetching MCP servers:", error);
+          console.error(t("Error fetching MCP servers:"), error);
         }
       }
     };
@@ -78,7 +79,7 @@ export function MCPServerPermissions({
           const filtered = Array.isArray(all) ? all.filter((t: MCPToolset) => mcpToolsets.includes(t.toolset_id)) : [];
           setToolsetDetails(filtered);
         } catch (error) {
-          console.error("Error fetching toolsets:", error);
+          console.error(t("Error fetching toolsets:"), error);
         }
       }
     };
@@ -111,7 +112,7 @@ export function MCPServerPermissions({
     <div className="space-y-3">
       <div className="flex items-center gap-2">
         <ServerIcon className="h-4 w-4 text-blue-600" />
-        <Text className="font-semibold text-gray-900">MCP Servers</Text>
+        <Text className="font-semibold text-gray-900">{t("MCP Servers")}</Text>
         <Badge color={blocksAllMcpServers ? "red" : "blue"} size="xs">
           {blocksAllMcpServers ? "Blocked" : grantsAllProxyMcpServers ? "All" : totalCount}
         </Badge>
@@ -127,7 +128,7 @@ export function MCPServerPermissions({
       ) : grantsAllProxyMcpServers ? (
         <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-50 border border-blue-200">
           <ServerIcon className="h-4 w-4 text-blue-400" />
-          <Text className="text-blue-700 text-sm">All Proxy MCP Servers</Text>
+          <Text className="text-blue-700 text-sm">{t("All Proxy MCP Servers")}</Text>
         </div>
       ) : totalCount > 0 ? (
         <div className="max-h-[400px] overflow-y-auto space-y-2 pr-1">
@@ -158,9 +159,7 @@ export function MCPServerPermissions({
                       <div className="inline-flex items-center gap-2 min-w-0">
                         <span className="inline-block w-1.5 h-1.5 bg-green-500 rounded-full shrink-0"></span>
                         <span className="text-sm font-medium text-gray-900 truncate">{item.value}</span>
-                        <span className="ml-1 px-1.5 py-0.5 text-[9px] font-semibold text-green-600 bg-green-50 border border-green-200 rounded-sm uppercase tracking-wide shrink-0">
-                          Group
-                        </span>
+                        <span className="ml-1 px-1.5 py-0.5 text-[9px] font-semibold text-green-600 bg-green-50 border border-green-200 rounded-sm uppercase tracking-wide shrink-0">{t("Group")}</span>
                       </div>
                     )}
                   </div>
@@ -217,9 +216,7 @@ export function MCPServerPermissions({
                       <span className="text-sm font-medium text-gray-900 truncate">
                         {detail?.toolset_name ?? toolsetId}
                       </span>
-                      <span className="ml-1 px-1.5 py-0.5 text-[9px] font-semibold text-purple-600 bg-purple-50 border border-purple-200 rounded-sm uppercase tracking-wide shrink-0">
-                        Toolset
-                      </span>
+                      <span className="ml-1 px-1.5 py-0.5 text-[9px] font-semibold text-purple-600 bg-purple-50 border border-purple-200 rounded-sm uppercase tracking-wide shrink-0">{t("Toolset")}</span>
                     </div>
                     {toolCount > 0 && (
                       <div className="flex items-center gap-1 shrink-0 whitespace-nowrap">
@@ -256,7 +253,7 @@ export function MCPServerPermissions({
       ) : (
         <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-50 border border-gray-200">
           <ServerIcon className="h-4 w-4 text-gray-400" />
-          <Text className="text-gray-500 text-sm">No MCP servers, access groups, or toolsets configured</Text>
+          <Text className="text-gray-500 text-sm">{t("No MCP servers, access groups, or toolsets configured")}</Text>
         </div>
       )}
     </div>

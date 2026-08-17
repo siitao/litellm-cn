@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import { t } from "@/i18n";
 export interface ContentFilterDetection {
   type: "pattern" | "blocked_word" | "category_keyword";
   pattern_name?: string;
@@ -80,7 +81,7 @@ const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response })
       return (
         <div className="bg-white rounded-lg border border-red-200 p-4">
           <div className="text-red-800">
-            <h5 className="font-medium mb-2">Error</h5>
+            <h5 className="font-medium mb-2">{t("Error")}</h5>
             <p className="text-sm">{response}</p>
           </div>
         </div>
@@ -95,7 +96,7 @@ const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response })
   if (detections.length === 0) {
     return (
       <div className="bg-white rounded-lg border border-gray-200 p-4">
-        <div className="text-gray-600 text-sm">No detections found</div>
+        <div className="text-gray-600 text-sm">{t("No detections found")}</div>
       </div>
     );
   }
@@ -118,10 +119,10 @@ const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response })
       <div className="bg-white rounded-lg border border-gray-200 p-4">
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <KV label="Total Detections:">
+            <KV label={t("Total Detections:")}>
               <span className="font-semibold">{totalDetections}</span>
             </KV>
-            <KV label="Actions:">
+            <KV label={t("Actions:")}>
               <div className="flex flex-wrap gap-2">
                 {blockedCount > 0 && chip(`${blockedCount} blocked`, "red")}
                 {maskedCount > 0 && chip(`${maskedCount} masked`, "blue")}
@@ -130,7 +131,7 @@ const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response })
             </KV>
           </div>
           <div className="space-y-2">
-            <KV label="By Type:">
+            <KV label={t("By Type:")}>
               <div className="flex flex-wrap gap-2">
                 {patterns.length > 0 && chip(`${patterns.length} patterns`, "slate")}
                 {blockedWords.length > 0 && chip(`${blockedWords.length} keywords`, "slate")}
@@ -149,10 +150,10 @@ const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response })
               <div key={idx} className="p-3 bg-gray-50 rounded-md">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <KV label="Pattern:">{detection.pattern_name || "unknown"}</KV>
+                    <KV label={t("Pattern:")}>{detection.pattern_name || "unknown"}</KV>
                   </div>
                   <div className="space-y-1">
-                    <KV label="Action:">{chip(detection.action, detection.action === "BLOCK" ? "red" : "blue")}</KV>
+                    <KV label={t("Action:")}>{chip(detection.action, detection.action === "BLOCK" ? "red" : "blue")}</KV>
                   </div>
                 </div>
               </div>
@@ -172,10 +173,10 @@ const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response })
                     <KV label="Keyword:" mono>
                       {detection.keyword || "unknown"}
                     </KV>
-                    {detection.description && <KV label="Description:">{detection.description}</KV>}
+                    {detection.description && <KV label={t("Description:")}>{detection.description}</KV>}
                   </div>
                   <div className="space-y-1">
-                    <KV label="Action:">{chip(detection.action, detection.action === "BLOCK" ? "red" : "blue")}</KV>
+                    <KV label={t("Action:")}>{chip(detection.action, detection.action === "BLOCK" ? "red" : "blue")}</KV>
                   </div>
                 </div>
               </div>
@@ -192,12 +193,12 @@ const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response })
               <div key={idx} className="p-3 bg-gray-50 rounded-md">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <KV label="Category:">{detection.category || "unknown"}</KV>
+                    <KV label={t("Category:")}>{detection.category || "unknown"}</KV>
                     <KV label="Keyword:" mono>
                       {detection.keyword || "unknown"}
                     </KV>
                     {detection.severity && (
-                      <KV label="Severity:">
+                      <KV label={t("Severity:")}>
                         {chip(
                           detection.severity,
                           detection.severity === "high" ? "red" : detection.severity === "medium" ? "amber" : "slate",
@@ -206,7 +207,7 @@ const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response })
                     )}
                   </div>
                   <div className="space-y-1">
-                    <KV label="Action:">{chip(detection.action, detection.action === "BLOCK" ? "red" : "blue")}</KV>
+                    <KV label={t("Action:")}>{chip(detection.action, detection.action === "BLOCK" ? "red" : "blue")}</KV>
                   </div>
                 </div>
               </div>

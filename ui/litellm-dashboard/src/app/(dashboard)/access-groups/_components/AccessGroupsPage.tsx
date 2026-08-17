@@ -110,13 +110,13 @@ export function AccessGroupsPage() {
 
       <DeleteResourceModal
         isOpen={!!groupToDelete}
-        title="Delete Access Group"
-        message="Are you sure you want to delete this access group? This action cannot be undone."
+        title={t("Delete Access Group")}
+        message={t("Are you sure you want to delete this access group? This action cannot be undone.")}
         resourceInformationTitle="Access Group Information"
         resourceInformation={[
           { label: "ID", value: groupToDelete?.id, code: true },
-          { label: "Name", value: groupToDelete?.name },
-          { label: "Description", value: groupToDelete?.description || "—" },
+          { label: t("Name"), value: groupToDelete?.name },
+          { label: t("Description"), value: groupToDelete?.description || "—" },
         ]}
         onCancel={() => setGroupToDelete(null)}
         onOk={() => {

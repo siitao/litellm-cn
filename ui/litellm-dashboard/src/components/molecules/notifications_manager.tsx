@@ -3,6 +3,7 @@ import { notification as staticNotification } from "antd";
 import type { NotificationInstance } from "antd/es/notification/interface";
 import { parseErrorMessage } from "../shared/errorUtils";
 import { ArgsProps } from "antd/es/notification";
+import { t } from "@/i18n";
 
 let notificationInstance: NotificationInstance | null = null;
 
@@ -221,10 +222,10 @@ const CONFIG_WARN_MATCH = [
 function classifyGeneralMessage(desc?: string): { kind: "success" | "info" | "warning"; title: string } | null {
   const d = (desc || "").toLowerCase();
 
-  if (SUCCESS_MATCH.some((s) => d.includes(s))) return { kind: "success", title: "Success" };
-  if (DEPRECATION_FEATURE_WARN_MATCH.some((s) => d.includes(s))) return { kind: "warning", title: "Feature Notice" };
-  if (CONFIG_WARN_MATCH.some((s) => d.includes(s))) return { kind: "warning", title: "Configuration Warning" };
-  if (INFO_MATCH.some((s) => d.includes(s))) return { kind: "warning", title: "Rate Limit" }; // show as warning for visibility
+  if (SUCCESS_MATCH.some((s) => d.includes(s))) return { kind: "success", title: t("Success")};
+  if (DEPRECATION_FEATURE_WARN_MATCH.some((s) => d.includes(s))) return { kind: "warning", title: t("Feature Notice")};
+  if (CONFIG_WARN_MATCH.some((s) => d.includes(s))) return { kind: "warning", title: t("Configuration Warning")};
+  if (INFO_MATCH.some((s) => d.includes(s))) return { kind: "warning", title: t("Rate Limit")}; // show as warning for visibility
 
   return null;
 }

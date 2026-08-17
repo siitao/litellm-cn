@@ -8,6 +8,7 @@ import BaseSSOSettingsForm from "./BaseSSOSettingsForm";
 import { useEditSSOSettings } from "@/app/(dashboard)/hooks/sso/useEditSSOSettings";
 import { processSSOSettingsPayload } from "../utils";
 
+import { t } from "@/i18n";
 interface AddSSOSettingsModalProps {
   isVisible: boolean;
   onCancel: () => void;
@@ -24,7 +25,7 @@ const AddSSOSettingsModal: React.FC<AddSSOSettingsModalProps> = ({ isVisible, on
 
     await mutateAsync(payload, {
       onSuccess: () => {
-        NotificationsManager.success("SSO settings added successfully");
+        NotificationsManager.success(t("SSO settings added successfully"));
         onSuccess();
       },
       onError: (error) => {
@@ -40,14 +41,12 @@ const AddSSOSettingsModal: React.FC<AddSSOSettingsModalProps> = ({ isVisible, on
 
   return (
     <Modal
-      title="Add SSO"
+      title={t("Add SSO")}
       open={isVisible}
       width={800}
       footer={
         <Space>
-          <Button onClick={handleCancel} disabled={isPending}>
-            Cancel
-          </Button>
+          <Button onClick={handleCancel} disabled={isPending}>{t("Cancel")}</Button>
           <Button loading={isPending} onClick={() => form.submit()}>
             {isPending ? "Adding..." : "Add SSO"}
           </Button>

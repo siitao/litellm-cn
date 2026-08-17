@@ -5,8 +5,10 @@ import ModelGroupAliasSettings from "@/components/model_group_alias_settings";
 import { getCallbacksCall } from "@/components/networking";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 export default function ModelGroupAliasPanel() {
-  const { accessToken, userId: userID, userRole } = useAuthorized();
+
+  const { t } = useLanguage();  const { accessToken, userId: userID, userRole } = useAuthorized();
   const [modelGroupAlias, setModelGroupAlias] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
@@ -21,7 +23,7 @@ export default function ModelGroupAliasPanel() {
           setModelGroupAlias(info.router_settings?.model_group_alias || {});
         }
       } catch (error) {
-        console.error("Error fetching model group alias:", error);
+        console.error(t("Error fetching model group alias:"), error);
       }
     })();
     return () => {

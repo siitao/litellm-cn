@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/cva.config";
 
+import { t } from "@/i18n";
+import { useLanguage } from "@/contexts/LanguageContext";
 interface MemoryRowActionsProps {
   row: MemoryRow;
   onViewClick: (row: MemoryRow) => void;
@@ -23,10 +25,11 @@ interface MemoryRowActionsProps {
 }
 
 function MemoryRowActions({ row, onViewClick, onEditClick, onDeleteClick }: MemoryRowActionsProps) {
-  return (
+
+  const { t } = useLanguage();  return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open memory actions"
+        aria-label={t("Open memory actions")}
         data-testid={`memory-actions-${row.memory_id}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -80,7 +83,7 @@ export const getMemoryTableColumns = ({
   {
     id: "key",
     accessorKey: "key",
-    meta: { title: "Name" },
+    meta: { title: t("Name")},
     header: "Name",
     size: 200,
     enableSorting: false,
@@ -93,7 +96,7 @@ export const getMemoryTableColumns = ({
   {
     id: "value",
     accessorKey: "value",
-    meta: { title: "Preview" },
+    meta: { title: t("Preview")},
     header: "Preview",
     enableSorting: false,
     cell: ({ row }) => (
@@ -105,7 +108,7 @@ export const getMemoryTableColumns = ({
   {
     id: "user_id",
     accessorKey: "user_id",
-    meta: { title: "User ID" },
+    meta: { title: t("User ID")},
     header: "User ID",
     size: 160,
     enableSorting: false,
@@ -114,7 +117,7 @@ export const getMemoryTableColumns = ({
   {
     id: "team_id",
     accessorKey: "team_id",
-    meta: { title: "Team ID" },
+    meta: { title: t("Team ID")},
     header: "Team ID",
     size: 160,
     enableSorting: false,
@@ -123,7 +126,7 @@ export const getMemoryTableColumns = ({
   {
     id: "updated_at",
     accessorKey: "updated_at",
-    meta: { title: "Updated" },
+    meta: { title: t("Updated")},
     header: "Updated",
     size: 170,
     enableSorting: false,
@@ -132,7 +135,7 @@ export const getMemoryTableColumns = ({
   {
     id: "actions",
     meta: { className: "text-right", headerClassName: "text-right" },
-    header: () => <span className="sr-only">Actions</span>,
+    header: () => <span className="sr-only">{t("Actions")}</span>,
     size: 64,
     enableSorting: false,
     enableHiding: false,

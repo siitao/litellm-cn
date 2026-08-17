@@ -9,6 +9,7 @@ import { getEmailEventSettings, updateEmailEventSettings, resetEmailEventSetting
 import { EmailEvent } from "../../types";
 import { EmailEventSetting } from "./types";
 
+import { t } from "@/i18n";
 interface EmailEventSettingsProps {
   accessToken: string | null;
 }
@@ -30,7 +31,7 @@ const EmailEventSettings: React.FC<EmailEventSettingsProps> = ({ accessToken }) 
       const response = await getEmailEventSettings(accessToken);
       setEventSettings(response.settings);
     } catch (error) {
-      console.error("Failed to fetch email event settings:", error);
+      console.error(t("Failed to fetch email event settings:"), error);
       NotificationsManager.fromBackend(error);
     } finally {
       setLoading(false);
@@ -49,9 +50,9 @@ const EmailEventSettings: React.FC<EmailEventSettingsProps> = ({ accessToken }) 
 
     try {
       await updateEmailEventSettings(accessToken, { settings: eventSettings });
-      NotificationsManager.success("Email event settings updated successfully");
+      NotificationsManager.success(t("Email event settings updated successfully"));
     } catch (error) {
-      console.error("Failed to update email event settings:", error);
+      console.error(t("Failed to update email event settings:"), error);
       NotificationsManager.fromBackend(error);
     }
   };
@@ -61,11 +62,11 @@ const EmailEventSettings: React.FC<EmailEventSettingsProps> = ({ accessToken }) 
 
     try {
       await resetEmailEventSettings(accessToken);
-      NotificationsManager.success("Email event settings reset to defaults");
+      NotificationsManager.success(t("Email event settings reset to defaults"));
       // Refresh settings after reset
       fetchEventSettings();
     } catch (error) {
-      console.error("Failed to reset email event settings:", error);
+      console.error(t("Failed to reset email event settings:"), error);
       NotificationsManager.fromBackend(error);
     }
   };
@@ -90,8 +91,8 @@ const EmailEventSettings: React.FC<EmailEventSettingsProps> = ({ accessToken }) 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-base">Email Notifications</CardTitle>
-        <p className="text-sm text-muted-foreground">Select which events should trigger email notifications.</p>
+        <CardTitle className="text-base">{t("Email Notifications")}</CardTitle>
+        <p className="text-sm text-muted-foreground">{t("Select which events should trigger email notifications.")}</p>
       </CardHeader>
 
       <CardContent>
@@ -121,12 +122,8 @@ const EmailEventSettings: React.FC<EmailEventSettingsProps> = ({ accessToken }) 
         )}
 
         <div className="mt-6 flex gap-4">
-          <Button onClick={handleSaveSettings} disabled={loading}>
-            Save Changes
-          </Button>
-          <Button variant="secondary" onClick={handleResetSettings} disabled={loading}>
-            Reset to Defaults
-          </Button>
+          <Button onClick={handleSaveSettings} disabled={loading}>{t("Save Changes")}</Button>
+          <Button variant="secondary" onClick={handleResetSettings} disabled={loading}>{t("Reset to Defaults")}</Button>
         </div>
       </CardContent>
     </Card>

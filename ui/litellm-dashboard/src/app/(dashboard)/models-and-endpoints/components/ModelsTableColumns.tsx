@@ -14,6 +14,8 @@ import { Switch } from "@/components/ui/switch";
 import { getDisplayModelName } from "@/components/view_model/model_name_display";
 import { copyToClipboard } from "@/utils/dataUtils";
 
+import { t } from "@/i18n";
+import { useLanguage } from "@/contexts/LanguageContext";
 export const MODEL_ID_COLUMN_ID = "model_info_id";
 export const MODEL_NAME_COLUMN_ID = "model_name";
 export const CREDENTIALS_COLUMN_ID = "litellm_credential_name";
@@ -42,7 +44,8 @@ const formatShortDate = (value: string | null | undefined): string | null => {
 };
 
 function ModelInformationCell({ model, displayName }: { model: ModelData; displayName: string }) {
-  const litellmModelName = model.litellm_model_name || "-";
+
+  const { t } = useLanguage();  const litellmModelName = model.litellm_model_name || "-";
 
   return (
     <HoverCard>
@@ -74,20 +77,20 @@ function ModelInformationCell({ model, displayName }: { model: ModelData; displa
             <span className="truncate text-xs text-muted-foreground">{model.provider || "Unknown provider"}</span>
           </div>
           <div className="flex flex-col gap-0.5">
-            <span className="text-xs text-muted-foreground">Public Model Name</span>
+            <span className="text-xs text-muted-foreground">{t("Public Model Name")}</span>
             <span className="truncate text-sm font-medium text-foreground" title={displayName}>
               {displayName}
             </span>
           </div>
           <div className="flex flex-col gap-0.5">
-            <span className="text-xs text-muted-foreground">LiteLLM Model Name</span>
+            <span className="text-xs text-muted-foreground">{t("LiteLLM Model Name")}</span>
             <span className="flex min-w-0 items-center gap-1.5">
               <span className="truncate font-mono text-sm text-foreground" title={litellmModelName}>
                 {litellmModelName}
               </span>
               <button
                 type="button"
-                aria-label="Copy LiteLLM model name"
+                aria-label={t("Copy LiteLLM model name")}
                 data-testid={`copy-litellm-model-name-${model.model_info.id}`}
                 className="shrink-0 cursor-pointer text-muted-foreground hover:text-foreground"
                 onClick={() => void copyToClipboard(litellmModelName, "LiteLLM model name copied")}
@@ -103,15 +106,14 @@ function ModelInformationCell({ model, displayName }: { model: ModelData; displa
 }
 
 function CredentialsHeader() {
-  return (
-    <span className="flex items-center gap-1">
-      Credentials
-      <HoverCard>
+
+  const { t } = useLanguage();  return (
+    <span className="flex items-center gap-1">{t("Credentials")}<HoverCard>
         <HoverCardTrigger
           render={
             <button
               type="button"
-              aria-label="About credential types"
+              aria-label={t("About credential types")}
               data-testid="credentials-header-info"
               className="cursor-pointer text-muted-foreground hover:text-foreground"
             />
@@ -121,24 +123,20 @@ function CredentialsHeader() {
         </HoverCardTrigger>
         <HoverCardContent align="start" className="w-80">
           <div className="flex flex-col gap-3">
-            <span className="text-sm font-medium text-foreground">Credential types</span>
+            <span className="text-sm font-medium text-foreground">{t("Credential types")}</span>
             <div className="flex flex-col gap-1">
               <span className="flex items-center gap-1.5 text-sm font-medium text-blue-600">
                 <RefreshCw className="size-3.5" />
                 Reusable
               </span>
-              <span className="text-xs text-muted-foreground">
-                Credentials saved in LiteLLM that can be added to models repeatedly.
-              </span>
+              <span className="text-xs text-muted-foreground">{t("Credentials saved in LiteLLM that can be added to models repeatedly.")}</span>
             </div>
             <div className="flex flex-col gap-1">
               <span className="flex items-center gap-1.5 text-sm font-medium text-foreground">
                 <Pencil className="size-3.5" />
                 Manual
               </span>
-              <span className="text-xs text-muted-foreground">
-                Credentials added directly during model creation or defined in the config file.
-              </span>
+              <span className="text-xs text-muted-foreground">{t("Credentials added directly during model creation or defined in the config file.")}</span>
             </div>
           </div>
         </HoverCardContent>
@@ -182,7 +180,8 @@ function CreatedByCell({ model }: { model: ModelData }) {
 }
 
 function CostsCell({ model }: { model: ModelData }) {
-  const { input_cost: inputCost, output_cost: outputCost } = model;
+
+  const { t } = useLanguage();  const { input_cost: inputCost, output_cost: outputCost } = model;
 
   if (inputCost == null && outputCost == null) {
     return <span className="text-sm text-muted-foreground">-</span>;
@@ -190,7 +189,7 @@ function CostsCell({ model }: { model: ModelData }) {
 
   return (
     <CellTooltip
-      content="Cost per 1M tokens"
+      content={t("Cost per 1M tokens")}
       trigger={
         <div className="flex flex-col gap-0.5 whitespace-nowrap">
           {inputCost != null && (
@@ -318,7 +317,7 @@ function ModelRowActions({
             <Button
               variant="ghost"
               size="icon-sm"
-              aria-label="Delete model"
+              aria-label={t("Delete model")}
               data-testid={`model-delete-${modelId}`}
               disabled={isConfigModel || !canEditModel}
               className="text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
@@ -359,7 +358,7 @@ export const getModelsTableColumns = ({
   {
     id: MODEL_ID_COLUMN_ID,
     accessorFn: (row) => row.model_info.id,
-    meta: { title: "Model ID" },
+    meta: { title: t("Model ID")},
     header: "Model ID",
     enableSorting: false,
     size: 140,
@@ -375,8 +374,8 @@ export const getModelsTableColumns = ({
   {
     id: MODEL_NAME_COLUMN_ID,
     accessorFn: (row) => row.model_name ?? "",
-    meta: { title: "Model Information", skeleton: "twoLine" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Model Information" />,
+    meta: { title: t("Model Information"), skeleton: "twoLine" },
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Model Information")} />,
     enableSorting: true,
     size: 280,
     minSize: 160,
@@ -387,7 +386,7 @@ export const getModelsTableColumns = ({
   {
     id: CREDENTIALS_COLUMN_ID,
     accessorFn: (row) => row.litellm_params?.litellm_credential_name ?? "",
-    meta: { title: "Credentials" },
+    meta: { title: t("Credentials")},
     header: () => <CredentialsHeader />,
     enableSorting: false,
     size: 180,
@@ -397,8 +396,8 @@ export const getModelsTableColumns = ({
   {
     id: CREATED_BY_COLUMN_ID,
     accessorFn: (row) => row.model_info.created_by ?? "",
-    meta: { title: "Created By", skeleton: "twoLine" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Created By" />,
+    meta: { title: t("Created By"), skeleton: "twoLine" },
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Created By")} />,
     enableSorting: true,
     size: 180,
     minSize: 110,
@@ -407,8 +406,8 @@ export const getModelsTableColumns = ({
   {
     id: UPDATED_AT_COLUMN_ID,
     accessorFn: (row) => row.model_info.updated_at ?? "",
-    meta: { title: "Updated At" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Updated At" />,
+    meta: { title: t("Updated At")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Updated At")} />,
     enableSorting: true,
     size: 140,
     minSize: 100,
@@ -417,8 +416,8 @@ export const getModelsTableColumns = ({
   {
     id: COSTS_COLUMN_ID,
     accessorFn: (row) => row.input_cost,
-    meta: { title: "Costs" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Costs" />,
+    meta: { title: t("Costs")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Costs")} />,
     enableSorting: true,
     size: 130,
     minSize: 90,
@@ -427,7 +426,7 @@ export const getModelsTableColumns = ({
   {
     id: TEAM_ID_COLUMN_ID,
     accessorFn: (row) => row.model_info.team_id ?? "",
-    meta: { title: "Team ID" },
+    meta: { title: t("Team ID")},
     header: "Team ID",
     enableSorting: false,
     size: 140,
@@ -443,7 +442,7 @@ export const getModelsTableColumns = ({
   {
     id: ACCESS_GROUPS_COLUMN_ID,
     accessorFn: (row) => row.model_info.access_groups ?? [],
-    meta: { title: "Model Access Group", skeleton: "chips" },
+    meta: { title: t("Model Access Group"), skeleton: "chips" },
     header: "Model Access Group",
     enableSorting: false,
     size: 200,
@@ -453,21 +452,21 @@ export const getModelsTableColumns = ({
   {
     id: STATUS_COLUMN_ID,
     accessorFn: (row) => row.model_info.db_model,
-    meta: { title: "Status", skeleton: "badge" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Status" />,
+    meta: { title: t("Status"), skeleton: "badge" },
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Status")} />,
     enableSorting: true,
     size: 140,
     minSize: 100,
     cell: ({ row }) =>
       row.original.model_info.db_model ? (
-        <StatusBadge tone="info" label="DB Model" />
+        <StatusBadge tone="info" label={t("DB Model")} />
       ) : (
-        <StatusBadge tone="neutral" label="Config Model" />
+        <StatusBadge tone="neutral" label={t("Config Model")} />
       ),
   },
   {
     id: "actions",
-    meta: { title: "Actions", className: "text-right", headerClassName: "text-right" },
+    meta: { title: t("Actions"), className: "text-right", headerClassName: "text-right" },
     header: "Actions",
     enableSorting: false,
     enableHiding: false,

@@ -177,7 +177,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
         );
       } catch (e) {
         if (!cancelled) {
-          console.error("Failed to fetch tag list", e);
+          console.error(t("Failed to fetch tag list"), e);
         }
       }
     })();
@@ -994,7 +994,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
                     <Button
                       variant="ghost"
                       size="icon-xs"
-                      aria-label="Close"
+                      aria-label={t("Close")}
                       onClick={() => setShowCredentialBanner(false)}
                     >
                       <X />

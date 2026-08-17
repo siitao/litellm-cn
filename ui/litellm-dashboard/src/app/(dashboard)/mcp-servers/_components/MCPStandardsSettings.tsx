@@ -1,6 +1,7 @@
 "use client";
 
 import { MCPServer } from "@/components/mcp_tools/types";
+import { t } from "@/i18n";
 
 export interface RequiredFieldDef {
   key: string;
@@ -16,51 +17,51 @@ export interface FieldGroup {
 
 export const FIELD_GROUPS: FieldGroup[] = [
   {
-    label: "Documentation",
+    label: t("Documentation"),
     fields: [
       {
         key: "description",
-        label: "Description",
-        description: "Must have a non-empty description",
+        label: t("Description"),
+        description: t("Must have a non-empty description"),
         check: (s) => !!s.description?.trim(),
       },
       {
         key: "alias",
-        label: "Alias",
-        description: "Must have a display alias",
+        label: t("Alias"),
+        description: t("Must have a display alias"),
         check: (s) => !!s.alias?.trim(),
       },
     ],
   },
   {
-    label: "Source",
+    label: t("Source"),
     fields: [
       {
         key: "source_url",
-        label: "GitHub / Source URL",
-        description: "Must link to a source repository",
+        label: t("GitHub / Source URL"),
+        description: t("Must link to a source repository"),
         check: (s) => !!s.source_url?.trim(),
       },
     ],
   },
   {
-    label: "Connection",
+    label: t("Connection"),
     fields: [
       {
         key: "url",
-        label: "Server URL",
-        description: "Must have a URL configured",
+        label: t("Server URL"),
+        description: t("Must have a URL configured"),
         check: (s) => !!s.url?.trim(),
       },
     ],
   },
   {
-    label: "Security",
+    label: t("Security"),
     fields: [
       {
         key: "auth_type",
-        label: "Auth configured",
-        description: "Must use authentication (not 'none')",
+        label: t("Auth configured"),
+        description: t("Must use authentication (not 'none')"),
         check: (s) => !!s.auth_type && s.auth_type !== "none",
       },
     ],

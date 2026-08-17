@@ -1,16 +1,17 @@
 import { Button, InputNumber, Select } from "antd";
 import React from "react";
 
+import { t } from "@/i18n";
 export interface BudgetWindowEntry {
   budget_duration: string;
   max_budget: number | null;
 }
 
 export const BUDGET_WINDOW_OPTIONS = [
-  { value: "1h", label: "Hourly", resetHint: "Resets every hour" },
-  { value: "24h", label: "Daily", resetHint: "Resets daily at midnight UTC" },
-  { value: "7d", label: "Weekly", resetHint: "Resets every Sunday at midnight UTC" },
-  { value: "30d", label: "Monthly", resetHint: "Resets on the 1st of every month at midnight UTC" },
+  { value: "1h", label: t("Hourly"), resetHint: "Resets every hour" },
+  { value: "24h", label: t("Daily"), resetHint: "Resets daily at midnight UTC" },
+  { value: "7d", label: t("Weekly"), resetHint: "Resets every Sunday at midnight UTC" },
+  { value: "30d", label: t("Monthly"), resetHint: "Resets on the 1st of every month at midnight UTC" },
 ];
 
 interface BudgetWindowsEditorProps {
@@ -51,7 +52,7 @@ export function BudgetWindowsEditor({ value, onChange }: BudgetWindowsEditorProp
                 precision={2}
                 value={window.max_budget ?? undefined}
                 onChange={(v) => updateWindow(idx, "max_budget", v ?? null)}
-                placeholder="Max spend ($)"
+                placeholder={t("Max spend ($)")}
                 style={{ width: 160 }}
                 prefix="$"
               />

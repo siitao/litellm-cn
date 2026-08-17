@@ -10,6 +10,7 @@ import MCPServerSelector from "@/components/mcp_server_management/MCPServerSelec
 import MCPToolPermissions from "@/components/mcp_server_management/MCPToolPermissions";
 import type { ObjectPermission } from "@/components/object_permission_types";
 
+import { t } from "@/i18n";
 interface UserEditViewProps {
   userData: any;
   onCancel: () => void;
@@ -83,7 +84,7 @@ export function UserEditView({
       try {
         values.metadata = JSON.parse(values.metadata);
       } catch (error) {
-        console.error("Error parsing metadata JSON:", error);
+        console.error(t("Error parsing metadata JSON:"), error);
         return;
       }
     }
@@ -115,8 +116,7 @@ export function UserEditView({
 
       <Form.Item
         label={
-          <span>
-            Global Proxy Role{" "}
+          <span>{t("Global Proxy Role")}{" "}
             <Tooltip title="This is the role that the user will globally on the proxy. This role is independent of any team/org specific roles.">
               <InfoCircleOutlined />
             </Tooltip>
@@ -141,8 +141,7 @@ export function UserEditView({
 
       <Form.Item
         label={
-          <span>
-            Personal Models{" "}
+          <span>{t("Personal Models")}{" "}
             <Tooltip title="Select which models this user can access outside of team-scope. Choose 'All Proxy Models' to grant access to all models available on the proxy.">
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
@@ -152,16 +151,12 @@ export function UserEditView({
       >
         <Select
           mode="multiple"
-          placeholder="Select models"
+          placeholder={t("Select models")}
           style={{ width: "100%" }}
           disabled={!all_admin_roles.includes(userRole || "")}
         >
-          <Select.Option key="all-proxy-models" value="all-proxy-models">
-            All Proxy Models
-          </Select.Option>
-          <Select.Option key="no-default-models" value="no-default-models">
-            No Default Models
-          </Select.Option>
+          <Select.Option key="all-proxy-models" value="all-proxy-models">{t("All Proxy Models")}</Select.Option>
+          <Select.Option key="no-default-models" value="no-default-models">{t("No Default Models")}</Select.Option>
           {userModels.map((model) => (
             <Select.Option key={model} value={model}>
               {getModelDisplayName(model)}
@@ -173,10 +168,8 @@ export function UserEditView({
       <Form.Item
         label={
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <span>Max Budget (USD)</span>
-            <Checkbox checked={unlimitedBudget} onChange={handleUnlimitedBudgetChange}>
-              Unlimited Budget
-            </Checkbox>
+            <span>{t("Max Budget (USD)")}</span>
+            <Checkbox checked={unlimitedBudget} onChange={handleUnlimitedBudgetChange}>{t("Unlimited Budget")}</Checkbox>
           </div>
         }
         name="max_budget"
@@ -199,15 +192,14 @@ export function UserEditView({
       </Form.Item>
 
       <Form.Item label="Metadata" name="metadata">
-        <Textarea rows={4} placeholder="Enter metadata as JSON" />
+        <Textarea rows={4} placeholder={t("Enter metadata as JSON")} />
       </Form.Item>
 
       {canEditMcpPermissions && (
         <>
           <Form.Item
             label={
-              <span>
-                MCP Servers / Access Groups{" "}
+              <span>{t("MCP Servers / Access Groups")}{" "}
                 <Tooltip title="Caps which MCP servers, access groups, and tools this user may reach. Every key the user holds is limited to this set.">
                   <InfoCircleOutlined />
                 </Tooltip>
@@ -219,7 +211,7 @@ export function UserEditView({
               onChange={(val) => form.setFieldValue("mcp_servers_and_groups", val)}
               value={form.getFieldValue("mcp_servers_and_groups")}
               accessToken={accessToken || ""}
-              placeholder="Select MCP servers or access groups (optional)"
+              placeholder={t("Select MCP servers or access groups (optional)")}
             />
           </Form.Item>
 
@@ -249,10 +241,8 @@ export function UserEditView({
       )}
 
       <div className="flex justify-end space-x-2">
-        <Button variant="secondary" type="button" onClick={onCancel}>
-          Cancel
-        </Button>
-        <Button type="submit">Save Changes</Button>
+        <Button variant="secondary" type="button" onClick={onCancel}>{t("Cancel")}</Button>
+        <Button type="submit">{t("Save Changes")}</Button>
       </div>
     </Form>
   );

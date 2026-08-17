@@ -10,6 +10,7 @@ import { ParsedMessage } from "./prettyMessagesTypes";
 import { SectionHeader } from "./SectionHeader";
 import { SimpleMessageBlock } from "./SimpleMessageBlock";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface OutputCardProps {
   message: ParsedMessage | null;
   completionTokens?: number;
@@ -17,13 +18,14 @@ interface OutputCardProps {
 }
 
 export function OutputCard({ message, completionTokens, outputCost }: OutputCardProps) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const { t } = useLanguage();  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const handleCopy = () => {
     if (!message) return;
 
     navigator.clipboard.writeText(message.content || "");
-    MessageManager.success("Output copied");
+    MessageManager.success(t("Output copied"));
   };
 
   return (
@@ -45,7 +47,7 @@ export function OutputCard({ message, completionTokens, outputCost }: OutputCard
           {message ? (
             <SimpleMessageBlock label="ASSISTANT" content={message.content} toolCalls={message.toolCalls} />
           ) : (
-            <span className="text-[13px] text-muted-foreground italic">No response data available</span>
+            <span className="text-[13px] text-muted-foreground italic">{t("No response data available")}</span>
           )}
         </div>
       </div>

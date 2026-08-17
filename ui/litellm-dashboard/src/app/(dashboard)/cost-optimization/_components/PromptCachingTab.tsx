@@ -11,6 +11,7 @@ import {
 import CacheLeakageCard from "./CacheLeakageCard";
 import { DailyActivityRange } from "./useDailyActivityRange";
 
+import { t } from "@/i18n";
 interface PromptCachingTabProps {
   accessToken: string | null;
   activity: DailyActivityRange;
@@ -26,7 +27,7 @@ const PromptCachingTab: React.FC<PromptCachingTabProps> = ({ accessToken, activi
     getGeneralSettingsCall(accessToken)
       .then((data: generalSettingsItem[]) => setSettings(data))
       .catch((error) => {
-        console.error("Failed to load prompt caching settings:", error);
+        console.error(t("Failed to load prompt caching settings:"), error);
         NotificationsManager.fromBackend("Failed to load prompt caching settings");
       });
   }, [accessToken]);

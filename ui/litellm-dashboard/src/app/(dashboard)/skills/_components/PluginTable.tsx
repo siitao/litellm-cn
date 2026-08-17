@@ -9,6 +9,7 @@ import { Plugin } from "@/components/claude_code_plugins/types";
 
 import { getPluginTableColumns } from "./PluginTableColumns";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface PluginTableProps {
   pluginsList: Plugin[];
   isLoading: boolean;
@@ -20,13 +21,14 @@ interface PluginTableProps {
 const DEFAULT_SORTING: SortingState = [{ id: "created_at", desc: true }];
 
 function EmptyState() {
-  return (
+
+  const { t } = useLanguage();  return (
     <div className="flex flex-col items-center gap-1 py-6">
       <div className="mb-1 flex size-10 items-center justify-center rounded-lg bg-muted">
         <Inbox className="size-5 text-muted-foreground" />
       </div>
-      <div className="text-sm font-medium text-foreground">No skills found</div>
-      <div className="text-sm text-muted-foreground">Add one to get started.</div>
+      <div className="text-sm font-medium text-foreground">{t("No skills found")}</div>
+      <div className="text-sm text-muted-foreground">{t("Add one to get started.")}</div>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { Providers, provider_map } from "@/components/provider_info_helpers";
 import { Logo } from "@/components/molecules/logo/Logo";
 import { DiscountConfig } from "./types";
 
+import { t } from "@/i18n";
 interface AddProviderFormProps {
   discountConfig: DiscountConfig;
   selectedProvider: string | undefined;
@@ -27,9 +28,7 @@ const AddProviderForm: React.FC<AddProviderFormProps> = ({
     <div className="space-y-6">
       <Form.Item
         label={
-          <span className="text-sm font-medium text-gray-700 flex items-center">
-            Provider
-            <Tooltip title="Select the LLM provider you want to configure a discount for">
+          <span className="text-sm font-medium text-gray-700 flex items-center">{t("Provider")}<Tooltip title={t("Select the LLM provider you want to configure a discount for")}>
               <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
             </Tooltip>
           </span>
@@ -38,7 +37,7 @@ const AddProviderForm: React.FC<AddProviderFormProps> = ({
       >
         <AntdSelect
           showSearch
-          placeholder="Select provider"
+          placeholder={t("Select provider")}
           value={selectedProvider}
           onChange={onProviderChange}
           style={{ width: "100%" }}
@@ -70,9 +69,7 @@ const AddProviderForm: React.FC<AddProviderFormProps> = ({
 
       <Form.Item
         label={
-          <span className="text-sm font-medium text-gray-700 flex items-center">
-            Discount Percentage
-            <Tooltip title="Enter a percentage value (e.g., 5 for 5% discount)">
+          <span className="text-sm font-medium text-gray-700 flex items-center">{t("Discount Percentage")}<Tooltip title={t("Enter a percentage value (e.g., 5 for 5% discount)")}>
               <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
             </Tooltip>
           </span>
@@ -91,9 +88,7 @@ const AddProviderForm: React.FC<AddProviderFormProps> = ({
       </Form.Item>
 
       <div className="flex items-center justify-end space-x-3 pt-6 border-t border-gray-100">
-        <Button variant="primary" onClick={onAddProvider} disabled={!selectedProvider || !newDiscount}>
-          Add Provider Discount
-        </Button>
+        <Button variant="primary" onClick={onAddProvider} disabled={!selectedProvider || !newDiscount}>{t("Add Provider Discount")}</Button>
       </div>
     </div>
   );

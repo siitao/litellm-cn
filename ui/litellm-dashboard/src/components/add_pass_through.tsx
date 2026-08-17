@@ -16,7 +16,8 @@ import RoutePreview from "./route_preview";
 import NotificationsManager from "./molecules/notifications_manager";
 import PassThroughSecuritySection from "./common_components/PassThroughSecuritySection";
 import PassThroughGuardrailsSection from "./common_components/PassThroughGuardrailsSection";
-const { Option } = Select2;
+
+import { t } from "@/i18n";const { Option } = Select2;
 
 const HTTP_METHODS = ["GET", "POST", "PUT", "DELETE", "PATCH"];
 
@@ -91,7 +92,7 @@ const AddPassThroughEndpoint: React.FC<AddFallbacksProps> = ({
       const updatedPassThroughSettings = [...passThroughItems, createdEndpoint];
       setPassThroughItems(updatedPassThroughSettings);
 
-      NotificationsManager.success("Pass-through endpoint created successfully");
+      NotificationsManager.success(t("Pass-through endpoint created successfully"));
       form.resetFields();
       setPathValue("");
       setTargetValue("");
@@ -115,7 +116,7 @@ const AddPassThroughEndpoint: React.FC<AddFallbacksProps> = ({
         title={
           <div className="flex items-center space-x-3 pb-4 border-b border-gray-100">
             <ApiOutlined className="text-xl text-blue-500" />
-            <h2 className="text-xl font-semibold text-gray-900">Add Pass-Through Endpoint</h2>
+            <h2 className="text-xl font-semibold text-gray-900">{t("Add Pass-Through Endpoint")}</h2>
           </div>
         }
         open={isModalVisible}
@@ -130,7 +131,7 @@ const AddPassThroughEndpoint: React.FC<AddFallbacksProps> = ({
       >
         <div className="mt-6">
           <Alert
-            message="What is a Pass-Through Endpoint?"
+            message={t("What is a Pass-Through Endpoint?")}
             description="Route requests from your LiteLLM proxy to any external API. Perfect for custom models, image generation APIs, or any service you want to proxy through LiteLLM."
             type="info"
             showIcon
@@ -150,18 +151,16 @@ const AddPassThroughEndpoint: React.FC<AddFallbacksProps> = ({
           >
             {/* Route Configuration Section */}
             <Card className="p-5">
-              <Title className="text-lg font-semibold text-gray-900 mb-2">Route Configuration</Title>
-              <Subtitle className="text-gray-600 mb-5">
-                Configure how requests to your domain will be forwarded to the target API
-              </Subtitle>
+              <Title className="text-lg font-semibold text-gray-900 mb-2">{t("Route Configuration")}</Title>
+              <Subtitle className="text-gray-600 mb-5">{t("Configure how requests to your domain will be forwarded to the target API")}</Subtitle>
 
               <div className="space-y-5">
                 <Form.Item
-                  label={<span className="text-sm font-medium text-gray-700">Path Prefix</span>}
+                  label={<span className="text-sm font-medium text-gray-700">{t("Path Prefix")}</span>}
                   name="path"
                   rules={[{ required: true, message: "Path is required", pattern: /^\// }]}
                   extra={
-                    <div className="text-xs text-gray-500 mt-1">Example: /bria, /adobe-photoshop, /elasticsearch</div>
+                    <div className="text-xs text-gray-500 mt-1">{t("Example: /bria, /adobe-photoshop, /elasticsearch")}</div>
                   }
                   className="mb-4"
                 >
@@ -176,7 +175,7 @@ const AddPassThroughEndpoint: React.FC<AddFallbacksProps> = ({
                 </Form.Item>
 
                 <Form.Item
-                  label={<span className="text-sm font-medium text-gray-700">Target URL</span>}
+                  label={<span className="text-sm font-medium text-gray-700">{t("Target URL")}</span>}
                   name="target"
                   rules={[
                     { required: true, message: "Target URL is required" },
@@ -197,9 +196,7 @@ const AddPassThroughEndpoint: React.FC<AddFallbacksProps> = ({
 
                 <Form.Item
                   label={
-                    <span className="text-sm font-medium text-gray-700 flex items-center">
-                      HTTP Methods (Optional)
-                      <Tooltip title="Select specific HTTP methods. Leave empty to support all methods (GET, POST, PUT, DELETE, PATCH). Useful when the same path needs different targets for different methods.">
+                    <span className="text-sm font-medium text-gray-700 flex items-center">{t("HTTP Methods (Optional)")}<Tooltip title="Select specific HTTP methods. Leave empty to support all methods (GET, POST, PUT, DELETE, PATCH). Useful when the same path needs different targets for different methods.">
                         <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>
@@ -216,7 +213,7 @@ const AddPassThroughEndpoint: React.FC<AddFallbacksProps> = ({
                 >
                   <Select2
                     mode="multiple"
-                    placeholder="Select methods (leave empty for all)"
+                    placeholder={t("Select methods (leave empty for all)")}
                     value={selectedMethods}
                     onChange={setSelectedMethods}
                     allowClear
@@ -232,10 +229,8 @@ const AddPassThroughEndpoint: React.FC<AddFallbacksProps> = ({
 
                 <div className="flex items-center justify-between py-3">
                   <div>
-                    <div className="text-sm font-medium text-gray-700">Include Subpaths</div>
-                    <div className="text-xs text-gray-500 mt-0.5">
-                      Forward all subpaths to the target API (recommended for REST APIs)
-                    </div>
+                    <div className="text-sm font-medium text-gray-700">{t("Include Subpaths")}</div>
+                    <div className="text-xs text-gray-500 mt-0.5">{t("Forward all subpaths to the target API (recommended for REST APIs)")}</div>
                   </div>
                   <Form.Item name="include_subpath" valuePropName="checked" className="mb-0">
                     <Switch checked={includeSubpath} onChange={setIncludeSubpath} />
@@ -249,16 +244,12 @@ const AddPassThroughEndpoint: React.FC<AddFallbacksProps> = ({
 
             {/* Headers Section */}
             <Card className="p-6">
-              <Title className="text-lg font-semibold text-gray-900 mb-2">Headers</Title>
-              <Subtitle className="text-gray-600 mb-6">
-                Add headers that will be sent with every request to the target API
-              </Subtitle>
+              <Title className="text-lg font-semibold text-gray-900 mb-2">{t("Headers")}</Title>
+              <Subtitle className="text-gray-600 mb-6">{t("Add headers that will be sent with every request to the target API")}</Subtitle>
 
               <Form.Item
                 label={
-                  <span className="text-sm font-medium text-gray-700 flex items-center">
-                    Authentication Headers
-                    <Tooltip title="Authentication and other headers to forward with requests">
+                  <span className="text-sm font-medium text-gray-700 flex items-center">{t("Authentication Headers")}<Tooltip title={t("Authentication and other headers to forward with requests")}>
                       <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                     </Tooltip>
                   </span>
@@ -267,8 +258,8 @@ const AddPassThroughEndpoint: React.FC<AddFallbacksProps> = ({
                 rules={[{ required: true, message: "Please configure the headers" }]}
                 extra={
                   <div className="text-xs text-gray-500 mt-2">
-                    <div className="font-medium mb-1">Add authentication tokens and other required headers</div>
-                    <div>Common examples: auth_token, Authorization, x-api-key</div>
+                    <div className="font-medium mb-1">{t("Add authentication tokens and other required headers")}</div>
+                    <div>{t("Common examples: auth_token, Authorization, x-api-key")}</div>
                   </div>
                 }
               >
@@ -278,16 +269,12 @@ const AddPassThroughEndpoint: React.FC<AddFallbacksProps> = ({
 
             {/* Default Query Parameters Section */}
             <Card className="p-6">
-              <Title className="text-lg font-semibold text-gray-900 mb-2">Default Query Parameters</Title>
-              <Subtitle className="text-gray-600 mb-6">
-                Add query parameters that will be automatically sent with every request to the target API
-              </Subtitle>
+              <Title className="text-lg font-semibold text-gray-900 mb-2">{t("Default Query Parameters")}</Title>
+              <Subtitle className="text-gray-600 mb-6">{t("Add query parameters that will be automatically sent with every request to the target API")}</Subtitle>
 
               <Form.Item
                 label={
-                  <span className="text-sm font-medium text-gray-700 flex items-center">
-                    Default Query Parameters (Optional)
-                    <Tooltip title="Query parameters that will be added to all requests. Clients can override these by providing their own values.">
+                  <span className="text-sm font-medium text-gray-700 flex items-center">{t("Default Query Parameters (Optional)")}<Tooltip title="Query parameters that will be added to all requests. Clients can override these by providing their own values.">
                       <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                     </Tooltip>
                   </span>
@@ -295,8 +282,8 @@ const AddPassThroughEndpoint: React.FC<AddFallbacksProps> = ({
                 name="default_query_params"
                 extra={
                   <div className="text-xs text-gray-500 mt-2">
-                    <div className="font-medium mb-1">Parameters are sent with all GET, POST, PUT, PATCH requests</div>
-                    <div>Client parameters override defaults. Examples: version=v1, format=json, key=default</div>
+                    <div className="font-medium mb-1">{t("Parameters are sent with all GET, POST, PUT, PATCH requests")}</div>
+                    <div>{t("Client parameters override defaults. Examples: version=v1, format=json, key=default")}</div>
                   </div>
                 }
               >
@@ -319,23 +306,19 @@ const AddPassThroughEndpoint: React.FC<AddFallbacksProps> = ({
 
             {/* Performance Section */}
             <Card className="p-6">
-              <Title className="text-lg font-semibold text-gray-900 mb-2">Performance</Title>
-              <Subtitle className="text-gray-600 mb-6">Configure upstream request timeout for this endpoint</Subtitle>
+              <Title className="text-lg font-semibold text-gray-900 mb-2">{t("Performance")}</Title>
+              <Subtitle className="text-gray-600 mb-6">{t("Configure upstream request timeout for this endpoint")}</Subtitle>
 
               <Form.Item
                 label={
-                  <span className="text-sm font-medium text-gray-700 flex items-center">
-                    Request Timeout (seconds)
-                    <Tooltip title="Max time to wait for the upstream API to respond. Leave empty to use general_settings.pass_through_request_timeout (default 600s).">
+                  <span className="text-sm font-medium text-gray-700 flex items-center">{t("Request Timeout (seconds)")}<Tooltip title="Max time to wait for the upstream API to respond. Leave empty to use general_settings.pass_through_request_timeout (default 600s).">
                       <InfoCircleOutlined className="ml-2 text-gray-400 hover:text-gray-600" />
                     </Tooltip>
                   </span>
                 }
                 name="timeout"
                 extra={
-                  <div className="text-xs text-gray-500 mt-2">
-                    Use a higher value for slow upstream APIs (e.g. 1200 for long-running LLM calls)
-                  </div>
+                  <div className="text-xs text-gray-500 mt-2">{t("Use a higher value for slow upstream APIs (e.g. 1200 for long-running LLM calls)")}</div>
                 }
               >
                 <NumericalInput min={1} step={1} precision={0} placeholder="600" size="large" />
@@ -344,23 +327,19 @@ const AddPassThroughEndpoint: React.FC<AddFallbacksProps> = ({
 
             {/* Billing Section */}
             <Card className="p-6">
-              <Title className="text-lg font-semibold text-gray-900 mb-2">Billing</Title>
-              <Subtitle className="text-gray-600 mb-6">Optional cost tracking for this endpoint</Subtitle>
+              <Title className="text-lg font-semibold text-gray-900 mb-2">{t("Billing")}</Title>
+              <Subtitle className="text-gray-600 mb-6">{t("Optional cost tracking for this endpoint")}</Subtitle>
 
               <Form.Item
                 label={
-                  <span className="text-sm font-medium text-gray-700 flex items-center">
-                    Cost Per Request (USD)
-                    <Tooltip title="Optional: Track costs for requests to this endpoint">
+                  <span className="text-sm font-medium text-gray-700 flex items-center">{t("Cost Per Request (USD)")}<Tooltip title={t("Optional: Track costs for requests to this endpoint")}>
                       <InfoCircleOutlined className="ml-2 text-gray-400 hover:text-gray-600" />
                     </Tooltip>
                   </span>
                 }
                 name="cost_per_request"
                 extra={
-                  <div className="text-xs text-gray-500 mt-2">
-                    The cost charged for each request through this endpoint
-                  </div>
+                  <div className="text-xs text-gray-500 mt-2">{t("The cost charged for each request through this endpoint")}</div>
                 }
               >
                 <NumericalInput min={0} step={0.001} precision={4} placeholder="2.0000" size="large" />
@@ -368,9 +347,7 @@ const AddPassThroughEndpoint: React.FC<AddFallbacksProps> = ({
             </Card>
 
             <div className="flex items-center justify-end space-x-3 pt-6 border-t border-gray-100">
-              <Button variant="secondary" onClick={handleCancel}>
-                Cancel
-              </Button>
+              <Button variant="secondary" onClick={handleCancel}>{t("Cancel")}</Button>
               <Button
                 variant="primary"
                 loading={isLoading}

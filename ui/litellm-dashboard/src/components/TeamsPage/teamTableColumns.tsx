@@ -21,6 +21,7 @@ import { copyToClipboard, formatNumberWithCommas } from "@/utils/dataUtils";
 import { Team } from "../key_team_helpers/key_list";
 import { Organization } from "../networking";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface ResourceTone {
   icon: typeof Users;
   className: string;
@@ -83,14 +84,15 @@ interface TeamRowActionsProps {
 }
 
 function TeamRowActions({ team, canManage, onEditTeam, onDeleteTeam }: TeamRowActionsProps) {
-  const handleCopy = () => {
+
+  const { t } = useLanguage();  const handleCopy = () => {
     void copyToClipboard(team.team_id, "Team ID copied");
   };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open team actions"
+        aria-label={t("Open team actions")}
         data-testid={`team-actions-${team.team_id}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -271,7 +273,7 @@ export const getTeamTableColumns = ({
     {
       id: "actions",
       meta: { className: "text-right", headerClassName: "text-right" },
-      header: () => <span className="sr-only">Actions</span>,
+      header: () => <span className="sr-only">{t("Actions")}</span>,
       size: 60,
       enableSorting: false,
       enableHiding: false,

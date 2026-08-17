@@ -2,6 +2,7 @@ import { Button, Select, Tooltip } from "antd";
 import { ArrowDown, Plus, X } from "lucide-react";
 import React, { useState } from "react";
 
+import { t } from "@/i18n";
 interface FallbackEntry {
   id: string;
   primaryModel: string | null;
@@ -61,9 +62,7 @@ export function BudgetFallbacksEditor({ value, onChange, availableModels }: Budg
         <div className="text-xs text-gray-500 mb-2">
           When a model exceeds its per-model budget, requests automatically reroute to fallback models
         </div>
-        <Button size="small" onClick={addEntry} icon={<Plus className="w-3 h-3" />}>
-          Add Budget Fallback
-        </Button>
+        <Button size="small" onClick={addEntry} icon={<Plus className="w-3 h-3" />}>{t("Add Budget Fallback")}</Button>
       </div>
     );
   }
@@ -90,10 +89,10 @@ export function BudgetFallbacksEditor({ value, onChange, availableModels }: Budg
             </button>
 
             <div className="mb-3">
-              <label className="block text-xs font-medium text-gray-600 mb-1">Primary Model</label>
+              <label className="block text-xs font-medium text-gray-600 mb-1">{t("Primary Model")}</label>
               <Select
                 className="w-full"
-                placeholder="Select model"
+                placeholder={t("Select model")}
                 value={entry.primaryModel}
                 onChange={(v) => {
                   const newFallbacks = entry.fallbackModels.filter((m) => m !== v);
@@ -114,7 +113,7 @@ export function BudgetFallbacksEditor({ value, onChange, availableModels }: Budg
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Fallback Models</label>
+              <label className="block text-xs font-medium text-gray-600 mb-1">{t("Fallback Models")}</label>
               <Select
                 mode="multiple"
                 className="w-full"
@@ -137,17 +136,13 @@ export function BudgetFallbacksEditor({ value, onChange, availableModels }: Budg
                 )}
               />
               {entry.fallbackModels.length > 1 && (
-                <div className="text-[10px] text-gray-400 mt-1 ml-1">
-                  Tried in order; first model still within its own budget is used
-                </div>
+                <div className="text-[10px] text-gray-400 mt-1 ml-1">{t("Tried in order; first model still within its own budget is used")}</div>
               )}
             </div>
           </div>
         );
       })}
-      <Button size="small" onClick={addEntry} icon={<Plus className="w-3 h-3" />}>
-        Add Budget Fallback
-      </Button>
+      <Button size="small" onClick={addEntry} icon={<Plus className="w-3 h-3" />}>{t("Add Budget Fallback")}</Button>
     </div>
   );
 }

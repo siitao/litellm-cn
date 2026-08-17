@@ -3,6 +3,7 @@ import { ArrowLeftOutlined, CopyOutlined, CheckOutlined, LinkOutlined } from "@a
 import { buildMarketplaceSettingsSnippet, formatInstallCommand } from "./helpers";
 import { Plugin } from "./types";
 
+import { t } from "@/i18n";
 interface SkillDetailProps {
   skill: Plugin;
   onBack: () => void;
@@ -45,8 +46,8 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
   ];
 
   const tabs = [
-    { key: "overview", label: "Overview" },
-    { key: "usage", label: "How to Use" },
+    { key: "overview", label: t("Overview")},
+    { key: "usage", label: t("How to Use")},
   ];
 
   return (
@@ -65,7 +66,7 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
         }}
       >
         <ArrowLeftOutlined style={{ fontSize: 11 }} />
-        <span>Skills</span>
+        <span>{t("Skills")}</span>
       </div>
 
       {/* Header */}
@@ -104,14 +105,12 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
         <div style={{ display: "flex", gap: 64 }}>
           {/* Left column */}
           <div style={{ flex: 1, minWidth: 0 }}>
-            <h2 style={{ fontSize: 18, fontWeight: 400, color: "#202124", margin: "0 0 4px 0" }}>Skill Details</h2>
-            <p style={{ fontSize: 13, color: "#5f6368", margin: "0 0 16px 0" }}>Metadata registered with this skill</p>
+            <h2 style={{ fontSize: 18, fontWeight: 400, color: "#202124", margin: "0 0 4px 0" }}>{t("Skill Details")}</h2>
+            <p style={{ fontSize: 13, color: "#5f6368", margin: "0 0 16px 0" }}>{t("Metadata registered with this skill")}</p>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
               <thead>
                 <tr style={{ borderBottom: "1px solid #dadce0" }}>
-                  <th style={{ textAlign: "left", padding: "12px 0", color: "#5f6368", fontWeight: 500, width: 160 }}>
-                    Property
-                  </th>
+                  <th style={{ textAlign: "left", padding: "12px 0", color: "#5f6368", fontWeight: 500, width: 160 }}>{t("Property")}</th>
                   <th style={{ textAlign: "left", padding: "12px 0", color: "#5f6368", fontWeight: 500 }}>
                     {skill.name}
                   </th>
@@ -131,7 +130,7 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
           {/* Right sidebar */}
           <div style={{ width: 240, flexShrink: 0 }}>
             <div style={{ marginBottom: 24 }}>
-              <div style={{ fontSize: 12, color: "#5f6368", marginBottom: 4 }}>Status</div>
+              <div style={{ fontSize: 12, color: "#5f6368", marginBottom: 4 }}>{t("Status")}</div>
               <span
                 style={{
                   fontSize: 12,
@@ -148,7 +147,7 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
 
             {sourceUrl && (
               <div style={{ marginBottom: 24 }}>
-                <div style={{ fontSize: 12, color: "#5f6368", marginBottom: 4 }}>Source</div>
+                <div style={{ fontSize: 12, color: "#5f6368", marginBottom: 4 }}>{t("Source")}</div>
                 <a
                   href={sourceUrl}
                   target="_blank"
@@ -170,7 +169,7 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
 
             {skill.keywords && skill.keywords.length > 0 && (
               <div style={{ marginBottom: 24 }}>
-                <div style={{ fontSize: 12, color: "#5f6368", marginBottom: 8 }}>Tags</div>
+                <div style={{ fontSize: 12, color: "#5f6368", marginBottom: 8 }}>{t("Tags")}</div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                   {skill.keywords.map((kw) => (
                     <span
@@ -192,7 +191,7 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
             )}
 
             <div>
-              <div style={{ fontSize: 12, color: "#5f6368", marginBottom: 4 }}>Skill ID</div>
+              <div style={{ fontSize: 12, color: "#5f6368", marginBottom: 4 }}>{t("Skill ID")}</div>
               <div style={{ fontSize: 12, fontFamily: "monospace", color: "#3c4043", wordBreak: "break-all" }}>
                 {skill.id}
               </div>
@@ -204,7 +203,7 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
       {/* How to Use tab */}
       {activeTab === "usage" && (
         <div style={{ maxWidth: 640 }}>
-          <h2 style={{ fontSize: 18, fontWeight: 400, color: "#202124", margin: "0 0 8px 0" }}>Using this skill</h2>
+          <h2 style={{ fontSize: 18, fontWeight: 400, color: "#202124", margin: "0 0 8px 0" }}>{t("Using this skill")}</h2>
           <p style={{ fontSize: 14, color: "#5f6368", margin: "0 0 24px 0", lineHeight: 1.6 }}>
             Once your proxy is set as a marketplace, enable this skill in Claude Code with one command:
           </p>
@@ -228,7 +227,7 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
                 borderBottom: "1px solid #dadce0",
               }}
             >
-              <span style={{ fontSize: 13, color: "#3c4043", fontWeight: 500 }}>Run in Claude Code</span>
+              <span style={{ fontSize: 13, color: "#3c4043", fontWeight: 500 }}>{t("Run in Claude Code")}</span>
               <button
                 onClick={() => copyToClipboard(installCommand, "install")}
                 style={{
@@ -261,11 +260,8 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
             </pre>
           </div>
 
-          <p style={{ fontSize: 13, color: "#5f6368", lineHeight: 1.6, margin: 0 }}>
-            Don&apos;t have the marketplace configured yet?{" "}
-            <span onClick={() => setActiveTab("setup")} style={{ color: "#1a73e8", cursor: "pointer" }}>
-              See one-time setup →
-            </span>
+          <p style={{ fontSize: 13, color: "#5f6368", lineHeight: 1.6, margin: 0 }}>{t("Don&apos;t have the marketplace configured yet?")}{" "}
+            <span onClick={() => setActiveTab("setup")} style={{ color: "#1a73e8", cursor: "pointer" }}>{t("See one-time setup →")}</span>
           </p>
         </div>
       )}
@@ -273,11 +269,8 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
       {/* Setup tab (linked from usage) */}
       {activeTab === "setup" && (
         <div style={{ maxWidth: 640 }}>
-          <h2 style={{ fontSize: 18, fontWeight: 400, color: "#202124", margin: "0 0 8px 0" }}>
-            One-time marketplace setup
-          </h2>
-          <p style={{ fontSize: 14, color: "#5f6368", margin: "0 0 24px 0", lineHeight: 1.6 }}>
-            Add this to{" "}
+          <h2 style={{ fontSize: 18, fontWeight: 400, color: "#202124", margin: "0 0 8px 0" }}>{t("One-time marketplace setup")}</h2>
+          <p style={{ fontSize: 14, color: "#5f6368", margin: "0 0 24px 0", lineHeight: 1.6 }}>{t("Add this to")}{" "}
             <code style={{ fontSize: 13, backgroundColor: "#f1f3f4", padding: "1px 6px", borderRadius: 4 }}>
               ~/.claude/settings.json
             </code>{" "}

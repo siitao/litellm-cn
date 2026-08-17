@@ -7,6 +7,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { UiLoadingSpinner } from "@/components/ui/ui-loading-spinner";
 import GuardrailTestResults from "./GuardrailTestResults";
 
+import { t } from "@/i18n";
 interface GuardrailTestPanelProps {
   guardrailNames: string[];
   onSubmit: (text: string, metadata?: Record<string, unknown> | null) => void;
@@ -90,7 +91,7 @@ export function GuardrailTestPanel({
         return true;
       }
     } catch (error) {
-      console.error("Copy failed:", error);
+      console.error(t("Copy failed:"), error);
       return false;
     }
   };
@@ -98,7 +99,7 @@ export function GuardrailTestPanel({
   const handleCopyInput = async () => {
     const success = await copyToClipboard(inputText);
     if (success) {
-      NotificationsManager.success("Input copied to clipboard");
+      NotificationsManager.success(t("Input copied to clipboard"));
     } else {
       NotificationsManager.fromBackend("Failed to copy input");
     }
@@ -111,7 +112,7 @@ export function GuardrailTestPanel({
         <div className="flex items-center space-x-3">
           <div className="flex-1 min-w-0">
             <div className="mb-1 flex items-center space-x-2">
-              <h2 className="text-lg font-semibold">Test Guardrails:</h2>
+              <h2 className="text-lg font-semibold">{t("Test Guardrails:")}</h2>
               <div className="flex flex-wrap gap-2">
                 {guardrailNames.map((name) => (
                   <div
@@ -123,8 +124,7 @@ export function GuardrailTestPanel({
                 ))}
               </div>
             </div>
-            <p className="text-sm text-muted-foreground">
-              Test {guardrailNames.length > 1 ? "guardrails" : "guardrail"} and compare results
+            <p className="text-sm text-muted-foreground">{t("Test")} {guardrailNames.length > 1 ? "guardrails" : "guardrail"} and compare results
             </p>
           </div>
         </div>
@@ -136,7 +136,7 @@ export function GuardrailTestPanel({
           <div>
             <div className="mb-2 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <label className="text-sm font-medium">Input Text</label>
+                <label className="text-sm font-medium">{t("Input Text")}</label>
                 <Tooltip>
                   <TooltipTrigger
                     render={
@@ -164,18 +164,16 @@ export function GuardrailTestPanel({
               className="font-mono text-sm field-sizing-fixed"
             />
             <div className="mt-1 flex items-center justify-between">
-              <span className="text-xs text-muted-foreground">
-                Press <kbd className="rounded-sm border border-border bg-muted px-1 py-0.5 text-xs">Enter</kbd> to
-                submit • <kbd className="rounded-sm border border-border bg-muted px-1 py-0.5 text-xs">Shift+Enter</kbd>{" "}
+              <span className="text-xs text-muted-foreground">{t("Press")}<kbd className="rounded-sm border border-border bg-muted px-1 py-0.5 text-xs">{t("Enter")}</kbd>{t("to submit •")}<kbd className="rounded-sm border border-border bg-muted px-1 py-0.5 text-xs">{t("Shift+Enter")}</kbd>{" "}
                 for new line
               </span>
-              <span className="text-xs text-muted-foreground">Characters: {inputText.length}</span>
+              <span className="text-xs text-muted-foreground">{t("Characters:")} {inputText.length}</span>
             </div>
           </div>
 
           <div>
             <div className="mb-2 flex items-center gap-2">
-              <label className="text-sm font-medium">Metadata (optional)</label>
+              <label className="text-sm font-medium">{t("Metadata (optional)")}</label>
               <Tooltip>
                 <TooltipTrigger
                   render={

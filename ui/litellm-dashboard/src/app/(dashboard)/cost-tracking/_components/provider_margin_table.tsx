@@ -6,6 +6,7 @@ import { MarginConfig } from "./types";
 import { getProviderLogoAndName } from "@/components/provider_info_helpers";
 import { Logo } from "@/components/molecules/logo/Logo";
 
+import { t } from "@/i18n";
 interface ProviderMarginTableProps {
   marginConfig: MarginConfig;
   onMarginChange: (provider: string, value: number | { percentage?: number; fixed_amount?: number }) => void;
@@ -104,7 +105,7 @@ const ProviderMarginTable: React.FC<ProviderMarginTableProps> = ({
             if (row.provider === "global") {
               return (
                 <div className="flex items-center space-x-2">
-                  <span className="font-medium">Global (All Providers)</span>
+                  <span className="font-medium">{t("Global (All Providers)")}</span>
                 </div>
               );
             }

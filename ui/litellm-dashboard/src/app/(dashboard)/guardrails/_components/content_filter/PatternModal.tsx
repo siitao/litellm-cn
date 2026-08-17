@@ -16,6 +16,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ACTION_ITEMS } from "./action_options";
 import { ABOVE_ANTD_MODAL } from "./dialog_layering";
 
+import { t } from "@/i18n";
 interface PrebuiltPattern {
   name: string;
   display_name: string;
@@ -68,7 +69,7 @@ const PatternModal: React.FC<PatternModalProps> = ({
     <Dialog open={visible} onOpenChange={(open) => !open && onCancel()}>
       <DialogContent className={`max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-[800px] ${ABOVE_ANTD_MODAL}`}>
         <DialogHeader>
-          <DialogTitle>Add prebuilt pattern</DialogTitle>
+          <DialogTitle>{t("Add prebuilt pattern")}</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-6">
@@ -83,7 +84,7 @@ const PatternModal: React.FC<PatternModalProps> = ({
             >
               <ComboboxInput className="mt-2 w-full" placeholder="Choose pattern type" />
               <ComboboxContent>
-                <ComboboxEmpty>No matching patterns</ComboboxEmpty>
+                <ComboboxEmpty>{t("No matching patterns")}</ComboboxEmpty>
                 <ComboboxList>
                   {(group: PatternGroup) => (
                     <ComboboxGroup key={group.category} items={group.items}>
@@ -103,16 +104,14 @@ const PatternModal: React.FC<PatternModalProps> = ({
           </div>
 
           <div>
-            <p className="font-semibold">Action</p>
-            <p className="mt-1 mb-2 text-muted-foreground">
-              Choose what action the guardrail should take when this pattern is detected
-            </p>
+            <p className="font-semibold">{t("Action")}</p>
+            <p className="mt-1 mb-2 text-muted-foreground">{t("Choose what action the guardrail should take when this pattern is detected")}</p>
             <Select
               items={ACTION_ITEMS}
               value={patternAction}
               onValueChange={(value: string | null) => value && onActionChange(value as "BLOCK" | "MASK")}
             >
-              <SelectTrigger className="w-full" aria-label="Action">
+              <SelectTrigger className="w-full" aria-label={t("Action")}>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent alignItemWithTrigger={false}>
@@ -127,10 +126,8 @@ const PatternModal: React.FC<PatternModalProps> = ({
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={onCancel}>
-            Cancel
-          </Button>
-          <Button onClick={onAdd}>Add</Button>
+          <Button variant="outline" onClick={onCancel}>{t("Cancel")}</Button>
+          <Button onClick={onAdd}>{t("Add")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

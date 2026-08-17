@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Alert } from "antd";
 
+import { t } from "@/i18n";
 const DEPRECATION_DISCUSSION_URL = "https://github.com/BerriAI/litellm/discussions/32090";
 const DEPRECATION_TARGET_DATE = "September 1, 2026";
 
@@ -17,9 +18,7 @@ export const DeprecationBanner: React.FC<DeprecationBannerProps> = ({ featureNam
     description={
       <>
         {`${featureName} is one of several experimental features we're considering removing, potentially as early as ${DEPRECATION_TARGET_DATE}. This list is a draft and is not final. If you rely on this feature, please share feedback on the `}
-        <Link href={DEPRECATION_DISCUSSION_URL} target="_blank" rel="noopener noreferrer">
-          deprecation discussion
-        </Link>
+        <Link href={DEPRECATION_DISCUSSION_URL} target="_blank" rel="noopener noreferrer">{t("deprecation discussion")}</Link>
         .
       </>
     }

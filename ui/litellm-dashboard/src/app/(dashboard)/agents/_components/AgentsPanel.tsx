@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 
+import { t } from "@/i18n";
 interface AgentsPanelProps {
   accessToken: string | null;
   userRole?: string;
@@ -57,7 +58,7 @@ const AgentsPanel: React.FC<AgentsPanelProps> = ({ accessToken, userRole, teams 
           setAgentsList(response.agents || []);
         }
       } catch (error) {
-        console.error("Error fetching agents:", error);
+        console.error(t("Error fetching agents:"), error);
         if (!cancelled) {
           setAgentsList([]);
         }
@@ -81,7 +82,7 @@ const AgentsPanel: React.FC<AgentsPanelProps> = ({ accessToken, userRole, teams 
       const response: AgentsResponse = await getAgentsList(accessToken, healthCheck);
       setAgentsList(response.agents || []);
     } catch (error) {
-      console.error("Error fetching agents:", error);
+      console.error(t("Error fetching agents:"), error);
     }
   };
 
@@ -123,7 +124,7 @@ const AgentsPanel: React.FC<AgentsPanelProps> = ({ accessToken, userRole, teams 
       NotificationsManager.success(`Agent "${agentToDelete.name}" deleted successfully`);
       await refetchAgents(healthCheckEnabled);
     } catch (error) {
-      console.error("Error deleting agent:", error);
+      console.error(t("Error deleting agent:"), error);
       NotificationsManager.fromBackend("Failed to delete agent");
     } finally {
       setIsDeleting(false);
@@ -138,14 +139,14 @@ const AgentsPanel: React.FC<AgentsPanelProps> = ({ accessToken, userRole, teams 
   return (
     <div className="w-full mx-auto flex-auto overflow-y-auto m-8 p-2">
       <div className="flex flex-col gap-2 mb-4">
-        <h1 className="text-2xl font-bold">Agents</h1>
+        <h1 className="text-2xl font-bold">{t("Agents")}</h1>
         <p className="text-sm text-muted-foreground">
           List of A2A-spec agents that are available to be used in your organization. Go to AI Hub, to make agents
           public.
         </p>
         <Alert className="mb-3">
           <Info />
-          <AlertTitle>Why do agents need keys?</AlertTitle>
+          <AlertTitle>{t("Why do agents need keys?")}</AlertTitle>
           <AlertDescription>
             Keys scope access to an agent and allow it to call MCP tools. Assign a key when creating an agent or from
             the Virtual Keys page.
@@ -198,16 +199,13 @@ const AgentsPanel: React.FC<AgentsPanelProps> = ({ accessToken, userRole, teams 
         >
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Delete Agent</AlertDialogTitle>
-              <AlertDialogDescription>
-                Are you sure you want to delete agent: {agentToDelete.name}? This action cannot be undone.
+              <AlertDialogTitle>{t("Delete Agent")}</AlertDialogTitle>
+              <AlertDialogDescription>{t("Are you sure you want to delete agent:")} {agentToDelete.name}? This action cannot be undone.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <Button variant="destructive" onClick={handleDeleteConfirm} disabled={isDeleting}>
-                Delete
-              </Button>
+              <AlertDialogCancel>{t("Cancel")}</AlertDialogCancel>
+              <Button variant="destructive" onClick={handleDeleteConfirm} disabled={isDeleting}>{t("Delete")}</Button>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

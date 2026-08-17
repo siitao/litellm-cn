@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/cva.config";
 
+import { t } from "@/i18n";
 interface GuardrailSettingsViewProps {
   globalGuardrailNames: Set<string>;
   teamGuardrails?: string[];
@@ -28,16 +29,16 @@ export function GuardrailSettingsView({
   const isEmpty = !killSwitchOn && globalsRunning.length === 0 && nonGlobalOptIns.length === 0;
 
   const content = isEmpty ? (
-    <span className="block text-muted-foreground">No guardrails configured</span>
+    <span className="block text-muted-foreground">{t("No guardrails configured")}</span>
   ) : (
     <div className="flex flex-col gap-4">
       <div>
         <span className="mb-2 flex items-center gap-1 text-sm font-medium text-foreground">
-          <Globe2 className="size-4" aria-label="Global guardrail" />
+          <Globe2 className="size-4" aria-label={t("Global guardrail")} />
           Global
         </span>
         {killSwitchOn ? (
-          <Badge variant="outline">Bypassed for this team</Badge>
+          <Badge variant="outline">{t("Bypassed for this team")}</Badge>
         ) : globalsRunning.length > 0 ? (
           <div className="flex flex-wrap gap-2">
             {globalsRunning.map((name) => (
@@ -45,11 +46,11 @@ export function GuardrailSettingsView({
             ))}
           </div>
         ) : (
-          <span className="block text-sm text-muted-foreground">None configured</span>
+          <span className="block text-sm text-muted-foreground">{t("None configured")}</span>
         )}
       </div>
       <div>
-        <span className="mb-2 block text-sm font-medium text-foreground">Team-specific</span>
+        <span className="mb-2 block text-sm font-medium text-foreground">{t("Team-specific")}</span>
         {nonGlobalOptIns.length > 0 ? (
           <div className="flex flex-wrap gap-2">
             {nonGlobalOptIns.map((name) => (
@@ -57,7 +58,7 @@ export function GuardrailSettingsView({
             ))}
           </div>
         ) : (
-          <span className="block text-sm text-muted-foreground">None configured</span>
+          <span className="block text-sm text-muted-foreground">{t("None configured")}</span>
         )}
       </div>
     </div>
@@ -67,8 +68,8 @@ export function GuardrailSettingsView({
     return (
       <Card className={className}>
         <CardHeader>
-          <CardTitle>Guardrails Settings</CardTitle>
-          <CardDescription>Global and team-specific guardrails applied to this team</CardDescription>
+          <CardTitle>{t("Guardrails Settings")}</CardTitle>
+          <CardDescription>{t("Global and team-specific guardrails applied to this team")}</CardDescription>
         </CardHeader>
         <CardContent>{content}</CardContent>
       </Card>
@@ -77,7 +78,7 @@ export function GuardrailSettingsView({
 
   return (
     <div className={cn(className)}>
-      <span className="mb-3 block font-medium text-foreground">Guardrails Settings</span>
+      <span className="mb-3 block font-medium text-foreground">{t("Guardrails Settings")}</span>
       {content}
     </div>
   );

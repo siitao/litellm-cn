@@ -7,6 +7,7 @@ import { CircleHelp } from "lucide-react";
 import React from "react";
 import { useMyTeamMember } from "./useMyTeamMember";
 
+import { t } from "@/i18n";
 interface MyUserTabProps {
   teamId: string;
 }
@@ -36,7 +37,7 @@ export default function MyUserTab({ teamId }: MyUserTabProps) {
   if (isLoading) {
     return (
       <Card>
-        <CardContent className="text-muted-foreground">Loading your membership info…</CardContent>
+        <CardContent className="text-muted-foreground">{t("Loading your membership info…")}</CardContent>
       </Card>
     );
   }
@@ -54,9 +55,7 @@ export default function MyUserTab({ teamId }: MyUserTabProps) {
   if (!data) {
     return (
       <Card>
-        <CardContent className="text-muted-foreground">
-          No membership info available for the current user in this team.
-        </CardContent>
+        <CardContent className="text-muted-foreground">{t("No membership info available for the current user in this team.")}</CardContent>
       </Card>
     );
   }
@@ -76,12 +75,12 @@ export default function MyUserTab({ teamId }: MyUserTabProps) {
         <CardContent>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
             <div>
-              <span className="text-muted-foreground">User</span>
+              <span className="text-muted-foreground">{t("User")}</span>
               <div className="mt-1 font-semibold">{data.user_email || data.user_id}</div>
               <span className="font-mono text-xs text-muted-foreground">{data.user_id}</span>
             </div>
             <div>
-              <span className="text-muted-foreground">Team Role</span>
+              <span className="text-muted-foreground">{t("Team Role")}</span>
               <div className="mt-1">
                 <Badge variant={data.role === "admin" ? "default" : "secondary"}>{data.role || "user"}</Badge>
               </div>
@@ -103,7 +102,7 @@ export default function MyUserTab({ teamId }: MyUserTabProps) {
                 of {maxBudget === null ? "Unlimited" : `$${formatNumber(maxBudget, 4)}`}
               </span>
             </div>
-            {budgetReset && <div className="mt-1 text-muted-foreground">Resets {budgetReset}</div>}
+            {budgetReset && <div className="mt-1 text-muted-foreground">{t("Resets")} {budgetReset}</div>}
           </CardContent>
         </Card>
 
@@ -111,9 +110,9 @@ export default function MyUserTab({ teamId }: MyUserTabProps) {
           <CardContent>
             {labelWithTooltip("Rate Limits", "Your per-member rate limits within this team.")}
             <div className="mt-2">
-              <span>TPM: {formatRateLimit(tpmLimit)}</span>
+              <span>{t("TPM:")} {formatRateLimit(tpmLimit)}</span>
               <br />
-              <span>RPM: {formatRateLimit(rpmLimit)}</span>
+              <span>{t("RPM:")} {formatRateLimit(rpmLimit)}</span>
             </div>
           </CardContent>
         </Card>
@@ -138,7 +137,7 @@ export default function MyUserTab({ teamId }: MyUserTabProps) {
                   ))}
                 </div>
               ) : (
-                <span>All Team Models</span>
+                <span>{t("All Team Models")}</span>
               )}
             </div>
           </CardContent>

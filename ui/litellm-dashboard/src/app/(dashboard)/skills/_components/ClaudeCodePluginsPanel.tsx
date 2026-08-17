@@ -17,6 +17,7 @@ import { isAdminRole } from "@/utils/roles";
 import NotificationsManager from "@/components/molecules/notifications_manager";
 import { Plugin, ListPluginsResponse } from "@/components/claude_code_plugins/types";
 
+import { t } from "@/i18n";
 interface ClaudeCodePluginsPanelProps {
   accessToken: string | null;
   userRole?: string;
@@ -46,7 +47,7 @@ const ClaudeCodePluginsPanel: React.FC<ClaudeCodePluginsPanelProps> = ({ accessT
       const response: ListPluginsResponse = await getClaudeCodePluginsList(accessToken, false);
       setPluginsList(response.plugins);
     } catch (error) {
-      console.error("Error fetching skills:", error);
+      console.error(t("Error fetching skills:"), error);
     } finally {
       setIsLoading(false);
     }
@@ -69,8 +70,8 @@ const ClaudeCodePluginsPanel: React.FC<ClaudeCodePluginsPanelProps> = ({ accessT
       NotificationsManager.success(`Skill "${pluginToDelete.displayName}" deleted successfully`);
       fetchPlugins();
     } catch (error) {
-      console.error("Error deleting skill:", error);
-      NotificationsManager.error("Failed to delete skill");
+      console.error(t("Error deleting skill:"), error);
+      NotificationsManager.error(t("Failed to delete skill"));
     } finally {
       setIsDeleting(false);
       setPluginToDelete(null);
@@ -90,7 +91,7 @@ const ClaudeCodePluginsPanel: React.FC<ClaudeCodePluginsPanelProps> = ({ accessT
       ) : (
         <>
           <div className="flex flex-col gap-2 mb-4">
-            <h1 className="text-2xl font-bold">Skills</h1>
+            <h1 className="text-2xl font-bold">{t("Skills")}</h1>
             <p className="text-sm text-gray-600">
               Register Claude Code skills. Published skills appear in the Skill Hub for all users and are served via{" "}
               <code className="bg-gray-100 px-1 rounded-sm">/claude-code/marketplace.json</code>.
@@ -131,17 +132,14 @@ const ClaudeCodePluginsPanel: React.FC<ClaudeCodePluginsPanelProps> = ({ accessT
         >
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Delete Skill</AlertDialogTitle>
-              <AlertDialogDescription>
-                Are you sure you want to delete skill: <strong>{pluginToDelete.displayName}</strong>?
+              <AlertDialogTitle>{t("Delete Skill")}</AlertDialogTitle>
+              <AlertDialogDescription>{t("Are you sure you want to delete skill:")}<strong>{pluginToDelete.displayName}</strong>?
               </AlertDialogDescription>
-              <p className="text-sm text-muted-foreground">This action cannot be undone.</p>
+              <p className="text-sm text-muted-foreground">{t("This action cannot be undone.")}</p>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <Button variant="destructive" onClick={handleDeleteConfirm} disabled={isDeleting}>
-                Delete
-              </Button>
+              <AlertDialogCancel>{t("Cancel")}</AlertDialogCancel>
+              <Button variant="destructive" onClick={handleDeleteConfirm} disabled={isDeleting}>{t("Delete")}</Button>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

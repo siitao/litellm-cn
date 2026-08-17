@@ -8,6 +8,7 @@ import { Providers } from "../provider_info_helpers";
 import { Logo } from "@/components/molecules/logo/Logo";
 import { resetCredentialFormOnProviderChange } from "./credential_form_helpers";
 
+import { t } from "@/i18n";
 const { Link } = Typography;
 
 interface CredentialModalProps {
@@ -70,7 +71,7 @@ export default function CredentialModal({
     >
       <Form form={form} onFinish={handleSubmit} layout="vertical" initialValues={initialValues}>
         <Form.Item
-          label="Credential Name:"
+          label={t("Credential Name:")}
           name="credential_name"
           rules={[{ required: true, message: "Credential name is required" }]}
         >
@@ -79,9 +80,9 @@ export default function CredentialModal({
 
         <Form.Item
           rules={[{ required: true, message: "Required" }]}
-          label="Provider:"
+          label={t("Provider:")}
           name="custom_llm_provider"
-          tooltip="Helper to auto-populate provider specific fields"
+          tooltip={t("Helper to auto-populate provider specific fields")}
         >
           <AntdSelect
             showSearch
@@ -103,14 +104,12 @@ export default function CredentialModal({
         <ProviderSpecificFields selectedProvider={selectedProvider} uploadProps={uploadProps} />
 
         <div className="flex justify-between items-center">
-          <Tooltip title="Get help on our github">
-            <Link href="https://github.com/BerriAI/litellm/issues">Need Help?</Link>
+          <Tooltip title={t("Get help on our github")}>
+            <Link href="https://github.com/BerriAI/litellm/issues">{t("Need Help?")}</Link>
           </Tooltip>
 
           <div>
-            <Button onClick={closeAndReset} style={{ marginRight: 10 }}>
-              Cancel
-            </Button>
+            <Button onClick={closeAndReset} style={{ marginRight: 10 }}>{t("Cancel")}</Button>
             <Button htmlType="submit">{isEdit ? "Update Credential" : "Add Credential"}</Button>
           </div>
         </div>

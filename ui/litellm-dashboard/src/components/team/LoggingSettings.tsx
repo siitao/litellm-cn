@@ -8,6 +8,7 @@ import { callbackInfo, callback_map, mapDisplayToInternalNames } from "../callba
 import { Logo } from "@/components/molecules/logo/Logo";
 import NumericalInput from "../shared/numerical_input";
 
+import { t } from "@/i18n";
 const { Option } = Select;
 
 interface LoggingConfig {
@@ -110,7 +111,7 @@ const LoggingSettings: React.FC<LoggingSettingsProps> = ({
           <div className="w-3 h-3 bg-blue-100 rounded-full flex items-center justify-center">
             <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
           </div>
-          <span className="text-sm font-medium text-gray-700">Integration Parameters</span>
+          <span className="text-sm font-medium text-gray-700">{t("Integration Parameters")}</span>
         </div>
         <div className="grid grid-cols-1 gap-4">
           {Object.entries(dynamicParams).map(([paramName, paramType]) => (
@@ -118,17 +119,13 @@ const LoggingSettings: React.FC<LoggingSettingsProps> = ({
               <label className="text-sm font-medium text-gray-700 capitalize flex items-center space-x-1">
                 <span>{paramName.replace(/_/g, " ")}</span>
                 {paramType === "password" && (
-                  <span className="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-yellow-100 text-yellow-800">
-                    Sensitive
-                  </span>
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-yellow-100 text-yellow-800">{t("Sensitive")}</span>
                 )}
                 {paramType === "number" && (
-                  <span className="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-yellow-100 text-yellow-800">
-                    Number
-                  </span>
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium bg-yellow-100 text-yellow-800">{t("Number")}</span>
                 )}
               </label>
-              {paramType === "number" && <span className="text-xs text-gray-500">Value must be between 0 and 1</span>}
+              {paramType === "number" && <span className="text-xs text-gray-500">{t("Value must be between 0 and 1")}</span>}
               {paramType === "number" ? (
                 <NumericalInput
                   step={0.01}
@@ -158,17 +155,17 @@ const LoggingSettings: React.FC<LoggingSettingsProps> = ({
       <div className="space-y-4">
         <div className="flex items-center space-x-2">
           <BanIcon className="w-5 h-5 text-red-500" />
-          <span className="text-base font-semibold text-gray-800">Disabled Callbacks</span>
+          <span className="text-base font-semibold text-gray-800">{t("Disabled Callbacks")}</span>
           <Tooltip title="Select callbacks to disable for this key. Disabled callbacks will not receive any logging data.">
             <InfoCircleOutlined className="text-gray-400 cursor-help" />
           </Tooltip>
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Disabled Callbacks</label>
+          <label className="text-sm font-medium text-gray-700">{t("Disabled Callbacks")}</label>
           <Select
             mode="multiple"
-            placeholder="Select callbacks to disable"
+            placeholder={t("Select callbacks to disable")}
             value={disabledCallbacks}
             onChange={handleDisabledCallbacksChange}
             style={{ width: "100%" }}
@@ -204,8 +201,8 @@ const LoggingSettings: React.FC<LoggingSettingsProps> = ({
       <div className="flex justify-between items-center">
         <div className="flex items-center space-x-2">
           <CogIcon className="w-5 h-5 text-blue-500" />
-          <span className="text-base font-semibold text-gray-800">Logging Integrations</span>
-          <Tooltip title="Configure callback logging integrations for this team.">
+          <span className="text-base font-semibold text-gray-800">{t("Logging Integrations")}</span>
+          <Tooltip title={t("Configure callback logging integrations for this team.")}>
             <InfoCircleOutlined className="text-gray-400 cursor-help" />
           </Tooltip>
         </div>
@@ -216,9 +213,7 @@ const LoggingSettings: React.FC<LoggingSettingsProps> = ({
           size="sm"
           className="hover:border-blue-400 hover:text-blue-500"
           type="button"
-        >
-          Add Integration
-        </Button>
+        >{t("Add Integration")}</Button>
       </div>
 
       <div className="space-y-4">
@@ -253,17 +248,15 @@ const LoggingSettings: React.FC<LoggingSettingsProps> = ({
                   color="red"
                   className="hover:bg-red-50"
                   type="button"
-                >
-                  Remove
-                </Button>
+                >{t("Remove")}</Button>
               </div>
               <div className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700">Integration Type</label>
+                    <label className="text-sm font-medium text-gray-700">{t("Integration Type")}</label>
                     <Select
                       value={callbackDisplayName}
-                      placeholder="Select integration"
+                      placeholder={t("Select integration")}
                       onChange={(value) => updateLoggingConfig(index, "callback_name", value)}
                       className="w-full"
                       optionLabelProp="label"
@@ -289,7 +282,7 @@ const LoggingSettings: React.FC<LoggingSettingsProps> = ({
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700">Event Type</label>
+                    <label className="text-sm font-medium text-gray-700">{t("Event Type")}</label>
                     <Select
                       value={config.callback_type}
                       onChange={(value) => updateLoggingConfig(index, "callback_type", value)}
@@ -298,19 +291,19 @@ const LoggingSettings: React.FC<LoggingSettingsProps> = ({
                       <Option value="success">
                         <div className="flex items-center space-x-2">
                           <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                          <span>Success Only</span>
+                          <span>{t("Success Only")}</span>
                         </div>
                       </Option>
                       <Option value="failure">
                         <div className="flex items-center space-x-2">
                           <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                          <span>Failure Only</span>
+                          <span>{t("Failure Only")}</span>
                         </div>
                       </Option>
                       <Option value="success_and_failure">
                         <div className="flex items-center space-x-2">
                           <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                          <span>Success & Failure</span>
+                          <span>{t("Success & Failure")}</span>
                         </div>
                       </Option>
                     </Select>
@@ -327,8 +320,8 @@ const LoggingSettings: React.FC<LoggingSettingsProps> = ({
       {value.length === 0 && (
         <div className="text-center py-12 text-gray-500 border-2 border-dashed border-gray-200 rounded-lg bg-gray-50/50">
           <CogIcon className="w-12 h-12 text-gray-300 mb-3 mx-auto" />
-          <div className="text-base font-medium mb-1">No logging integrations configured</div>
-          <div className="text-sm text-gray-400">Click "Add Integration" to configure logging for this team</div>
+          <div className="text-base font-medium mb-1">{t("No logging integrations configured")}</div>
+          <div className="text-sm text-gray-400">{t("Click \"Add Integration\" to configure logging for this team")}</div>
         </div>
       )}
     </div>

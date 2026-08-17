@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/cva.config";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 /**
  * Filtering happens on the server, so this never runs as a predicate. It exists to override
  * TanStack's auto-remove heuristic, which infers a filter shape from the column's first cell
@@ -35,8 +36,9 @@ function RateLimitCell({ value }: { value: number | null | undefined }) {
 }
 
 function BudgetDurationCell({ value }: { value: string | null | undefined }) {
-  if (!value) {
-    return <span className="text-muted-foreground">Not set</span>;
+
+  const { t } = useLanguage();  if (!value) {
+    return <span className="text-muted-foreground">{t("Not set")}</span>;
   }
   return <span className="whitespace-nowrap">{getBudgetDurationLabel(value)}</span>;
 }
@@ -48,10 +50,11 @@ interface BudgetRowActionsProps {
 }
 
 function BudgetRowActions({ budget, onEditClick, onDeleteClick }: BudgetRowActionsProps) {
-  return (
+
+  const { t } = useLanguage();  return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open budget actions"
+        aria-label={t("Open budget actions")}
         data-testid={`budget-actions-${budget.budget_id}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -98,7 +101,7 @@ export const getBudgetTableColumns = ({
   {
     id: "budget_id",
     accessorKey: "budget_id",
-    meta: { title: "Budget ID" },
+    meta: { title: t("Budget ID")},
     header: ({ column }) => <DataTableSortHeader column={column} title={t("budgets.col_budget_id")} />,
     cell: ({ row }) => (
       <IdCell value={row.original.budget_id} variant="plain" truncate={false} copyable className="whitespace-nowrap" />
@@ -108,10 +111,10 @@ export const getBudgetTableColumns = ({
     id: "max_budget",
     accessorKey: "max_budget",
     filterFn: serverFilter,
-    meta: { title: "Max Budget", numeric: true },
+    meta: { title: t("Max Budget"), numeric: true },
     header: ({ column }) => <DataTableSortHeader column={column} title={t("budgets.col_max_budget")} />,
     size: 120,
-    cell: ({ row }) => <MoneyCell value={row.original.max_budget} decimals={2} showZero emptyText="Unlimited" />,
+    cell: ({ row }) => <MoneyCell value={row.original.max_budget} decimals={2} showZero emptyText={t("Unlimited")} />,
   },
   {
     id: "tpm_limit",
@@ -133,7 +136,7 @@ export const getBudgetTableColumns = ({
     id: "budget_duration",
     accessorKey: "budget_duration",
     filterFn: serverFilter,
-    meta: { title: "Reset" },
+    meta: { title: t("Reset")},
     // "7d"/"30d" sort lexicographically, not chronologically, so the route does not offer it.
     enableSorting: false,
     header: ({ column }) => <DataTableSortHeader column={column} title={t("budgets.col_reset")} />,
@@ -144,7 +147,7 @@ export const getBudgetTableColumns = ({
     id: "created_at",
     accessorKey: "created_at",
     filterFn: serverFilter,
-    meta: { title: "Created" },
+    meta: { title: t("Created")},
     header: ({ column }) => <DataTableSortHeader column={column} title={t("budgets.col_created")} />,
     size: 160,
     cell: ({ row }) => <DateCell value={row.original.created_at} />,
@@ -154,7 +157,7 @@ export const getBudgetTableColumns = ({
         {
           id: "actions",
           meta: { className: "text-right", headerClassName: "text-right" },
-          header: () => <span className="sr-only">Actions</span>,
+          header: () => <span className="sr-only">{t("Actions")}</span>,
           size: 64,
           enableSorting: false,
           enableHiding: false,

@@ -17,6 +17,7 @@ import { cn } from "@/lib/cva.config";
 
 import { AccessGroup } from "./types";
 
+import { t } from "@/i18n";
 interface ResourceTone {
   icon: typeof Layers;
   className: string;
@@ -30,9 +31,9 @@ const RESOURCE_TONES: Record<"models" | "mcpServers" | "agents", ResourceTone> =
 
 function ResourcesCell({ group }: { group: AccessGroup }) {
   const items = [
-    { key: "models" as const, label: "Models", count: group.modelIds.length },
-    { key: "mcpServers" as const, label: "MCP Servers", count: group.mcpServerIds.length },
-    { key: "agents" as const, label: "Agents", count: group.agentIds.length },
+    { key: "models" as const, label: t("Models"), count: group.modelIds.length },
+    { key: "mcpServers" as const, label: t("MCP Servers"), count: group.mcpServerIds.length },
+    { key: "agents" as const, label: t("Agents"), count: group.agentIds.length },
   ];
 
   return (
@@ -68,7 +69,7 @@ function AccessGroupRowActions({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open access group actions"
+        aria-label={t("Open access group actions")}
         data-testid={`access-group-actions-${group.id}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -120,7 +121,7 @@ export const getAccessGroupsTableColumns = ({
     {
       id: "name",
       accessorKey: "name",
-      meta: { title: "Name" },
+      meta: { title: t("Name")},
       header: ({ column }) => <DataTableSortHeader column={column} title={t("access_groups.col_name")} />,
       size: 220,
       enableSorting: true,
@@ -135,7 +136,7 @@ export const getAccessGroupsTableColumns = ({
     },
     {
       id: "resources",
-      meta: { title: "Resources" },
+      meta: { title: t("Resources")},
       header: t("access_groups.col_resources"),
       size: 220,
       enableSorting: false,
@@ -144,7 +145,7 @@ export const getAccessGroupsTableColumns = ({
     {
       id: "createdAt",
       accessorKey: "createdAt",
-      meta: { title: "Created" },
+      meta: { title: t("Created")},
       header: ({ column }) => <DataTableSortHeader column={column} title={t("access_groups.col_created")} />,
       size: 150,
       enableSorting: true,
@@ -154,7 +155,7 @@ export const getAccessGroupsTableColumns = ({
     {
       id: "updatedAt",
       accessorKey: "updatedAt",
-      meta: { title: "Updated" },
+      meta: { title: t("Updated")},
       header: t("access_groups.col_updated"),
       size: 150,
       enableSorting: false,
@@ -171,7 +172,7 @@ export const getAccessGroupsTableColumns = ({
     {
       id: "actions",
       meta: { className: "text-right", headerClassName: "text-right" },
-      header: () => <span className="sr-only">Actions</span>,
+      header: () => <span className="sr-only">{t("Actions")}</span>,
       size: 64,
       enableSorting: false,
       enableHiding: false,

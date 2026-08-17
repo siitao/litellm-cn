@@ -22,6 +22,7 @@ import { getSecureItem, setSecureItem } from "@/utils/secureStorage";
 import { setToken } from "@/utils/mcpTokenStore";
 import { buildCallbackUrl, clearStorage } from "./mcpOAuthUtils";
 
+import { t } from "@/i18n";
 export type ToolsOAuthStatus = "idle" | "authorizing" | "exchanging" | "success" | "error";
 
 interface UseToolsOAuthFlowOptions {
@@ -218,7 +219,7 @@ export const useToolsOAuthFlow = ({
 
       setStatus("success");
       setError(null);
-      NotificationsManager.success("Connected successfully");
+      NotificationsManager.success(t("Connected successfully"));
       onSuccessRef.current(token.access_token);
     } catch (err) {
       const msg = extractErrorMessage(err);

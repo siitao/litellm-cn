@@ -5,6 +5,7 @@ import { FormInstance } from "antd/es/form";
 import { AUTH_TYPE, OAUTH_FLOW } from "@/components/mcp_tools/types";
 import OpenAPIQuickPicker, { OpenAPIRegistryEntry, OpenAPIKeyTool } from "./OpenAPIQuickPicker";
 
+import { t } from "@/i18n";
 interface OpenAPIFormSectionProps {
   form: FormInstance;
   accessToken: string | null;
@@ -65,9 +66,7 @@ const OpenAPIFormSection: React.FC<OpenAPIFormSectionProps> = ({
 
       <Form.Item
         label={
-          <span className="text-sm font-medium text-gray-700 flex items-center">
-            OpenAPI Spec URL
-            <Tooltip title="URL to an OpenAPI specification (JSON or YAML). MCP tools will be automatically generated from the API endpoints defined in the spec.">
+          <span className="text-sm font-medium text-gray-700 flex items-center">{t("OpenAPI Spec URL")}<Tooltip title="URL to an OpenAPI specification (JSON or YAML). MCP tools will be automatically generated from the API endpoints defined in the spec.">
               <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
             </Tooltip>
           </span>

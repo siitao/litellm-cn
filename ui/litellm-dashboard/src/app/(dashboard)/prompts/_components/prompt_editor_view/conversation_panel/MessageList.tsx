@@ -4,6 +4,7 @@ import EmptyState from "./EmptyState";
 import MessageBubble from "./MessageBubble";
 import { Message } from "./types";
 
+import { t } from "@/i18n";
 interface MessageListProps {
   messages: Message[];
   isLoading: boolean;
@@ -22,7 +23,7 @@ const MessageList: React.FC<MessageListProps> = ({ messages, isLoading, hasVaria
 
       {isLoading && (
         <div className="flex justify-center items-center my-4">
-          <Loader2 className="size-6 animate-spin text-muted-foreground" aria-label="Loading response" />
+          <Loader2 className="size-6 animate-spin text-muted-foreground" aria-label={t("Loading response")} />
         </div>
       )}
       <div ref={messagesEndRef} style={{ height: "1px" }} />

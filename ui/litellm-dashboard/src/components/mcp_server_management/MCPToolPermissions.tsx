@@ -7,6 +7,7 @@ import { useMCPServers } from "../../app/(dashboard)/hooks/mcpServers/useMCPServ
 import McpCrudPermissionPanel from "../mcp_tools/McpCrudPermissionPanel";
 import { classifyToolOp } from "../../utils/mcpToolCrudClassification";
 
+import { t } from "@/i18n";
 interface MCPToolPermissionsProps {
   accessToken: string;
   selectedServers: string[];
@@ -133,8 +134,8 @@ const MCPToolPermissions: React.FC<MCPToolPermissionsProps> = ({
                     optionType="button"
                     buttonStyle="solid"
                     options={[
-                      { label: "Risk Groups", value: "crud" },
-                      { label: "Flat List", value: "flat" },
+                      { label: t("Risk Groups"), value: "crud" },
+                      { label: t("Flat List"), value: "flat" },
                     ]}
                   />
                 )}
@@ -145,17 +146,13 @@ const MCPToolPermissions: React.FC<MCPToolPermissionsProps> = ({
                       className="text-sm text-blue-600 hover:text-blue-700 font-medium"
                       onClick={() => handleSelectAll(server.server_id)}
                       disabled={isLoading}
-                    >
-                      Select All
-                    </button>
+                    >{t("Select All")}</button>
                     <button
                       type="button"
                       className="text-sm text-blue-600 hover:text-blue-700 font-medium"
                       onClick={() => handleDeselectAll(server.server_id)}
                       disabled={isLoading}
-                    >
-                      Deselect All
-                    </button>
+                    >{t("Deselect All")}</button>
                   </>
                 )}
               </div>
@@ -174,7 +171,7 @@ const MCPToolPermissions: React.FC<MCPToolPermissionsProps> = ({
               {/* Error */}
               {error && !isLoading && (
                 <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-center">
-                  <Text className="text-red-600 font-medium">Unable to load tools</Text>
+                  <Text className="text-red-600 font-medium">{t("Unable to load tools")}</Text>
                   <Text className="text-sm text-red-500 mt-1">{error}</Text>
                 </div>
               )}
@@ -224,7 +221,7 @@ const MCPToolPermissions: React.FC<MCPToolPermissionsProps> = ({
               {/* Empty State */}
               {!isLoading && !error && tools.length === 0 && (
                 <div className="text-center py-6">
-                  <Text className="text-gray-500">No tools available</Text>
+                  <Text className="text-gray-500">{t("No tools available")}</Text>
                 </div>
               )}
             </div>

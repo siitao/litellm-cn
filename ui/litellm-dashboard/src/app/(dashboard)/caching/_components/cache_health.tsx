@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CheckCircle2, XCircle, ClipboardCopy } from "lucide-react";
 import { ResponseTimeIndicator } from "./response_time_indicator";
 
+import { t } from "@/i18n";
 // Helper function to deep-parse a JSON string if possible
 const deepParse = (input: any) => {
   let parsed = input;
@@ -156,12 +157,8 @@ const HealthCheckDetails: React.FC<{ response: any }> = ({ response }) => {
     <div className="rounded-lg bg-card shadow-sm">
       <Tabs defaultValue="summary">
         <TabsList className="border-b border-border px-4">
-          <TabsTrigger value="summary" className="flex-none">
-            Summary
-          </TabsTrigger>
-          <TabsTrigger value="raw" className="flex-none">
-            Raw Response
-          </TabsTrigger>
+          <TabsTrigger value="summary" className="flex-none">{t("Summary")}</TabsTrigger>
+          <TabsTrigger value="raw" className="flex-none">{t("Raw Response")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="summary" className="p-4">
@@ -174,8 +171,7 @@ const HealthCheckDetails: React.FC<{ response: any }> = ({ response }) => {
               )}
               <p
                 className={`text-sm font-medium ${response?.status === "healthy" ? "text-green-600" : "text-destructive"}`}
-              >
-                Cache Status: {response?.status || "unhealthy"}
+              >{t("Cache Status:")} {response?.status || "unhealthy"}
               </p>
             </div>
 
@@ -185,9 +181,7 @@ const HealthCheckDetails: React.FC<{ response: any }> = ({ response }) => {
                 {errorDetails && (
                   <>
                     <tr>
-                      <td colSpan={2} className="pt-4 pb-2 font-semibold text-destructive">
-                        Error Details
-                      </td>
+                      <td colSpan={2} className="pt-4 pb-2 font-semibold text-destructive">{t("Error Details")}</td>
                     </tr>
                     <TableClickableErrorField label="Error Message" value={errorDetails.message} />
                     <TableClickableErrorField label="Traceback" value={errorDetails.traceback} />
@@ -196,9 +190,7 @@ const HealthCheckDetails: React.FC<{ response: any }> = ({ response }) => {
 
                 {/* Always show cache details, regardless of error state */}
                 <tr>
-                  <td colSpan={2} className="pt-4 pb-2 font-semibold">
-                    Cache Details
-                  </td>
+                  <td colSpan={2} className="pt-4 pb-2 font-semibold">{t("Cache Details")}</td>
                 </tr>
                 <TableClickableErrorField label="Cache Configuration" value={String(parsedLitellmParams?.type)} />
                 <TableClickableErrorField label="Ping Response" value={String(response.ping_response)} />
@@ -212,9 +204,7 @@ const HealthCheckDetails: React.FC<{ response: any }> = ({ response }) => {
                 {parsedLitellmParams?.type === "redis" && (
                   <>
                     <tr>
-                      <td colSpan={2} className="pt-4 pb-2 font-semibold">
-                        Redis Details
-                      </td>
+                      <td colSpan={2} className="pt-4 pb-2 font-semibold">{t("Redis Details")}</td>
                     </tr>
                     <TableClickableErrorField label="Redis Host" value={redisDetails.redis_host || "N/A"} />
                     <TableClickableErrorField label="Redis Port" value={redisDetails.redis_port || "N/A"} />

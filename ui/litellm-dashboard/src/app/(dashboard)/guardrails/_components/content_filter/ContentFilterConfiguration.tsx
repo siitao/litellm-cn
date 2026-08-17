@@ -13,6 +13,7 @@ import KeywordTable from "./KeywordTable";
 import ContentCategoryConfiguration from "./ContentCategoryConfiguration";
 import CompetitorIntentConfiguration, { CompetitorIntentConfig } from "./CompetitorIntentConfiguration";
 
+import { t } from "@/i18n";
 interface PrebuiltPattern {
   name: string;
   display_name: string;
@@ -119,7 +120,7 @@ const ContentFilterConfiguration: React.FC<ContentFilterConfigurationProps> = ({
 
   const handleAddPrebuiltPattern = () => {
     if (!selectedPatternName) {
-      NotificationsManager.error("Please select a pattern");
+      NotificationsManager.error(t("Please select a pattern"));
       return;
     }
 
@@ -140,7 +141,7 @@ const ContentFilterConfiguration: React.FC<ContentFilterConfigurationProps> = ({
 
   const handleAddCustomPattern = () => {
     if (!customPatternName || !customPatternRegex) {
-      NotificationsManager.error("Please provide pattern name and regex");
+      NotificationsManager.error(t("Please provide pattern name and regex"));
       return;
     }
 
@@ -160,7 +161,7 @@ const ContentFilterConfiguration: React.FC<ContentFilterConfigurationProps> = ({
 
   const handleAddKeyword = () => {
     if (!newKeyword) {
-      NotificationsManager.error("Please enter a keyword");
+      NotificationsManager.error(t("Please enter a keyword"));
       return;
     }
 
@@ -230,10 +231,8 @@ const ContentFilterConfiguration: React.FC<ContentFilterConfigurationProps> = ({
         <Card>
           <CardHeader>
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <CardTitle>Pattern Detection</CardTitle>
-              <p className="text-sm font-normal text-muted-foreground">
-                Detect sensitive information using regex patterns (SSN, credit cards, API keys, etc.)
-              </p>
+              <CardTitle>{t("Pattern Detection")}</CardTitle>
+              <p className="text-sm font-normal text-muted-foreground">{t("Detect sensitive information using regex patterns (SSN, credit cards, API keys, etc.)")}</p>
             </div>
           </CardHeader>
           <CardContent>
@@ -260,10 +259,8 @@ const ContentFilterConfiguration: React.FC<ContentFilterConfigurationProps> = ({
         <Card>
           <CardHeader>
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <CardTitle>Blocked Keywords</CardTitle>
-              <p className="text-sm font-normal text-muted-foreground">
-                Block or mask specific sensitive terms and phrases
-              </p>
+              <CardTitle>{t("Blocked Keywords")}</CardTitle>
+              <p className="text-sm font-normal text-muted-foreground">{t("Block or mask specific sensitive terms and phrases")}</p>
             </div>
           </CardHeader>
           <CardContent>

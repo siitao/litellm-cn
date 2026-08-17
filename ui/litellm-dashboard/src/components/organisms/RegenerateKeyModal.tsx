@@ -8,6 +8,7 @@ import NotificationManager from "../molecules/notifications_manager";
 import { regenerateKeyCall } from "../networking";
 import { calculateExpiryPreviewFromDuration, formatExpiresUtc, isKeyExpired } from "@/utils/keyExpiryUtils";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 const { Text } = Typography;
 
 const DURATION_RULE = {
@@ -23,7 +24,8 @@ interface RegenerateKeyModalProps {
 }
 
 export function RegenerateKeyModal({ selectedToken, visible, onClose, onKeyUpdate }: RegenerateKeyModalProps) {
-  const { accessToken } = useAuthorized();
+
+  const { t } = useLanguage();  const { accessToken } = useAuthorized();
   const [form] = Form.useForm();
   const [regeneratedKey, setRegeneratedKey] = useState<string | null>(null);
   const [isRegenerating, setIsRegenerating] = useState(false);
@@ -62,7 +64,7 @@ export function RegenerateKeyModal({ selectedToken, visible, onClose, onKeyUpdat
 
       const response = await regenerateKeyCall(accessToken, selectedToken.token || selectedToken.token_id, formValues);
       setRegeneratedKey(response.key);
-      NotificationManager.success("Virtual Key regenerated successfully");
+      NotificationManager.success(t("Virtual Key regenerated successfully"));
 
       // Build the update payload. Spread the API response first so any new
       // fields it returns (new token, timestamps, etc.) are captured, then
@@ -93,7 +95,7 @@ export function RegenerateKeyModal({ selectedToken, visible, onClose, onKeyUpdat
       if (error && typeof error === "object" && "errorFields" in error) {
         return;
       }
-      console.error("Error regenerating key:", error);
+      console.error(t("Error regenerating key:"), error);
       NotificationManager.fromBackend(error);
     }
   };
@@ -112,7 +114,7 @@ export function RegenerateKeyModal({ selectedToken, visible, onClose, onKeyUpdat
 
   return (
     <Modal
-      title="Regenerate Virtual Key"
+      title={t("Regenerate Virtual Key")}
       open={visible}
       onCancel={handleClose}
       width={520}
@@ -121,7 +123,7 @@ export function RegenerateKeyModal({ selectedToken, visible, onClose, onKeyUpdat
         regeneratedKey
           ? [
               <Space key="footer-actions">
-                <Button onClick={handleClose}>Close</Button>
+                <Button onClick={handleClose}>{t("Close")}</Button>
                 <CopyToClipboard text={regeneratedKey} onCopy={handleCopyKey}>
                   <Button type="primary" icon={copied ? <CheckOutlined /> : <CopyOutlined />}>
                     {copied ? "Copied" : "Copy Key"}
@@ -131,29 +133,23 @@ export function RegenerateKeyModal({ selectedToken, visible, onClose, onKeyUpdat
             ]
           : [
               <Space key="footer-actions">
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button type="primary" icon={<SyncOutlined />} onClick={handleRegenerateKey} loading={isRegenerating}>
-                  Regenerate
-                </Button>
+                <Button onClick={handleClose}>{t("Cancel")}</Button>
+                <Button type="primary" icon={<SyncOutlined />} onClick={handleRegenerateKey} loading={isRegenerating}>{t("Regenerate")}</Button>
               </Space>,
             ]
       }
     >
       {regeneratedKey ? (
         <Flex vertical gap="middle">
-          <Alert type="warning" showIcon message="Save it now, you will not see it again" />
+          <Alert type="warning" showIcon message={t("Save it now, you will not see it again")} />
 
           <Flex vertical gap={2}>
-            <Text type="secondary" style={{ fontSize: 12 }}>
-              Key Alias
-            </Text>
+            <Text type="secondary" style={{ fontSize: 12 }}>{t("Key Alias")}</Text>
             <Text>{selectedToken?.key_alias || "No alias set"}</Text>
           </Flex>
 
           <Flex vertical gap={6}>
-            <Text type="secondary" style={{ fontSize: 12 }}>
-              Virtual Key
-            </Text>
+            <Text type="secondary" style={{ fontSize: 12 }}>{t("Virtual Key")}</Text>
             <div
               style={{
                 background: "#f5f5f5",
@@ -172,23 +168,23 @@ export function RegenerateKeyModal({ selectedToken, visible, onClose, onKeyUpdat
         </Flex>
       ) : (
         <Form form={form} layout="vertical" style={{ marginTop: 4 }}>
-          <Form.Item name="key_alias" label="Key Alias">
+          <Form.Item name="key_alias" label={t("Key Alias")}>
             <Input disabled />
           </Form.Item>
 
           <Row gutter={12}>
             <Col span={8}>
-              <Form.Item name="max_budget" label="Max Budget (USD)">
+              <Form.Item name="max_budget" label={t("Max Budget (USD)")}>
                 <InputNumber step={0.01} precision={2} style={{ width: "100%" }} />
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item name="tpm_limit" label="TPM Limit">
+              <Form.Item name="tpm_limit" label={t("TPM Limit")}>
                 <InputNumber style={{ width: "100%" }} />
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item name="rpm_limit" label="RPM Limit">
+              <Form.Item name="rpm_limit" label={t("RPM Limit")}>
                 <InputNumber style={{ width: "100%" }} />
               </Form.Item>
             </Col>
@@ -198,38 +194,34 @@ export function RegenerateKeyModal({ selectedToken, visible, onClose, onKeyUpdat
             <Col span={12}>
               <Form.Item
                 name="duration"
-                label="Expire Key"
+                label={t("Expire Key")}
                 rules={durationRules}
                 extra={
                   <Flex vertical gap={2}>
-                    <Text type={keyIsExpired ? "danger" : "secondary"} style={{ fontSize: 12 }}>
-                      Current expiry: {selectedToken?.expires ? formatExpiresUtc(selectedToken.expires) : "Never"}
+                    <Text type={keyIsExpired ? "danger" : "secondary"} style={{ fontSize: 12 }}>{t("Current expiry:")} {selectedToken?.expires ? formatExpiresUtc(selectedToken.expires) : "Never"}
                       {keyIsExpired && " (expired)"}
                     </Text>
                     {newExpiryTime && (
-                      <Text type="success" style={{ fontSize: 12 }}>
-                        New expiry: {newExpiryTime}
+                      <Text type="success" style={{ fontSize: 12 }}>{t("New expiry:")} {newExpiryTime}
                       </Text>
                     )}
                   </Flex>
                 }
               >
-                <Input placeholder="e.g. 30s, 30h, 30d" />
+                <Input placeholder={t("e.g. 30s, 30h, 30d")} />
               </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item
                 name="grace_period"
-                label="Grace Period"
+                label={t("Grace Period")}
                 tooltip="Keep the old key valid for this duration after rotation. Both keys work during this period for seamless cutover. Empty = immediate revoke."
                 extra={
-                  <Text type="secondary" style={{ fontSize: 12 }}>
-                    Recommended: 24h to 72h for production keys
-                  </Text>
+                  <Text type="secondary" style={{ fontSize: 12 }}>{t("Recommended: 24h to 72h for production keys")}</Text>
                 }
                 rules={[DURATION_RULE]}
               >
-                <Input placeholder="e.g. 24h, 2d" />
+                <Input placeholder={t("e.g. 24h, 2d")} />
               </Form.Item>
             </Col>
           </Row>

@@ -40,7 +40,8 @@ import {
 import { LoggingCallbacksTable } from "./Settings/LoggingAndAlerts/LoggingCallbacks/LoggingCallbacksTable";
 import { AlertingObject } from "./Settings/LoggingAndAlerts/LoggingCallbacks/types";
 import { parseErrorMessage } from "./shared/errorUtils";
-interface SettingsPageProps {
+
+import { t } from "@/i18n";interface SettingsPageProps {
   accessToken: string | null;
   userRole: string | null;
   userID: string | null;
@@ -138,7 +139,7 @@ export const CallbackSelector: React.FC<CallbackSelectorProps> = ({
 }) => {
   return (
     <FormItem
-      label="Callback"
+      label={t("Callback")}
       name="callback"
       rules={disabled ? undefined : [{ required: true, message: "Please select a callback" }]}
     >
@@ -409,7 +410,7 @@ const Settings: React.FC<SettingsPageProps> = ({ accessToken, userRole, userID, 
     } catch (error) {
       NotificationsManager.fromBackend(error);
     }
-    NotificationsManager.success("Alerts updated successfully");
+    NotificationsManager.success(t("Alerts updated successfully"));
   };
 
   const handleDeleteCallback = (callback: any) => {
@@ -436,7 +437,7 @@ const Settings: React.FC<SettingsPageProps> = ({ accessToken, userRole, userID, 
       setShowDeleteConfirmModal(false);
       setCallbackToDelete(null);
     } catch (error) {
-      console.error("Failed to delete callback:", error);
+      console.error(t("Failed to delete callback:"), error);
       NotificationsManager.fromBackend(error);
     } finally {
       setIsDeletingCallback(false);
@@ -473,7 +474,7 @@ const Settings: React.FC<SettingsPageProps> = ({ accessToken, userRole, userID, 
                 onTest={async (cb) => {
                   try {
                     await serviceHealthCheck(accessToken, cb.name);
-                    NotificationsManager.success("Health check triggered");
+                    NotificationsManager.success(t("Health check triggered"));
                   } catch (error) {
                     NotificationsManager.fromBackend(parseErrorMessage(error));
                   }
@@ -557,7 +558,7 @@ const Settings: React.FC<SettingsPageProps> = ({ accessToken, userRole, userID, 
                     try {
                       await serviceHealthCheck(accessToken, "slack");
                       NotificationsManager.success(
-                        "Alert test triggered. Test request to slack made - check logs/alerts on slack to verify",
+                        t("Alert test triggered. Test request to slack made - check logs/alerts on slack to verify"),
                       );
                     } catch (error) {
                       NotificationsManager.fromBackend(parseErrorMessage(error));
@@ -628,9 +629,7 @@ const Settings: React.FC<SettingsPageProps> = ({ accessToken, userRole, userID, 
                 addForm.resetFields();
               }}
               disabled={isAddingCallback}
-            >
-              Cancel
-            </Button2>
+            >{t("Cancel")}</Button2>
             <Button2 htmlType="submit" loading={isAddingCallback} disabled={isAddingCallback}>
               {isAddingCallback ? "Adding..." : "Add Callback"}
             </Button2>
@@ -685,9 +684,7 @@ const Settings: React.FC<SettingsPageProps> = ({ accessToken, userRole, userID, 
                 editForm.resetFields();
               }}
               disabled={isUpdatingCallback}
-            >
-              Cancel
-            </Button2>
+            >{t("Cancel")}</Button2>
             <Button2
               onClick={() => {
                 editForm.submit();
@@ -704,11 +701,11 @@ const Settings: React.FC<SettingsPageProps> = ({ accessToken, userRole, userID, 
       <DeleteResourceModal
         isOpen={showDeleteConfirmModal}
         title={t("logging_alerts.delete_callback")}
-        message="Are you sure you want to delete this callback? This action cannot be undone."
+        message={t("Are you sure you want to delete this callback? This action cannot be undone.")}
         resourceInformationTitle="Callback Information"
         resourceInformation={[
-          { label: "Callback Name", value: callbackToDelete?.name },
-          { label: "Mode", value: callbackToDelete?.mode || "success" },
+          { label: t("Callback Name"), value: callbackToDelete?.name },
+          { label: t("Mode"), value: callbackToDelete?.mode || "success" },
         ]}
         onCancel={() => {
           setShowDeleteConfirmModal(false);

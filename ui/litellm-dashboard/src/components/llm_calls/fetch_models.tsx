@@ -3,6 +3,7 @@
 import { excludeProxyWideSentinel } from "@/components/key_team_helpers/fetch_available_models_team_key";
 import { modelAvailableCall, modelHubCall } from "@/components/networking";
 
+import { t } from "@/i18n";
 export interface ModelGroup {
   model_group: string;
   mode?: string;
@@ -44,7 +45,7 @@ export const fetchAvailableModels = async (accessToken: string): Promise<ModelGr
     }
     return [];
   } catch (error) {
-    console.error("Error fetching model info:", error);
+    console.error(t("Error fetching model info:"), error);
     throw error;
   }
 };

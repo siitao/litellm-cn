@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UiLoadingSpinner } from "@/components/ui/ui-loading-spinner";
 import { AccessGroupEditModal } from "./AccessGroupsModal/AccessGroupEditModal";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface AccessGroupDetailProps {
   accessGroupId: string;
   onBack: () => void;
@@ -35,7 +36,8 @@ function ResourceList({ ids, emptyMessage }: { ids: string[]; emptyMessage: stri
 }
 
 export function AccessGroupDetail({ accessGroupId, onBack }: AccessGroupDetailProps) {
-  const { data: accessGroup, isLoading } = useAccessGroupDetails(accessGroupId);
+
+  const { t } = useLanguage();  const { data: accessGroup, isLoading } = useAccessGroupDetails(accessGroupId);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [showAllKeys, setShowAllKeys] = useState(false);
   const [showAllTeams, setShowAllTeams] = useState(false);
@@ -56,7 +58,7 @@ export function AccessGroupDetail({ accessGroupId, onBack }: AccessGroupDetailPr
         <Button variant="ghost" size="icon" aria-label="Back" onClick={onBack} className="mb-4">
           <ArrowLeftIcon className="size-4" />
         </Button>
-        <p className="py-8 text-center text-sm text-muted-foreground">Access group not found</p>
+        <p className="py-8 text-center text-sm text-muted-foreground">{t("Access group not found")}</p>
       </div>
     );
   }
@@ -80,8 +82,8 @@ export function AccessGroupDetail({ accessGroupId, onBack }: AccessGroupDetailPr
           <div>
             <h1 className="text-xl font-semibold tracking-tight text-foreground">{accessGroup.access_group_name}</h1>
             <div className="flex items-center gap-1 text-sm text-muted-foreground">
-              <span>ID: {accessGroup.access_group_id}</span>
-              <CopyButton value={accessGroup.access_group_id} label="Copy access group ID" />
+              <span>{t("ID:")} {accessGroup.access_group_id}</span>
+              <CopyButton value={accessGroup.access_group_id} label={t("Copy access group ID")} />
             </div>
           </div>
         </div>
@@ -93,13 +95,13 @@ export function AccessGroupDetail({ accessGroupId, onBack }: AccessGroupDetailPr
 
       <Card className="mb-6">
         <CardHeader>
-          <CardTitle>Group Details</CardTitle>
+          <CardTitle>{t("Group Details")}</CardTitle>
         </CardHeader>
         <CardContent>
           <dl className="grid grid-cols-[max-content_1fr] gap-x-4 gap-y-2 text-sm">
-            <dt className="text-muted-foreground">Description</dt>
+            <dt className="text-muted-foreground">{t("Description")}</dt>
             <dd className="text-foreground">{accessGroup.description || "—"}</dd>
-            <dt className="text-muted-foreground">Created</dt>
+            <dt className="text-muted-foreground">{t("Created")}</dt>
             <dd className="flex items-center gap-1 text-foreground">
               {new Date(accessGroup.created_at).toLocaleString()}
               {accessGroup.created_by && (
@@ -109,7 +111,7 @@ export function AccessGroupDetail({ accessGroupId, onBack }: AccessGroupDetailPr
                 </>
               )}
             </dd>
-            <dt className="text-muted-foreground">Last Updated</dt>
+            <dt className="text-muted-foreground">{t("Last Updated")}</dt>
             <dd className="flex items-center gap-1 text-foreground">
               {new Date(accessGroup.updated_at).toLocaleString()}
               {accessGroup.updated_by && (
@@ -149,7 +151,7 @@ export function AccessGroupDetail({ accessGroupId, onBack }: AccessGroupDetailPr
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-muted-foreground">No keys attached</p>
+              <p className="text-sm text-muted-foreground">{t("No keys attached")}</p>
             )}
           </CardContent>
         </Card>
@@ -179,7 +181,7 @@ export function AccessGroupDetail({ accessGroupId, onBack }: AccessGroupDetailPr
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-muted-foreground">No teams attached</p>
+              <p className="text-sm text-muted-foreground">{t("No teams attached")}</p>
             )}
           </CardContent>
         </Card>

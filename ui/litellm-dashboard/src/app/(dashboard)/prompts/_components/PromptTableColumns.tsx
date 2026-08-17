@@ -20,6 +20,8 @@ import { copyToClipboard } from "@/utils/dataUtils";
 
 import { extractModel, getProviderFromModelHub, ModelGroupInfo } from "./prompt_utils";
 
+import { t } from "@/i18n";
+import { useLanguage } from "@/contexts/LanguageContext";
 const ENVIRONMENT_TONE: Record<string, StatusTone> = {
   production: "error",
   staging: "warning",
@@ -68,10 +70,11 @@ interface PromptRowActionsProps {
 }
 
 function PromptRowActions({ prompt, isAdmin, onDeleteClick }: PromptRowActionsProps) {
-  return (
+
+  const { t } = useLanguage();  return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open prompt actions"
+        aria-label={t("Open prompt actions")}
         data-testid={`prompt-actions-${prompt.prompt_id}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -119,8 +122,8 @@ export const getPromptTableColumns = ({
   {
     id: "prompt_id",
     accessorKey: "prompt_id",
-    meta: { title: "Prompt ID" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Prompt ID" />,
+    meta: { title: t("Prompt ID")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Prompt ID")} />,
     size: 220,
     enableSorting: true,
     cell: ({ row }) => (
@@ -134,7 +137,7 @@ export const getPromptTableColumns = ({
   },
   {
     id: "model",
-    meta: { title: "Model" },
+    meta: { title: t("Model")},
     header: "Model",
     size: 200,
     enableSorting: false,
@@ -144,8 +147,8 @@ export const getPromptTableColumns = ({
     id: "created_at",
     accessorKey: "created_at",
     sortingFn: "datetime",
-    meta: { title: "Created At" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Created At" />,
+    meta: { title: t("Created At")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Created At")} />,
     size: 160,
     enableSorting: true,
     cell: ({ row }) => <DateCell value={row.original.created_at} />,
@@ -154,8 +157,8 @@ export const getPromptTableColumns = ({
     id: "updated_at",
     accessorKey: "updated_at",
     sortingFn: "datetime",
-    meta: { title: "Updated At" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Updated At" />,
+    meta: { title: t("Updated At")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Updated At")} />,
     size: 160,
     enableSorting: true,
     cell: ({ row }) => <DateCell value={row.original.updated_at} />,
@@ -163,7 +166,7 @@ export const getPromptTableColumns = ({
   {
     id: "environment",
     accessorKey: "environment",
-    meta: { title: "Environment", skeleton: "badge" },
+    meta: { title: t("Environment"), skeleton: "badge" },
     header: "Environment",
     size: 130,
     enableSorting: false,
@@ -175,7 +178,7 @@ export const getPromptTableColumns = ({
   {
     id: "created_by",
     accessorKey: "created_by",
-    meta: { title: "Created By" },
+    meta: { title: t("Created By")},
     header: "Created By",
     size: 160,
     enableSorting: false,
@@ -191,7 +194,7 @@ export const getPromptTableColumns = ({
   {
     id: "prompt_type",
     accessorKey: "prompt_info.prompt_type",
-    meta: { title: "Type" },
+    meta: { title: t("Type")},
     header: "Type",
     size: 140,
     enableSorting: false,
@@ -207,7 +210,7 @@ export const getPromptTableColumns = ({
   {
     id: "actions",
     meta: { className: "text-right", headerClassName: "text-right" },
-    header: () => <span className="sr-only">Actions</span>,
+    header: () => <span className="sr-only">{t("Actions")}</span>,
     size: 64,
     enableSorting: false,
     enableHiding: false,

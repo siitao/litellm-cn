@@ -19,6 +19,8 @@ import {
 import { cn } from "@/lib/cva.config";
 import { copyToClipboard } from "@/utils/dataUtils";
 
+import { t } from "@/i18n";
+import { useLanguage } from "@/contexts/LanguageContext";
 const CATEGORY_BADGE_CLASS: Record<ReturnType<typeof getCategoryBadgeColor>, string> = {
   blue: "border-blue-200 bg-blue-50 text-blue-600",
   green: "border-green-200 bg-green-50 text-green-600",
@@ -47,10 +49,11 @@ interface PluginRowActionsProps {
 }
 
 function PluginRowActions({ plugin, isAdmin, onDeleteClick }: PluginRowActionsProps) {
-  return (
+
+  const { t } = useLanguage();  return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open skill actions"
+        aria-label={t("Open skill actions")}
         data-testid={`plugin-actions-${plugin.name}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -96,8 +99,8 @@ export const getPluginTableColumns = ({
   {
     id: "name",
     accessorKey: "name",
-    meta: { title: "Skill Name" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Skill Name" />,
+    meta: { title: t("Skill Name")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Skill Name")} />,
     size: 220,
     enableSorting: true,
     cell: ({ row }) => (
@@ -112,7 +115,7 @@ export const getPluginTableColumns = ({
   {
     id: "version",
     accessorKey: "version",
-    meta: { title: "Version" },
+    meta: { title: t("Version")},
     header: "Version",
     size: 100,
     enableSorting: false,
@@ -121,7 +124,7 @@ export const getPluginTableColumns = ({
   {
     id: "description",
     accessorKey: "description",
-    meta: { title: "Description" },
+    meta: { title: t("Description")},
     header: "Description",
     size: 300,
     enableSorting: false,
@@ -137,7 +140,7 @@ export const getPluginTableColumns = ({
   {
     id: "category",
     accessorKey: "category",
-    meta: { title: "Category", skeleton: "badge" },
+    meta: { title: t("Category"), skeleton: "badge" },
     header: "Category",
     size: 150,
     enableSorting: false,
@@ -146,7 +149,7 @@ export const getPluginTableColumns = ({
   {
     id: "enabled",
     accessorKey: "enabled",
-    meta: { title: "Public", skeleton: "badge" },
+    meta: { title: t("Public"), skeleton: "badge" },
     header: "Public",
     size: 100,
     enableSorting: false,
@@ -158,8 +161,8 @@ export const getPluginTableColumns = ({
     id: "created_at",
     accessorKey: "created_at",
     sortingFn: "datetime",
-    meta: { title: "Created At" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Created At" />,
+    meta: { title: t("Created At")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Created At")} />,
     size: 160,
     enableSorting: true,
     cell: ({ row }) => <DateCell value={row.original.created_at} />,
@@ -167,7 +170,7 @@ export const getPluginTableColumns = ({
   {
     id: "actions",
     meta: { className: "text-right", headerClassName: "text-right" },
-    header: () => <span className="sr-only">Actions</span>,
+    header: () => <span className="sr-only">{t("Actions")}</span>,
     size: 64,
     enableSorting: false,
     enableHiding: false,

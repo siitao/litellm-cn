@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ClassificationRubric } from "./ComplexityRouterConfig";
 import { hasCustomPrompt, initialDraftText, resolveCustomPrompt } from "./classifierPromptEditorState";
 
+import { t } from "@/i18n";
 interface ClassifierPromptEditorProps {
   systemPrompt: string | undefined;
   onChange: (systemPrompt: string | undefined) => void;
@@ -66,9 +67,7 @@ const ClassifierPromptEditor: React.FC<ClassifierPromptEditorProps> = ({
           {isOverridden ? "Edit custom prompt" : "Change default prompt"}
         </Button>
         {isOverridden && (
-          <Button type="button" size="sm" variant="link" onClick={() => onChange(undefined)}>
-            Reset to default
-          </Button>
+          <Button type="button" size="sm" variant="link" onClick={() => onChange(undefined)}>{t("Reset to default")}</Button>
         )}
       </div>
       <p className="mt-1 text-xs text-muted-foreground">
@@ -80,7 +79,7 @@ const ClassifierPromptEditor: React.FC<ClassifierPromptEditorProps> = ({
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Classifier prompt</DialogTitle>
+            <DialogTitle>{t("Classifier prompt")}</DialogTitle>
           </DialogHeader>
 
           <div className="rounded-md border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
@@ -111,12 +110,11 @@ const ClassifierPromptEditor: React.FC<ClassifierPromptEditorProps> = ({
             onChange={(e) => setDraft(e.target.value)}
             rows={16}
             disabled={isLoading}
-            aria-label="Classifier system prompt"
+            aria-label={t("Classifier system prompt")}
             className="mt-3 font-mono text-xs"
           />
           <div className="mt-2 flex items-center justify-between">
-            <p className="text-xs text-muted-foreground">
-              Prefilled from the {classificationRubric} rubric this router would send at a context window of{" "}
+            <p className="text-xs text-muted-foreground">{t("Prefilled from the")} {classificationRubric} rubric this router would send at a context window of{" "}
               {contextWindowSize}.
             </p>
             <Button
@@ -125,18 +123,12 @@ const ClassifierPromptEditor: React.FC<ClassifierPromptEditorProps> = ({
               variant="link"
               onClick={() => setDraft(defaultPrompt)}
               disabled={isLoading || draft === defaultPrompt}
-            >
-              Restore default text
-            </Button>
+            >{t("Restore default text")}</Button>
           </div>
 
           <DialogFooter className="mt-4">
-            <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
-              Cancel
-            </Button>
-            <Button type="button" onClick={handleSave} disabled={isLoading || !draft.trim()}>
-              Save prompt
-            </Button>
+            <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>{t("Cancel")}</Button>
+            <Button type="button" onClick={handleSave} disabled={isLoading || !draft.trim()}>{t("Save prompt")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

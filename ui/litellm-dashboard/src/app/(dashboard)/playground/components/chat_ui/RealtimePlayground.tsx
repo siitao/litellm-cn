@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { getProxyBaseUrl } from "@/components/networking";
 import { OPEN_AI_VOICE_SELECT_OPTIONS } from "./chatConstants";
 
+import { t } from "@/i18n";
 interface RealtimeMessage {
   role: "user" | "assistant" | "system" | "status";
   content: string;
@@ -365,7 +366,7 @@ const RealtimePlayground: React.FC<RealtimePlaygroundProps> = ({
       <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-gray-50">
         <div className="flex items-center gap-3">
           <Volume2 className="size-5 text-blue-500" />
-          <span className="font-semibold text-gray-800">Realtime Voice Chat</span>
+          <span className="font-semibold text-gray-800">{t("Realtime Voice Chat")}</span>
           <span className={`inline-block w-2 h-2 rounded-full ${isConnected ? "bg-green-500" : "bg-gray-300"}`} />
           <span className="text-xs text-gray-500">
             {isConnected ? "Connected" : isConnecting ? "Connecting..." : "Disconnected"}
@@ -377,7 +378,7 @@ const RealtimePlayground: React.FC<RealtimePlaygroundProps> = ({
             onValueChange={(voice) => setSelectedVoice(voice ?? selectedVoice)}
             disabled={isConnected}
           >
-            <SelectTrigger size="sm" className="w-[220px]" aria-label="Voice">
+            <SelectTrigger size="sm" className="w-[220px]" aria-label={t("Voice")}>
               <SelectValue>{OPEN_AI_VOICE_SELECT_OPTIONS.find((v) => v.value === selectedVoice)?.label}</SelectValue>
             </SelectTrigger>
             <SelectContent>
@@ -389,9 +390,7 @@ const RealtimePlayground: React.FC<RealtimePlaygroundProps> = ({
             </SelectContent>
           </Select>
           {!isConnected ? (
-            <Button onClick={connect} disabled={isConnecting} size="sm">
-              Connect
-            </Button>
+            <Button onClick={connect} disabled={isConnecting} size="sm">{t("Connect")}</Button>
           ) : (
             <Button variant="destructive" onClick={disconnect} size="sm">
               <CircleX />
@@ -406,9 +405,8 @@ const RealtimePlayground: React.FC<RealtimePlaygroundProps> = ({
         {messages.length === 0 && !isConnected && (
           <div className="flex flex-col items-center justify-center h-full text-gray-400 gap-3">
             <Volume2 className="size-12" />
-            <span className="text-lg text-gray-500">Realtime Voice Playground</span>
-            <p className="text-sm text-gray-400 text-center max-w-md">
-              Click <b>Connect</b> to start a realtime session. You can speak using your microphone or type messages.
+            <span className="text-lg text-gray-500">{t("Realtime Voice Playground")}</span>
+            <p className="text-sm text-gray-400 text-center max-w-md">{t("Click")}<b>{t("Connect")}</b> to start a realtime session. You can speak using your microphone or type messages.
               The AI will respond with voice and text.
             </p>
           </div>
@@ -459,7 +457,7 @@ const RealtimePlayground: React.FC<RealtimePlaygroundProps> = ({
               }}
               className="h-10 flex-1"
             />
-            <Button size="icon-lg" onClick={sendTextMessage} disabled={!inputText.trim()} aria-label="Send">
+            <Button size="icon-lg" onClick={sendTextMessage} disabled={!inputText.trim()} aria-label={t("Send")}>
               <Send />
             </Button>
           </div>

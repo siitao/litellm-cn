@@ -347,8 +347,8 @@ export const getKeyTableColumns = ({
       const key = row.original;
       return (
         <div className="text-xs">
-          <div>TPM: {key.tpm_limit !== null ? key.tpm_limit : t("common.unlimited")}</div>
-          <div>RPM: {key.rpm_limit !== null ? key.rpm_limit : t("common.unlimited")}</div>
+          <div>{t("TPM:")} {key.tpm_limit !== null ? key.tpm_limit : t("common.unlimited")}</div>
+          <div>{t("RPM:")} {key.rpm_limit !== null ? key.rpm_limit : t("common.unlimited")}</div>
         </div>
       );
     },

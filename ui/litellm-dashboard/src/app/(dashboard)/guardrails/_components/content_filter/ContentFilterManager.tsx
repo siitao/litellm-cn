@@ -6,6 +6,7 @@ import ContentFilterConfiguration from "./ContentFilterConfiguration";
 import ContentFilterDisplay from "./ContentFilterDisplay";
 import type { CompetitorIntentConfig } from "./CompetitorIntentConfiguration";
 
+import { t } from "@/i18n";
 interface Pattern {
   id: string;
   type: "prebuilt" | "custom";
@@ -234,7 +235,7 @@ const ContentFilterManager: React.FC<ContentFilterManagerProps> = ({
   return (
     <>
       <div className="my-6 flex items-center gap-4">
-        <span className="shrink-0 font-medium">Content Filter Configuration</span>
+        <span className="shrink-0 font-medium">{t("Content Filter Configuration")}</span>
         <Separator className="flex-1" />
       </div>
       {hasUnsavedChanges && (

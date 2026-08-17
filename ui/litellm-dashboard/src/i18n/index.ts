@@ -26,6 +26,17 @@ type NestedMap = {
 
 const translations: Record<Locale, NestedMap> = { en, zh };
 
+/**
+ * Module-level current locale, kept in sync with LanguageProvider so the pure
+ * `t()` helper (used in module scope / server components) reflects the active
+ * language at render time. Tests default this to "en" via setupTests.ts.
+ */
+let currentLocale: Locale | null = null;
+
+export function setCurrentLocale(locale: Locale | null): void {
+  currentLocale = locale;
+}
+
 /** localStorage key used by LanguageContext to persist the user's choice. */
 export const LOCALE_STORAGE_KEY = "litellm_locale";
 
@@ -39,6 +50,11 @@ export const SUPPORTED_LOCALES: { value: Locale; label: string }[] = [
 ];
 
 function resolve(map: NestedMap, key: string): string | undefined {
+  // Literal key wins — lets UI strings containing "." double as keys.
+  if (typeof map[key] === "string") return map[key];
+  // The "ui" section holds raw English UI strings as keys.
+  const ui = map["ui"];
+  if (ui != null && typeof ui !== "string" && typeof ui[key] === "string") return ui[key];
   let node: string | NestedMap | undefined = map;
   for (const part of key.split(".")) {
     if (node == null || typeof node === "string") return undefined;
@@ -51,7 +67,7 @@ function resolve(map: NestedMap, key: string): string | undefined {
  * Translate `key` for `locale` (defaults to DEFAULT_LOCALE).
  * Falls back zh → en → the raw key so a missing entry never renders blank.
  */
-export function t(key: string, locale: Locale = DEFAULT_LOCALE): string {
+export function t(key: string, locale: Locale = currentLocale ?? DEFAULT_LOCALE): string {
   const map = translations[locale] ?? translations.en;
   const direct = resolve(map, key);
   if (direct != null) return direct;

@@ -3,6 +3,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/shared/Alert";
 import { Badge } from "@/components/ui/badge";
 import { AlertTriangle, Info } from "lucide-react";
 
+import { t } from "@/i18n";
 interface ImpactResult {
   affected_keys_count: number;
   affected_teams_count: number;
@@ -38,16 +39,14 @@ const ImpactPreviewAlert: React.FC<ImpactPreviewAlertProps> = ({ impactResult })
   return (
     <Alert className="mb-4">
       {isGlobal ? <AlertTriangle /> : <Info />}
-      <AlertTitle>Impact Preview</AlertTitle>
+      <AlertTitle>{t("Impact Preview")}</AlertTitle>
       <AlertDescription>
         {isGlobal ? (
-          <span>
-            Global scope — this will affect <strong>all keys and teams</strong>.
+          <span>{t("Global scope — this will affect")}<strong>{t("all keys and teams")}</strong>.
           </span>
         ) : (
           <div>
-            <span>
-              This attachment would affect{" "}
+            <span>{t("This attachment would affect")}{" "}
               <strong>
                 {impactResult.affected_keys_count} key{impactResult.affected_keys_count !== 1 ? "s" : ""}
               </strong>{" "}
@@ -59,14 +58,14 @@ const ImpactPreviewAlert: React.FC<ImpactPreviewAlertProps> = ({ impactResult })
             </span>
             {impactResult.sample_keys.length > 0 && (
               <SampleList
-                label="Keys"
+                label={t("Keys")}
                 samples={impactResult.sample_keys}
                 totalCount={impactResult.affected_keys_count}
               />
             )}
             {impactResult.sample_teams.length > 0 && (
               <SampleList
-                label="Teams"
+                label={t("Teams")}
                 samples={impactResult.sample_teams}
                 totalCount={impactResult.affected_teams_count}
               />

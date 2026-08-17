@@ -11,6 +11,7 @@ import { ToolRow, updateToolPolicy } from "@/components/networking";
 import { toolPoliciesListOptions } from "./toolPoliciesQueries";
 import { ToolPoliciesTable } from "./ToolPoliciesTable";
 
+import { t } from "@/i18n";
 function getUTCDateKey(date: Date): string {
   return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}-${String(date.getUTCDate()).padStart(2, "0")}`;
 }
@@ -131,11 +132,11 @@ export const ToolPoliciesPanel: React.FC<ToolPoliciesPanelProps> = ({ accessToke
 
   return (
     <div className="w-full">
-      <h1 className="text-2xl font-semibold text-gray-900 mb-6">Tool Policies</h1>
+      <h1 className="text-2xl font-semibold text-gray-900 mb-6">{t("Tool Policies")}</h1>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <MetricCard
-          label="New Today"
+          label={t("New Today")}
           value={newToday}
           valueColor="text-green-600"
           subtitle={trendSubtitle}
@@ -147,7 +148,7 @@ export const ToolPoliciesPanel: React.FC<ToolPoliciesPanelProps> = ({ accessToke
         />
         <MetricCard label="Total Tools Discovered" value={totalTools} />
         <MetricCard
-          label="Blocked Tools"
+          label={t("Blocked Tools")}
           value={blockedCount}
           valueColor={blockedCount > 0 ? "text-red-600" : undefined}
         />
@@ -156,7 +157,7 @@ export const ToolPoliciesPanel: React.FC<ToolPoliciesPanelProps> = ({ accessToke
 
       {needsReviewTools.length > 0 && (
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
-          <h2 className="text-sm font-semibold text-amber-900 mb-1">Needs Review</h2>
+          <h2 className="text-sm font-semibold text-amber-900 mb-1">{t("Needs Review")}</h2>
           <p className="text-sm text-amber-800 mb-3">
             {needsReviewTools.length} new tool{needsReviewTools.length !== 1 ? "s" : ""} discovered that require policy
             decisions.
@@ -174,9 +175,7 @@ export const ToolPoliciesPanel: React.FC<ToolPoliciesPanelProps> = ({ accessToke
                   type="button"
                   onClick={() => scrollToToolRow(tool.tool_id)}
                   className="text-amber-700 hover:text-amber-900 font-medium text-xs whitespace-nowrap"
-                >
-                  Review
-                </button>
+                >{t("Review")}</button>
               </span>
             ))}
           </div>

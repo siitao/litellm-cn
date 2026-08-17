@@ -109,7 +109,7 @@ const CacheDashboard: React.FC<CachePageProps> = ({ accessToken, token, userRole
       const response = await cachingHealthCheckCall(accessToken !== null ? accessToken : "");
       setHealthCheckResponse(response);
     } catch (error: any) {
-      console.error("Error running health check:", error);
+      console.error(t("Error running health check:"), error);
       let errorData;
       if (error && error.message) {
         try {
@@ -158,7 +158,7 @@ const CacheDashboard: React.FC<CachePageProps> = ({ accessToken, token, userRole
 
         <div className="flex items-center space-x-2">
           {lastRefreshed && <p className="text-sm text-muted-foreground">{t("common.last_refreshed").replace("{time}", lastRefreshed)}</p>}
-          <Button variant="outline" size="icon-sm" onClick={handleRefreshClick} aria-label="Refresh">
+          <Button variant="outline" size="icon-sm" onClick={handleRefreshClick} aria-label={t("Refresh")}>
             <RefreshCw />
           </Button>
         </div>
@@ -167,25 +167,20 @@ const CacheDashboard: React.FC<CachePageProps> = ({ accessToken, token, userRole
       <TabsContent value="analytics">
         <Card>
           <CardContent>
-            <p className="text-sm text-muted-foreground">
-              Analytics for LiteLLM&apos;s{" "}
+            <p className="text-sm text-muted-foreground">{t("Analytics for LiteLLM&apos;s")}{" "}
               <a
                 href="https://docs.litellm.ai/docs/proxy/caching"
                 target="_blank"
                 rel="noreferrer"
                 className="underline"
-              >
-                response cache
-              </a>{" "}
+              >{t("response cache")}</a>{" "}
               (e.g. Redis / in-memory): requests answered from cache without calling the LLM provider. Provider-side{" "}
               <a
                 href="https://docs.litellm.ai/docs/completion/prompt_caching"
                 target="_blank"
                 rel="noreferrer"
                 className="underline"
-              >
-                prompt caching
-              </a>{" "}
+              >{t("prompt caching")}</a>{" "}
               (cached input tokens from Anthropic, OpenAI, etc.) is not shown here; see &quot;Prompt Caching
               Metrics&quot; on the Usage page or individual requests in the Logs page.
             </p>

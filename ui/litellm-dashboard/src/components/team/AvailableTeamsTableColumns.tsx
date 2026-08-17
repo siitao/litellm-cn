@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/cva.config";
 
+import { t } from "@/i18n";
 export interface AvailableTeam {
   team_id: string;
   team_alias: string;
@@ -26,7 +27,7 @@ function AvailableTeamRowActions({ team, onJoinTeam }: { team: AvailableTeam; on
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open team actions"
+        aria-label={t("Open team actions")}
         data-testid={`available-team-actions-${team.team_id}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -52,8 +53,8 @@ export const getAvailableTeamsTableColumns = ({
   {
     id: "team_alias",
     accessorKey: "team_alias",
-    meta: { title: "Team Name" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Team Name" />,
+    meta: { title: t("Team Name")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Team Name")} />,
     size: 220,
     enableSorting: true,
     cell: ({ row }) => (
@@ -63,7 +64,7 @@ export const getAvailableTeamsTableColumns = ({
   {
     id: "description",
     accessorKey: "description",
-    meta: { title: "Description" },
+    meta: { title: t("Description")},
     header: "Description",
     size: 280,
     enableSorting: false,
@@ -79,8 +80,8 @@ export const getAvailableTeamsTableColumns = ({
   {
     id: "members",
     accessorFn: (team) => team.members_with_roles.length,
-    meta: { title: "Members" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Members" />,
+    meta: { title: t("Members")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Members")} />,
     size: 120,
     enableSorting: true,
     cell: ({ row }) => (
@@ -89,7 +90,7 @@ export const getAvailableTeamsTableColumns = ({
   },
   {
     id: "models",
-    meta: { title: "Models" },
+    meta: { title: t("Models")},
     header: "Models",
     size: 260,
     enableSorting: false,
@@ -98,7 +99,7 @@ export const getAvailableTeamsTableColumns = ({
   {
     id: "actions",
     meta: { className: "text-right", headerClassName: "text-right" },
-    header: () => <span className="sr-only">Actions</span>,
+    header: () => <span className="sr-only">{t("Actions")}</span>,
     size: 64,
     enableSorting: false,
     enableHiding: false,

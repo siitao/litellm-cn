@@ -2,6 +2,7 @@ import { JsonView, defaultStyles } from "react-json-view-lite";
 import "react-json-view-lite/dist/index.css";
 import { JSON_MAX_HEIGHT, COLOR_BG_LIGHT, SPACING_LARGE } from "./constants";
 
+import { t } from "@/i18n";
 interface JsonViewerProps {
   data: any;
   mode: "formatted";
@@ -12,7 +13,7 @@ interface JsonViewerProps {
  * Uses an interactive tree component for easy navigation.
  */
 export function JsonViewer({ data }: JsonViewerProps) {
-  if (!data) return <span className="text-muted-foreground">No data</span>;
+  if (!data) return <span className="text-muted-foreground">{t("No data")}</span>;
 
   return (
     <div

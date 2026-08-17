@@ -43,6 +43,7 @@ import { Tag } from "../tag_management/types";
 import EditLoggingSettings from "../team/EditLoggingSettings";
 import VectorStoreSelector from "../vector_store_management/VectorStoreSelector";
 
+import { t } from "@/i18n";
 interface KeyEditViewProps {
   keyData: KeyResponse;
   onCancel: () => void;
@@ -121,7 +122,7 @@ export function KeyEditView({
           setAvailableModels(excludeProxyWideSentinel(Array.from(new Set([...team.models, ...models]))));
         }
       } catch (error) {
-        console.error("Error fetching models:", error);
+        console.error(t("Error fetching models:"), error);
       }
     };
 
@@ -131,7 +132,7 @@ export function KeyEditView({
         const response = await getPromptsList(accessToken);
         setPromptsList(response.prompts.map((prompt) => prompt.prompt_id));
       } catch (error) {
-        console.error("Failed to fetch prompts:", error);
+        console.error(t("Failed to fetch prompts:"), error);
       }
     };
 
@@ -333,7 +334,7 @@ export function KeyEditView({
               <>
                 <Select
                   mode="multiple"
-                  placeholder="Select models"
+                  placeholder={t("Select models")}
                   style={{ width: "100%" }}
                   disabled={isDisabled}
                   value={isDisabled ? [] : models}
@@ -348,9 +349,9 @@ export function KeyEditView({
                   }}
                 >
                   {keyData.team_id != null ? (
-                    team != null && <Select.Option value="all-team-models">All Team Models</Select.Option>
+                    team != null && <Select.Option value="all-team-models">{t("All Team Models")}</Select.Option>
                   ) : (
-                    <Select.Option value="all-proxy-models">All Proxy Models</Select.Option>
+                    <Select.Option value="all-proxy-models">{t("All Proxy Models")}</Select.Option>
                   )}
                   {availableModels.map((model) => (
                     <Select.Option key={model} value={model} disabled={hasAllModelsSentinel(models)}>
@@ -369,7 +370,7 @@ export function KeyEditView({
         </Form.Item>
       </Form.Item>
 
-      <Form.Item label="Key Type">
+      <Form.Item label={t("Key Type")}>
         <Form.Item
           noStyle
           shouldUpdate={(prevValues, currentValues) => prevValues.allowed_routes !== currentValues.allowed_routes}
@@ -407,28 +408,22 @@ export function KeyEditView({
                   }
                 }}
               >
-                <Select.Option value="default" label="Full Access">
+                <Select.Option value="default" label={t("Full Access")}>
                   <div style={{ padding: "4px 0" }}>
-                    <div style={{ fontWeight: 500 }}>Full Access</div>
-                    <div style={{ fontSize: "11px", color: "#6b7280", marginTop: "2px" }}>
-                      Can call all routes (AI APIs, Management, and read-only)
-                    </div>
+                    <div style={{ fontWeight: 500 }}>{t("Full Access")}</div>
+                    <div style={{ fontSize: "11px", color: "#6b7280", marginTop: "2px" }}>{t("Can call all routes (AI APIs, Management, and read-only)")}</div>
                   </div>
                 </Select.Option>
-                <Select.Option value="llm_api" label="AI APIs">
+                <Select.Option value="llm_api" label={t("AI APIs")}>
                   <div style={{ padding: "4px 0" }}>
-                    <div style={{ fontWeight: 500 }}>AI APIs</div>
-                    <div style={{ fontSize: "11px", color: "#6b7280", marginTop: "2px" }}>
-                      Can call only AI API routes (chat/completions, embeddings, etc.)
-                    </div>
+                    <div style={{ fontWeight: 500 }}>{t("AI APIs")}</div>
+                    <div style={{ fontSize: "11px", color: "#6b7280", marginTop: "2px" }}>{t("Can call only AI API routes (chat/completions, embeddings, etc.)")}</div>
                   </div>
                 </Select.Option>
-                <Select.Option value="management" label="Management">
+                <Select.Option value="management" label={t("Management")}>
                   <div style={{ padding: "4px 0" }}>
-                    <div style={{ fontWeight: 500 }}>Management</div>
-                    <div style={{ fontSize: "11px", color: "#6b7280", marginTop: "2px" }}>
-                      Can call only management routes (user/team/key management)
-                    </div>
+                    <div style={{ fontWeight: 500 }}>{t("Management")}</div>
+                    <div style={{ fontSize: "11px", color: "#6b7280", marginTop: "2px" }}>{t("Can call only management routes (user/team/key management)")}</div>
                   </div>
                 </Select.Option>
               </Select>
@@ -439,8 +434,7 @@ export function KeyEditView({
 
       <Form.Item
         label={
-          <span>
-            Allowed Routes{" "}
+          <span>{t("Allowed Routes")}{" "}
             <Tooltip title="List of allowed routes for the key (comma-separated). Can be specific routes (e.g., '/chat/completions') or route patterns (e.g., 'llm_api_routes', 'management_routes', '/keys/*'). Leave empty to allow all routes.">
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
@@ -452,17 +446,16 @@ export function KeyEditView({
       </Form.Item>
 
       <Form.Item label="Max Budget (USD)" name="max_budget">
-        <NumericalInput step={0.01} style={{ width: "100%" }} placeholder="Enter a numerical value" />
+        <NumericalInput step={0.01} style={{ width: "100%" }} placeholder={t("Enter a numerical value")} />
       </Form.Item>
 
       <Form.Item label="Reset Budget" name="budget_duration">
-        <BudgetDurationDropdown placeholder="Never resets" />
+        <BudgetDurationDropdown placeholder={t("Never resets")} />
       </Form.Item>
 
       <Form.Item
         label={
-          <span>
-            Budget Windows{" "}
+          <span>{t("Budget Windows")}{" "}
             <Tooltip title="Set multiple independent budget windows (e.g., hourly $10 AND monthly $200). Each window tracks spend separately and resets on its own schedule.">
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
@@ -474,8 +467,7 @@ export function KeyEditView({
 
       <Form.Item
         label={
-          <span>
-            Budget Fallbacks{" "}
+          <span>{t("Budget Fallbacks")}{" "}
             <Tooltip title="When a model exceeds its per-model budget, requests automatically reroute to fallback models instead of failing">
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
@@ -503,8 +495,7 @@ export function KeyEditView({
 
       <Form.Item
         label={
-          <span>
-            Throttle on budget exceeded{" "}
+          <span>{t("Throttle on budget exceeded")}{" "}
             <Tooltip title="When this key exceeds its max budget, throttle its TPM/RPM to the globally configured percentage instead of blocking access entirely. Requires budget_exceeded_throttle_percentage in litellm_settings and a TPM/RPM limit on the key.">
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
@@ -518,8 +509,7 @@ export function KeyEditView({
 
       <Form.Item
         label={
-          <span>
-            Enable Prompt Caching{" "}
+          <span>{t("Enable Prompt Caching")}{" "}
             <Tooltip title="Automatically add prompt caching breakpoints (cache_control markers) to requests made with this key, cutting input cost on repeated prompts. Applies to Anthropic and Bedrock Claude models; requests that already set their own cache_control markers are left untouched.">
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
@@ -544,7 +534,7 @@ export function KeyEditView({
       </Form.Item>
 
       <Form.Item
-        label="Estimated Output Tokens"
+        label={t("Estimated Output Tokens")}
         name="default_estimated_output_tokens"
         tooltip={estimateTooltip.estimate}
         rules={[estimateRules.positive]}
@@ -553,7 +543,7 @@ export function KeyEditView({
       </Form.Item>
 
       <Form.Item
-        label="Estimated Output Tokens Per Model"
+        label={t("Estimated Output Tokens Per Model")}
         name="default_estimated_output_tokens_per_model"
         tooltip={estimateTooltip.perModel}
         rules={[estimateRules.perModel]}
@@ -563,8 +553,7 @@ export function KeyEditView({
 
       <Form.Item
         label={
-          <span>
-            Per-Tag Rate Limits{" "}
+          <span>{t("Per-Tag Rate Limits")}{" "}
             <Tooltip title="Scope rate limits to a request tag so each tag (e.g. a cell or group) gets its own RPM counter. Requests without a matching tag fall back to the key-level limit.">
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
@@ -588,8 +577,7 @@ export function KeyEditView({
 
       <Form.Item
         label={
-          <span>
-            Disable Global Guardrails{" "}
+          <span>{t("Disable Global Guardrails")}{" "}
             <Tooltip title="When enabled, this key will bypass any guardrails configured to run on every request (global guardrails)">
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
@@ -604,9 +592,8 @@ export function KeyEditView({
       {canViewPolicies && (
         <Form.Item
           label={
-            <span>
-              Policies{" "}
-              <Tooltip title="Apply policies to this key to control guardrails and other settings">
+            <span>{t("Policies")}{" "}
+              <Tooltip title={t("Apply policies to this key to control guardrails and other settings")}>
                 <InfoCircleOutlined style={{ marginLeft: "4px" }} />
               </Tooltip>
             </span>
@@ -629,7 +616,7 @@ export function KeyEditView({
         <Select
           mode="tags"
           style={{ width: "100%" }}
-          placeholder="Select or enter tags"
+          placeholder={t("Select or enter tags")}
           options={Object.values(tagsList).map((tag) => ({
             value: tag.name,
             label: tag.name,
@@ -660,8 +647,7 @@ export function KeyEditView({
 
       <Form.Item
         label={
-          <span>
-            Access Groups{" "}
+          <span>{t("Access Groups")}{" "}
             <Tooltip title="Assign access groups to this key. Access groups control which models, MCP servers, and agents this key can use">
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
@@ -669,11 +655,11 @@ export function KeyEditView({
         }
         name="access_group_ids"
       >
-        <AccessGroupSelector placeholder="Select access groups (optional)" />
+        <AccessGroupSelector placeholder={t("Select access groups (optional)")} />
       </Form.Item>
 
       <Form.Item
-        label="Allowed Pass Through Routes"
+        label={t("Allowed Pass Through Routes")}
         name="allowed_passthrough_routes"
         tooltip={!premiumUser ? "Setting allowed pass through routes by key is a premium feature" : undefined}
       >
@@ -696,7 +682,7 @@ export function KeyEditView({
           onChange={(values: string[]) => form.setFieldValue("vector_stores", values)}
           value={form.getFieldValue("vector_stores")}
           accessToken={accessToken || ""}
-          placeholder="Select vector stores"
+          placeholder={t("Select vector stores")}
         />
       </Form.Item>
 
@@ -705,7 +691,7 @@ export function KeyEditView({
           onChange={(val) => form.setFieldValue("mcp_servers_and_groups", val)}
           value={form.getFieldValue("mcp_servers_and_groups")}
           accessToken={accessToken || ""}
-          placeholder="Select MCP servers or access groups (optional)"
+          placeholder={t("Select MCP servers or access groups (optional)")}
           allowNoMcpServers
         />
       </Form.Item>
@@ -741,14 +727,13 @@ export function KeyEditView({
           onChange={(val) => form.setFieldValue("agents_and_groups", val)}
           value={form.getFieldValue("agents_and_groups")}
           accessToken={accessToken || ""}
-          placeholder="Select agents or access groups (optional)"
+          placeholder={t("Select agents or access groups (optional)")}
         />
       </Form.Item>
 
       <Form.Item
         label={
-          <span>
-            Organization{" "}
+          <span>{t("Organization")}{" "}
             <Tooltip title="The organization this key belongs to. Selecting an organization filters the available teams.">
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
@@ -768,12 +753,12 @@ export function KeyEditView({
       </Form.Item>
 
       <Form.Item
-        label="Team ID"
+        label={t("Team ID")}
         name="team_id"
         help={enableProjectsUI && hasProject ? "Team is locked because this key belongs to a project" : undefined}
       >
         <Select
-          placeholder="Select team"
+          placeholder={t("Select team")}
           showSearch
           disabled={enableProjectsUI && hasProject}
           style={{ width: "100%" }}
@@ -806,11 +791,11 @@ export function KeyEditView({
         </Select>
       </Form.Item>
       {enableProjectsUI && hasProject && (
-        <Form.Item label="Project">
+        <Form.Item label={t("Project")}>
           <Input value={projectDisplay ?? ""} disabled />
         </Form.Item>
       )}
-      <Form.Item label="Router Settings">
+      <Form.Item label={t("Router Settings")}>
         <RouterSettingsAccordion
           ref={routerSettingsRef}
           accessToken={accessToken || ""}
@@ -871,12 +856,8 @@ export function KeyEditView({
 
       <div className="sticky z-10 bg-white p-4 border-t border-gray-200 -bottom-6 -inset-x-6">
         <div className="flex justify-end items-center gap-2">
-          <TremorButton variant="secondary" onClick={onCancel} disabled={isKeySaving}>
-            Cancel
-          </TremorButton>
-          <TremorButton type="submit" loading={isKeySaving}>
-            Save Changes
-          </TremorButton>
+          <TremorButton variant="secondary" onClick={onCancel} disabled={isKeySaving}>{t("Cancel")}</TremorButton>
+          <TremorButton type="submit" loading={isKeySaving}>{t("Save Changes")}</TremorButton>
         </div>
       </div>
     </Form>

@@ -10,8 +10,10 @@ import { CreateProjectModal } from "./ProjectModals/CreateProjectModal";
 import { ProjectDetail } from "./ProjectDetailsPage";
 import { ProjectsTable } from "./ProjectsTable";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 export function ProjectsPage() {
-  const { data: projects, isLoading } = useProjects();
+
+  const { t } = useLanguage();  const { data: projects, isLoading } = useProjects();
   const { data: teams, isLoading: isTeamsLoading } = useTeams();
 
   const [selectedProjectId, setSelectedProjectId] = useQueryState(
@@ -57,8 +59,8 @@ export function ProjectsPage() {
     <div className="p-6 px-12">
       <div className="mb-4">
         <PageHeader
-          title="Projects"
-          subtitle="Manage projects within your teams"
+          title={t("Projects")}
+          subtitle={t("Manage projects within your teams")}
           actions={
             <Button onClick={() => setIsCreateModalVisible(true)}>
               <Plus className="size-4" />

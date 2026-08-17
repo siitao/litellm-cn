@@ -4,6 +4,7 @@ import React, { useMemo } from "react";
 import { Form, Input, Modal, Select, Space, Typography } from "antd";
 import type { RoutingGroup, RoutingStrategy } from "./types";
 
+import { t } from "@/i18n";
 const { Text, Paragraph } = Typography;
 
 interface RoutingGroupModalProps {
@@ -93,7 +94,7 @@ const RoutingGroupModal: React.FC<RoutingGroupModalProps> = ({
       onCancel={onClose}
       onOk={handleSubmit}
       okText={mode === "create" ? "Create Group" : "Save Changes"}
-      cancelText="Cancel"
+      cancelText={t("Cancel")}
       confirmLoading={saving}
       destroyOnClose
       width={560}
@@ -106,7 +107,7 @@ const RoutingGroupModal: React.FC<RoutingGroupModalProps> = ({
         initialValues={initialValues}
       >
         <Form.Item
-          label="Group Name"
+          label={t("Group Name")}
           name="group_name"
           rules={[
             { required: true, message: "Group name is required" },
@@ -131,7 +132,7 @@ const RoutingGroupModal: React.FC<RoutingGroupModalProps> = ({
         </Form.Item>
 
         <Form.Item
-          label="Models"
+          label={t("Models")}
           name="models"
           rules={[{ required: true, message: "Select at least one model" }]}
           extra="Models from your model list that this group routes between."
@@ -139,18 +140,18 @@ const RoutingGroupModal: React.FC<RoutingGroupModalProps> = ({
           <Select
             mode="multiple"
             allowClear
-            placeholder="Select models"
+            placeholder={t("Select models")}
             options={modelOptions.map((m) => ({ label: m, value: m }))}
             optionFilterProp="label"
           />
         </Form.Item>
 
         <Form.Item
-          label="Routing Strategy"
+          label={t("Routing Strategy")}
           name="routing_strategy"
           rules={[{ required: true, message: "Strategy is required" }]}
         >
-          <Select options={availableStrategies.map((s) => ({ label: s, value: s }))} placeholder="Select strategy" />
+          <Select options={availableStrategies.map((s) => ({ label: s, value: s }))} placeholder={t("Select strategy")} />
         </Form.Item>
 
         {selectedStrategy && strategyDescriptions[selectedStrategy] && (
@@ -159,7 +160,7 @@ const RoutingGroupModal: React.FC<RoutingGroupModalProps> = ({
 
         {STRATEGIES_WITH_ARGS.has(String(selectedStrategy)) && (
           <Form.Item
-            label="Strategy Arguments (JSON)"
+            label={t("Strategy Arguments (JSON)")}
             name="routing_strategy_args"
             extra={
               selectedStrategy === "latency-based-routing"

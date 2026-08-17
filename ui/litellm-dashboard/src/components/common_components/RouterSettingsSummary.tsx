@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { hasRouterSettings } from "./routerSettingsPayload";
 
+import { t } from "@/i18n";
 interface RouterSettingsSummaryProps {
   routerSettings: Record<string, unknown> | null | undefined;
   emptyText?: string;
@@ -27,19 +28,18 @@ export default function RouterSettingsSummary({
   return (
     <div className="space-y-1 text-sm">
       {settings.routing_strategy != null && (
-        <div>
-          Routing Strategy: <Badge variant="secondary">{String(settings.routing_strategy)}</Badge>
+        <div>{t("Routing Strategy:")}<Badge variant="secondary">{String(settings.routing_strategy)}</Badge>
         </div>
       )}
-      {settings.num_retries != null && <div>Number of Retries: {String(settings.num_retries)}</div>}
-      {settings.allowed_fails != null && <div>Allowed Failures: {String(settings.allowed_fails)}</div>}
-      {settings.cooldown_time != null && <div>Cooldown Time: {String(settings.cooldown_time)}s</div>}
-      {settings.timeout != null && <div>Timeout: {String(settings.timeout)}s</div>}
-      {settings.retry_after != null && <div>Retry After: {String(settings.retry_after)}s</div>}
-      {Boolean(settings.enable_tag_filtering) && <div>Tag Filtering: Enabled</div>}
+      {settings.num_retries != null && <div>{t("Number of Retries:")} {String(settings.num_retries)}</div>}
+      {settings.allowed_fails != null && <div>{t("Allowed Failures:")} {String(settings.allowed_fails)}</div>}
+      {settings.cooldown_time != null && <div>{t("Cooldown Time:")} {String(settings.cooldown_time)}s</div>}
+      {settings.timeout != null && <div>{t("Timeout:")} {String(settings.timeout)}s</div>}
+      {settings.retry_after != null && <div>{t("Retry After:")} {String(settings.retry_after)}s</div>}
+      {Boolean(settings.enable_tag_filtering) && <div>{t("Tag Filtering: Enabled")}</div>}
       {fallbacks.length > 0 && (
         <div>
-          <div>Fallbacks:</div>
+          <div>{t("Fallbacks:")}</div>
           <div className="mt-1 space-y-1">
             {fallbacks.map(([model, targets]) => (
               <div key={model} className="text-xs text-gray-600">

@@ -6,6 +6,7 @@ import { Providers, provider_map } from "@/components/provider_info_helpers";
 import { Logo } from "@/components/molecules/logo/Logo";
 import { MarginConfig } from "./types";
 
+import { t } from "@/i18n";
 interface AddMarginFormProps {
   marginConfig: MarginConfig;
   selectedProvider: string | undefined;
@@ -35,9 +36,7 @@ const AddMarginForm: React.FC<AddMarginFormProps> = ({
     <div className="space-y-6">
       <Form.Item
         label={
-          <span className="text-sm font-medium text-gray-700 flex items-center">
-            Provider
-            <Tooltip title="Select 'Global' to apply margin to all providers, or select a specific provider">
+          <span className="text-sm font-medium text-gray-700 flex items-center">{t("Provider")}<Tooltip title={t("Select 'Global' to apply margin to all providers, or select a specific provider")}>
               <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
             </Tooltip>
           </span>
@@ -46,7 +45,7 @@ const AddMarginForm: React.FC<AddMarginFormProps> = ({
       >
         <AntdSelect
           showSearch
-          placeholder="Select provider or 'Global'"
+          placeholder={t("Select provider or 'Global'")}
           value={selectedProvider}
           onChange={onProviderChange}
           style={{ width: "100%" }}
@@ -58,9 +57,9 @@ const AddMarginForm: React.FC<AddMarginFormProps> = ({
               .includes(input.toLowerCase())
           }
         >
-          <AntdSelect.Option key="global" value="global" label="Global (All Providers)">
+          <AntdSelect.Option key="global" value="global" label={t("Global (All Providers)")}>
             <div className="flex items-center space-x-2">
-              <span className="font-medium">Global (All Providers)</span>
+              <span className="font-medium">{t("Global (All Providers)")}</span>
             </div>
           </AntdSelect.Option>
           {Object.entries(Providers).map(([providerEnum, providerDisplayName]) => {
@@ -83,9 +82,7 @@ const AddMarginForm: React.FC<AddMarginFormProps> = ({
 
       <Form.Item
         label={
-          <span className="text-sm font-medium text-gray-700 flex items-center">
-            Margin Type
-            <Tooltip title="Choose how to apply the margin: percentage-based or fixed amount">
+          <span className="text-sm font-medium text-gray-700 flex items-center">{t("Margin Type")}<Tooltip title={t("Choose how to apply the margin: percentage-based or fixed amount")}>
               <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
             </Tooltip>
           </span>
@@ -93,17 +90,15 @@ const AddMarginForm: React.FC<AddMarginFormProps> = ({
         rules={[{ required: true, message: "Please select a margin type" }]}
       >
         <Radio.Group value={marginType} onChange={(e) => onMarginTypeChange(e.target.value)} className="w-full">
-          <Radio value="percentage">Percentage-based</Radio>
-          <Radio value="fixed">Fixed Amount</Radio>
+          <Radio value="percentage">{t("Percentage-based")}</Radio>
+          <Radio value="fixed">{t("Fixed Amount")}</Radio>
         </Radio.Group>
       </Form.Item>
 
       {marginType === "percentage" && (
         <Form.Item
           label={
-            <span className="text-sm font-medium text-gray-700 flex items-center">
-              Margin Percentage
-              <Tooltip title="Enter a percentage value (e.g., 10 for 10% margin)">
+            <span className="text-sm font-medium text-gray-700 flex items-center">{t("Margin Percentage")}<Tooltip title={t("Enter a percentage value (e.g., 10 for 10% margin)")}>
                 <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
               </Tooltip>
             </span>
@@ -139,9 +134,7 @@ const AddMarginForm: React.FC<AddMarginFormProps> = ({
       {marginType === "fixed" && (
         <Form.Item
           label={
-            <span className="text-sm font-medium text-gray-700 flex items-center">
-              Fixed Margin Amount
-              <Tooltip title="Enter a fixed amount in USD (e.g., 0.001 for $0.001 per request)">
+            <span className="text-sm font-medium text-gray-700 flex items-center">{t("Fixed Margin Amount")}<Tooltip title={t("Enter a fixed amount in USD (e.g., 0.001 for $0.001 per request)")}>
                 <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
               </Tooltip>
             </span>
@@ -183,9 +176,7 @@ const AddMarginForm: React.FC<AddMarginFormProps> = ({
             (marginType === "percentage" && !percentageValue) ||
             (marginType === "fixed" && !fixedAmountValue)
           }
-        >
-          Add Provider Margin
-        </Button>
+        >{t("Add Provider Margin")}</Button>
       </div>
     </div>
   );

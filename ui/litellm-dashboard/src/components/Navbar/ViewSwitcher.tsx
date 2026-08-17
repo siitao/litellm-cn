@@ -8,6 +8,7 @@ import { usePluginMode } from "@/contexts/PluginModeContext";
 import { useUISettings } from "@/app/(dashboard)/hooks/uiSettings/useUISettings";
 import { migratedHref } from "@/utils/migratedPages";
 
+import { t } from "@/i18n";
 const GATEWAY = "ai-gateway";
 const CHAT = "chat";
 
@@ -25,7 +26,7 @@ export default function ViewSwitcher() {
   const activeLabel = isChatRoute ? "Chat" : plugins.find((p) => p.name === mode)?.display_name ?? "AI Gateway";
 
   const modeEntries = [
-    { key: GATEWAY, label: "AI Gateway" },
+    { key: GATEWAY, label: t("AI Gateway")},
     ...plugins.map((p) => ({ key: p.name, label: p.display_name })),
   ];
 
@@ -34,7 +35,7 @@ export default function ViewSwitcher() {
         key: CHAT,
         label: (
           <div className="flex items-center justify-between gap-6 py-0.5">
-            <span className="font-medium">Chat</span>
+            <span className="font-medium">{t("Chat")}</span>
             {isChatRoute && <CheckOutlined className="text-blue-600" />}
           </div>
         ),
@@ -44,10 +45,8 @@ export default function ViewSwitcher() {
         disabled: true,
         label: (
           <div className="flex max-w-[220px] flex-col py-0.5">
-            <span className="font-medium">Chat</span>
-            <span className="whitespace-normal text-xs leading-snug text-muted-foreground">
-              Admins can enable in Settings
-            </span>
+            <span className="font-medium">{t("Chat")}</span>
+            <span className="whitespace-normal text-xs leading-snug text-muted-foreground">{t("Admins can enable in Settings")}</span>
           </div>
         ),
       };

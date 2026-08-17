@@ -1,6 +1,7 @@
 import { Button, Input, InputNumber } from "antd";
 import React from "react";
 
+import { t } from "@/i18n";
 export interface TagRateLimitEntry {
   // Stable identity for React list keys so deleting a middle row doesn't shift
   // the controlled inputs of the rows below it.
@@ -74,7 +75,7 @@ export function TagRateLimitEditor({ value, onChange }: TagRateLimitEditorProps)
           <Input
             value={row.tag}
             onChange={(e) => updateRow(idx, "tag", e.target.value)}
-            placeholder="Tag (e.g. cell-1)"
+            placeholder={t("Tag (e.g. cell-1)")}
             style={{ width: 180 }}
           />
           <InputNumber

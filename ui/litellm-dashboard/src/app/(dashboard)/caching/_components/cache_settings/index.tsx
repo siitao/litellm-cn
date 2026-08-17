@@ -10,6 +10,7 @@ import { EmbeddingModelOption } from "./CacheFormField";
 import { REDIS_TYPES, REDIS_TYPE_DESCRIPTIONS, RedisType } from "./cacheSettingsFields";
 import { buildCachePayload, buildInitialValues, CacheFormValues, configuredSecretFields } from "./cacheSettingsUtils";
 
+import { t } from "@/i18n";
 interface CacheSettingsProps {
   accessToken: string | null;
   userRole: string | null;
@@ -38,7 +39,7 @@ const CacheSettings: React.FC<CacheSettingsProps> = ({ accessToken }) => {
       setConfiguredSecrets(configuredSecretFields(currentValues));
       setRedisType(toRedisType(currentValues.redis_type));
     } catch (error) {
-      console.error("Failed to load cache settings:", error);
+      console.error(t("Failed to load cache settings:"), error);
       NotificationsManager.fromBackend("Failed to load cache settings");
     }
   }, [accessToken, form]);
@@ -59,7 +60,7 @@ const CacheSettings: React.FC<CacheSettingsProps> = ({ accessToken }) => {
             .map((model) => ({ value: model.model_group, label: model.model_group })),
         ),
       )
-      .catch((error) => console.error("Error fetching embedding models:", error));
+      .catch((error) => console.error(t("Error fetching embedding models:"), error));
   }, [accessToken]);
 
   const validate = async (): Promise<CacheFormValues | null> => {
@@ -86,12 +87,12 @@ const CacheSettings: React.FC<CacheSettingsProps> = ({ accessToken }) => {
         buildCachePayload(redisType, values, { forTesting: true }),
       );
       if (result.status === "success") {
-        NotificationsManager.success("Cache connection test successful!");
+        NotificationsManager.success(t("Cache connection test successful!"));
       } else {
         NotificationsManager.fromBackend(`Connection test failed: ${result.message || result.error}`);
       }
     } catch (error) {
-      console.error("Test connection error:", error);
+      console.error(t("Test connection error:"), error);
       NotificationsManager.fromBackend(
         `Connection test failed: ${error instanceof Error ? error.message : "Unknown error"}`,
       );
@@ -112,10 +113,10 @@ const CacheSettings: React.FC<CacheSettingsProps> = ({ accessToken }) => {
     setIsSaving(true);
     try {
       await updateCacheSettingsCall(accessToken, buildCachePayload(redisType, values, { forTesting: false }));
-      NotificationsManager.success("Cache settings updated successfully");
+      NotificationsManager.success(t("Cache settings updated successfully"));
       await loadCacheSettings();
     } catch (error) {
-      console.error("Failed to save cache settings:", error);
+      console.error(t("Failed to save cache settings:"), error);
       NotificationsManager.fromBackend("Failed to update cache settings");
     } finally {
       setIsSaving(false);
@@ -130,8 +131,8 @@ const CacheSettings: React.FC<CacheSettingsProps> = ({ accessToken }) => {
     <div className="w-full space-y-8 py-2">
       <Form form={form} layout="vertical" requiredMark={false} className="space-y-6">
         <div className="max-w-3xl">
-          <h3 className="text-sm font-medium text-gray-900">Cache Settings</h3>
-          <p className="text-xs text-gray-500 mt-1">Configure Redis cache for LiteLLM</p>
+          <h3 className="text-sm font-medium text-gray-900">{t("Cache Settings")}</h3>
+          <p className="text-xs text-gray-500 mt-1">{t("Configure Redis cache for LiteLLM")}</p>
         </div>
 
         <RedisTypeSelector
@@ -142,7 +143,7 @@ const CacheSettings: React.FC<CacheSettingsProps> = ({ accessToken }) => {
 
         <div className="pt-4 border-t border-gray-200">
           <CacheFieldSection
-            title="Connection Settings"
+            title={t("Connection Settings")}
             section="connection"
             redisType={redisType}
             embeddingModels={embeddingModels}
@@ -153,7 +154,7 @@ const CacheSettings: React.FC<CacheSettingsProps> = ({ accessToken }) => {
         {redisType === "cluster" && (
           <div className="pt-4 border-t border-gray-200">
             <CacheFieldSection
-              title="Cluster Configuration"
+              title={t("Cluster Configuration")}
               section="cluster"
               redisType={redisType}
               embeddingModels={embeddingModels}
@@ -165,7 +166,7 @@ const CacheSettings: React.FC<CacheSettingsProps> = ({ accessToken }) => {
         {redisType === "sentinel" && (
           <div className="pt-4 border-t border-gray-200">
             <CacheFieldSection
-              title="Sentinel Configuration"
+              title={t("Sentinel Configuration")}
               section="sentinel"
               redisType={redisType}
               embeddingModels={embeddingModels}
@@ -177,7 +178,7 @@ const CacheSettings: React.FC<CacheSettingsProps> = ({ accessToken }) => {
         {redisType === "semantic" && (
           <div className="pt-4 border-t border-gray-200">
             <CacheFieldSection
-              title="Semantic Configuration"
+              title={t("Semantic Configuration")}
               section="semantic"
               redisType={redisType}
               embeddingModels={embeddingModels}
@@ -187,26 +188,26 @@ const CacheSettings: React.FC<CacheSettingsProps> = ({ accessToken }) => {
 
         <Accordion className="mt-4">
           <AccordionHeader>
-            <span className="text-sm font-medium text-gray-900">Advanced Settings</span>
+            <span className="text-sm font-medium text-gray-900">{t("Advanced Settings")}</span>
           </AccordionHeader>
           <AccordionBody>
             <div className="space-y-6">
               <CacheFieldSection
-                title="SSL Settings"
+                title={t("SSL Settings")}
                 section="ssl"
                 redisType={redisType}
                 embeddingModels={embeddingModels}
                 headingLevel="h5"
               />
               <CacheFieldSection
-                title="Cache Management"
+                title={t("Cache Management")}
                 section="cacheManagement"
                 redisType={redisType}
                 embeddingModels={embeddingModels}
                 headingLevel="h5"
               />
               <CacheFieldSection
-                title="GCP Authentication"
+                title={t("GCP Authentication")}
                 section="gcp"
                 redisType={redisType}
                 embeddingModels={embeddingModels}

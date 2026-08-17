@@ -260,3 +260,9 @@ if (typeof window !== "undefined") {
     disconnect() {}
   };
 }
+
+import { setCurrentLocale } from "@/i18n";
+
+// Module-level t() used by components outside LanguageProvider should render
+// English in tests (the canonical dictionary), matching the default context.
+setCurrentLocale("en");

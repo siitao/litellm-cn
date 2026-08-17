@@ -10,6 +10,7 @@ import { DiscoverableMCPServer, DiscoverMCPServersResponse } from "@/components/
 import { mcpLogoImg } from "./CreateMCPServer";
 import { resolveLogoSrc } from "@/lib/assetPaths";
 
+import { t } from "@/i18n";
 interface MCPDiscoveryProps {
   isVisible: boolean;
   onClose: () => void;
@@ -108,7 +109,7 @@ const MCPDiscovery: React.FC<MCPDiscoveryProps> = ({
           <div className="flex items-center justify-between border-b border-border pb-4">
             <div className="flex items-center space-x-3">
               <img src={resolveLogoSrc(mcpLogoImg)} alt="MCP Logo" className="mr-2 size-5 object-contain" />
-              <DialogTitle className="text-xl font-semibold">Add MCP Server</DialogTitle>
+              <DialogTitle className="text-xl font-semibold">{t("Add MCP Server")}</DialogTitle>
             </div>
             <Button variant="link" size="sm" className="mr-8" onClick={onCustomServer}>
               + Custom Server
@@ -157,17 +158,14 @@ const MCPDiscovery: React.FC<MCPDiscoveryProps> = ({
 
           {error && (
             <div className="py-8 text-center text-muted-foreground">
-              <p className="text-sm">Failed to load servers: {error}</p>
+              <p className="text-sm">{t("Failed to load servers:")} {error}</p>
             </div>
           )}
 
           {!loading && !error && filteredServers.length === 0 && (
             <div className="py-8 text-center text-muted-foreground">
-              <p className="text-sm">
-                No servers found.{" "}
-                <Button variant="link" size="sm" onClick={onCustomServer}>
-                  Add a custom server
-                </Button>
+              <p className="text-sm">{t("No servers found.")}{" "}
+                <Button variant="link" size="sm" onClick={onCustomServer}>{t("Add a custom server")}</Button>
               </p>
             </div>
           )}

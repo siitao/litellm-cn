@@ -1,6 +1,7 @@
 import React from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import type { ExportScope, EntityType } from "./types";
+import { t } from "@/i18n";
 
 interface ExportTypeSelectorProps {
   value: ExportScope;
@@ -23,7 +24,7 @@ const ExportTypeSelector: React.FC<ExportTypeSelectorProps> = ({ value, onChange
     {
       value: "daily_with_models",
       title: `Day-by-day by ${entityType} and model`,
-      description: "Daily metrics split by model",
+      description: t("Daily metrics split by model"),
     },
   ];
 

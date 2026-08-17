@@ -19,6 +19,7 @@ import type { TokenUsage } from "@/components/chat_ui/ResponseMetrics";
 import type { MCPEvent } from "@/components/chat/types";
 import { getProviderLogoAndName } from "@/components/provider_info_helpers";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 const SUGGESTIONS = ["Write", "Learn", "Code", "Brainstorm"];
 const LOCALSTORAGE_MODEL_KEY = "litellm_chat_selected_model";
 
@@ -50,7 +51,8 @@ function getProviderFromModelName(modelName: string): string {
 }
 
 export default function ChatConversationPage() {
-  const router = useRouter();
+
+  const { t } = useLanguage();  const router = useRouter();
   const {
     accessToken,
     userId,
@@ -111,7 +113,7 @@ export default function ChatConversationPage() {
           localStorage.setItem(LOCALSTORAGE_MODEL_KEY, names[0]);
         }
       })
-      .catch(() => MessageManager.error("Could not load models"))
+      .catch(() => MessageManager.error(t("Could not load models")))
       .finally(() => setIsLoadingModels(false));
   }, [accessToken]);
 
@@ -432,7 +434,7 @@ export default function ChatConversationPage() {
                 <span className="overflow-hidden text-ellipsis whitespace-nowrap">{selectedModel}</span>
               </>
             ) : (
-              <span className="text-muted-foreground">Select model</span>
+              <span className="text-muted-foreground">{t("Select model")}</span>
             )}
             <ChevronDown className="h-3 w-3 text-muted-foreground shrink-0" />
           </Button>
@@ -500,9 +502,7 @@ export default function ChatConversationPage() {
               size="sm"
               onClick={() => handleSend(inputText)}
               disabled={!inputText.trim() || isLoadingModels || !selectedModel}
-            >
-              Send
-            </Button>
+            >{t("Send")}</Button>
           )}
         </div>
       </div>
@@ -513,7 +513,7 @@ export default function ChatConversationPage() {
     <>
       {storageUnavailable && !storageBannerDismissed && (
         <div className="bg-amber-50 border-b border-amber-200 px-5 py-1.5 text-[13px] text-amber-800 flex justify-between items-center">
-          <span>Chat history won&apos;t be saved in this browser session</span>
+          <span>{t("Chat history won&apos;t be saved in this browser session")}</span>
           <Button
             variant="ghost"
             size="icon-xs"
@@ -532,8 +532,7 @@ export default function ChatConversationPage() {
               {greeting}
             </h1>
 
-            <p className="-mt-4 mb-7 text-sm text-muted-foreground text-center max-w-[520px] leading-relaxed">
-              Chat with 100+ LLMs + MCP tools; authenticate once, use them here.{" "}
+            <p className="-mt-4 mb-7 text-sm text-muted-foreground text-center max-w-[520px] leading-relaxed">{t("Chat with 100+ LLMs + MCP tools; authenticate once, use them here.")}{" "}
               <Button
                 variant="link"
                 onClick={() => router.push(getChatRoutes().integrations)}
@@ -586,7 +585,7 @@ export default function ChatConversationPage() {
                   }
                 }}
                 className="absolute bottom-[100px] left-1/2 -translate-x-1/2 z-10 rounded-full border bg-background/75 text-muted-foreground shadow-sm backdrop-blur-md hover:bg-background/95 hover:text-muted-foreground"
-                aria-label="Scroll to bottom"
+                aria-label={t("Scroll to bottom")}
               >
                 <ChevronDown className="h-3 w-3" />
               </Button>

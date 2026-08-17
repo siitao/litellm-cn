@@ -7,10 +7,11 @@ import AntdGlobalProvider from "@/contexts/AntdGlobalProvider";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import ReactQueryProvider from "@/contexts/ReactQueryProvider";
+import { t } from "@/i18n";
 
 export const metadata: Metadata = {
-  title: "LiteLLM Dashboard",
-  description: "LiteLLM Proxy Admin UI",
+  title: t("LiteLLM Dashboard"),
+  description: t("LiteLLM Proxy Admin UI"),
   icons: { icon: "/get_favicon" },
 };
 

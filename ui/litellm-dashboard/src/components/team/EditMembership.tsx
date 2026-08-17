@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import NumericalInput from "../shared/numerical_input";
 import BudgetDurationDropdown from "../common_components/budget_duration_dropdown";
 
+import { t } from "@/i18n";
 interface BaseMember {
   user_email?: string;
   user_id?: string;
@@ -101,7 +102,7 @@ const MemberModal = <T extends BaseMember>({
       // NotificationsManager.success(`Successfully ${mode === 'add' ? 'added' : 'updated'} member`);
     } catch (error) {
       // NotificationManager.fromBackend('Failed to submit form');
-      console.error("Form submission error:", error);
+      console.error(t("Form submission error:"), error);
     } finally {
       setIsSubmitting(false);
     }
@@ -171,7 +172,7 @@ const MemberModal = <T extends BaseMember>({
       <Form form={form} onFinish={handleSubmit} labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} labelAlign="left">
         {config.showEmail && (
           <Form.Item
-            label="Email"
+            label={t("Email")}
             name="user_email"
             className="mb-4"
             rules={[{ type: "email", message: "Please enter a valid email!" }]}
@@ -195,7 +196,7 @@ const MemberModal = <T extends BaseMember>({
         <Form.Item
           label={
             <div className="flex items-center gap-2">
-              <span>Role</span>
+              <span>{t("Role")}</span>
               {mode === "edit" && initialData && (
                 <span className="text-gray-500 text-sm">(Current: {getRoleLabel(initialData.role)})</span>
               )}
@@ -232,9 +233,7 @@ const MemberModal = <T extends BaseMember>({
         ))}
 
         <div className="text-right mt-6">
-          <AntButton onClick={onCancel} className="mr-2" disabled={isSubmitting}>
-            Cancel
-          </AntButton>
+          <AntButton onClick={onCancel} className="mr-2" disabled={isSubmitting}>{t("Cancel")}</AntButton>
           <AntButton type="default" htmlType="submit" loading={isSubmitting}>
             {mode === "add" ? (isSubmitting ? "Adding..." : "Add Member") : isSubmitting ? "Saving..." : "Save Changes"}
           </AntButton>

@@ -8,6 +8,7 @@ import { LogDetailsDrawer } from "@/components/view_logs/LogDetailsDrawer";
 import type { LogEntry as ViewLogsLogEntry } from "@/components/view_logs/columns";
 import type { LogEntry } from "./mockData";
 
+import { t } from "@/i18n";
 const actionConfig: Record<
   "blocked" | "passed" | "flagged",
   { icon: React.ElementType; color: string; bg: string; border: string; label: string }
@@ -17,21 +18,21 @@ const actionConfig: Record<
     color: "text-red-600",
     bg: "bg-red-50",
     border: "border-red-200",
-    label: "Blocked",
+    label: t("Blocked"),
   },
   passed: {
     icon: CheckCircleOutlined,
     color: "text-green-600",
     bg: "bg-green-50",
     border: "border-green-200",
-    label: "Passed",
+    label: t("Passed"),
   },
   flagged: {
     icon: WarningOutlined,
     color: "text-amber-600",
     bg: "bg-amber-50",
     border: "border-amber-200",
-    label: "Flagged",
+    label: t("Flagged"),
   },
 };
 
@@ -135,7 +136,7 @@ export function LogViewer({
               </div>
               <div className="h-4 w-px bg-gray-200" />
               <div className="flex items-center gap-1">
-                <span className="text-xs text-gray-500 mr-1">Sample:</span>
+                <span className="text-xs text-gray-500 mr-1">{t("Sample:")}</span>
                 {sampleSizes.map((size) => (
                   <Button
                     key={size}
@@ -158,7 +159,7 @@ export function LogViewer({
         </div>
       )}
       {!logsLoading && displayLogs.length === 0 && (
-        <div className="py-12 text-center text-sm text-gray-500">No logs to display. Adjust filters or date range.</div>
+        <div className="py-12 text-center text-sm text-gray-500">{t("No logs to display. Adjust filters or date range.")}</div>
       )}
       {!logsLoading && displayLogs.length > 0 && (
         <div className="divide-y divide-gray-100">

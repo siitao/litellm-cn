@@ -9,6 +9,7 @@ import { detectSSOProvider, processSSOSettingsPayload } from "../utils";
 import { useSSOSettings } from "@/app/(dashboard)/hooks/sso/useSSOSettings";
 import { useEditSSOSettings } from "@/app/(dashboard)/hooks/sso/useEditSSOSettings";
 
+import { t } from "@/i18n";
 interface EditSSOSettingsModalProps {
   isVisible: boolean;
   onCancel: () => void;
@@ -86,7 +87,7 @@ const EditSSOSettingsModal: React.FC<EditSSOSettingsModalProps> = ({ isVisible, 
 
       await mutateAsync(payload, {
         onSuccess: () => {
-          NotificationsManager.success("SSO settings updated successfully");
+          NotificationsManager.success(t("SSO settings updated successfully"));
           onSuccess();
         },
         onError: (error) => {
@@ -106,14 +107,12 @@ const EditSSOSettingsModal: React.FC<EditSSOSettingsModalProps> = ({ isVisible, 
 
   return (
     <Modal
-      title="Edit SSO Settings"
+      title={t("Edit SSO Settings")}
       open={isVisible}
       width={800}
       footer={
         <Space>
-          <Button onClick={handleCancel} disabled={isPending}>
-            Cancel
-          </Button>
+          <Button onClick={handleCancel} disabled={isPending}>{t("Cancel")}</Button>
           <Button loading={isPending} onClick={() => form.submit()}>
             {isPending ? "Saving..." : "Save"}
           </Button>

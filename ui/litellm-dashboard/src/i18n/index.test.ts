@@ -1,10 +1,23 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_LOCALE, LOCALE_STORAGE_KEY, Locale, getStoredLocale, t, translations } from "./index";
+import {
+  DEFAULT_LOCALE,
+  LOCALE_STORAGE_KEY,
+  Locale,
+  getStoredLocale,
+  setCurrentLocale,
+  t,
+  translations,
+} from "./index";
 
 describe("i18n t()", () => {
   it("resolves a dotted key for the default (Chinese) locale", () => {
-    expect(t("nav.api-keys")).toBe("虚拟密钥");
-    expect(t("common.save")).toBe("保存");
+    setCurrentLocale("zh");
+    try {
+      expect(t("nav.api-keys")).toBe("虚拟密钥");
+      expect(t("common.save")).toBe("保存");
+    } finally {
+      setCurrentLocale("en");
+    }
   });
 
   it("resolves a dotted key for a specific locale", () => {
@@ -17,7 +30,7 @@ describe("i18n t()", () => {
     const saved = zh.common.save;
     delete zh.common.save;
     try {
-      expect(t("common.save")).toBe("Save");
+      expect(t("common.save", "zh")).toBe("Save");
     } finally {
       zh.common.save = saved;
     }
@@ -34,8 +47,20 @@ describe("i18n t()", () => {
 
   it("is deterministic and never touches localStorage on the server path", () => {
     // DEFAULT_LOCALE is zh; t() must not depend on window/localStorage.
-    expect(t("nav.settings")).toBe("设置");
+    setCurrentLocale(null);
+    try {
+      expect(t("nav.settings")).toBe("设置");
+    } finally {
+      setCurrentLocale("en");
+    }
     expect(DEFAULT_LOCALE).toBe("zh");
+  });
+
+  it("resolves raw English UI strings from the ui section", () => {
+    expect(t("Cancel", "zh")).toBe("取消");
+    expect(t("Cancel", "en")).toBe("Cancel");
+    expect(t("Guardrails &amp; Policy Compliance", "zh")).toBe("护栏与策略合规");
+    expect(t("Guardrails &amp; Policy Compliance", "en")).toBe("Guardrails & Policy Compliance");
   });
 });
 

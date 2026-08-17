@@ -49,7 +49,7 @@ const TagManagement: React.FC<TagProps> = ({ accessToken, userID, userRole }) =>
       const response = await tagListCall(accessToken);
       setTags(Object.values(response));
     } catch (error) {
-      console.error("Error fetching tags:", error);
+      console.error(t("Error fetching tags:"), error);
       NotificationsManager.fromBackend("Error fetching tags: " + error);
     } finally {
       setIsLoadingTags(false);
@@ -75,11 +75,11 @@ const TagManagement: React.FC<TagProps> = ({ accessToken, userID, userRole }) =>
         rpm_limit: formValues.rpm_limit,
         budget_duration: formValues.budget_duration,
       });
-      NotificationsManager.success("Tag created successfully");
+      NotificationsManager.success(t("Tag created successfully"));
       setIsCreateModalVisible(false);
       fetchTags();
     } catch (error) {
-      console.error("Error creating tag:", error);
+      console.error(t("Error creating tag:"), error);
       NotificationsManager.fromBackend("Error creating tag: " + error);
     }
   };
@@ -94,10 +94,10 @@ const TagManagement: React.FC<TagProps> = ({ accessToken, userID, userRole }) =>
     setIsDeleting(true);
     try {
       await tagDeleteCall(accessToken, tagToDelete);
-      NotificationsManager.success("Tag deleted successfully");
+      NotificationsManager.success(t("Tag deleted successfully"));
       fetchTags();
     } catch (error) {
-      console.error("Error deleting tag:", error);
+      console.error(t("Error deleting tag:"), error);
       NotificationsManager.fromBackend("Error deleting tag: " + error);
     } finally {
       setIsDeleting(false);
@@ -115,7 +115,7 @@ const TagManagement: React.FC<TagProps> = ({ accessToken, userID, userRole }) =>
             setAvailableModels(response.data);
           }
         } catch (error) {
-          console.error("Error fetching models:", error);
+          console.error(t("Error fetching models:"), error);
           NotificationsManager.fromBackend("Error fetching models: " + error);
         }
       };
@@ -195,7 +195,7 @@ const TagManagement: React.FC<TagProps> = ({ accessToken, userID, userRole }) =>
           <DeleteResourceModal
             isOpen={isDeleteModalOpen}
             title={t("tag_management.delete_title")}
-            message="Are you sure you want to delete this tag? This action cannot be undone."
+            message={t("Are you sure you want to delete this tag? This action cannot be undone.")}
             resourceInformationTitle={t("tag_management.tag_information")}
             resourceInformation={[{ label: t("tag_management.col_name"), value: tagToDelete, code: true }]}
             onCancel={() => {

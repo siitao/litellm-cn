@@ -4,6 +4,7 @@ import { UserGroupIcon } from "@heroicons/react/outline";
 import { Tooltip } from "antd";
 import { getAgentsList } from "../networking";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface Agent {
   agent_id: string;
   agent_name: string;
@@ -18,7 +19,8 @@ interface AgentPermissionsProps {
 }
 
 export function AgentPermissions({ agents, agentAccessGroups = [], accessToken }: AgentPermissionsProps) {
-  const [agentDetails, setAgentDetails] = useState<Agent[]>([]);
+
+  const { t } = useLanguage();  const [agentDetails, setAgentDetails] = useState<Agent[]>([]);
 
   // Fetch agent details when component mounts
   useEffect(() => {
@@ -30,7 +32,7 @@ export function AgentPermissions({ agents, agentAccessGroups = [], accessToken }
             setAgentDetails(response.agents);
           }
         } catch (error) {
-          console.error("Error fetching agents:", error);
+          console.error(t("Error fetching agents:"), error);
         }
       }
     };
@@ -58,7 +60,7 @@ export function AgentPermissions({ agents, agentAccessGroups = [], accessToken }
     <div className="space-y-3">
       <div className="flex items-center gap-2">
         <UserGroupIcon className="h-4 w-4 text-purple-600" />
-        <Text className="font-semibold text-gray-900">Agents</Text>
+        <Text className="font-semibold text-gray-900">{t("Agents")}</Text>
         <Badge color="purple" size="xs">
           {totalCount}
         </Badge>
@@ -83,9 +85,7 @@ export function AgentPermissions({ agents, agentAccessGroups = [], accessToken }
                     <div className="inline-flex items-center gap-2 min-w-0">
                       <span className="inline-block w-1.5 h-1.5 bg-green-500 rounded-full shrink-0"></span>
                       <span className="text-sm font-medium text-gray-900 truncate">{item.value}</span>
-                      <span className="ml-1 px-1.5 py-0.5 text-[9px] font-semibold text-green-600 bg-green-50 border border-green-200 rounded-sm uppercase tracking-wide shrink-0">
-                        Group
-                      </span>
+                      <span className="ml-1 px-1.5 py-0.5 text-[9px] font-semibold text-green-600 bg-green-50 border border-green-200 rounded-sm uppercase tracking-wide shrink-0">{t("Group")}</span>
                     </div>
                   )}
                 </div>
@@ -96,7 +96,7 @@ export function AgentPermissions({ agents, agentAccessGroups = [], accessToken }
       ) : (
         <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-50 border border-gray-200">
           <UserGroupIcon className="h-4 w-4 text-gray-400" />
-          <Text className="text-gray-500 text-sm">No agents or access groups configured</Text>
+          <Text className="text-gray-500 text-sm">{t("No agents or access groups configured")}</Text>
         </div>
       )}
     </div>

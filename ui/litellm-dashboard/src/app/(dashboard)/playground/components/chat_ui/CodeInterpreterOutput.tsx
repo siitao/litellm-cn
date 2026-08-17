@@ -6,6 +6,7 @@ import { getProxyBaseUrl, getGlobalLitellmHeaderName } from "@/components/networ
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
+import { t } from "@/i18n";
 interface ContainerFileCitation {
   type: "container_file_citation";
   container_id: string;
@@ -73,7 +74,7 @@ const CodeInterpreterOutput: React.FC<CodeInterpreterOutputProps> = ({ code, ann
             }
           }
         } catch (error) {
-          console.error("Error fetching image:", error);
+          console.error(t("Error fetching image:"), error);
         } finally {
           if (!cancelled) {
             setLoadingImages((prev) => ({ ...prev, [annotation.file_id]: false }));
@@ -115,7 +116,7 @@ const CodeInterpreterOutput: React.FC<CodeInterpreterOutputProps> = ({ code, ann
         URL.revokeObjectURL(url);
       }
     } catch (error) {
-      console.error("Error downloading file:", error);
+      console.error(t("Error downloading file:"), error);
     }
   };
 
@@ -196,7 +197,7 @@ const CodeInterpreterOutput: React.FC<CodeInterpreterOutputProps> = ({ code, ann
             </div>
           ) : (
             <div className="flex items-center justify-center bg-gray-50 p-4">
-              <span className="text-sm text-gray-400">Image not available</span>
+              <span className="text-sm text-gray-400">{t("Image not available")}</span>
             </div>
           )}
         </div>

@@ -4,6 +4,7 @@ import { modelAvailableCall } from "./networking";
 import { formatNumberWithCommas } from "@/utils/dataUtils";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
 
+import { t } from "@/i18n";
 // Define the props type
 interface ViewUserSpendProps {
   userSpend: number | null;
@@ -78,7 +79,7 @@ const ViewUserSpend: React.FC<ViewUserSpendProps> = ({ userSpend, userMaxBudget,
           setUserModels(available_model_names);
         }
       } catch (error) {
-        console.error("Error fetching user models:", error);
+        console.error(t("Error fetching user models:"), error);
       }
     };
 
@@ -115,13 +116,13 @@ const ViewUserSpend: React.FC<ViewUserSpendProps> = ({ userSpend, userMaxBudget,
     <div className="flex items-center">
       <div className="flex justify-between gap-x-6">
         <div>
-          <p className="text-tremor-default text-tremor-content dark:text-dark-tremor-content">Total Spend</p>
+          <p className="text-tremor-default text-tremor-content dark:text-dark-tremor-content">{t("Total Spend")}</p>
           <p className="text-2xl text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold">
             ${roundedSpend}
           </p>
         </div>
         <div>
-          <p className="text-tremor-default text-tremor-content dark:text-dark-tremor-content">Max Budget</p>
+          <p className="text-tremor-default text-tremor-content dark:text-dark-tremor-content">{t("Max Budget")}</p>
           <p className="text-2xl text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold">
             {displayMaxBudget}
           </p>
@@ -129,7 +130,7 @@ const ViewUserSpend: React.FC<ViewUserSpendProps> = ({ userSpend, userMaxBudget,
       </div>
       {/* <div className="ml-auto">
           <Accordion>
-            <AccordionHeader><Text>Team Models</Text></AccordionHeader>
+            <AccordionHeader><Text>{t("Team Models")}</Text></AccordionHeader>
             <AccordionBody className="absolute right-0 z-10 bg-white p-2 shadow-lg max-w-xs">
               <List>
                 {modelsToDisplay.map((model: string) => (

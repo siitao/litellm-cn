@@ -17,6 +17,7 @@ import { normalizeGuardrailEntries, sortSessionLogs, SessionLogSortMode } from "
 import { DRAWER_WIDTH } from "./constants";
 import { useLogDetails } from "@/app/(dashboard)/hooks/logDetails/useLogDetails";
 
+import { t } from "@/i18n";
 export interface LogDetailsDrawerProps {
   open: boolean;
   onClose: () => void;
@@ -319,7 +320,7 @@ export function LogDetailsDrawer({
             icon={<LeftOutlined />}
             onClick={() => setIsSidebarCollapsed(true)}
             className="absolute top-2 left-2 z-20 bg-white! border! border-slate-200! rounded-md!"
-            aria-label="Collapse trace sidebar"
+            aria-label={t("Collapse trace sidebar")}
           />
         ) : (
           <Button
@@ -328,7 +329,7 @@ export function LogDetailsDrawer({
             icon={<RightOutlined />}
             onClick={() => setIsSidebarCollapsed(false)}
             className="absolute top-2 left-2 z-20 bg-white! border! border-slate-200! rounded-md!"
-            aria-label="Expand trace sidebar"
+            aria-label={t("Expand trace sidebar")}
           />
         )}
         {!isSidebarCollapsed && (
@@ -345,7 +346,7 @@ export function LogDetailsDrawer({
                       type="button"
                       onClick={handleCopyLeftPanelId}
                       className="text-slate-400 hover:text-slate-600"
-                      aria-label="Copy trace id"
+                      aria-label={t("Copy trace id")}
                     >
                       {copiedLeftPanelId ? (
                         <CheckOutlined className="text-[11px]" />
@@ -388,8 +389,7 @@ export function LogDetailsDrawer({
                 )}
               </div>
               {isSessionMode && sessionTruncated && (
-                <div className="mt-1 text-[11px] text-amber-600 font-mono">
-                  Showing most recent {logsForList.length} of {sessionTotalCount}
+                <div className="mt-1 text-[11px] text-amber-600 font-mono">{t("Showing most recent")} {logsForList.length} of {sessionTotalCount}
                 </div>
               )}
               {isSessionMode && (
@@ -398,8 +398,8 @@ export function LogDetailsDrawer({
                   size="small"
                   className="mt-1.5 [&_.ant-segmented-item-label]:text-[11px]"
                   options={[
-                    { label: "Duration", value: "duration" },
-                    { label: "Start time", value: "start_time" },
+                    { label: t("Duration"), value: "duration" },
+                    { label: t("Start time"), value: "start_time" },
                   ]}
                   value={sessionSortMode}
                   onChange={(value) => setSessionSortMode(value as SessionLogSortMode)}

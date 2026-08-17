@@ -11,6 +11,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 
 import { getAgentsTableColumns } from "./AgentsTableColumns";
 
+import { t } from "@/i18n";
+import { useLanguage } from "@/contexts/LanguageContext";
 interface AgentsTableProps {
   agents: Agent[];
   isLoading: boolean;
@@ -25,13 +27,14 @@ interface AgentsTableProps {
 const DEFAULT_SORTING: SortingState = [{ id: "created_at", desc: true }];
 
 function EmptyState() {
-  return (
+
+  const { t } = useLanguage();  return (
     <div className="flex flex-col items-center gap-1 py-6">
       <div className="mb-1 flex size-10 items-center justify-center rounded-lg bg-muted">
         <Bot className="size-5 text-muted-foreground" />
       </div>
-      <div className="text-sm font-medium text-foreground">No agents yet</div>
-      <div className="text-sm text-muted-foreground">Add an agent to make it available in your organization.</div>
+      <div className="text-sm font-medium text-foreground">{t("No agents yet")}</div>
+      <div className="text-sm text-muted-foreground">{t("Add an agent to make it available in your organization.")}</div>
     </div>
   );
 }
@@ -75,7 +78,7 @@ const AgentsTable: React.FC<AgentsTableProps> = ({
                     <CircleCheck
                       className={healthCheckEnabled ? "size-4 text-green-500" : "size-4 text-muted-foreground"}
                     />
-                    <span className="text-sm text-muted-foreground">Health Check</span>
+                    <span className="text-sm text-muted-foreground">{t("Health Check")}</span>
                     <Switch
                       size="sm"
                       checked={healthCheckEnabled}
@@ -85,7 +88,7 @@ const AgentsTable: React.FC<AgentsTableProps> = ({
                   </div>
                 }
               />
-              <TooltipContent>When enabled, only agents with reachable URLs are shown</TooltipContent>
+              <TooltipContent>{t("When enabled, only agents with reachable URLs are shown")}</TooltipContent>
             </Tooltip>
           </TooltipProvider>
         </div>

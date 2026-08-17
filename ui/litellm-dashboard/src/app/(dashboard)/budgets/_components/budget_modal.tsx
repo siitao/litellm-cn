@@ -4,6 +4,7 @@ import { Button as Button2, Modal, Form, InputNumber, Select } from "antd";
 import { useCreateBudget } from "@/app/(dashboard)/hooks/budgets/useBudgets";
 import NotificationsManager from "@/components/molecules/notifications_manager";
 
+import { t } from "@/i18n";
 interface BudgetModalProps {
   isModalVisible: boolean;
   setIsModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,20 +25,20 @@ const BudgetModal: React.FC<BudgetModalProps> = ({ isModalVisible, setIsModalVis
 
   const handleCreate = async (formValues: Record<string, any>) => {
     try {
-      NotificationsManager.info("Making API Call");
+      NotificationsManager.info(t("Making API Call"));
       await createBudget.mutateAsync(formValues);
-      NotificationsManager.success("Budget Created");
+      NotificationsManager.success(t("Budget Created"));
       form.resetFields();
       setIsModalVisible(false);
     } catch (error) {
-      console.error("Error creating the budget:", error);
+      console.error(t("Error creating the budget:"), error);
       NotificationsManager.fromBackend(`Error creating the budget: ${error}`);
     }
   };
 
   return (
     <Modal
-      title="Create Budget"
+      title={t("Create Budget")}
       open={isModalVisible}
       width={800}
       footer={null}
@@ -47,7 +48,7 @@ const BudgetModal: React.FC<BudgetModalProps> = ({ isModalVisible, setIsModalVis
       <Form form={form} onFinish={handleCreate} labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} labelAlign="left">
         <>
           <Form.Item
-            label="Budget ID"
+            label={t("Budget ID")}
             name="budget_id"
             rules={[
               {
@@ -55,20 +56,20 @@ const BudgetModal: React.FC<BudgetModalProps> = ({ isModalVisible, setIsModalVis
                 message: "Please input a human-friendly name for the budget",
               },
             ]}
-            help="A human-friendly name for the budget"
+            help={t("A human-friendly name for the budget")}
           >
             <TextInput placeholder="" />
           </Form.Item>
-          <Form.Item label="Max Tokens per minute" name="tpm_limit" help="Default is model limit.">
+          <Form.Item label="Max Tokens per minute" name="tpm_limit" help={t("Default is model limit.")}>
             <InputNumber step={1} precision={2} width={200} />
           </Form.Item>
-          <Form.Item label="Max Requests per minute" name="rpm_limit" help="Default is model limit.">
+          <Form.Item label="Max Requests per minute" name="rpm_limit" help={t("Default is model limit.")}>
             <InputNumber step={1} precision={2} width={200} />
           </Form.Item>
 
           <Accordion className="mt-20 mb-8">
             <AccordionHeader>
-              <b>Optional Settings</b>
+              <b>{t("Optional Settings")}</b>
             </AccordionHeader>
             <AccordionBody>
               <Form.Item label="Max Budget (USD)" name="max_budget">
@@ -86,7 +87,7 @@ const BudgetModal: React.FC<BudgetModalProps> = ({ isModalVisible, setIsModalVis
         </>
 
         <div style={{ textAlign: "right", marginTop: "10px" }}>
-          <Button2 htmlType="submit">Create Budget</Button2>
+          <Button2 htmlType="submit">{t("Create Budget")}</Button2>
         </div>
       </Form>
     </Modal>

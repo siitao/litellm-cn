@@ -35,6 +35,7 @@ import ShadowEvalSection from "./ShadowEvalSection";
 import TierTurnsChart from "./TierTurnsChart";
 import { useAutoRouterBenchmarks } from "./useAutoRouterBenchmarks";
 
+import { t } from "@/i18n";
 const Message: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <p className="py-8 text-center text-sm text-muted-foreground">{children}</p>
 );
@@ -57,7 +58,7 @@ const HeroCard: React.FC<{ view: BenchmarkView }> = ({ view }) => {
     <Card className="overflow-hidden py-0">
       <div className="grid md:grid-cols-[1fr_1fr]">
         <div className="flex flex-col justify-center gap-3 p-6">
-          <p className="text-sm text-muted-foreground">Total estimated savings</p>
+          <p className="text-sm text-muted-foreground">{t("Total estimated savings")}</p>
           <div className="flex flex-wrap items-center gap-3">
             <p className="text-5xl font-semibold tracking-tight text-foreground">{usd(stats.saved_spend)}</p>
             <Badge
@@ -70,18 +71,18 @@ const HeroCard: React.FC<{ view: BenchmarkView }> = ({ view }) => {
           </div>
           <dl className="divide-y text-sm">
             <div className="flex items-baseline justify-between gap-6 py-3">
-              <dt className="text-muted-foreground">Actual auto-router spend</dt>
+              <dt className="text-muted-foreground">{t("Actual auto-router spend")}</dt>
               <dd className="font-medium tabular-nums text-foreground">{usd(stats.spend)}</dd>
             </div>
             <div className="flex items-baseline justify-between gap-6 py-3">
-              <dt className="text-muted-foreground">Estimated spend at highest-tier model</dt>
+              <dt className="text-muted-foreground">{t("Estimated spend at highest-tier model")}</dt>
               <dd className="font-medium tabular-nums text-foreground">{usd(stats.baseline_spend)}</dd>
             </div>
           </dl>
         </div>
 
         <div className="flex flex-col items-center justify-center gap-2 border-t p-6 md:border-t-0 md:border-l">
-          <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Avg saved per session</p>
+          <p className="text-[11px] uppercase tracking-wide text-muted-foreground">{t("Avg saved per session")}</p>
           <p className="text-5xl font-semibold tracking-tight text-foreground">{usd(stats.saved_per_session)}</p>
           <p className="text-sm text-muted-foreground">across {stats.sessions.toLocaleString()} sessions</p>
         </div>
@@ -97,7 +98,7 @@ const StackedTurnBar: React.FC<{ buckets: BucketRow[] }> = ({ buckets }) => {
       <div
         className="flex h-2.5 w-full gap-0.5 overflow-hidden rounded-sm"
         role="img"
-        aria-label="Share of turns by bucket"
+        aria-label={t("Share of turns by bucket")}
       >
         {segments.map((b) => (
           <div
@@ -123,10 +124,10 @@ const BucketTable: React.FC<{ buckets: BucketRow[] }> = ({ buckets }) => (
   <Table className="border-b">
     <TableHeader>
       <TableRow className="hover:bg-transparent">
-        <TableHead className="text-[11px] uppercase tracking-wide">Bucket</TableHead>
-        <TableHead className="text-right text-[11px] uppercase tracking-wide">Turns</TableHead>
+        <TableHead className="text-[11px] uppercase tracking-wide">{t("Bucket")}</TableHead>
+        <TableHead className="text-right text-[11px] uppercase tracking-wide">{t("Turns")}</TableHead>
         <TableHead className="w-1/2" />
-        <TableHead className="text-right text-[11px] uppercase tracking-wide">Hit rate</TableHead>
+        <TableHead className="text-right text-[11px] uppercase tracking-wide">{t("Hit rate")}</TableHead>
       </TableRow>
     </TableHeader>
     <TableBody>
@@ -167,7 +168,7 @@ const CachingCard: React.FC<{ cache: AutoRouterCacheStats }> = ({ cache }) => {
       <div className="grid lg:grid-cols-[1fr_3fr]">
         <div className="flex flex-col border-b p-6 lg:border-b-0 lg:border-r">
           <div className="flex flex-1 flex-col justify-center gap-3">
-            <p className="text-sm text-muted-foreground">Cache hit rate</p>
+            <p className="text-sm text-muted-foreground">{t("Cache hit rate")}</p>
             <p className="text-5xl font-semibold tracking-tight text-foreground">{pctLabel(cache.hit_rate_pct)}</p>
           </div>
           {expiredMissPct === null ? null : (
@@ -181,9 +182,7 @@ const CachingCard: React.FC<{ cache: AutoRouterCacheStats }> = ({ cache }) => {
                     />
                   }
                 >
-                  <span className="text-sm text-muted-foreground underline decoration-dotted underline-offset-2">
-                    Expired-miss
-                  </span>
+                  <span className="text-sm text-muted-foreground underline decoration-dotted underline-offset-2">{t("Expired-miss")}</span>
                   <span className="font-medium tabular-nums text-foreground">{pctLabel(expiredMissPct)}</span>
                 </TooltipTrigger>
                 <TooltipContent className="max-w-64">
@@ -197,11 +196,9 @@ const CachingCard: React.FC<{ cache: AutoRouterCacheStats }> = ({ cache }) => {
 
         <div className="flex flex-col gap-3 p-6">
           <div className="flex items-baseline justify-between">
-            <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Share of turns</p>
+            <p className="text-[11px] uppercase tracking-wide text-muted-foreground">{t("Share of turns")}</p>
             <p className="text-xs text-muted-foreground">
-              <span className="text-lg font-semibold tabular-nums text-foreground">{total.toLocaleString()}</span> turns
-              measured
-            </p>
+              <span className="text-lg font-semibold tabular-nums text-foreground">{total.toLocaleString()}</span>{t("turns measured")}</p>
           </div>
           <StackedTurnBar buckets={buckets} />
           <BucketTable buckets={buckets} />
@@ -227,10 +224,10 @@ interface BenchmarksBodyProps {
 const BenchmarksBody: React.FC<BenchmarksBodyProps> = ({ isPending, error, data, selectedKey, autoRouters }) => {
   if (isPending) return <Message>Loading auto-router usage...</Message>;
   if (error instanceof ApiError && error.status === 403) {
-    return <Message>Auto-router usage is visible to proxy admin roles only</Message>;
+    return <Message>{t("Auto-router usage is visible to proxy admin roles only")}</Message>;
   }
-  if (error || !data) return <Message>Auto-router usage is unavailable right now</Message>;
-  if (data.groups.length === 0) return <Message>No auto-router sessions in this window yet</Message>;
+  if (error || !data) return <Message>{t("Auto-router usage is unavailable right now")}</Message>;
+  if (data.groups.length === 0) return <Message>{t("No auto-router sessions in this window yet")}</Message>;
 
   const view = viewFor(data, selectedKey);
   const stats = view.stats;
@@ -254,10 +251,8 @@ const BenchmarksBody: React.FC<BenchmarksBodyProps> = ({ isPending, error, data,
 
       <div className="space-y-4">
         <div className="flex flex-wrap items-baseline gap-2">
-          <h3 className="text-lg font-semibold text-foreground">Auto-router prompt caching</h3>
-          <p className="text-xs text-muted-foreground">
-            every turn falls in exactly one bucket, by what the router did
-          </p>
+          <h3 className="text-lg font-semibold text-foreground">{t("Auto-router prompt caching")}</h3>
+          <p className="text-xs text-muted-foreground">{t("every turn falls in exactly one bucket, by what the router did")}</p>
         </div>
         <CachingCard cache={stats.cache} />
       </div>
@@ -282,7 +277,7 @@ const UsageView: React.FC<AutoRouterBenchmarksTabProps> = ({ accessToken }) => {
     <div className="w-full space-y-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h2 className="text-xl font-semibold text-foreground">Auto-router usage</h2>
+          <h2 className="text-xl font-semibold text-foreground">{t("Auto-router usage")}</h2>
           <p className="mt-1 text-sm text-muted-foreground">{WINDOW_LABELS[range]}</p>
         </div>
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
@@ -299,7 +294,7 @@ const UsageView: React.FC<AutoRouterBenchmarksTabProps> = ({ accessToken }) => {
                 <SelectValue>{selectedLabel}</SelectValue>
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value={ALL_ROUTERS}>All auto-routers</SelectItem>
+                <SelectItem value={ALL_ROUTERS}>{t("All auto-routers")}</SelectItem>
                 {groups.map((g) => (
                   <SelectItem key={groupKey(g)} value={groupKey(g)}>
                     {groupLabel(g, groups)}
@@ -336,12 +331,8 @@ const AutoRouterBenchmarksTab: React.FC<AutoRouterBenchmarksTabProps> = ({ acces
   return (
     <Tabs defaultValue="usage" onValueChange={handleTabChange} className="w-full gap-4">
       <TabsList>
-        <TabsTrigger value="usage" className="px-3">
-          Usage
-        </TabsTrigger>
-        <TabsTrigger value="shadow-evals" className="px-3">
-          Shadow Evals
-        </TabsTrigger>
+        <TabsTrigger value="usage" className="px-3">{t("Usage")}</TabsTrigger>
+        <TabsTrigger value="shadow-evals" className="px-3">{t("Shadow Evals")}</TabsTrigger>
       </TabsList>
 
       <TabsContent value="usage" keepMounted={visitedTabs.includes("usage")}>

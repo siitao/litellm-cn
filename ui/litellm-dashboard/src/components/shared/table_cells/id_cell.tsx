@@ -8,6 +8,7 @@ import { copyToClipboard } from "@/utils/dataUtils";
 
 import { CellTooltip } from "./cell_tooltip";
 
+import { t } from "@/i18n";
 export type IdCellVariant = "pill" | "plain";
 
 interface IdCellProps {
@@ -80,7 +81,7 @@ export function IdCell({
       {withTooltip}
       <button
         type="button"
-        aria-label="Copy ID"
+        aria-label={t("Copy ID")}
         className="shrink-0 cursor-pointer text-muted-foreground hover:text-foreground"
         onClick={(event) => {
           event.stopPropagation();

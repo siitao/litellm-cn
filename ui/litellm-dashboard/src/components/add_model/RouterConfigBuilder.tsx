@@ -13,6 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
+import { t } from "@/i18n";
 interface Route {
   id: string;
   model: string;
@@ -77,7 +78,7 @@ const UtteranceInput = ({ value, onChange }: UtteranceInputProps) => {
         </Badge>
       ))}
       <input
-        aria-label="Example Utterances"
+        aria-label={t("Example Utterances")}
         value={draft}
         onChange={(event) => setDraft(event.target.value)}
         onBlur={() => draft.trim() && addUtterances(draft)}
@@ -200,7 +201,7 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
       <div className="w-full space-y-6">
         <div className="flex w-full flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <h3 className="text-lg font-semibold">Routes Configuration</h3>
+            <h3 className="text-lg font-semibold">{t("Routes Configuration")}</h3>
             <HelpTooltip content="Configure routing logic to automatically select the best model based on user input patterns" />
           </div>
           <Button type="button" onClick={addRoute}>
@@ -211,9 +212,7 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
 
         {routes.length === 0 ? (
           <Card>
-            <CardContent className="py-8 text-center text-muted-foreground">
-              No routes configured. Click &quot;Add Route&quot; to get started.
-            </CardContent>
+            <CardContent className="py-8 text-center text-muted-foreground">{t("No routes configured. Click &quot;Add Route&quot; to get started.")}</CardContent>
           </Card>
         ) : (
           <div className="space-y-3">
@@ -237,8 +236,7 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
                       <ChevronDown
                         className={`size-4 shrink-0 text-muted-foreground transition-transform ${isExpanded ? "rotate-180" : ""}`}
                       />
-                      <span className="truncate text-base font-medium">
-                        Route {index + 1}: {route.model || "Unnamed"}
+                      <span className="truncate text-base font-medium">{t("Route")} {index + 1}: {route.model || "Unnamed"}
                       </span>
                     </CollapsibleTrigger>
                     <Button
@@ -255,17 +253,17 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
                     <Separator />
                     <div className="space-y-4 p-4">
                       <div className="space-y-2">
-                        <Label>Model</Label>
+                        <Label>{t("Model")}</Label>
                         <SearchSelect
                           value={route.model}
                           onValueChange={(model) => updateRoute(route.id, "model", model)}
-                          placeholder="Select model"
+                          placeholder={t("Select model")}
                           options={modelOptions}
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor={`${route.id}-description`}>Description</Label>
+                        <Label htmlFor={`${route.id}-description`}>{t("Description")}</Label>
                         <Textarea
                           id={`${route.id}-description`}
                           value={route.description}
@@ -277,8 +275,8 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
 
                       <div className="space-y-2">
                         <div className="flex items-center gap-2">
-                          <Label htmlFor={`${route.id}-threshold`}>Score Threshold</Label>
-                          <HelpTooltip content="Minimum similarity score to route to this model (0-1)" />
+                          <Label htmlFor={`${route.id}-threshold`}>{t("Score Threshold")}</Label>
+                          <HelpTooltip content={t("Minimum similarity score to route to this model (0-1)")} />
                         </div>
                         <Input
                           id={`${route.id}-threshold`}
@@ -296,12 +294,10 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
 
                       <div className="space-y-2">
                         <div className="flex items-center gap-2">
-                          <Label>Example Utterances</Label>
-                          <HelpTooltip content="Training examples for this route. Type an utterance and press Enter to add it." />
+                          <Label>{t("Example Utterances")}</Label>
+                          <HelpTooltip content={t("Training examples for this route. Type an utterance and press Enter to add it.")} />
                         </div>
-                        <p className="text-xs text-muted-foreground">
-                          Type an utterance and press Enter to add it. You can also paste multiple lines.
-                        </p>
+                        <p className="text-xs text-muted-foreground">{t("Type an utterance and press Enter to add it. You can also paste multiple lines.")}</p>
                         <UtteranceInput
                           value={route.utterances}
                           onChange={(utterances) => updateRoute(route.id, "utterances", utterances)}
@@ -317,7 +313,7 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
 
         <Separator />
         <div className="flex w-full items-center justify-between gap-3">
-          <h3 className="text-lg font-semibold">JSON Preview</h3>
+          <h3 className="text-lg font-semibold">{t("JSON Preview")}</h3>
           <Button type="button" variant="link" onClick={() => setShowJsonPreview((visible) => !visible)}>
             {showJsonPreview ? "Hide" : "Show"}
           </Button>

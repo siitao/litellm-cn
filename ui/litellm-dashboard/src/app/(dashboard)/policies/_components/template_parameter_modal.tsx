@@ -16,6 +16,7 @@ import { UiLoadingSpinner } from "@/components/ui/ui-loading-spinner";
 import { SearchSelect } from "@/components/shared/SearchSelect";
 import { modelHubCall, enrichPolicyTemplateStream } from "@/components/networking";
 
+import { t } from "@/i18n";
 interface TemplateParameter {
   name: string;
   label: string;
@@ -100,7 +101,7 @@ const TemplateParameterModal: React.FC<TemplateParameterModalProps> = ({
         setAvailableModels(models);
       }
     } catch (error) {
-      console.error("Error fetching models:", error);
+      console.error(t("Error fetching models:"), error);
     } finally {
       setIsLoadingModels(false);
     }
@@ -132,7 +133,7 @@ const TemplateParameterModal: React.FC<TemplateParameterModalProps> = ({
           setStatusMessage("");
         },
         (error) => {
-          console.error("Streaming error:", error);
+          console.error(t("Streaming error:"), error);
           setIsGenerating(false);
           setStatusMessage("");
         },
@@ -140,7 +141,7 @@ const TemplateParameterModal: React.FC<TemplateParameterModalProps> = ({
         (status) => setStatusMessage(status),
       );
     } catch (error) {
-      console.error("Error generating competitor names:", error);
+      console.error(t("Error generating competitor names:"), error);
       setIsGenerating(false);
     }
   };
@@ -170,7 +171,7 @@ const TemplateParameterModal: React.FC<TemplateParameterModalProps> = ({
           setStatusMessage("");
         },
         (error) => {
-          console.error("Refinement error:", error);
+          console.error(t("Refinement error:"), error);
           setIsRefining(false);
           setStatusMessage("");
         },
@@ -181,7 +182,7 @@ const TemplateParameterModal: React.FC<TemplateParameterModalProps> = ({
         (status) => setStatusMessage(status),
       );
     } catch (error) {
-      console.error("Error refining competitor names:", error);
+      console.error(t("Error refining competitor names:"), error);
       setIsRefining(false);
     }
   };
@@ -244,7 +245,7 @@ const TemplateParameterModal: React.FC<TemplateParameterModalProps> = ({
       <DialogContent className="sm:max-w-175">
         <DialogHeader>
           <DialogTitle className="text-lg">{template?.title}</DialogTitle>
-          <DialogDescription>Configure competitor blocking for your brand</DialogDescription>
+          <DialogDescription>{t("Configure competitor blocking for your brand")}</DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 py-4">
@@ -253,7 +254,7 @@ const TemplateParameterModal: React.FC<TemplateParameterModalProps> = ({
           {hasEnrichment && (
             <>
               <div>
-                <label className="mb-2 block text-sm font-medium">Competitor Discovery</label>
+                <label className="mb-2 block text-sm font-medium">{t("Competitor Discovery")}</label>
                 <RadioGroup
                   value={competitorMode}
                   onValueChange={(value) => setCompetitorMode(value as "ai" | "manual")}
@@ -271,12 +272,10 @@ const TemplateParameterModal: React.FC<TemplateParameterModalProps> = ({
 
               {/* Brand Name */}
               <div>
-                <label className="mb-1 block text-sm font-medium">
-                  Your Brand Name
-                  <span className="ml-1 text-destructive">*</span>
+                <label className="mb-1 block text-sm font-medium">{t("Your Brand Name")}<span className="ml-1 text-destructive">*</span>
                 </label>
                 <Input
-                  placeholder="e.g. Acme Airlines"
+                  placeholder={t("e.g. Acme Airlines")}
                   value={parameterValues[enrichmentParam || "brand_name"] || ""}
                   onChange={(e) =>
                     setParameterValues((prev) => ({
@@ -290,16 +289,14 @@ const TemplateParameterModal: React.FC<TemplateParameterModalProps> = ({
               {competitorMode === "ai" && (
                 <>
                   <div>
-                    <label className="mb-1 block text-sm font-medium">
-                      Select Model
-                      <span className="ml-1 text-destructive">*</span>
+                    <label className="mb-1 block text-sm font-medium">{t("Select Model")}<span className="ml-1 text-destructive">*</span>
                     </label>
                     <SearchSelect
                       options={availableModels.map((m) => ({ label: m, value: m }))}
                       value={selectedModel}
                       onValueChange={(value) => setSelectedModel(value || undefined)}
                       placeholder={isLoadingModels ? "Loading models..." : "Select a model to generate names"}
-                      emptyText="No models found"
+                      emptyText={t("No models found")}
                       disabled={isLoadingModels}
                     />
                   </div>
@@ -316,8 +313,7 @@ const TemplateParameterModal: React.FC<TemplateParameterModalProps> = ({
 
               {/* Competitor Tags */}
               <div>
-                <label className="mb-1 block text-sm font-medium">
-                  Competitor Names
+                <label className="mb-1 block text-sm font-medium">{t("Competitor Names")}
                   {competitorTags.length > 0 && (
                     <span className="ml-2 font-normal text-muted-foreground">({competitorTags.length})</span>
                   )}
@@ -337,15 +333,13 @@ const TemplateParameterModal: React.FC<TemplateParameterModalProps> = ({
                   ))}
                   <input
                     className="min-w-40 flex-1 bg-transparent text-sm outline-none"
-                    placeholder="Type a name and press Enter to add"
+                    placeholder={t("Type a name and press Enter to add")}
                     value={tagDraft}
                     onChange={(e) => setTagDraft(e.target.value)}
                     onKeyDown={handleTagDraftKeyDown}
                   />
                 </div>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  Type a name and press Enter to add. Click ✕ to remove.
-                </p>
+                <p className="mt-1 text-xs text-muted-foreground">{t("Type a name and press Enter to add. Click ✕ to remove.")}</p>
                 {statusMessage && (
                   <div className="mt-2 flex items-center gap-2 rounded-sm border border-border bg-muted p-2">
                     <UiLoadingSpinner className="size-3" />
@@ -363,7 +357,7 @@ const TemplateParameterModal: React.FC<TemplateParameterModalProps> = ({
               {/* Refinement input — shown after initial generation in AI mode */}
               {competitorMode === "ai" && hasGenerated && competitorTags.length > 0 && (
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Refine List</label>
+                  <label className="mb-1 block text-sm font-medium">{t("Refine List")}</label>
                   <div className="flex gap-2">
                     <Input
                       placeholder="e.g. add 10 more from Asia, increase to 50 total..."
@@ -380,9 +374,7 @@ const TemplateParameterModal: React.FC<TemplateParameterModalProps> = ({
                       {isRefining ? "..." : "Send"}
                     </Button>
                   </div>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    Give instructions to add, remove, or change competitors. Press Enter to send.
-                  </p>
+                  <p className="mt-1 text-xs text-muted-foreground">{t("Give instructions to add, remove, or change competitors. Press Enter to send.")}</p>
                 </div>
               )}
             </>
@@ -390,9 +382,7 @@ const TemplateParameterModal: React.FC<TemplateParameterModalProps> = ({
         </div>
 
         <DialogFooter>
-          <Button variant="secondary" onClick={onCancel} disabled={isLoading}>
-            Cancel
-          </Button>
+          <Button variant="secondary" onClick={onCancel} disabled={isLoading}>{t("Cancel")}</Button>
           <Button onClick={handleConfirm} disabled={!canContinue || isLoading}>
             {isLoading ? "Creating guardrails..." : "Continue"}
           </Button>

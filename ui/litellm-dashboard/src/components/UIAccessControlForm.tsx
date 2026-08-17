@@ -4,6 +4,7 @@ import { Text, TextInput } from "@tremor/react";
 import { getSSOSettings, updateSSOSettings } from "./networking";
 import NotificationManager from "./molecules/notifications_manager";
 
+import { t } from "@/i18n";
 interface UIAccessControlFormProps {
   accessToken: string | null;
   onSuccess: () => void;
@@ -43,7 +44,7 @@ const UIAccessControlForm: React.FC<UIAccessControlFormProps> = ({ accessToken, 
             form.setFieldsValue(formValues);
           }
         } catch (error) {
-          console.error("Failed to load UI access settings:", error);
+          console.error(t("Failed to load UI access settings:"), error);
         }
       }
     };
@@ -80,7 +81,7 @@ const UIAccessControlForm: React.FC<UIAccessControlFormProps> = ({ accessToken, 
       await updateSSOSettings(accessToken, apiPayload);
       onSuccess();
     } catch (error) {
-      console.error("Failed to save UI access settings:", error);
+      console.error(t("Failed to save UI access settings:"), error);
       NotificationManager.fromBackend("Failed to save UI access settings");
     } finally {
       setLoading(false);
@@ -97,9 +98,9 @@ const UIAccessControlForm: React.FC<UIAccessControlFormProps> = ({ accessToken, 
 
       <Form form={form} onFinish={handleUIAccessSubmit} layout="vertical">
         <Form.Item label="UI Access Mode" name="ui_access_mode_type" tooltip="Controls who can access the UI interface">
-          <Select placeholder="Select access mode">
-            <Select.Option value="all_authenticated_users">All Authenticated Users</Select.Option>
-            <Select.Option value="restricted_sso_group">Restricted SSO Group</Select.Option>
+          <Select placeholder={t("Select access mode")}>
+            <Select.Option value="all_authenticated_users">{t("All Authenticated Users")}</Select.Option>
+            <Select.Option value="restricted_sso_group">{t("Restricted SSO Group")}</Select.Option>
           </Select>
         </Form.Item>
 
@@ -113,7 +114,7 @@ const UIAccessControlForm: React.FC<UIAccessControlFormProps> = ({ accessToken, 
             const uiAccessModeType = getFieldValue("ui_access_mode_type");
             return uiAccessModeType === "restricted_sso_group" ? (
               <Form.Item
-                label="Restricted SSO Group"
+                label={t("Restricted SSO Group")}
                 name="restricted_sso_group"
                 rules={[{ required: true, message: "Please enter the restricted SSO group" }]}
               >
@@ -124,7 +125,7 @@ const UIAccessControlForm: React.FC<UIAccessControlFormProps> = ({ accessToken, 
         </Form.Item>
 
         <Form.Item
-          label="SSO Group JWT Field"
+          label={t("SSO Group JWT Field")}
           name="sso_group_jwt_field"
           tooltip="JWT field name that contains team/group information. Use dot notation to access nested fields."
         >
@@ -140,9 +141,7 @@ const UIAccessControlForm: React.FC<UIAccessControlFormProps> = ({ accessToken, 
               backgroundColor: "#6366f1",
               borderColor: "#6366f1",
             }}
-          >
-            Update UI Access Control
-          </Button2>
+          >{t("Update UI Access Control")}</Button2>
         </div>
       </Form>
     </div>

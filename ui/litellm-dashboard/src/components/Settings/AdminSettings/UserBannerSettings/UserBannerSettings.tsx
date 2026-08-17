@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { SEVERITY_ICONS, UserBannerMarkdown } from "@/components/UserBanner";
 import { Skeleton } from "@/components/ui/skeleton";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 const SEVERITY_LABELS: Record<UserBannerSeverity, string> = {
   info: "Info",
   warning: "Warning",
@@ -49,7 +50,8 @@ interface UserBannerSettingsFormProps {
 }
 
 function UserBannerSettingsForm({ persisted, isLoading, isPending, saveBanner }: UserBannerSettingsFormProps) {
-  const [draft, setDraft] = useState<UserBannerUpdate>({
+
+  const { t } = useLanguage();  const [draft, setDraft] = useState<UserBannerUpdate>({
     enabled: persisted.enabled,
     message: persisted.message,
     severity: persisted.severity,
@@ -60,7 +62,7 @@ function UserBannerSettingsForm({ persisted, isLoading, isPending, saveBanner }:
   const handleSave = () => {
     saveBanner(draft, {
       onSuccess: () => {
-        NotificationManager.success("User banner updated successfully");
+        NotificationManager.success(t("User banner updated successfully"));
       },
       onError: (error) => {
         NotificationManager.fromBackend(error);
@@ -71,7 +73,7 @@ function UserBannerSettingsForm({ persisted, isLoading, isPending, saveBanner }:
   return (
     <Card>
       <CardHeader>
-        <CardTitle>User Banner</CardTitle>
+        <CardTitle>{t("User Banner")}</CardTitle>
         <CardDescription>
           Publish an announcement to all dashboard users. Markdown is supported; the banner appears below the header on
           every page until you unpublish it. Users can dismiss it, and it reappears whenever the content changes.
@@ -86,13 +88,13 @@ function UserBannerSettingsForm({ persisted, isLoading, isPending, saveBanner }:
               <Switch
                 checked={draft.enabled}
                 onCheckedChange={(checked: boolean) => setDraft({ ...draft, enabled: checked })}
-                aria-label="Publish user banner"
+                aria-label={t("Publish user banner")}
               />
-              <Label>Publish user banner</Label>
+              <Label>{t("Publish user banner")}</Label>
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label htmlFor="user-banner-message">Message</Label>
+              <Label htmlFor="user-banner-message">{t("Message")}</Label>
               <Textarea
                 id="user-banner-message"
                 value={draft.message}
@@ -103,19 +105,19 @@ function UserBannerSettingsForm({ persisted, isLoading, isPending, saveBanner }:
                   setDraft({ ...draft, message: event.target.value })
                 }
               />
-              {messageMissing && <p className="text-sm text-destructive">Add a message before publishing.</p>}
+              {messageMissing && <p className="text-sm text-destructive">{t("Add a message before publishing.")}</p>}
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label>Severity</Label>
+              <Label>{t("Severity")}</Label>
               <Select
                 value={draft.severity}
                 onValueChange={(value: string | null) =>
                   setDraft({ ...draft, severity: (value ?? "info") as UserBannerSeverity })
                 }
               >
-                <SelectTrigger className="w-48" aria-label="Banner severity">
-                  <SelectValue placeholder="Severity" />
+                <SelectTrigger className="w-48" aria-label={t("Banner severity")}>
+                  <SelectValue placeholder={t("Severity")} />
                 </SelectTrigger>
                 <SelectContent>
                   {(Object.keys(SEVERITY_LABELS) as UserBannerSeverity[]).map((severity) => (
@@ -129,7 +131,7 @@ function UserBannerSettingsForm({ persisted, isLoading, isPending, saveBanner }:
 
             {draft.message.trim() !== "" && (
               <div className="flex flex-col gap-2">
-                <Label>Preview</Label>
+                <Label>{t("Preview")}</Label>
                 <Alert variant={draft.severity}>
                   {SEVERITY_ICONS[draft.severity]}
                   <AlertDescription>

@@ -4,6 +4,7 @@ import { TextInput } from "@tremor/react";
 import { Tooltip } from "../atoms/index";
 import { Providers } from "../provider_info_helpers";
 
+import { t } from "@/i18n";
 const ConditionalPublicModelName: React.FC = () => {
   const form = Form.useFormInstance();
   const [tableKey, setTableKey] = useState(0); // Add a key to force table re-render
@@ -95,31 +96,27 @@ const ConditionalPublicModelName: React.FC = () => {
 
   const publicNameTooltipContent = (
     <>
-      <div className="mb-2 font-normal">The name you specify in your API calls to LiteLLM Proxy</div>
+      <div className="mb-2 font-normal">{t("The name you specify in your API calls to LiteLLM Proxy")}</div>
       <div className="mb-2 font-normal">
-        <strong>Example:</strong> If you name your public model{" "}
+        <strong>{t("Example:")}</strong>{t("If you name your public model")}{" "}
         <code className="bg-gray-700 px-1 py-0.5 rounded-sm text-xs">example-name</code>, and choose{" "}
-        <code className="bg-gray-700 px-1 py-0.5 rounded-sm text-xs">openai/qwen-plus-latest</code> as the LiteLLM model
-      </div>
+        <code className="bg-gray-700 px-1 py-0.5 rounded-sm text-xs">openai/qwen-plus-latest</code>{t("as the LiteLLM model")}</div>
       <div className="mb-2 font-normal">
-        <strong>Usage:</strong> You make an API call to the LiteLLM proxy with{" "}
+        <strong>{t("Usage:")}</strong>{t("You make an API call to the LiteLLM proxy with")}{" "}
         <code className="bg-gray-700 px-1 py-0.5 rounded-sm text-xs">model = &quot;example-name&quot;</code>
       </div>
       <div className="font-normal">
-        <strong>Result:</strong> LiteLLM sends{" "}
-        <code className="bg-gray-700 px-1 py-0.5 rounded-sm text-xs">qwen-plus-latest</code> to the provider
-      </div>
+        <strong>{t("Result:")}</strong>{t("LiteLLM sends")}{" "}
+        <code className="bg-gray-700 px-1 py-0.5 rounded-sm text-xs">qwen-plus-latest</code>{t("to the provider")}</div>
     </>
   );
 
-  const liteLLMModelTooltipContent = <div>The model name LiteLLM will send to the LLM API</div>;
+  const liteLLMModelTooltipContent = <div>{t("The model name LiteLLM will send to the LLM API")}</div>;
 
   const columns = [
     {
       title: (
-        <span className="flex items-center">
-          Public Model Name
-          <Tooltip content={publicNameTooltipContent} width="500px" />
+        <span className="flex items-center">{t("Public Model Name")}<Tooltip content={publicNameTooltipContent} width="500px" />
         </span>
       ),
       dataIndex: "public_name",
@@ -162,9 +159,7 @@ const ConditionalPublicModelName: React.FC = () => {
     },
     {
       title: (
-        <span className="flex items-center">
-          LiteLLM Model Name
-          <Tooltip content={liteLLMModelTooltipContent} width="360px" />
+        <span className="flex items-center">{t("LiteLLM Model Name")}<Tooltip content={liteLLMModelTooltipContent} width="360px" />
         </span>
       ),
       dataIndex: "litellm_model",
@@ -175,9 +170,9 @@ const ConditionalPublicModelName: React.FC = () => {
   return (
     <>
       <Form.Item
-        label="Model Mappings"
+        label={t("Model Mappings")}
         name="model_mappings"
-        tooltip="Map public model names to LiteLLM model names for load balancing"
+        tooltip={t("Map public model names to LiteLLM model names for load balancing")}
         labelCol={{ span: 10 }}
         wrapperCol={{ span: 16 }}
         labelAlign="left"

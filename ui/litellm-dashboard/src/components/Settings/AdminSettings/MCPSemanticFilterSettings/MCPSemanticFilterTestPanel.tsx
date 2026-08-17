@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import ModelSelector from "@/components/common_components/ModelSelector";
 import { TestResult } from "./semanticFilterTestUtils";
 
+import { t } from "@/i18n";
 interface MCPSemanticFilterTestPanelProps {
   accessToken: string | null;
   testQuery: string;
@@ -40,17 +41,13 @@ export default function MCPSemanticFilterTestPanel({
   return (
     <Card className="mb-4">
       <CardHeader>
-        <CardTitle>Test Configuration</CardTitle>
+        <CardTitle>{t("Test Configuration")}</CardTitle>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="test">
           <TabsList>
-            <TabsTrigger value="test" className="flex-none">
-              Test
-            </TabsTrigger>
-            <TabsTrigger value="api" className="flex-none">
-              API Usage
-            </TabsTrigger>
+            <TabsTrigger value="test" className="flex-none">{t("Test")}</TabsTrigger>
+            <TabsTrigger value="api" className="flex-none">{t("API Usage")}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="test">
@@ -88,22 +85,22 @@ export default function MCPSemanticFilterTestPanel({
               {!filterEnabled && (
                 <Alert>
                   <Info />
-                  <AlertTitle>Semantic filtering is disabled</AlertTitle>
-                  <AlertDescription>Enable semantic filtering and save settings to test the filter.</AlertDescription>
+                  <AlertTitle>{t("Semantic filtering is disabled")}</AlertTitle>
+                  <AlertDescription>{t("Enable semantic filtering and save settings to test the filter.")}</AlertDescription>
                 </Alert>
               )}
 
               {testError && (
                 <Alert variant="destructive" className="mb-4">
                   <CircleAlert />
-                  <AlertTitle>Semantic filtering did not run</AlertTitle>
+                  <AlertTitle>{t("Semantic filtering did not run")}</AlertTitle>
                   <AlertDescription>{testError}</AlertDescription>
                 </Alert>
               )}
 
               {testResult && (
                 <div>
-                  <h5 className="mb-2 text-base font-medium">Results</h5>
+                  <h5 className="mb-2 text-base font-medium">{t("Results")}</h5>
                   <Alert className="mb-4">
                     <Info />
                     <AlertTitle>
@@ -114,7 +111,7 @@ export default function MCPSemanticFilterTestPanel({
                     </AlertDescription>
                   </Alert>
                   <div>
-                    <p className="mb-2 block font-medium">Selected Tools:</p>
+                    <p className="mb-2 block font-medium">{t("Selected Tools:")}</p>
                     <ul className="m-0 list-disc pl-5">
                       {testResult.tools.map((tool, index) => (
                         <li key={index} className="mb-1">
@@ -137,22 +134,18 @@ export default function MCPSemanticFilterTestPanel({
             <div>
               <div className="mb-2 flex items-center gap-2">
                 <Code className="size-4" />
-                <p className="font-medium">API Usage</p>
+                <p className="font-medium">{t("API Usage")}</p>
               </div>
-              <p className="mb-2 block text-sm text-muted-foreground">
-                Use this curl command to test the semantic filter with your current configuration.
-              </p>
-              <p className="mb-2 block font-medium">Response headers to check:</p>
+              <p className="mb-2 block text-sm text-muted-foreground">{t("Use this curl command to test the semantic filter with your current configuration.")}</p>
+              <p className="mb-2 block font-medium">{t("Response headers to check:")}</p>
               <ul className="mt-0 mr-0 mb-3 ml-0 list-disc pl-5">
                 <li>
-                  <span>x-litellm-semantic-filter: shows total tools → selected tools</span>
-                  <span className="block text-sm text-muted-foreground">Example: 10→3</span>
+                  <span>{t("x-litellm-semantic-filter: shows total tools → selected tools")}</span>
+                  <span className="block text-sm text-muted-foreground">{t("Example: 10→3")}</span>
                 </li>
                 <li>
-                  <span>x-litellm-semantic-filter-tools: CSV of selected tool names</span>
-                  <span className="block text-sm text-muted-foreground">
-                    Example: wikipedia-fetch,github-search,slack-post
-                  </span>
+                  <span>{t("x-litellm-semantic-filter-tools: CSV of selected tool names")}</span>
+                  <span className="block text-sm text-muted-foreground">{t("Example: wikipedia-fetch,github-search,slack-post")}</span>
                 </li>
               </ul>
               <pre className="m-0 overflow-auto rounded-sm bg-muted p-3 text-xs">{curlCommand}</pre>

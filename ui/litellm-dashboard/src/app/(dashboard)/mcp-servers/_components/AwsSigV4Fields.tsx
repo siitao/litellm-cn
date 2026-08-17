@@ -2,10 +2,10 @@ import React from "react";
 import { Form, Input, Tooltip } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 
+import { t } from "@/i18n";
 const AwsSigV4Fields: React.FC = () => (
   <>
-    <p className="text-sm text-gray-500 mb-2">
-      For MCP servers hosted on AWS Bedrock AgentCore.{" "}
+    <p className="text-sm text-gray-500 mb-2">{t("For MCP servers hosted on AWS Bedrock AgentCore.")}{" "}
       <a
         href="https://docs.litellm.ai/docs/mcp_aws_sigv4"
         target="_blank"
@@ -17,9 +17,7 @@ const AwsSigV4Fields: React.FC = () => (
     </p>
     <Form.Item
       label={
-        <span className="text-sm font-medium text-gray-700 flex items-center">
-          AWS Region
-          <Tooltip title="AWS region for SigV4 signing (e.g., us-east-1)">
+        <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Region")}<Tooltip title={t("AWS region for SigV4 signing (e.g., us-east-1)")}>
             <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
           </Tooltip>
         </span>
@@ -31,9 +29,7 @@ const AwsSigV4Fields: React.FC = () => (
     </Form.Item>
     <Form.Item
       label={
-        <span className="text-sm font-medium text-gray-700 flex items-center">
-          AWS Service Name
-          <Tooltip title="AWS service name for SigV4 signing. Defaults to 'bedrock-agentcore'.">
+        <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Service Name")}<Tooltip title={t("AWS service name for SigV4 signing. Defaults to 'bedrock-agentcore'.")}>
             <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
           </Tooltip>
         </span>
@@ -47,9 +43,7 @@ const AwsSigV4Fields: React.FC = () => (
     </Form.Item>
     <Form.Item
       label={
-        <span className="text-sm font-medium text-gray-700 flex items-center">
-          AWS Access Key ID
-          <Tooltip title="Optional. If not provided, falls back to the boto3 credential chain (IAM role, env vars, etc.).">
+        <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Access Key ID")}<Tooltip title="Optional. If not provided, falls back to the boto3 credential chain (IAM role, env vars, etc.).">
             <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
           </Tooltip>
         </span>
@@ -75,9 +69,7 @@ const AwsSigV4Fields: React.FC = () => (
     </Form.Item>
     <Form.Item
       label={
-        <span className="text-sm font-medium text-gray-700 flex items-center">
-          AWS Secret Access Key
-          <Tooltip title="Optional. Required if AWS Access Key ID is provided.">
+        <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Secret Access Key")}<Tooltip title={t("Optional. Required if AWS Access Key ID is provided.")}>
             <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
           </Tooltip>
         </span>
@@ -97,15 +89,13 @@ const AwsSigV4Fields: React.FC = () => (
       ]}
     >
       <Input.Password
-        placeholder="Enter secret key (optional — uses IAM role if blank)"
+        placeholder={t("Enter secret key (optional — uses IAM role if blank)")}
         className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
       />
     </Form.Item>
     <Form.Item
       label={
-        <span className="text-sm font-medium text-gray-700 flex items-center">
-          AWS Session Token
-          <Tooltip title="Optional. Only needed for temporary STS credentials.">
+        <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Session Token")}<Tooltip title={t("Optional. Only needed for temporary STS credentials.")}>
             <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
           </Tooltip>
         </span>
@@ -113,15 +103,13 @@ const AwsSigV4Fields: React.FC = () => (
       name={["credentials", "aws_session_token"]}
     >
       <Input.Password
-        placeholder="Enter session token (optional)"
+        placeholder={t("Enter session token (optional)")}
         className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
       />
     </Form.Item>
     <Form.Item
       label={
-        <span className="text-sm font-medium text-gray-700 flex items-center">
-          AWS Role ARN
-          <Tooltip title="Optional. IAM role ARN to assume via STS before signing. If set, LiteLLM calls sts:AssumeRole to get temporary credentials. Uses ambient credentials (IAM role, env vars) as the source identity unless explicit keys are also provided.">
+        <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Role ARN")}<Tooltip title="Optional. IAM role ARN to assume via STS before signing. If set, LiteLLM calls sts:AssumeRole to get temporary credentials. Uses ambient credentials (IAM role, env vars) as the source identity unless explicit keys are also provided.">
             <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
           </Tooltip>
         </span>
@@ -129,15 +117,13 @@ const AwsSigV4Fields: React.FC = () => (
       name={["credentials", "aws_role_name"]}
     >
       <Input
-        placeholder="arn:aws:iam::123456789012:role/MyRole (optional)"
+        placeholder={t("arn:aws:iam::123456789012:role/MyRole (optional)")}
         className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
       />
     </Form.Item>
     <Form.Item
       label={
-        <span className="text-sm font-medium text-gray-700 flex items-center">
-          AWS Session Name
-          <Tooltip title="Optional. Session name for the AssumeRole call — appears in CloudTrail logs. Auto-generated if omitted.">
+        <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Session Name")}<Tooltip title="Optional. Session name for the AssumeRole call — appears in CloudTrail logs. Auto-generated if omitted.">
             <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
           </Tooltip>
         </span>
@@ -145,7 +131,7 @@ const AwsSigV4Fields: React.FC = () => (
       name={["credentials", "aws_session_name"]}
     >
       <Input
-        placeholder="litellm-prod (optional, auto-generated if blank)"
+        placeholder={t("litellm-prod (optional, auto-generated if blank)")}
         className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
       />
     </Form.Item>

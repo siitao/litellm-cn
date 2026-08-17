@@ -10,6 +10,7 @@ import { getProxyBaseUrl, keyInfoCall, modelAvailableCall, Organization, userGet
 import CreateKey, { CreateKeyPrefillData } from "./organisms/create_key_button";
 import { VirtualKeysTable } from "./VirtualKeysPage/VirtualKeysTable";
 
+import { t } from "@/i18n";
 export interface ProxySettings {
   PROXY_BASE_URL: string | null;
   PROXY_LOGOUT_URL: string | null;
@@ -122,7 +123,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
 
             sessionStorage.setItem("userModels" + userID, JSON.stringify(available_model_names));
           } catch (error: any) {
-            console.error("There was an error fetching the data", error);
+            console.error(t("There was an error fetching the data"), error);
             if (error.message.includes("Invalid proxy server token passed")) {
               gotoLogin();
             }
@@ -189,7 +190,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
         return null;
       }
     } catch (error) {
-      console.error("Error decoding token:", error);
+      console.error(t("Error decoding token:"), error);
       // If there's an error decoding the token, consider it invalid
       clearTokenCookies();
 
@@ -204,7 +205,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
   }
 
   if (userID == null) {
-    return <h1>User ID is not set</h1>;
+    return <h1>{t("User ID is not set")}</h1>;
   }
 
   if (userRole == null) {

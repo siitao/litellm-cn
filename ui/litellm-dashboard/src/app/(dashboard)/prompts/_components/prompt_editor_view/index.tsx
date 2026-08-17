@@ -14,13 +14,14 @@ import PublishModal from "./PublishModal";
 import DotpromptViewTab from "./DotpromptViewTab";
 import VersionHistorySidePanel from "./VersionHistorySidePanel";
 
+import { t } from "@/i18n";
 const PromptEditorView: React.FC<PromptEditorViewProps> = ({ onClose, onSuccess, accessToken, initialPromptData }) => {
   const getInitialPrompt = (): PromptType => {
     if (initialPromptData) {
       try {
         return parseExistingPrompt(initialPromptData);
       } catch (error) {
-        console.error("Error parsing existing prompt:", error);
+        console.error(t("Error parsing existing prompt:"), error);
         NotificationsManager.fromBackend("Failed to parse prompt data");
       }
     }
@@ -171,7 +172,7 @@ const PromptEditorView: React.FC<PromptEditorViewProps> = ({ onClose, onSuccess,
       setActiveVersionId(`${versionData.prompt_id}.v${versionNum}`);
       // NotificationsManager.success(`Loaded version v${versionNum}`);
     } catch (error) {
-      console.error("Error loading version:", error);
+      console.error(t("Error loading version:"), error);
       NotificationsManager.fromBackend("Failed to load prompt version");
     }
   };
@@ -215,15 +216,15 @@ const PromptEditorView: React.FC<PromptEditorViewProps> = ({ onClose, onSuccess,
 
       if (editMode && initialPromptData?.prompt_spec?.prompt_id) {
         await updatePromptCall(accessToken, initialPromptData.prompt_spec.prompt_id, promptData);
-        NotificationsManager.success("Prompt updated successfully!");
+        NotificationsManager.success(t("Prompt updated successfully!"));
       } else {
         await createPromptCall(accessToken, promptData);
-        NotificationsManager.success("Prompt created successfully!");
+        NotificationsManager.success(t("Prompt created successfully!"));
       }
       onSuccess();
       onClose();
     } catch (error) {
-      console.error("Error saving prompt:", error);
+      console.error(t("Error saving prompt:"), error);
       NotificationsManager.fromBackend(editMode ? "Failed to update prompt" : "Failed to save prompt");
     } finally {
       setIsSaving(false);

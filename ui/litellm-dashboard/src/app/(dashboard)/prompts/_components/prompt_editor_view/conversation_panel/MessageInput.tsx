@@ -3,6 +3,7 @@ import { ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
+import { t } from "@/i18n";
 interface MessageInputProps {
   inputMessage: string;
   isLoading: boolean;
@@ -41,16 +42,14 @@ const MessageInput: React.FC<MessageInputProps> = ({
           onClick={onSend}
           disabled={isDisabled}
           className="ml-2 shrink-0 rounded-full"
-          aria-label="Send message"
+          aria-label={t("Send message")}
         >
           <ArrowUp aria-hidden="true" />
         </Button>
       </div>
 
       {isLoading && (
-        <Button type="button" variant="destructive" onClick={onCancel}>
-          Cancel
-        </Button>
+        <Button type="button" variant="destructive" onClick={onCancel}>{t("Cancel")}</Button>
       )}
     </div>
   );

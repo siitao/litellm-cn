@@ -10,6 +10,7 @@ import { CircleHelp } from "lucide-react";
 import type { ComponentProps } from "react";
 import { TeamData } from "./TeamInfo";
 
+import { t } from "@/i18n";
 interface TeamMemberTabProps {
   teamData: TeamData;
   canEditTeam: boolean;
@@ -100,10 +101,8 @@ export default function TeamMemberTab({
   const extraColumns: NonNullable<ComponentProps<typeof MemberTable>["extraColumns"]> = [
     {
       title: (
-        <span className="flex items-center gap-1">
-          Model Scope
-          <Tooltip content="Models this member can access. Empty means they inherit all team models.">
-            <CircleHelp className="size-4" aria-label="Model scope information" />
+        <span className="flex items-center gap-1">{t("Model Scope")}<Tooltip content={t("Models this member can access. Empty means they inherit all team models.")}>
+            <CircleHelp className="size-4" aria-label={t("Model scope information")} />
           </Tooltip>
         </span>
       ),
@@ -133,10 +132,8 @@ export default function TeamMemberTab({
     },
     {
       title: (
-        <span className="flex items-center gap-1">
-          Current Cycle Spend (USD)
-          <Tooltip content="Spend for the current budget cycle. Resets to $0 when the member's budget window rolls over. This is the value checked against the member's budget.">
-            <CircleHelp className="size-4" aria-label="Current cycle spend information" />
+        <span className="flex items-center gap-1">{t("Current Cycle Spend (USD)")}<Tooltip content="Spend for the current budget cycle. Resets to $0 when the member's budget window rolls over. This is the value checked against the member's budget.">
+            <CircleHelp className="size-4" aria-label={t("Current cycle spend information")} />
           </Tooltip>
         </span>
       ),
@@ -147,10 +144,8 @@ export default function TeamMemberTab({
     },
     {
       title: (
-        <span className="flex items-center gap-1">
-          Total Spend (USD)
-          <Tooltip content="Cumulative spend by this member within this team, across all budget cycles. Tracking began 2026-04-21; spend from before that date is not included.">
-            <CircleHelp className="size-4" aria-label="Total spend information" />
+        <span className="flex items-center gap-1">{t("Total Spend (USD)")}<Tooltip content="Cumulative spend by this member within this team, across all budget cycles. Tracking began 2026-04-21; spend from before that date is not included.">
+            <CircleHelp className="size-4" aria-label={t("Total spend information")} />
           </Tooltip>
         </span>
       ),
@@ -158,23 +153,21 @@ export default function TeamMemberTab({
       render: (_: unknown, record: Member) => <MoneyCell value={getUserTotalSpend(record.user_id)} decimals={2} />,
     },
     {
-      title: "Team Member Budget (USD)",
+      title: t("Team Member Budget (USD)"),
       key: "budget",
       render: (_: unknown, record: Member) => (
         <MoneyCell value={getUserBudget(record.user_id)} decimals={2} emptyText="Unlimited" showZero />
       ),
     },
     {
-      title: "Budget Reset",
+      title: t("Budget Reset"),
       key: "budget_reset",
       render: (_: unknown, record: Member) => <DateCell value={getUserBudgetReset(record.user_id)} precision="date" />,
     },
     {
       title: (
-        <span className="flex items-center gap-1">
-          Team Member Rate Limits
-          <Tooltip content="Rate limits for this member's usage within this team.">
-            <CircleHelp className="size-4" aria-label="Team member rate limits information" />
+        <span className="flex items-center gap-1">{t("Team Member Rate Limits")}<Tooltip content={t("Rate limits for this member's usage within this team.")}>
+            <CircleHelp className="size-4" aria-label={t("Team member rate limits information")} />
           </Tooltip>
         </span>
       ),

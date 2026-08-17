@@ -7,6 +7,7 @@ import {
   AccessGroupCreateParams,
 } from "@/app/(dashboard)/hooks/accessGroups/useCreateAccessGroup";
 
+import { t } from "@/i18n";
 interface AccessGroupCreateModalProps {
   visible: boolean;
   onCancel: () => void;
@@ -31,7 +32,7 @@ export function AccessGroupCreateModal({ visible, onCancel, onSuccess }: AccessG
 
         createMutation.mutate(params, {
           onSuccess: () => {
-            MessageManager.success("Access group created successfully");
+            MessageManager.success(t("Access group created successfully"));
             form.resetFields();
             onSuccess?.();
             onCancel();
@@ -43,13 +44,13 @@ export function AccessGroupCreateModal({ visible, onCancel, onSuccess }: AccessG
 
   return (
     <Modal
-      title="Create Access Group"
+      title={t("Create Access Group")}
       open={visible}
       onOk={handleOk}
       onCancel={onCancel}
       width={700}
-      okText="Create Group"
-      cancelText="Cancel"
+      okText={t("Create Group")}
+      cancelText={t("Cancel")}
       confirmLoading={createMutation.isPending}
       destroyOnClose
     >

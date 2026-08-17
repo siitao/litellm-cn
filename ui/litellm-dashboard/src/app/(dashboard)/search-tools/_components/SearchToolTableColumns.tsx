@@ -17,6 +17,8 @@ import { cn } from "@/lib/cva.config";
 
 import { AvailableSearchProvider, SearchTool } from "./types";
 
+import { t } from "@/i18n";
+import { useLanguage } from "@/contexts/LanguageContext";
 const CONFIG_EDIT_HINT = "Config search tools cannot be edited on the dashboard. Please edit the config file.";
 const CONFIG_DELETE_HINT = "Config search tools cannot be deleted on the dashboard. Please edit the config file.";
 
@@ -29,13 +31,14 @@ interface SearchToolRowActionsProps {
 }
 
 function SearchToolRowActions({ tool, onEdit, onDelete }: SearchToolRowActionsProps) {
-  const isFromConfig = tool.is_from_config ?? false;
+
+  const { t } = useLanguage();  const isFromConfig = tool.is_from_config ?? false;
   const toolId = tool.search_tool_id;
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open search tool actions"
+        aria-label={t("Open search tool actions")}
         data-testid={`search-tool-actions-${searchToolKey(tool)}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -83,8 +86,8 @@ export const getSearchToolTableColumns = ({
   {
     id: "search_tool_id",
     accessorKey: "search_tool_id",
-    meta: { title: "Search Tool ID" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Search Tool ID" />,
+    meta: { title: t("Search Tool ID")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Search Tool ID")} />,
     size: 200,
     enableSorting: true,
     cell: ({ row }) => {
@@ -101,8 +104,8 @@ export const getSearchToolTableColumns = ({
   {
     id: "search_tool_name",
     accessorKey: "search_tool_name",
-    meta: { title: "Name" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Name" />,
+    meta: { title: t("Name")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Name")} />,
     size: 200,
     enableSorting: true,
     cell: ({ row }) => (
@@ -113,7 +116,7 @@ export const getSearchToolTableColumns = ({
   },
   {
     id: "provider",
-    meta: { title: "Provider" },
+    meta: { title: t("Provider")},
     header: "Provider",
     size: 160,
     enableSorting: false,
@@ -126,8 +129,8 @@ export const getSearchToolTableColumns = ({
   {
     id: "created_at",
     accessorKey: "created_at",
-    meta: { title: "Created At" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Created At" />,
+    meta: { title: t("Created At")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Created At")} />,
     size: 130,
     enableSorting: true,
     cell: ({ row }) => <DateCell value={row.original.created_at} precision="date" />,
@@ -135,15 +138,15 @@ export const getSearchToolTableColumns = ({
   {
     id: "updated_at",
     accessorKey: "updated_at",
-    meta: { title: "Updated At" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Updated At" />,
+    meta: { title: t("Updated At")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Updated At")} />,
     size: 130,
     enableSorting: true,
     cell: ({ row }) => <DateCell value={row.original.updated_at} precision="date" />,
   },
   {
     id: "source",
-    meta: { title: "Source", skeleton: "badge" },
+    meta: { title: t("Source"), skeleton: "badge" },
     header: "Source",
     size: 100,
     enableSorting: false,
@@ -155,7 +158,7 @@ export const getSearchToolTableColumns = ({
   {
     id: "actions",
     meta: { className: "text-right", headerClassName: "text-right" },
-    header: () => <span className="sr-only">Actions</span>,
+    header: () => <span className="sr-only">{t("Actions")}</span>,
     size: 64,
     enableSorting: false,
     enableHiding: false,

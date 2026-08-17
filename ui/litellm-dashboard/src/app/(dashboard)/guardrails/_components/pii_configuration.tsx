@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { CategoryFilter, PiiEntityList, QuickActions } from "./pii_components";
 import { PiiConfigurationProps } from "@/components/guardrails/types";
 
+import { t } from "@/i18n";
 /**
  * A reusable component for rendering PII entity selection and action configuration
  * Used in both add and edit guardrail forms
@@ -54,7 +55,7 @@ const PiiConfiguration: React.FC<PiiConfigurationProps> = ({
     <div className="pii-configuration">
       <div className="flex justify-between items-center mb-5">
         <div className="flex items-center">
-          <h4 className="m-0 text-lg font-semibold text-foreground">Configure PII Protection</h4>
+          <h4 className="m-0 text-lg font-semibold text-foreground">{t("Configure PII Protection")}</h4>
         </div>
         <span className="text-muted-foreground">{selectedEntities.length} items selected</span>
       </div>

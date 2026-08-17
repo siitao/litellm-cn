@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Card, Text } from "@tremor/react";
 
+import { t } from "@/i18n";
 interface ModelGroupInfo {
   model_group: string;
   providers: string[];
@@ -125,7 +126,7 @@ const ModelFilters: React.FC<ModelFiltersProps> = ({
   const filtersContent = (
     <div className="flex flex-wrap gap-4 items-center">
       <div>
-        <Text className="text-sm font-medium mb-2">Search Models:</Text>
+        <Text className="text-sm font-medium mb-2">{t("Search Models:")}</Text>
         <input
           type="text"
           placeholder="Search model names..."
@@ -135,15 +136,13 @@ const ModelFilters: React.FC<ModelFiltersProps> = ({
         />
       </div>
       <div>
-        <Text className="text-sm font-medium mb-2">Provider:</Text>
+        <Text className="text-sm font-medium mb-2">{t("Provider:")}</Text>
         <select
           value={selectedProvider}
           onChange={(e) => setSelectedProvider(e.target.value)}
           className="border rounded-sm px-3 py-2 text-sm text-gray-600 w-40 h-10"
         >
-          <option value="" className="text-sm text-gray-600">
-            All Providers
-          </option>
+          <option value="" className="text-sm text-gray-600">{t("All Providers")}</option>
           {modelHubData &&
             getUniqueProviders(modelHubData).map((provider) => (
               <option key={provider} value={provider} className="text-sm text-gray-800">
@@ -153,15 +152,13 @@ const ModelFilters: React.FC<ModelFiltersProps> = ({
         </select>
       </div>
       <div>
-        <Text className="text-sm font-medium mb-2">Mode:</Text>
+        <Text className="text-sm font-medium mb-2">{t("Mode:")}</Text>
         <select
           value={selectedMode}
           onChange={(e) => setSelectedMode(e.target.value)}
           className="border rounded-sm px-3 py-2 text-sm text-gray-600 w-32 h-10"
         >
-          <option value="" className="text-sm text-gray-600">
-            All Modes
-          </option>
+          <option value="" className="text-sm text-gray-600">{t("All Modes")}</option>
           {modelHubData &&
             getUniqueModes(modelHubData).map((mode) => (
               <option key={mode} value={mode} className="text-sm text-gray-800">
@@ -171,15 +168,13 @@ const ModelFilters: React.FC<ModelFiltersProps> = ({
         </select>
       </div>
       <div>
-        <Text className="text-sm font-medium mb-2">Features:</Text>
+        <Text className="text-sm font-medium mb-2">{t("Features:")}</Text>
         <select
           value={selectedFeature}
           onChange={(e) => setSelectedFeature(e.target.value)}
           className="border rounded-sm px-3 py-2 text-sm text-gray-600 w-48 h-10"
         >
-          <option value="" className="text-sm text-gray-600">
-            All Features
-          </option>
+          <option value="" className="text-sm text-gray-600">{t("All Features")}</option>
           {modelHubData &&
             getUniqueFeatures(modelHubData).map((feature) => (
               <option key={feature} value={feature} className="text-sm text-gray-800">
@@ -195,9 +190,7 @@ const ModelFilters: React.FC<ModelFiltersProps> = ({
           <button
             onClick={resetFilters}
             className="text-blue-600 hover:text-blue-800 text-sm underline h-10 flex items-center"
-          >
-            Clear Filters
-          </button>
+          >{t("Clear Filters")}</button>
         </div>
       )}
     </div>

@@ -6,6 +6,7 @@ import NotificationsManager from "@/components/molecules/notifications_manager";
 import AvailableTeamsTable from "./AvailableTeamsTable";
 import { AvailableTeam } from "./AvailableTeamsTableColumns";
 
+import { t } from "@/i18n";
 interface AvailableTeamsProps {
   accessToken: string | null;
   userID: string | null;
@@ -30,7 +31,7 @@ const AvailableTeamsPanel: React.FC<AvailableTeamsProps> = ({ accessToken, userI
           setAvailableTeams(response);
         }
       } catch (error) {
-        console.error("Error fetching available teams:", error);
+        console.error(t("Error fetching available teams:"), error);
       } finally {
         if (!ignore) {
           setIsLoading(false);
@@ -54,10 +55,10 @@ const AvailableTeamsPanel: React.FC<AvailableTeamsProps> = ({ accessToken, userI
         role: "user",
       });
 
-      NotificationsManager.success("Successfully joined team");
+      NotificationsManager.success(t("Successfully joined team"));
       setAvailableTeams((teams) => teams.filter((team) => team.team_id !== teamId));
     } catch (error) {
-      console.error("Error joining team:", error);
+      console.error(t("Error joining team:"), error);
       NotificationsManager.fromBackend("Failed to join team");
     }
   };

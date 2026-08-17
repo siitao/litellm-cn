@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import { t } from "@/i18n";
 interface PromptCodeSnippetsProps {
   promptId: string;
   model: string;
@@ -244,13 +245,11 @@ main();`;
       <Dialog open={isModalVisible} onOpenChange={(open) => !open && handleCancel()}>
         <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-3xl">
           <DialogHeader>
-            <DialogTitle>Generated Code</DialogTitle>
+            <DialogTitle>{t("Generated Code")}</DialogTitle>
           </DialogHeader>
           <div className="flex justify-between items-center mb-4">
             <div>
-              <label htmlFor="prompt-code-language" className="font-medium block mb-1 text-foreground">
-                Language
-              </label>
+              <label htmlFor="prompt-code-language" className="font-medium block mb-1 text-foreground">{t("Language")}</label>
               <Select
                 value={selectedLanguage}
                 onValueChange={(value) => setSelectedLanguage(value as "curl" | "python" | "javascript")}
@@ -260,8 +259,8 @@ main();`;
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="curl">cURL</SelectItem>
-                  <SelectItem value="python">Python (OpenAI SDK)</SelectItem>
-                  <SelectItem value="javascript">JavaScript (OpenAI SDK)</SelectItem>
+                  <SelectItem value="python">{t("Python (OpenAI SDK)")}</SelectItem>
+                  <SelectItem value="javascript">{t("JavaScript (OpenAI SDK)")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -269,7 +268,7 @@ main();`;
               variant="outline"
               onClick={() => {
                 navigator.clipboard.writeText(generatedCode);
-                NotificationsManager.success("Copied to clipboard!");
+                NotificationsManager.success(t("Copied to clipboard!"));
               }}
             >
               <CopyIcon />
@@ -279,9 +278,9 @@ main();`;
 
           <Tabs value={selectedTab} onValueChange={(value) => setSelectedTab(String(value))}>
             <TabsList aria-label="Generated code type">
-              <TabsTrigger value="basic">Basic</TabsTrigger>
-              <TabsTrigger value="messages">With Messages</TabsTrigger>
-              <TabsTrigger value="version">With Version</TabsTrigger>
+              <TabsTrigger value="basic">{t("Basic")}</TabsTrigger>
+              <TabsTrigger value="messages">{t("With Messages")}</TabsTrigger>
+              <TabsTrigger value="version">{t("With Version")}</TabsTrigger>
             </TabsList>
           </Tabs>
 

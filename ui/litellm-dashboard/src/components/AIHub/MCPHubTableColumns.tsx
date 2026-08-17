@@ -16,6 +16,8 @@ import {
 import { cn } from "@/lib/cva.config";
 import { copyToClipboard } from "@/utils/dataUtils";
 
+import { t } from "@/i18n";
+import { useLanguage } from "@/contexts/LanguageContext";
 export interface MCPServerData {
   server_id: string;
   server_name: string;
@@ -58,10 +60,11 @@ interface MCPHubRowActionsProps {
 }
 
 function MCPHubRowActions({ server, onServerClick }: MCPHubRowActionsProps) {
-  return (
+
+  const { t } = useLanguage();  return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open MCP server actions"
+        aria-label={t("Open MCP server actions")}
         data-testid={`mcp-hub-actions-${server.server_id}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -92,8 +95,8 @@ export const getMCPHubTableColumns = ({ onServerClick }: MCPHubTableColumnsDeps)
   {
     id: "server_name",
     accessorKey: "server_name",
-    meta: { title: "Server Name" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Server Name" />,
+    meta: { title: t("Server Name")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Server Name")} />,
     size: 200,
     enableSorting: true,
     sortingFn: "alphanumeric",
@@ -104,8 +107,8 @@ export const getMCPHubTableColumns = ({ onServerClick }: MCPHubTableColumnsDeps)
   {
     id: "description",
     accessorKey: "description",
-    meta: { title: "Description", className: "hidden md:table-cell" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Description" />,
+    meta: { title: t("Description"), className: "hidden md:table-cell" },
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Description")} />,
     size: 240,
     enableSorting: true,
     sortingFn: "alphanumeric",
@@ -118,8 +121,8 @@ export const getMCPHubTableColumns = ({ onServerClick }: MCPHubTableColumnsDeps)
   {
     id: "transport",
     accessorKey: "transport",
-    meta: { title: "Transport", skeleton: "badge", className: "hidden md:table-cell" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Transport" />,
+    meta: { title: t("Transport"), skeleton: "badge", className: "hidden md:table-cell" },
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Transport")} />,
     size: 110,
     enableSorting: true,
     sortingFn: "alphanumeric",
@@ -132,8 +135,8 @@ export const getMCPHubTableColumns = ({ onServerClick }: MCPHubTableColumnsDeps)
   {
     id: "auth_type",
     accessorKey: "auth_type",
-    meta: { title: "Auth Type", skeleton: "badge", className: "hidden md:table-cell" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Auth Type" />,
+    meta: { title: t("Auth Type"), skeleton: "badge", className: "hidden md:table-cell" },
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Auth Type")} />,
     size: 110,
     enableSorting: true,
     sortingFn: "alphanumeric",
@@ -144,8 +147,8 @@ export const getMCPHubTableColumns = ({ onServerClick }: MCPHubTableColumnsDeps)
   {
     id: "status",
     accessorKey: "status",
-    meta: { title: "Status", skeleton: "badge" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Status" />,
+    meta: { title: t("Status"), skeleton: "badge" },
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Status")} />,
     size: 110,
     enableSorting: true,
     sortingFn: "alphanumeric",
@@ -155,7 +158,7 @@ export const getMCPHubTableColumns = ({ onServerClick }: MCPHubTableColumnsDeps)
   },
   {
     id: "allowed_tools",
-    meta: { title: "Tools", skeleton: "chips", className: "hidden lg:table-cell" },
+    meta: { title: t("Tools"), skeleton: "chips", className: "hidden lg:table-cell" },
     header: "Tools",
     size: 180,
     enableSorting: false,
@@ -183,8 +186,8 @@ export const getMCPHubTableColumns = ({ onServerClick }: MCPHubTableColumnsDeps)
   {
     id: "created_by",
     accessorKey: "created_by",
-    meta: { title: "Created By", className: "hidden xl:table-cell" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Created By" />,
+    meta: { title: t("Created By"), className: "hidden xl:table-cell" },
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Created By")} />,
     size: 140,
     enableSorting: true,
     sortingFn: "alphanumeric",
@@ -197,8 +200,8 @@ export const getMCPHubTableColumns = ({ onServerClick }: MCPHubTableColumnsDeps)
   {
     id: "is_public",
     accessorFn: (row) => row.mcp_info?.is_public === true,
-    meta: { title: "Public", skeleton: "badge", className: "hidden md:table-cell" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Public" />,
+    meta: { title: t("Public"), skeleton: "badge", className: "hidden md:table-cell" },
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Public")} />,
     size: 100,
     enableSorting: true,
     sortingFn: (rowA, rowB) => {
@@ -214,7 +217,7 @@ export const getMCPHubTableColumns = ({ onServerClick }: MCPHubTableColumnsDeps)
   {
     id: "actions",
     meta: { className: "text-right", headerClassName: "text-right" },
-    header: () => <span className="sr-only">Actions</span>,
+    header: () => <span className="sr-only">{t("Actions")}</span>,
     size: 64,
     enableSorting: false,
     enableHiding: false,

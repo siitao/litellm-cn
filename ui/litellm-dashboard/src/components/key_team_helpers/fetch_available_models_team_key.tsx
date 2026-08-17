@@ -1,5 +1,6 @@
 import { modelAvailableCall } from "../networking";
 
+import { t } from "@/i18n";
 export const fetchAvailableModelsForTeamOrKey = async (
   userID: string,
   userRole: string,
@@ -31,7 +32,7 @@ export const fetchAvailableModelsForTeamOrKey = async (
       return [...providerModels, ...specificModels];
     }
   } catch (error) {
-    console.error("Error fetching user models:", error);
+    console.error(t("Error fetching user models:"), error);
   }
 };
 

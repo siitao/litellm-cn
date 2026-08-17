@@ -32,6 +32,7 @@ import { getEndpointType } from "@/components/chat_ui/mode_endpoint_mapping";
 import { MessageType } from "@/components/chat_ui/types";
 import { getProviderLogoAndName } from "./provider_info_helpers";
 
+import { t } from "@/i18n";
 const { TabPane } = Tabs;
 
 interface PublicModelHubProps {
@@ -87,7 +88,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
       try {
         await getUiConfig();
       } catch (error) {
-        console.error("Failed to get UI config:", error);
+        console.error(t("Failed to get UI config:"), error);
         // Continue anyway - might work with default proxyBaseUrl
       }
 
@@ -97,7 +98,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
           const _modelHubData = await modelHubPublicModelsCall();
           setModelHubData(Array.isArray(_modelHubData) ? _modelHubData : []);
         } catch (error) {
-          console.error("There was an error fetching the public model data", error);
+          console.error(t("There was an error fetching the public model data"), error);
           setServiceStatus("Service unavailable");
         } finally {
           setLoading(false);
@@ -110,7 +111,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
           const _agentHubData = await agentHubPublicModelsCall();
           setAgentHubData(Array.isArray(_agentHubData) ? _agentHubData : []);
         } catch (error) {
-          console.error("There was an error fetching the public agent data", error);
+          console.error(t("There was an error fetching the public agent data"), error);
         } finally {
           setAgentLoading(false);
         }
@@ -122,7 +123,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
           const _mcpHubData = await mcpHubPublicServersCall();
           setMcpHubData(Array.isArray(_mcpHubData) ? _mcpHubData : []);
         } catch (error) {
-          console.error("There was an error fetching the public MCP server data", error);
+          console.error(t("There was an error fetching the public MCP server data"), error);
         } finally {
           setMcpLoading(false);
         }
@@ -142,7 +143,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
           const response = await skillHubPublicCall();
           setSkillHubData(response.plugins ?? []);
         } catch (error) {
-          console.error("There was an error fetching the public skill data", error);
+          console.error(t("There was an error fetching the public skill data"), error);
         } finally {
           setSkillLoading(false);
         }
@@ -439,7 +440,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
-    NotificationsManager.success("Copied to clipboard!");
+    NotificationsManager.success(t("Copied to clipboard!"));
   };
 
   const formatCapabilityName = (key: string) => {
@@ -487,14 +488,13 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
           {/* About Section - only shown when not embedded */}
           {!isEmbedded && (
             <Card className="mb-10 p-8 bg-white border border-gray-200 rounded-lg shadow-xs">
-              <Title className="text-2xl font-semibold mb-6 text-gray-900">About</Title>
+              <Title className="text-2xl font-semibold mb-6 text-gray-900">{t("About")}</Title>
               <p className="text-gray-700 mb-6 text-base leading-relaxed">
                 {customDocsDescription ? customDocsDescription : "Proxy Server to call 100+ LLMs in the OpenAI format."}
               </p>
               <div className="flex items-center space-x-3 text-sm text-gray-600">
                 <span className="flex items-center">
-                  <span className="w-4 h-4 mr-2">🔧</span>
-                  Built with litellm: v{litellmVersion}
+                  <span className="w-4 h-4 mr-2">🔧</span>{t("Built with litellm: v")}{litellmVersion}
                 </span>
               </div>
             </Card>
@@ -503,7 +503,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
           {/* Useful Links - only shown when not embedded */}
           {usefulLinks && Object.keys(usefulLinks).length > 0 && (
             <Card className="mb-10 p-8 bg-white border border-gray-200 rounded-lg shadow-xs">
-              <Title className="text-2xl font-semibold mb-6 text-gray-900">Useful Links</Title>
+              <Title className="text-2xl font-semibold mb-6 text-gray-900">{t("Useful Links")}</Title>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {Object.entries(usefulLinks || {})
                   .map(([title, value]) => {
@@ -530,9 +530,9 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
           {/* Health and Endpoint Status - only shown when not embedded */}
           {!isEmbedded && (
             <Card className="mb-10 p-8 bg-white border border-gray-200 rounded-lg shadow-xs">
-              <Title className="text-2xl font-semibold mb-6 text-gray-900">Health and Endpoint Status</Title>
+              <Title className="text-2xl font-semibold mb-6 text-gray-900">{t("Health and Endpoint Status")}</Title>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Text className="text-green-600 font-medium text-sm">Service status: {serviceStatus}</Text>
+                <Text className="text-green-600 font-medium text-sm">{t("Service status:")} {serviceStatus}</Text>
               </div>
             </Card>
           )}
@@ -543,14 +543,14 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
               {/* Models Tab */}
               <TabPane tab="Model Hub" key="models">
                 <div className="flex justify-between items-center mb-8">
-                  <Title className="text-2xl font-semibold text-gray-900">Available Models</Title>
+                  <Title className="text-2xl font-semibold text-gray-900">{t("Available Models")}</Title>
                 </div>
 
                 {/* Filters */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
                   <div>
                     <div className="flex items-center space-x-2 mb-3">
-                      <Text className="text-sm font-medium text-gray-700">Search Models:</Text>
+                      <Text className="text-sm font-medium text-gray-700">{t("Search Models:")}</Text>
                       <Tooltip
                         title="Smart search with relevance ranking - finds models containing your search terms, ranked by relevance. Try searching 'xai grok-4', 'claude-4', 'gpt-4', or 'sonnet'"
                         placement="top"
@@ -570,12 +570,12 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
                     </div>
                   </div>
                   <div>
-                    <Text className="text-sm font-medium mb-3 text-gray-700">Provider:</Text>
+                    <Text className="text-sm font-medium mb-3 text-gray-700">{t("Provider:")}</Text>
                     <Select
                       mode="multiple"
                       value={selectedProviders}
                       onChange={(values) => setSelectedProviders(values)}
-                      placeholder="Select providers"
+                      placeholder={t("Select providers")}
                       className="w-full"
                       size="large"
                       allowClear
@@ -608,12 +608,12 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
                     </Select>
                   </div>
                   <div>
-                    <Text className="text-sm font-medium mb-3 text-gray-700">Mode:</Text>
+                    <Text className="text-sm font-medium mb-3 text-gray-700">{t("Mode:")}</Text>
                     <Select
                       mode="multiple"
                       value={selectedModes}
                       onChange={(values) => setSelectedModes(values)}
-                      placeholder="Select modes"
+                      placeholder={t("Select modes")}
                       className="w-full"
                       size="large"
                       allowClear
@@ -628,12 +628,12 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
                     </Select>
                   </div>
                   <div>
-                    <Text className="text-sm font-medium mb-3 text-gray-700">Features:</Text>
+                    <Text className="text-sm font-medium mb-3 text-gray-700">{t("Features:")}</Text>
                     <Select
                       mode="multiple"
                       value={selectedFeatures}
                       onChange={(values) => setSelectedFeatures(values)}
-                      placeholder="Select features"
+                      placeholder={t("Select features")}
                       className="w-full"
                       size="large"
                       allowClear
@@ -672,8 +672,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
                 />
 
                 <div className="mt-8 text-center">
-                  <Text className="text-sm text-gray-600">
-                    Showing {filteredData.length} of {modelHubData?.length || 0} models
+                  <Text className="text-sm text-gray-600">{t("Showing")} {filteredData.length} of {modelHubData?.length || 0} models
                   </Text>
                 </div>
               </TabPane>
@@ -682,14 +681,14 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
               {agentHubData && Array.isArray(agentHubData) && agentHubData.length > 0 && (
                 <TabPane tab="Agent Hub" key="agents">
                   <div className="flex justify-between items-center mb-8">
-                    <Title className="text-2xl font-semibold text-gray-900">Available Agents</Title>
+                    <Title className="text-2xl font-semibold text-gray-900">{t("Available Agents")}</Title>
                   </div>
 
                   {/* Filters */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
                     <div>
                       <div className="flex items-center space-x-2 mb-3">
-                        <Text className="text-sm font-medium text-gray-700">Search Agents:</Text>
+                        <Text className="text-sm font-medium text-gray-700">{t("Search Agents:")}</Text>
                         <Tooltip title="Search agents by name or description" placement="top">
                           <Info className="w-4 h-4 text-gray-400 cursor-help" />
                         </Tooltip>
@@ -706,12 +705,12 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
                       </div>
                     </div>
                     <div>
-                      <Text className="text-sm font-medium mb-3 text-gray-700">Skills:</Text>
+                      <Text className="text-sm font-medium mb-3 text-gray-700">{t("Skills:")}</Text>
                       <Select
                         mode="multiple"
                         value={selectedAgentSkills}
                         onChange={(values) => setSelectedAgentSkills(values)}
-                        placeholder="Select skills"
+                        placeholder={t("Select skills")}
                         className="w-full"
                         size="large"
                         allowClear
@@ -738,7 +737,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
                     loadingMessage="Loading agents…"
                     noDataMessage={
                       <PublicHubEmptyState
-                        title="No matching agents"
+                        title={t("No matching agents")}
                         body="Adjust the search or skill filter to see more agents."
                       />
                     }
@@ -746,8 +745,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
                   />
 
                   <div className="mt-8 text-center">
-                    <Text className="text-sm text-gray-600">
-                      Showing {filteredAgentData.length} of {agentHubData?.length || 0} agents
+                    <Text className="text-sm text-gray-600">{t("Showing")} {filteredAgentData.length} of {agentHubData?.length || 0} agents
                     </Text>
                   </div>
                 </TabPane>
@@ -757,14 +755,14 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
               {mcpHubData && Array.isArray(mcpHubData) && mcpHubData.length > 0 && (
                 <TabPane tab="MCP Hub" key="mcp">
                   <div className="flex justify-between items-center mb-8">
-                    <Title className="text-2xl font-semibold text-gray-900">Available MCP Servers</Title>
+                    <Title className="text-2xl font-semibold text-gray-900">{t("Available MCP Servers")}</Title>
                   </div>
 
                   {/* Filters */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
                     <div>
                       <div className="flex items-center space-x-2 mb-3">
-                        <Text className="text-sm font-medium text-gray-700">Search MCP Servers:</Text>
+                        <Text className="text-sm font-medium text-gray-700">{t("Search MCP Servers:")}</Text>
                         <Tooltip title="Search MCP servers by name or description" placement="top">
                           <Info className="w-4 h-4 text-gray-400 cursor-help" />
                         </Tooltip>
@@ -781,12 +779,12 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
                       </div>
                     </div>
                     <div>
-                      <Text className="text-sm font-medium mb-3 text-gray-700">Transport:</Text>
+                      <Text className="text-sm font-medium mb-3 text-gray-700">{t("Transport:")}</Text>
                       <Select
                         mode="multiple"
                         value={selectedMcpTransports}
                         onChange={(values) => setSelectedMcpTransports(values)}
-                        placeholder="Select transport types"
+                        placeholder={t("Select transport types")}
                         className="w-full"
                         size="large"
                         allowClear
@@ -813,7 +811,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
                     loadingMessage="Loading MCP servers…"
                     noDataMessage={
                       <PublicHubEmptyState
-                        title="No matching MCP servers"
+                        title={t("No matching MCP servers")}
                         body="Adjust the search or transport filter to see more servers."
                       />
                     }
@@ -821,8 +819,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
                   />
 
                   <div className="mt-8 text-center">
-                    <Text className="text-sm text-gray-600">
-                      Showing {filteredMcpData.length} of {mcpHubData?.length || 0} MCP servers
+                    <Text className="text-sm text-gray-600">{t("Showing")} {filteredMcpData.length} of {mcpHubData?.length || 0} MCP servers
                     </Text>
                   </div>
                 </TabPane>
@@ -842,7 +839,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
             <div className="flex items-center space-x-2">
               <span>{selectedModel?.model_group || "Model Details"}</span>
               {selectedModel && (
-                <Tooltip title="Copy model name">
+                <Tooltip title={t("Copy model name")}>
                   <Copy
                     onClick={() => copyToClipboard(selectedModel.model_group)}
                     className="cursor-pointer text-gray-500 hover:text-blue-500 w-4 h-4"
@@ -861,18 +858,18 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
             <div className="space-y-6">
               {/* Model Overview */}
               <div>
-                <Text className="text-lg font-semibold mb-4">Model Overview</Text>
+                <Text className="text-lg font-semibold mb-4">{t("Model Overview")}</Text>
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div>
-                    <Text className="font-medium">Model Name:</Text>
+                    <Text className="font-medium">{t("Model Name:")}</Text>
                     <Text>{selectedModel.model_group}</Text>
                   </div>
                   <div>
-                    <Text className="font-medium">Mode:</Text>
+                    <Text className="font-medium">{t("Mode:")}</Text>
                     <Text>{selectedModel.mode || "Not specified"}</Text>
                   </div>
                   <div>
-                    <Text className="font-medium">Providers:</Text>
+                    <Text className="font-medium">{t("Providers:")}</Text>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {(selectedModel.providers ?? []).map((provider) => {
                         const { logo } = getProviderLogoAndName(provider);
@@ -904,13 +901,11 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
                     <div className="flex items-start space-x-2">
                       <Info className="w-4 h-4 text-blue-600 mt-0.5 shrink-0" />
                       <div>
-                        <Text className="font-medium text-blue-900 mb-2">Wildcard Routing</Text>
-                        <Text className="text-sm text-blue-800 mb-2">
-                          This model uses wildcard routing. You can pass any value where you see the{" "}
+                        <Text className="font-medium text-blue-900 mb-2">{t("Wildcard Routing")}</Text>
+                        <Text className="text-sm text-blue-800 mb-2">{t("This model uses wildcard routing. You can pass any value where you see the")}{" "}
                           <code className="bg-blue-100 px-1 py-0.5 rounded-sm text-xs">*</code> symbol.
                         </Text>
-                        <Text className="text-sm text-blue-800">
-                          For example, with{" "}
+                        <Text className="text-sm text-blue-800">{t("For example, with")}{" "}
                           <code className="bg-blue-100 px-1 py-0.5 rounded-sm text-xs">
                             {selectedModel.model_group}
                           </code>
@@ -928,18 +923,18 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
 
               {/* Token and Cost Information */}
               <div>
-                <Text className="text-lg font-semibold mb-4">Token & Cost Information</Text>
+                <Text className="text-lg font-semibold mb-4">{t("Token & Cost Information")}</Text>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Text className="font-medium">Max Input Tokens:</Text>
+                    <Text className="font-medium">{t("Max Input Tokens:")}</Text>
                     <Text>{selectedModel.max_input_tokens?.toLocaleString() || "Not specified"}</Text>
                   </div>
                   <div>
-                    <Text className="font-medium">Max Output Tokens:</Text>
+                    <Text className="font-medium">{t("Max Output Tokens:")}</Text>
                     <Text>{selectedModel.max_output_tokens?.toLocaleString() || "Not specified"}</Text>
                   </div>
                   <div>
-                    <Text className="font-medium">Input Cost per 1M Tokens:</Text>
+                    <Text className="font-medium">{t("Input Cost per 1M Tokens:")}</Text>
                     <Text>
                       {selectedModel.input_cost_per_token
                         ? formatCost(selectedModel.input_cost_per_token)
@@ -947,7 +942,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
                     </Text>
                   </div>
                   <div>
-                    <Text className="font-medium">Output Cost per 1M Tokens:</Text>
+                    <Text className="font-medium">{t("Output Cost per 1M Tokens:")}</Text>
                     <Text>
                       {selectedModel.output_cost_per_token
                         ? formatCost(selectedModel.output_cost_per_token)
@@ -959,14 +954,14 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
 
               {/* Capabilities */}
               <div>
-                <Text className="text-lg font-semibold mb-4">Capabilities</Text>
+                <Text className="text-lg font-semibold mb-4">{t("Capabilities")}</Text>
                 <div className="flex flex-wrap gap-2">
                   {(() => {
                     const capabilities = getModelCapabilities(selectedModel);
                     const colors = ["green", "blue", "purple", "orange", "red", "yellow"];
 
                     if (capabilities.length === 0) {
-                      return <Text className="text-gray-500">No special capabilities listed</Text>;
+                      return <Text className="text-gray-500">{t("No special capabilities listed")}</Text>;
                     }
 
                     return capabilities.map((capability, index) => (
@@ -981,17 +976,17 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
               {/* Rate Limits */}
               {(selectedModel.tpm || selectedModel.rpm) && (
                 <div>
-                  <Text className="text-lg font-semibold mb-4">Rate Limits</Text>
+                  <Text className="text-lg font-semibold mb-4">{t("Rate Limits")}</Text>
                   <div className="grid grid-cols-2 gap-4">
                     {selectedModel.tpm && (
                       <div>
-                        <Text className="font-medium">Tokens per Minute:</Text>
+                        <Text className="font-medium">{t("Tokens per Minute:")}</Text>
                         <Text>{selectedModel.tpm.toLocaleString()}</Text>
                       </div>
                     )}
                     {selectedModel.rpm && (
                       <div>
-                        <Text className="font-medium">Requests per Minute:</Text>
+                        <Text className="font-medium">{t("Requests per Minute:")}</Text>
                         <Text>{selectedModel.rpm.toLocaleString()}</Text>
                       </div>
                     )}
@@ -1002,7 +997,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
               {/* Supported OpenAI Parameters */}
               {selectedModel.supported_openai_params && selectedModel.supported_openai_params.length > 0 && (
                 <div>
-                  <Text className="text-lg font-semibold mb-4">Supported OpenAI Parameters</Text>
+                  <Text className="text-lg font-semibold mb-4">{t("Supported OpenAI Parameters")}</Text>
                   <div className="flex flex-wrap gap-2">
                     {selectedModel.supported_openai_params.map((param) => (
                       <Tag key={param} color="green">
@@ -1015,7 +1010,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
 
               {/* Usage Example */}
               <div>
-                <Text className="text-lg font-semibold mb-4">Usage Example</Text>
+                <Text className="text-lg font-semibold mb-4">{t("Usage Example")}</Text>
                 <div className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
                   <pre className="text-sm">
                     {(() => {
@@ -1059,9 +1054,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
                       copyToClipboard(codeSnippet);
                     }}
                     className="text-sm text-blue-600 hover:text-blue-800 cursor-pointer"
-                  >
-                    Copy to clipboard
-                  </button>
+                  >{t("Copy to clipboard")}</button>
                 </div>
               </div>
             </div>
@@ -1074,7 +1067,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
             <div className="flex items-center space-x-2">
               <span>{selectedAgent?.name || "Agent Details"}</span>
               {selectedAgent && (
-                <Tooltip title="Copy agent name">
+                <Tooltip title={t("Copy agent name")}>
                   <Copy
                     onClick={() => copyToClipboard(selectedAgent.name)}
                     className="cursor-pointer text-gray-500 hover:text-blue-500 w-4 h-4"
@@ -1093,23 +1086,23 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
             <div className="space-y-6">
               {/* Agent Overview */}
               <div>
-                <Text className="text-lg font-semibold mb-4">Agent Overview</Text>
+                <Text className="text-lg font-semibold mb-4">{t("Agent Overview")}</Text>
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div>
-                    <Text className="font-medium">Name:</Text>
+                    <Text className="font-medium">{t("Name:")}</Text>
                     <Text>{selectedAgent.name}</Text>
                   </div>
                   <div>
-                    <Text className="font-medium">Version:</Text>
+                    <Text className="font-medium">{t("Version:")}</Text>
                     <Text>{selectedAgent.version}</Text>
                   </div>
                   <div className="col-span-2">
-                    <Text className="font-medium">Description:</Text>
+                    <Text className="font-medium">{t("Description:")}</Text>
                     <Text>{selectedAgent.description}</Text>
                   </div>
                   {selectedAgent.url && (
                     <div>
-                      <Text className="font-medium">URL:</Text>
+                      <Text className="font-medium">{t("URL:")}</Text>
                       <a
                         href={selectedAgent.url}
                         target="_blank"
@@ -1126,7 +1119,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
               {/* Capabilities */}
               {selectedAgent.capabilities && (
                 <div>
-                  <Text className="text-lg font-semibold mb-4">Capabilities</Text>
+                  <Text className="text-lg font-semibold mb-4">{t("Capabilities")}</Text>
                   <div className="flex flex-wrap gap-2">
                     {Object.entries(selectedAgent.capabilities)
                       .filter(([_, value]) => value === true)
@@ -1142,7 +1135,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
               {/* Skills */}
               {selectedAgent.skills && selectedAgent.skills.length > 0 && (
                 <div>
-                  <Text className="text-lg font-semibold mb-4">Skills</Text>
+                  <Text className="text-lg font-semibold mb-4">{t("Skills")}</Text>
                   <div className="space-y-4">
                     {selectedAgent.skills.map((skill, index) => (
                       <div key={index} className="border border-gray-200 rounded-lg p-4">
@@ -1169,10 +1162,10 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
 
               {/* Input/Output Modes */}
               <div>
-                <Text className="text-lg font-semibold mb-4">Input/Output Modes</Text>
+                <Text className="text-lg font-semibold mb-4">{t("Input/Output Modes")}</Text>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Text className="font-medium">Input Modes:</Text>
+                    <Text className="font-medium">{t("Input Modes:")}</Text>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {(selectedAgent.defaultInputModes ?? []).map((mode) => (
                         <Tag key={mode} color="blue">
@@ -1182,7 +1175,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
                     </div>
                   </div>
                   <div>
-                    <Text className="font-medium">Output Modes:</Text>
+                    <Text className="font-medium">{t("Output Modes:")}</Text>
                     <div className="flex flex-wrap gap-1 mt-1">
                       {(selectedAgent.defaultOutputModes ?? []).map((mode) => (
                         <Tag key={mode} color="blue">
@@ -1197,7 +1190,7 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
               {/* Documentation */}
               {selectedAgent.documentationUrl && (
                 <div>
-                  <Text className="text-lg font-semibold mb-4">Documentation</Text>
+                  <Text className="text-lg font-semibold mb-4">{t("Documentation")}</Text>
                   <a
                     href={selectedAgent.documentationUrl}
                     target="_blank"
@@ -1205,18 +1198,18 @@ const PublicModelHub: React.FC<PublicModelHubProps> = ({ accessToken, isEmbedded
                     className="text-blue-600 hover:text-blue-800 flex items-center space-x-2"
                   >
                     <ExternalLinkIcon className="w-4 h-4" />
-                    <span>View Documentation</span>
+                    <span>{t("View Documentation")}</span>
                   </a>
                 </div>
               )}
 
               {/* A2A Usage Example */}
               <div>
-                <Text className="text-lg font-semibold mb-4">Usage Example (A2A Protocol)</Text>
+                <Text className="text-lg font-semibold mb-4">{t("Usage Example (A2A Protocol)")}</Text>
 
                 {/* Step 1: Retrieve Agent Card */}
                 <div className="mb-4">
-                  <Text className="text-sm font-medium mb-2 text-gray-700">Step 1: Retrieve Agent Card</Text>
+                  <Text className="text-sm font-medium mb-2 text-gray-700">{t("Step 1: Retrieve Agent Card")}</Text>
                   <div className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
                     <pre className="text-xs">
                       {`base_url = '${selectedAgent.url}'
@@ -1303,15 +1296,13 @@ if _public_card.supports_authenticated_extended_card:
                         copyToClipboard(codeSnippet);
                       }}
                       className="text-sm text-blue-600 hover:text-blue-800 cursor-pointer"
-                    >
-                      Copy to clipboard
-                    </button>
+                    >{t("Copy to clipboard")}</button>
                   </div>
                 </div>
 
                 {/* Step 2: Call the Agent */}
                 <div>
-                  <Text className="text-sm font-medium mb-2 text-gray-700">Step 2: Call the Agent</Text>
+                  <Text className="text-sm font-medium mb-2 text-gray-700">{t("Step 2: Call the Agent")}</Text>
                   <div className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
                     <pre className="text-xs">
                       {`client = A2AClient(
@@ -1360,9 +1351,7 @@ print(response.model_dump(mode='json', exclude_none=True))`;
                         copyToClipboard(codeSnippet);
                       }}
                       className="text-sm text-blue-600 hover:text-blue-800 cursor-pointer"
-                    >
-                      Copy to clipboard
-                    </button>
+                    >{t("Copy to clipboard")}</button>
                   </div>
                 </div>
               </div>
@@ -1376,7 +1365,7 @@ print(response.model_dump(mode='json', exclude_none=True))`;
             <div className="flex items-center space-x-2">
               <span>{selectedMcpServer?.server_name || "MCP Server Details"}</span>
               {selectedMcpServer && (
-                <Tooltip title="Copy server name">
+                <Tooltip title={t("Copy server name")}>
                   <Copy
                     onClick={() => copyToClipboard(selectedMcpServer.server_name)}
                     className="cursor-pointer text-gray-500 hover:text-blue-500 w-4 h-4"
@@ -1395,30 +1384,30 @@ print(response.model_dump(mode='json', exclude_none=True))`;
             <div className="space-y-6">
               {/* Server Overview */}
               <div>
-                <Text className="text-lg font-semibold mb-4">Server Overview</Text>
+                <Text className="text-lg font-semibold mb-4">{t("Server Overview")}</Text>
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div>
-                    <Text className="font-medium">Server Name:</Text>
+                    <Text className="font-medium">{t("Server Name:")}</Text>
                     <Text>{selectedMcpServer.server_name}</Text>
                   </div>
                   <div>
-                    <Text className="font-medium">Transport:</Text>
+                    <Text className="font-medium">{t("Transport:")}</Text>
                     <Tag color="blue">{selectedMcpServer.transport}</Tag>
                   </div>
                   {selectedMcpServer.alias && (
                     <div>
-                      <Text className="font-medium">Alias:</Text>
+                      <Text className="font-medium">{t("Alias:")}</Text>
                       <Text>{selectedMcpServer.alias}</Text>
                     </div>
                   )}
                   <div>
-                    <Text className="font-medium">Auth Type:</Text>
+                    <Text className="font-medium">{t("Auth Type:")}</Text>
                     <Tag color={selectedMcpServer.auth_type === "none" ? "gray" : "green"}>
                       {selectedMcpServer.auth_type}
                     </Tag>
                   </div>
                   <div className="col-span-2">
-                    <Text className="font-medium">Description:</Text>
+                    <Text className="font-medium">{t("Description:")}</Text>
                     <Text>{selectedMcpServer.mcp_info?.description || "-"}</Text>
                   </div>
                 </div>
@@ -1427,7 +1416,7 @@ print(response.model_dump(mode='json', exclude_none=True))`;
               {/* Additional Info */}
               {selectedMcpServer.mcp_info && Object.keys(selectedMcpServer.mcp_info).length > 0 && (
                 <div>
-                  <Text className="text-lg font-semibold mb-4">Additional Information</Text>
+                  <Text className="text-lg font-semibold mb-4">{t("Additional Information")}</Text>
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <pre className="text-xs overflow-x-auto">{JSON.stringify(selectedMcpServer.mcp_info, null, 2)}</pre>
                   </div>
@@ -1436,7 +1425,7 @@ print(response.model_dump(mode='json', exclude_none=True))`;
 
               {/* Usage Example */}
               <div>
-                <Text className="text-lg font-semibold mb-4">Usage Example</Text>
+                <Text className="text-lg font-semibold mb-4">{t("Usage Example")}</Text>
                 <div className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto">
                   <pre className="text-sm">
                     {`# Using MCP Server with Python FastMCP
@@ -1517,9 +1506,7 @@ if __name__ == "__main__":
                       copyToClipboard(codeSnippet);
                     }}
                     className="text-sm text-blue-600 hover:text-blue-800 cursor-pointer"
-                  >
-                    Copy to clipboard
-                  </button>
+                  >{t("Copy to clipboard")}</button>
                 </div>
               </div>
             </div>

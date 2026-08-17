@@ -21,6 +21,7 @@ import {
 import MessageManager from "@/components/molecules/message_manager";
 import { deleteMCPOAuthUserCredential, listMCPUserCredentials, MCPUserCredentialListItem } from "../networking";
 
+import { t } from "@/i18n";
 const MCP_CREDENTIALS_QUERY_KEY = "mcp-user-credentials";
 
 interface Props {
@@ -83,7 +84,7 @@ const MCPCredentialsTab: React.FC<Props> = ({ accessToken }) => {
         (prev ?? []).filter((c) => c.server_id !== serverId),
       );
     } catch {
-      MessageManager.error("Failed to revoke connection. Please try again.");
+      MessageManager.error(t("Failed to revoke connection. Please try again."));
     } finally {
       setRevoking((prev) => {
         const n = new Set(prev);
@@ -98,8 +99,8 @@ const MCPCredentialsTab: React.FC<Props> = ({ accessToken }) => {
   return (
     <div className="w-full">
       <div className="mb-4">
-        <h2 className="text-base font-semibold text-foreground mb-0.5">App Credentials</h2>
-        <p className="text-sm text-muted-foreground m-0">Your stored OAuth connections; used automatically in chat</p>
+        <h2 className="text-base font-semibold text-foreground mb-0.5">{t("App Credentials")}</h2>
+        <p className="text-sm text-muted-foreground m-0">{t("Your stored OAuth connections; used automatically in chat")}</p>
       </div>
 
       {loading ? (
@@ -107,18 +108,10 @@ const MCPCredentialsTab: React.FC<Props> = ({ accessToken }) => {
           <Table>
             <TableHeader>
               <TableRow className="bg-muted/50">
-                <TableHead className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-                  App
-                </TableHead>
-                <TableHead className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-                  Connected
-                </TableHead>
-                <TableHead className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-                  Status
-                </TableHead>
-                <TableHead className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground text-right">
-                  Actions
-                </TableHead>
+                <TableHead className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{t("App")}</TableHead>
+                <TableHead className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{t("Connected")}</TableHead>
+                <TableHead className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{t("Status")}</TableHead>
+                <TableHead className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground text-right">{t("Actions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -144,29 +137,19 @@ const MCPCredentialsTab: React.FC<Props> = ({ accessToken }) => {
       ) : credentials.length === 0 ? (
         <div className="text-center text-muted-foreground text-sm py-12 border border-dashed rounded-lg">
           <Link className="h-6 w-6 mb-3 mx-auto text-muted-foreground/50" />
-          <p className="m-0">No connections yet</p>
-          <p className="m-0 mt-1 text-xs">
-            Go to <span className="font-medium">Integrations</span> and click{" "}
-            <span className="font-medium">Connect</span> to authorize an MCP server
-          </p>
+          <p className="m-0">{t("No connections yet")}</p>
+          <p className="m-0 mt-1 text-xs">{t("Go to")}<span className="font-medium">{t("Integrations")}</span>{t("and click")}{" "}
+            <span className="font-medium">{t("Connect")}</span>{t("to authorize an MCP server")}</p>
         </div>
       ) : (
         <div className="rounded-lg border overflow-hidden">
           <Table>
             <TableHeader>
               <TableRow className="bg-muted/50">
-                <TableHead className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-                  App
-                </TableHead>
-                <TableHead className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-                  Connected
-                </TableHead>
-                <TableHead className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-                  Status
-                </TableHead>
-                <TableHead className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground text-right">
-                  Actions
-                </TableHead>
+                <TableHead className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{t("App")}</TableHead>
+                <TableHead className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{t("Connected")}</TableHead>
+                <TableHead className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{t("Status")}</TableHead>
+                <TableHead className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground text-right">{t("Actions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -190,7 +173,7 @@ const MCPCredentialsTab: React.FC<Props> = ({ accessToken }) => {
                               variant="outline"
                               size="icon-sm"
                               disabled={isRevoking}
-                              title="Revoke connection"
+                              title={t("Revoke connection")}
                               className="text-muted-foreground hover:text-destructive hover:border-destructive/50"
                             >
                               {isRevoking ? (
@@ -203,17 +186,14 @@ const MCPCredentialsTab: React.FC<Props> = ({ accessToken }) => {
                         />
                         <AlertDialogContent>
                           <AlertDialogHeader>
-                            <AlertDialogTitle>Revoke connection?</AlertDialogTitle>
-                            <AlertDialogDescription>
-                              This removes the stored OAuth credential for {displayName(cred)}. You&apos;ll need to
+                            <AlertDialogTitle>{t("Revoke connection?")}</AlertDialogTitle>
+                            <AlertDialogDescription>{t("This removes the stored OAuth credential for")} {displayName(cred)}. You&apos;ll need to
                               reconnect to use it in chat again.
                             </AlertDialogDescription>
                           </AlertDialogHeader>
                           <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction variant="destructive" onClick={() => handleRevoke(cred.server_id)}>
-                              Revoke
-                            </AlertDialogAction>
+                            <AlertDialogCancel>{t("Cancel")}</AlertDialogCancel>
+                            <AlertDialogAction variant="destructive" onClick={() => handleRevoke(cred.server_id)}>{t("Revoke")}</AlertDialogAction>
                           </AlertDialogFooter>
                         </AlertDialogContent>
                       </AlertDialog>

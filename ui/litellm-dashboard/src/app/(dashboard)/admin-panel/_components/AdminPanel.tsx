@@ -72,7 +72,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
           setSsoConfigured(false);
         }
       } catch (error) {
-        console.error("Error checking SSO configuration:", error);
+        console.error(t("Error checking SSO configuration:"), error);
         setSsoConfigured(false);
       }
     }
@@ -93,7 +93,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
         setAllowedIPs([all_ip_address_allowed]);
       }
     } catch (error) {
-      console.error("Error fetching allowed IPs:", error);
+      console.error(t("Error fetching allowed IPs:"), error);
       NotificationsManager.fromBackend(`Failed to fetch allowed IPs ${error}`);
       setAllowedIPs([all_ip_address_allowed]);
     } finally {
@@ -110,10 +110,10 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
         // Fetch the updated list of IPs
         const updatedIPs = await getAllowedIPs(accessToken);
         setAllowedIPs(updatedIPs);
-        NotificationsManager.success("IP address added successfully");
+        NotificationsManager.success(t("IP address added successfully"));
       }
     } catch (error) {
-      console.error("Error adding IP:", error);
+      console.error(t("Error adding IP:"), error);
       NotificationsManager.fromBackend(`Failed to add IP address ${error}`);
     } finally {
       setIsAddIPModalVisible(false);
@@ -132,9 +132,9 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
         // Fetch the updated list of IPs
         const updatedIPs = await getAllowedIPs(accessToken);
         setAllowedIPs(updatedIPs.length > 0 ? updatedIPs : [all_ip_address_allowed]);
-        NotificationsManager.success("IP address deleted successfully");
+        NotificationsManager.success(t("IP address deleted successfully"));
       } catch (error) {
-        console.error("Error deleting IP:", error);
+        console.error(t("Error deleting IP:"), error);
         NotificationsManager.fromBackend(`Failed to delete IP address ${error}`);
       } finally {
         setIsDeleteIPModalVisible(false);
@@ -201,7 +201,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
           <Card>
             <Title level={4}> {t("admin_panel.security_section")}</Title>
             <Alert
-              message="SSO Configuration Deprecated"
+              message={t("SSO Configuration Deprecated")}
               description="Editing SSO Settings on this page is deprecated and will be removed in a future version. Please use the SSO Settings tab for SSO configuration."
               type="warning"
               showIcon
@@ -233,9 +233,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
                       ? setIsUIAccessControlModalVisible(true)
                       : NotificationsManager.fromBackend("Only premium users can configure UI access control")
                   }
-                >
-                  UI Access Control
-                </Button>
+                >{t("UI Access Control")}</Button>
               </div>
             </div>
           </Card>
@@ -271,7 +269,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
                 <TableHead>
                   <TableRow>
                     <TableHeaderCell>{t("admin_panel.col_ip_address")}</TableHeaderCell>
-                    <TableHeaderCell className="text-right">Action</TableHeaderCell>
+                    <TableHeaderCell className="text-right">{t("Action")}</TableHeaderCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -280,9 +278,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
                       <TableCell>{ip}</TableCell>
                       <TableCell className="text-right">
                         {ip !== all_ip_address_allowed && (
-                          <Button onClick={() => handleDeleteIP(ip)} color="red" size="xs">
-                            Delete
-                          </Button>
+                          <Button onClick={() => handleDeleteIP(ip)} color="red" size="xs">{t("Delete")}</Button>
                         )}
                       </TableCell>
                     </TableRow>
@@ -313,9 +309,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
               onCancel={() => setIsDeleteIPModalVisible(false)}
               onOk={confirmDeleteIP}
               footer={[
-                <Button className="mx-1" key="delete" onClick={() => confirmDeleteIP()}>
-                  Yes
-                </Button>,
+                <Button className="mx-1" key="delete" onClick={() => confirmDeleteIP()}>{t("Yes")}</Button>,
                 <Button key="close" onClick={() => setIsDeleteIPModalVisible(false)}>
                   {t("common.close")}
                 </Button>,
@@ -337,13 +331,12 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
                 accessToken={accessToken}
                 onSuccess={() => {
                   handleUIAccessControlOk();
-                  NotificationsManager.success("UI Access Control settings updated successfully");
+                  NotificationsManager.success(t("UI Access Control settings updated successfully"));
                 }}
               />
             </Modal>
           </div>
-          <Callout title={t("admin_panel.login_without_sso")} color="teal">
-            If you need to login without sso, you can access{" "}
+          <Callout title={t("admin_panel.login_without_sso")} color="teal">{t("If you need to login without sso, you can access")}{" "}
             <a href={nonSssoUrl} target="_blank" rel="noopener noreferrer">
               <b>{nonSssoUrl}</b>{" "}
             </a>
@@ -379,12 +372,12 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ proxySettings }) => {
     },
     {
       key: "hashicorp-vault",
-      label: "Hashicorp Vault",
+      label: t("Hashicorp Vault"),
       children: <HashicorpVault />,
     },
     {
       key: "plugins",
-      label: "Plugins",
+      label: t("Plugins"),
       children: <PluginSettings />,
     },
   ];

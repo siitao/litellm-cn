@@ -4,6 +4,7 @@ import { Policy } from "./types";
 import { getPoliciesList } from "../networking";
 import { MultiSelect } from "@/components/shared/MultiSelect";
 
+import { t } from "@/i18n";
 /** Prefix for policy version IDs in request body; must match backend POLICY_VERSION_ID_PREFIX. */
 export const POLICY_VERSION_ID_PREFIX = "policy_";
 
@@ -68,7 +69,7 @@ const PolicySelector: React.FC<PolicySelectorProps> = ({
           onPoliciesLoaded?.(response.policies);
         }
       } catch (error) {
-        console.error("Error fetching policies:", error);
+        console.error(t("Error fetching policies:"), error);
       } finally {
         setLoading(false);
       }

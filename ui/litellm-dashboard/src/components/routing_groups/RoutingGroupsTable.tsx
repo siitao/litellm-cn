@@ -10,6 +10,7 @@ import { RoutingGroupUsagePanel } from "./RoutingGroupUsagePanel";
 import { getRoutingGroupsTableColumns } from "./RoutingGroupsTableColumns";
 import type { RoutingGroup } from "./types";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface RoutingGroupsTableProps {
   groups: RoutingGroup[];
   isLoading?: boolean;
@@ -25,15 +26,14 @@ const resolveBaseUrl = (proxyBaseUrl?: string): string => {
 };
 
 function EmptyState() {
-  return (
+
+  const { t } = useLanguage();  return (
     <div className="flex flex-col items-center gap-1 py-6">
       <div className="mb-1 flex size-10 items-center justify-center rounded-lg bg-muted">
         <Inbox className="size-5 text-muted-foreground" />
       </div>
-      <div className="text-sm font-medium text-foreground">No routing groups yet</div>
-      <div className="text-sm text-muted-foreground">
-        Create a group to load-balance a set of models behind one name.
-      </div>
+      <div className="text-sm font-medium text-foreground">{t("No routing groups yet")}</div>
+      <div className="text-sm text-muted-foreground">{t("Create a group to load-balance a set of models behind one name.")}</div>
     </div>
   );
 }

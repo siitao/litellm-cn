@@ -8,8 +8,10 @@ import { useQueryClient } from "@tanstack/react-query";
 import { createQueryKeys } from "@/app/(dashboard)/hooks/common/queryKeysFactory";
 import { CloudZeroIntegrationSettings } from "./CloudZeroIntegrationSettings";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 export default function CloudZeroCostTracking() {
-  const { accessToken } = useAuthorized();
+
+  const { t } = useLanguage();  const { accessToken } = useAuthorized();
   const { data: settings, isLoading, error } = useCloudZeroSettings(accessToken);
   const queryClient = useQueryClient();
   const cloudZeroSettingsKeys = createQueryKeys("cloudZeroSettings");
@@ -39,8 +41,7 @@ export default function CloudZeroCostTracking() {
     return (
       <Card>
         <CardContent>
-          <p className="text-sm text-destructive">
-            Error loading CloudZero settings: {error instanceof Error ? error.message : String(error)}
+          <p className="text-sm text-destructive">{t("Error loading CloudZero settings:")} {error instanceof Error ? error.message : String(error)}
           </p>
         </CardContent>
       </Card>

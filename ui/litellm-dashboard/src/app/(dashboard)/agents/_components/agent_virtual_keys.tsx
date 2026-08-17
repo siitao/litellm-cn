@@ -4,6 +4,7 @@ import { KeyResponse } from "@/components/key_team_helpers/key_list";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
+import { t } from "@/i18n";
 interface AgentVirtualKeysProps {
   keys: KeyResponse[];
   isLoading: boolean;
@@ -13,11 +14,11 @@ interface AgentVirtualKeysProps {
 const AgentVirtualKeys: React.FC<AgentVirtualKeysProps> = ({ keys, isLoading, onKeyClick }) => {
   return (
     <div className="mt-6">
-      <h4 className="text-base font-semibold text-foreground">Virtual Keys</h4>
+      <h4 className="text-base font-semibold text-foreground">{t("Virtual Keys")}</h4>
       {isLoading ? (
         <p className="mt-2 text-sm text-muted-foreground">Loading keys...</p>
       ) : keys.length === 0 ? (
-        <p className="mt-2 text-sm text-muted-foreground">No virtual key assigned to this agent.</p>
+        <p className="mt-2 text-sm text-muted-foreground">{t("No virtual key assigned to this agent.")}</p>
       ) : (
         <div className="mt-3 flex flex-col gap-2">
           {keys.map((key) => (

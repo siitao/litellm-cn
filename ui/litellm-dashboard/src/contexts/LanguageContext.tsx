@@ -4,7 +4,14 @@ import React, { createContext, useCallback, useContext, useEffect, useState } fr
 import { ConfigProvider } from "antd";
 import enUS from "antd/locale/en_US";
 import zhCN from "antd/locale/zh_CN";
-import { DEFAULT_LOCALE, LOCALE_STORAGE_KEY, Locale, TFunction, t as translate } from "@/i18n";
+import {
+  DEFAULT_LOCALE,
+  LOCALE_STORAGE_KEY,
+  Locale,
+  TFunction,
+  setCurrentLocale,
+  t as translate,
+} from "@/i18n";
 
 interface LanguageContextValue {
   locale: Locale;
@@ -52,7 +59,14 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       // localStorage unavailable (e.g. privacy mode) — still switch in-memory.
     }
     setLocaleState(next);
+    setCurrentLocale(next);
   }, []);
+
+  // Keep the module-level locale (used by pure `t()` in module scope / server
+  // components) in sync with the persisted choice.
+  useEffect(() => {
+    setCurrentLocale(locale);
+  }, [locale]);
 
   const t = useCallback((key: string) => translate(key, locale), [locale]);
 

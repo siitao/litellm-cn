@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 
 import { TeamMetadataField } from "@/app/(dashboard)/hooks/teams/useTeamMetadataSchema";
 
+import { t } from "@/i18n";
 export interface MetadataPair {
   key: string;
   value: string;
@@ -109,22 +110,20 @@ const MetadataKeyValueFields: React.FC<MetadataKeyValueFieldsProps> = ({
                   },
                 ]}
               >
-                <Input placeholder="Key" />
+                <Input placeholder={t("Key")} />
               </Form.Item>
               <Form.Item {...restField} name={[fieldName, "value"]}>
-                <Input placeholder="Value" />
+                <Input placeholder={t("Value")} />
               </Form.Item>
               <MinusCircleOutlined
-                aria-label="Remove key-value pair"
+                aria-label={t("Remove key-value pair")}
                 onClick={() => remove(fieldName)}
                 style={{ color: "#ef4444" }}
               />
             </Space>
           ))}
           <Form.Item style={{ marginBottom: 0 }}>
-            <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-              Add Key-Value Pair
-            </Button>
+            <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>{t("Add Key-Value Pair")}</Button>
           </Form.Item>
         </>
       )}

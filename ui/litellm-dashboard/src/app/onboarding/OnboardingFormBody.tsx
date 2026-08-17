@@ -1,6 +1,7 @@
 import React from "react";
 import { Alert, Button, Card, Form, Input, Typography } from "antd";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 type OnboardingFormBodyProps = {
   variant: "signup" | "reset_password";
   userEmail: string;
@@ -10,7 +11,8 @@ type OnboardingFormBodyProps = {
 };
 
 export function OnboardingFormBody({ variant, userEmail, isPending, claimError, onSubmit }: OnboardingFormBodyProps) {
-  const [form] = Form.useForm();
+
+  const { t } = useLanguage();  const [form] = Form.useForm();
 
   React.useEffect(() => {
     if (userEmail) form.setFieldValue("user_email", userEmail);
@@ -36,10 +38,8 @@ export function OnboardingFormBody({ variant, userEmail, isPending, claimError, 
             message="SSO"
             description={
               <div className="flex justify-between items-center">
-                <span>SSO is under the Enterprise Tier.</span>
-                <Button type="primary" size="small" href="https://forms.gle/W3U4PZpJGFHWtHyA9" target="_blank">
-                  Get Free Trial
-                </Button>
+                <span>{t("SSO is under the Enterprise Tier.")}</span>
+                <Button type="primary" size="small" href="https://forms.gle/W3U4PZpJGFHWtHyA9" target="_blank">{t("Get Free Trial")}</Button>
               </div>
             }
             showIcon
@@ -57,7 +57,7 @@ export function OnboardingFormBody({ variant, userEmail, isPending, claimError, 
           </Form.Item>
 
           <Form.Item
-            label="Password"
+            label={t("Password")}
             name="password"
             rules={[{ required: true, message: "password required to sign up" }]}
             help={variant === "reset_password" ? "Enter your new password" : "Create a password for your account"}

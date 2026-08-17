@@ -3,6 +3,7 @@ import { Eye, EyeOff } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
+import { t } from "@/i18n";
 export default function RedactableField({
   defaultHidden = true,
   value,
@@ -22,7 +23,7 @@ export default function RedactableField({
             value
           )
         ) : (
-          <span className="text-muted-foreground italic">Not configured</span>
+          <span className="text-muted-foreground italic">{t("Not configured")}</span>
         )}
       </span>
       {value && (

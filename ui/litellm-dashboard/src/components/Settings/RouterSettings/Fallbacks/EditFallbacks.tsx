@@ -13,6 +13,7 @@ import NotificationManager from "../../../molecules/notifications_manager";
 import { AddFallbacksModal } from "./AddFallbacksModal";
 import { FallbackGroup, FallbackGroupConfig } from "./FallbackGroupConfig";
 
+import { t } from "@/i18n";
 export type FallbackEntry = { [modelName: string]: string[] };
 export type Fallbacks = FallbackEntry[];
 
@@ -72,7 +73,7 @@ export default function EditFallbacks({
       NotificationManager.success(`Fallbacks for ${primaryModel} updated successfully!`);
       onClose();
     } catch (error) {
-      console.error("Error updating fallbacks:", error);
+      console.error(t("Error updating fallbacks:"), error);
     } finally {
       setIsSaving(false);
     }
@@ -88,9 +89,7 @@ export default function EditFallbacks({
         disablePrimaryModel
       />
       <div className="flex items-center justify-end space-x-3 pt-6 mt-6 border-t border-gray-100">
-        <Button type="default" onClick={onClose} disabled={isSaving}>
-          Cancel
-        </Button>
+        <Button type="default" onClick={onClose} disabled={isSaving}>{t("Cancel")}</Button>
         <Button
           type="primary"
           icon={<Pencil className="w-4 h-4" />}

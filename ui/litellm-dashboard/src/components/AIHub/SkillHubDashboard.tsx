@@ -8,6 +8,7 @@ import { DataTable } from "@/components/shared/DataTable";
 import { getSkillHubTableColumns } from "@/components/AIHub/SkillHubTableColumns";
 import SkillDetail from "@/components/claude_code_plugins/skill_detail";
 
+import { t } from "@/i18n";
 interface SkillHubDashboardProps {
   skills: Plugin[];
   isLoading: boolean;
@@ -92,15 +93,15 @@ const SkillHubDashboard: React.FC<SkillHubDashboardProps> = ({
       {/* Stats row */}
       <div className="grid grid-cols-3 gap-4">
         <div className="border border-gray-200 rounded-lg p-4">
-          <div className="text-xs text-gray-500 mb-1">Total Skills</div>
+          <div className="text-xs text-gray-500 mb-1">{t("Total Skills")}</div>
           <div className="text-2xl font-semibold text-gray-900">{totalSkills}</div>
         </div>
         <div className="border border-gray-200 rounded-lg p-4">
-          <div className="text-xs text-gray-500 mb-1">Namespaces</div>
+          <div className="text-xs text-gray-500 mb-1">{t("Namespaces")}</div>
           <div className="text-2xl font-semibold text-gray-900">{namespaces.length}</div>
         </div>
         <div className="border border-gray-200 rounded-lg p-4">
-          <div className="text-xs text-gray-500 mb-1">Domains</div>
+          <div className="text-xs text-gray-500 mb-1">{t("Domains")}</div>
           <div className="text-2xl font-semibold text-gray-900">{domains.length}</div>
         </div>
       </div>
@@ -108,10 +109,10 @@ const SkillHubDashboard: React.FC<SkillHubDashboardProps> = ({
       {/* Search + filters + table */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-semibold text-gray-700">All {publicPage ? "Public " : ""}Skills</h3>
+          <h3 className="text-sm font-semibold text-gray-700">{t("All")} {publicPage ? "Public " : ""}Skills</h3>
           <div className="flex items-center gap-2">
             <Select
-              placeholder="All Domains"
+              placeholder={t("All Domains")}
               allowClear
               value={domainFilter}
               onChange={(val) => setDomainFilter(val)}
@@ -120,7 +121,7 @@ const SkillHubDashboard: React.FC<SkillHubDashboardProps> = ({
             />
             <Input
               prefix={<SearchOutlined className="text-gray-400" />}
-              placeholder="Search by name, namespace, or tag…"
+              placeholder={t("Search by name, namespace, or tag…")}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               style={{ width: 280 }}
@@ -141,8 +142,7 @@ const SkillHubDashboard: React.FC<SkillHubDashboardProps> = ({
           size="compact"
         />
         <div className="mt-3 text-center">
-          <p className="text-sm text-gray-500">
-            Showing {filteredSkills.length} of {totalSkills} skill{totalSkills !== 1 ? "s" : ""}
+          <p className="text-sm text-gray-500">{t("Showing")} {filteredSkills.length} of {totalSkills} skill{totalSkills !== 1 ? "s" : ""}
           </p>
         </div>
       </div>

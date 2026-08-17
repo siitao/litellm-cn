@@ -21,7 +21,8 @@ import {
   PTU_END_FIELD,
 } from "../../utils/ptuValidation";
 import { usePtuCostAttributionEnabled } from "@/app/(dashboard)/hooks/uiSettings/usePtuCostAttributionEnabled";
-const { Link } = Typography;
+
+import { t } from "@/i18n";const { Link } = Typography;
 
 interface AdvancedSettingsProps {
   showAdvancedSettings: boolean;
@@ -119,7 +120,7 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
     <>
       <Accordion className="mt-2 mb-4">
         <AccordionHeader>
-          <b>Advanced Settings</b>
+          <b>{t("Advanced Settings")}</b>
         </AccordionHeader>
         <AccordionBody>
           <div className="bg-white rounded-lg">
@@ -129,8 +130,7 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
 
             <Form.Item
               label={
-                <span>
-                  Attached Knowledge Bases (RAG){" "}
+                <span>{t("Attached Knowledge Bases (RAG)")}{" "}
                   <Tooltip title="Vector stores to use for RAG. Every request to this model will automatically retrieve context from these knowledge bases.">
                     <a
                       href="https://docs.litellm.ai/docs/completion/knowledgebase"
@@ -150,15 +150,14 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
               <VectorStoreSelector
                 onChange={() => {}}
                 accessToken={accessToken}
-                placeholder="Select knowledge bases (optional)"
+                placeholder={t("Select knowledge bases (optional)")}
               />
             </Form.Item>
 
             <Form.Item
               label={
-                <span>
-                  Guardrails{" "}
-                  <Tooltip title="Apply safety guardrails to this key to filter content or enforce policies">
+                <span>{t("Guardrails")}{" "}
+                  <Tooltip title={t("Apply safety guardrails to this key to filter content or enforce policies")}>
                     <a
                       href="https://docs.litellm.ai/docs/proxy/guardrails/quick_start"
                       target="_blank"
@@ -177,7 +176,7 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
               <Select
                 mode="tags"
                 style={{ width: "100%" }}
-                placeholder="Select or enter guardrails"
+                placeholder={t("Select or enter guardrails")}
                 options={guardrailsList.map((name) => ({ value: name, label: name }))}
               />
             </Form.Item>
@@ -186,7 +185,7 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
               <Select
                 mode="tags"
                 style={{ width: "100%" }}
-                placeholder="Select or enter tags"
+                placeholder={t("Select or enter tags")}
                 options={Object.values(tagsList).map((tag) => ({
                   value: tag.name,
                   label: tag.name,
@@ -198,29 +197,29 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
             {ptuCostAttributionEnabled && (
               <>
                 <Form.Item
-                  label="PTU Count"
+                  label={t("PTU Count")}
                   name={PTU_COUNT_FIELD}
                   dependencies={[PTU_RATE_FIELD]}
                   rules={[{ validator: validateNumber }, ...ptuCountRules, ptuPairRule(PTU_RATE_FIELD)]}
                   tooltip="Provisioned throughput units for this deployment. Set together with Cost per PTU / Hour and a Team to attribute a flat daily cost."
                   className="mb-4"
                 >
-                  <TextInput placeholder="e.g. 15" />
+                  <TextInput placeholder={t("e.g. 15")} />
                 </Form.Item>
 
                 <Form.Item
-                  label="Calculated Cost per PTU / Hour (USD)"
+                  label={t("Calculated Cost per PTU / Hour (USD)")}
                   name={PTU_RATE_FIELD}
                   dependencies={[PTU_COUNT_FIELD]}
                   rules={[{ validator: validateNumber }, ...ptuRateRules, ptuPairRule(PTU_COUNT_FIELD)]}
-                  tooltip="Flat cost = PTU count * this rate * active hours, attributed to the deployment's team."
+                  tooltip={t("Flat cost = PTU count * this rate * active hours, attributed to the deployment's team.")}
                   className="mb-4"
                 >
-                  <TextInput placeholder="e.g. 2.00" />
+                  <TextInput placeholder={t("e.g. 2.00")} />
                 </Form.Item>
 
                 <Form.Item
-                  label="PTU Effective From (UTC)"
+                  label={t("PTU Effective From (UTC)")}
                   name={PTU_START_FIELD}
                   dependencies={[PTU_COUNT_FIELD, PTU_END_FIELD]}
                   rules={[ptuStartRequiredRule(PTU_COUNT_FIELD), ptuWindowOrderRule(PTU_END_FIELD, "start")]}
@@ -231,11 +230,11 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
                 </Form.Item>
 
                 <Form.Item
-                  label="PTU Effective To (UTC)"
+                  label={t("PTU Effective To (UTC)")}
                   name={PTU_END_FIELD}
                   dependencies={[PTU_START_FIELD]}
                   rules={[ptuWindowOrderRule(PTU_START_FIELD, "end")]}
-                  tooltip="Optional end of the PTU window (exclusive). Leave blank for open-ended."
+                  tooltip={t("Optional end of the PTU window (exclusive). Leave blank for open-ended.")}
                   className="mb-4"
                 >
                   <DatePicker showTime style={{ width: "100%" }} />
@@ -250,8 +249,8 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
                     defaultValue="per_token"
                     onChange={(value: "per_token" | "per_second") => setPricingModel(value)}
                     options={[
-                      { value: "per_token", label: "Per Million Tokens" },
-                      { value: "per_second", label: "Per Second" },
+                      { value: "per_token", label: t("Per Million Tokens")},
+                      { value: "per_second", label: t("Per Second")},
                     ]}
                   />
                 </Form.Item>
@@ -259,7 +258,7 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
                 {pricingModel === "per_token" ? (
                   <>
                     <Form.Item
-                      label="Input Cost (per 1M tokens)"
+                      label={t("Input Cost (per 1M tokens)")}
                       name="input_cost_per_token"
                       rules={[{ validator: validateNumber }]}
                       className="mb-4"
@@ -267,7 +266,7 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
                       <TextInput />
                     </Form.Item>
                     <Form.Item
-                      label="Output Cost (per 1M tokens)"
+                      label={t("Output Cost (per 1M tokens)")}
                       name="output_cost_per_token"
                       rules={[{ validator: validateNumber }]}
                       className="mb-4"
@@ -275,27 +274,27 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
                       <TextInput />
                     </Form.Item>
                     <Form.Item
-                      label="Cache Read Cost (per 1M tokens)"
+                      label={t("Cache Read Cost (per 1M tokens)")}
                       name="cache_read_input_token_cost"
                       rules={[{ validator: validateNumber }]}
-                      tooltip="If left blank, defaults to Input Cost."
+                      tooltip={t("If left blank, defaults to Input Cost.")}
                       className="mb-4"
                     >
-                      <TextInput placeholder="Defaults to Input Cost if blank" />
+                      <TextInput placeholder={t("Defaults to Input Cost if blank")} />
                     </Form.Item>
                     <Form.Item
-                      label="Cache Write Cost (per 1M tokens)"
+                      label={t("Cache Write Cost (per 1M tokens)")}
                       name="cache_creation_input_token_cost"
                       rules={[{ validator: validateNumber }]}
                       tooltip="If left blank, defaults to Input Cost (the backend falls back to input_cost_per_token when no cache-write rate is set)."
                       className="mb-4"
                     >
-                      <TextInput placeholder="Defaults to Input Cost if blank" />
+                      <TextInput placeholder={t("Defaults to Input Cost if blank")} />
                     </Form.Item>
                   </>
                 ) : (
                   <Form.Item
-                    label="Cost Per Second"
+                    label={t("Cost Per Second")}
                     name="input_cost_per_second"
                     rules={[{ validator: validateNumber }]}
                     className="mb-4"
@@ -307,16 +306,13 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
             )}
 
             <Form.Item
-              label="Use in pass through routes"
+              label={t("Use in pass through routes")}
               name="use_in_pass_through"
               valuePropName="checked"
               className="mb-4 mt-4"
               tooltip={
-                <span>
-                  Allow using these credentials in pass through routes.{" "}
-                  <Link href="https://docs.litellm.ai/docs/pass_through/vertex_ai" target="_blank">
-                    Learn more
-                  </Link>
+                <span>{t("Allow using these credentials in pass through routes.")}{" "}
+                  <Link href="https://docs.litellm.ai/docs/pass_through/vertex_ai" target="_blank">{t("Learn more")}</Link>
                 </span>
               }
             >
@@ -329,9 +325,9 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
               onCacheControlChange={handleCacheControlChange}
             />
             <Form.Item
-              label="LiteLLM Params"
+              label={t("LiteLLM Params")}
               name="litellm_extra_params"
-              tooltip="Optional litellm params used for making a litellm.completion() call."
+              tooltip={t("Optional litellm params used for making a litellm.completion() call.")}
               className="mb-4 mt-4"
               rules={[{ validator: formItemValidateJSON }]}
             >
@@ -347,18 +343,15 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
             <Row className="mb-4">
               <Col span={10}></Col>
               <Col span={10}>
-                <Text className="text-gray-600 text-sm">
-                  Pass JSON of litellm supported params{" "}
-                  <Link href="https://docs.litellm.ai/docs/completion/input" target="_blank">
-                    litellm.completion() call
-                  </Link>
+                <Text className="text-gray-600 text-sm">{t("Pass JSON of litellm supported params")}{" "}
+                  <Link href="https://docs.litellm.ai/docs/completion/input" target="_blank">{t("litellm.completion() call")}</Link>
                 </Text>
               </Col>
             </Row>
             <Form.Item
-              label="Model Info"
+              label={t("Model Info")}
               name="model_info_params"
-              tooltip="Optional model info params. Returned when calling `/model/info` endpoint."
+              tooltip={t("Optional model info params. Returned when calling `/model/info` endpoint.")}
               className="mb-0"
               rules={[{ validator: formItemValidateJSON }]}
             >

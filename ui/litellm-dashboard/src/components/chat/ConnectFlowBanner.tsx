@@ -4,6 +4,7 @@ import React from "react";
 import { CheckCircle } from "lucide-react";
 import { getProxyBaseUrl } from "@/components/networking";
 
+import { t } from "@/i18n";
 interface Props {
   flowHandle: string;
   clientOrigin: string | null;
@@ -47,7 +48,7 @@ const ConnectFlowBanner: React.FC<Props> = ({ flowHandle, clientOrigin }) => {
         <div className="flex items-start gap-3 min-w-0">
           <CheckCircle className="h-5 w-5 text-primary shrink-0 mt-0.5" />
           <div className="min-w-0">
-            <p className="text-sm font-semibold text-foreground">Connect your MCP servers to {clientLabel}</p>
+            <p className="text-sm font-semibold text-foreground">{t("Connect your MCP servers to")} {clientLabel}</p>
             <p className="text-[13px] text-muted-foreground mt-0.5">
               Authorize the servers you want to use below, then click Finish connecting to return to {clientLabel}.
             </p>
@@ -58,9 +59,7 @@ const ConnectFlowBanner: React.FC<Props> = ({ flowHandle, clientOrigin }) => {
           <button
             type="submit"
             className="h-[38px] rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
-          >
-            Finish connecting
-          </button>
+          >{t("Finish connecting")}</button>
           {loopbackClient && (
             <label className="mt-2 flex items-center gap-2 text-[13px] text-muted-foreground">
               <input type="checkbox" name="delivery" value="manual" />

@@ -1,6 +1,7 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
 
+import { t } from "@/i18n";
 interface VariableInputProps {
   extractedVariables: string[];
   variables: Record<string, string>;
@@ -14,7 +15,7 @@ const VariableInput: React.FC<VariableInputProps> = ({ extractedVariables, varia
 
   return (
     <div className="p-4 border-b border-border bg-accent">
-      <h3 className="text-sm font-semibold text-foreground mb-3">Fill in template variables to start testing</h3>
+      <h3 className="text-sm font-semibold text-foreground mb-3">{t("Fill in template variables to start testing")}</h3>
       <div className="space-y-2">
         {extractedVariables.map((varName) => (
           <div key={varName}>

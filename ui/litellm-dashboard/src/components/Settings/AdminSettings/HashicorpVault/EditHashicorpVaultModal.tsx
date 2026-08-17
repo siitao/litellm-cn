@@ -8,6 +8,7 @@ import { Button, Divider, Form, Input, Modal, Space, Typography } from "antd";
 import React, { useEffect } from "react";
 import { SENSITIVE_FIELDS, FIELD_LABELS } from "./constants";
 
+import { t } from "@/i18n";
 interface FieldGroup {
   title: string;
   subtitle?: string;
@@ -16,22 +17,22 @@ interface FieldGroup {
 
 const FIELD_GROUPS: FieldGroup[] = [
   {
-    title: "Connection",
+    title: t("Connection"),
     fields: ["vault_addr", "vault_namespace", "vault_mount_name", "vault_path_prefix"],
   },
   {
-    title: "Token Authentication",
-    subtitle: "Use a Vault token to authenticate. Only one auth method is required.",
+    title: t("Token Authentication"),
+    subtitle: t("Use a Vault token to authenticate. Only one auth method is required."),
     fields: ["vault_token"],
   },
   {
-    title: "AppRole Authentication",
-    subtitle: "Use AppRole credentials to authenticate. Only one auth method is required.",
+    title: t("AppRole Authentication"),
+    subtitle: t("Use AppRole credentials to authenticate. Only one auth method is required."),
     fields: ["approle_role_id", "approle_secret_id", "approle_mount_path"],
   },
   {
     title: "TLS",
-    subtitle: "Optional client certificate for mTLS.",
+    subtitle: t("Optional client certificate for mTLS."),
     fields: ["client_cert", "client_key", "vault_cert_role"],
   },
 ];
@@ -81,7 +82,7 @@ const EditHashicorpVaultModal: React.FC<EditHashicorpVaultModalProps> = ({ isVis
 
     mutate(config, {
       onSuccess: () => {
-        NotificationManager.success("Hashicorp Vault configuration updated successfully");
+        NotificationManager.success(t("Hashicorp Vault configuration updated successfully"));
         onSuccess();
       },
       onError: (err) => {
@@ -118,14 +119,12 @@ const EditHashicorpVaultModal: React.FC<EditHashicorpVaultModalProps> = ({ isVis
 
   return (
     <Modal
-      title="Edit Hashicorp Vault Configuration"
+      title={t("Edit Hashicorp Vault Configuration")}
       open={isVisible}
       width={700}
       footer={
         <Space>
-          <Button onClick={handleCancel} disabled={isPending}>
-            Cancel
-          </Button>
+          <Button onClick={handleCancel} disabled={isPending}>{t("Cancel")}</Button>
           <Button type="primary" loading={isPending} onClick={() => form.submit()}>
             {isPending ? "Saving..." : "Save"}
           </Button>

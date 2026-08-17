@@ -9,6 +9,7 @@ import { DataTable } from "@/components/shared/DataTable";
 
 import { getProjectKeysTableColumns } from "./ProjectKeysTableColumns";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface ProjectKeysTableProps {
   keys: KeyResponse[];
   totalCount: number;
@@ -20,13 +21,14 @@ interface ProjectKeysTableProps {
 const PAGE_SIZE_OPTIONS = [5, 10, 25];
 
 function EmptyState() {
-  return (
+
+  const { t } = useLanguage();  return (
     <div className="flex flex-col items-center gap-1 py-6">
       <div className="mb-1 flex size-10 items-center justify-center rounded-lg bg-muted">
         <KeyRound className="size-5 text-muted-foreground" />
       </div>
-      <div className="text-sm font-medium text-foreground">No keys found</div>
-      <div className="text-sm text-muted-foreground">Keys created in this project will show up here.</div>
+      <div className="text-sm font-medium text-foreground">{t("No keys found")}</div>
+      <div className="text-sm text-muted-foreground">{t("Keys created in this project will show up here.")}</div>
     </div>
   );
 }

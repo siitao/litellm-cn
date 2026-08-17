@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useLanguage } from "@/contexts/LanguageContext";
 import { hasCapability, type Capability } from "@/utils/capabilities";
 import { all_admin_roles } from "@/utils/roles";
+import { t } from "@/i18n";
 export type UsageOption =
   | "global"
   | "my-usage"
@@ -40,66 +41,66 @@ interface OptionConfig {
 const OPTIONS: OptionConfig[] = [
   {
     value: "global",
-    label: "Global Usage",
+    label: t("Global Usage"),
     showForAdmin: "Global Usage",
     showForNonAdmin: "Your Usage",
-    description: "View usage across all resources",
+    description: t("View usage across all resources"),
     descriptionForAdmin: "View usage across all resources",
     descriptionForNonAdmin: "View your usage",
     icon: <Globe className="size-4" />,
   },
   {
     value: "my-usage",
-    label: "Your Usage",
-    description: "View your own usage",
+    label: t("Your Usage"),
+    description: t("View your own usage"),
     icon: <User className="size-4" />,
     adminOnly: true,
   },
   {
     value: "organization",
-    label: "Organization Usage",
-    description: "View usage across all organizations",
+    label: t("Organization Usage"),
+    description: t("View usage across all organizations"),
     icon: <Building2 className="size-4" />,
     capability: "viewOrganizationUsage",
   },
   {
     value: "team",
-    label: "Team Usage",
-    description: "View usage by team",
+    label: t("Team Usage"),
+    description: t("View usage by team"),
     icon: <Users className="size-4" />,
   },
   {
     value: "customer",
-    label: "Customer Usage",
-    description: "View usage by customer accounts",
+    label: t("Customer Usage"),
+    description: t("View usage by customer accounts"),
     icon: <ShoppingCart className="size-4" />,
     adminOnly: true,
   },
   {
     value: "tag",
-    label: "Tag Usage",
-    description: "View usage grouped by tags",
+    label: t("Tag Usage"),
+    description: t("View usage grouped by tags"),
     icon: <Tags className="size-4" />,
     adminOnly: true,
   },
   {
     value: "agent",
-    label: "Agent Usage (A2A)",
-    description: "View usage by AI agents",
+    label: t("Agent Usage (A2A)"),
+    description: t("View usage by AI agents"),
     icon: <Bot className="size-4" />,
     capability: "viewAgentUsage",
   },
   {
     value: "user",
-    label: "User Usage",
-    description: "View usage by individual users",
+    label: t("User Usage"),
+    description: t("View usage by individual users"),
     icon: <User className="size-4" />,
     adminOnly: true,
   },
   {
     value: "user-agent-activity",
-    label: "User Agent Activity",
-    description: "View detailed user agent activity logs",
+    label: t("User Agent Activity"),
+    description: t("View detailed user agent activity logs"),
     icon: <LineChart className="size-4" />,
     adminOnly: true,
   },

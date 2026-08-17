@@ -4,6 +4,7 @@ import NotificationsManager from "@/components/molecules/notifications_manager";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
+import { t } from "@/i18n";
 interface TestResult {
   guardrailName: string;
   response_text: string;
@@ -57,7 +58,7 @@ export function GuardrailTestResults({ results, errors }: GuardrailTestResultsPr
         return true;
       }
     } catch (error) {
-      console.error("Copy failed:", error);
+      console.error(t("Copy failed:"), error);
       return false;
     }
   };
@@ -68,7 +69,7 @@ export function GuardrailTestResults({ results, errors }: GuardrailTestResultsPr
 
   return (
     <div className="space-y-3 border-t border-border pt-4">
-      <h3 className="text-sm font-semibold">Results</h3>
+      <h3 className="text-sm font-semibold">{t("Results")}</h3>
 
       {/* Success Results */}
       {results &&
@@ -102,7 +103,7 @@ export function GuardrailTestResults({ results, errors }: GuardrailTestResultsPr
                         onClick={async () => {
                           const success = await copyToClipboard(result.response_text);
                           if (success) {
-                            NotificationsManager.success("Result copied to clipboard");
+                            NotificationsManager.success(t("Result copied to clipboard"));
                           } else {
                             NotificationsManager.fromBackend("Failed to copy result");
                           }
@@ -117,13 +118,13 @@ export function GuardrailTestResults({ results, errors }: GuardrailTestResultsPr
                 {!isCollapsed && (
                   <>
                     <div className="rounded-sm border border-emerald-200 bg-background p-3">
-                      <label className="mb-2 block text-xs font-medium text-muted-foreground">Output Text</label>
+                      <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("Output Text")}</label>
                       <div className="font-mono text-sm whitespace-pre-wrap wrap-break-word">
                         {result.response_text}
                       </div>
                     </div>
                     <div className="text-xs text-muted-foreground">
-                      <span className="font-medium">Characters:</span> {result.response_text.length}
+                      <span className="font-medium">{t("Characters:")}</span> {result.response_text.length}
                     </div>
                   </>
                 )}

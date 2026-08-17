@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
 import { useCloudZeroCreate } from "@/app/(dashboard)/hooks/cloudzero/useCloudZeroCreate";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface CloudZeroCreationModalProps {
   open: boolean;
   onOk: () => void;
@@ -11,7 +12,8 @@ interface CloudZeroCreationModalProps {
 }
 
 export default function CloudZeroCreationModal({ open, onOk, onCancel }: CloudZeroCreationModalProps) {
-  const { accessToken } = useAuthorized();
+
+  const { t } = useLanguage();  const { accessToken } = useAuthorized();
   const [form] = Form.useForm();
   const createMutation = useCloudZeroCreate(accessToken || "");
 
@@ -32,7 +34,7 @@ export default function CloudZeroCreationModal({ open, onOk, onCancel }: CloudZe
         },
         {
           onSuccess: () => {
-            MessageManager.success("CloudZero integration created successfully");
+            MessageManager.success(t("CloudZero integration created successfully"));
             form.resetFields();
             onOk();
           },
@@ -59,13 +61,13 @@ export default function CloudZeroCreationModal({ open, onOk, onCancel }: CloudZe
 
   return (
     <Modal
-      title="Create CloudZero Integration"
+      title={t("Create CloudZero Integration")}
       open={open}
       onOk={handleSubmit}
       onCancel={handleCancel}
       confirmLoading={createMutation.isPending}
       okText={createMutation.isPending ? "Creating..." : "Create"}
-      cancelText="Cancel"
+      cancelText={t("Cancel")}
       okButtonProps={{
         disabled: createMutation.isPending,
       }}
@@ -75,23 +77,23 @@ export default function CloudZeroCreationModal({ open, onOk, onCancel }: CloudZe
     >
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         <Form.Item
-          label="CloudZero API Key"
+          label={t("CloudZero API Key")}
           name="api_key"
           rules={[{ required: true, message: "Please enter your CloudZero API key" }]}
         >
-          <Input.Password placeholder="Enter your CloudZero API key" />
+          <Input.Password placeholder={t("Enter your CloudZero API key")} />
         </Form.Item>
         <Form.Item
-          label="Connection ID"
+          label={t("Connection ID")}
           name="connection_id"
           rules={[{ required: true, message: "Please enter your CloudZero connection ID" }]}
         >
-          <Input placeholder="Enter your CloudZero connection ID" />
+          <Input placeholder={t("Enter your CloudZero connection ID")} />
         </Form.Item>
         <Form.Item
-          label="Timezone"
+          label={t("Timezone")}
           name="timezone"
-          tooltip="Timezone for date handling (defaults to UTC if not provided)"
+          tooltip={t("Timezone for date handling (defaults to UTC if not provided)")}
         >
           <Input placeholder="UTC" />
         </Form.Item>

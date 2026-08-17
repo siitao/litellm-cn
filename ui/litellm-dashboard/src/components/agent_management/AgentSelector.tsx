@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Select } from "antd";
 import { getAgentsList } from "../networking";
 
+import { t } from "@/i18n";
 interface Agent {
   agent_id: string;
   agent_name: string;
@@ -52,7 +53,7 @@ const AgentSelector: React.FC<AgentSelectorProps> = ({
         });
         setAccessGroups(Array.from(groups));
       } catch (error) {
-        console.error("Error fetching agents:", error);
+        console.error(t("Error fetching agents:"), error);
       } finally {
         setLoading(false);
       }

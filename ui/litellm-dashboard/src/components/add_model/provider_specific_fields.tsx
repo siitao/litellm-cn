@@ -5,7 +5,8 @@ import { Button as Button2, Col, Form, Input, Row, Select, Typography, Upload, U
 import React from "react";
 import { CredentialItem, ProviderCredentialFieldMetadata } from "../networking";
 import { provider_map, Providers } from "../provider_info_helpers";
-const { Link } = Typography;
+
+import { t } from "@/i18n";const { Link } = Typography;
 
 interface ProviderSpecificFieldsProps {
   selectedProvider: Providers;
@@ -260,7 +261,7 @@ const ProviderSpecificFields: React.FC<ProviderSpecificFieldsProps> = ({ selecte
                   }
                 }}
               >
-                <Button2 icon={<UploadOutlined />}>Click to Upload</Button2>
+                <Button2 icon={<UploadOutlined />}>{t("Click to Upload")}</Button2>
               </Upload>
             ) : field.type === "textarea" ? (
               <Input.TextArea

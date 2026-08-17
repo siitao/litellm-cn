@@ -3,6 +3,7 @@ import { ExternalLink } from "lucide-react";
 
 import { cn } from "@/lib/cva.config";
 
+import { t } from "@/i18n";
 export type DocLinkProps = {
   href?: string;
   className?: string;
@@ -21,7 +22,7 @@ const DocLink = ({ href, className }: DocLinkProps) => {
         className,
       )}
     >
-      <span>API Reference Docs</span>
+      <span>{t("API Reference Docs")}</span>
       <ExternalLink aria-hidden className="h-4 w-4 opacity-80" />
       <span className="sr-only">(opens in a new tab)</span>
     </a>

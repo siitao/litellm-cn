@@ -1,6 +1,7 @@
 import React from "react";
 import { Switch } from "antd";
 
+import { t } from "@/i18n";
 interface TagFilteringToggleProps {
   enabled: boolean;
   routerFieldsMetadata: { [key: string]: any };
@@ -25,9 +26,7 @@ const TagFilteringToggle: React.FC<TagFilteringToggleProps> = ({ enabled, router
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-600 hover:text-blue-800 underline"
-                >
-                  Learn more
-                </a>
+                >{t("Learn more")}</a>
               </>
             )}
           </p>

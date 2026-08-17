@@ -10,13 +10,15 @@ import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
 import { fetchProxySettings } from "@/utils/proxyUtils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface ProxySettings {
   PROXY_BASE_URL?: string;
   LITELLM_UI_API_DOC_BASE_URL?: string | null;
 }
 
 export default function PlaygroundPage() {
-  const { accessToken, userRole, userId, disabledPersonalKeyCreation, token, isViewOnly } = useAuthorized();
+
+  const { t } = useLanguage();  const { accessToken, userRole, userId, disabledPersonalKeyCreation, token, isViewOnly } = useAuthorized();
   const [proxySettings, setProxySettings] = useState<ProxySettings | undefined>(undefined);
 
   useEffect(() => {
@@ -38,7 +40,7 @@ export default function PlaygroundPage() {
   if (isViewOnly) {
     return (
       <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-8 text-center">
-        <h1 className="text-2xl font-semibold">Access Denied</h1>
+        <h1 className="text-2xl font-semibold">{t("Access Denied")}</h1>
         <p className="text-muted-foreground">
           Your role does not have access to the Playground. Ask your proxy admin for access to test models.
         </p>
@@ -53,18 +55,10 @@ export default function PlaygroundPage() {
           variant="line"
           className="mb-0 h-auto w-full shrink-0 justify-start overflow-x-auto rounded-none border-b border-border bg-transparent p-0"
         >
-          <TabsTrigger value="chat" className="flex-none rounded-none px-4 py-2">
-            Chat
-          </TabsTrigger>
-          <TabsTrigger value="compare" className="flex-none rounded-none px-4 py-2">
-            Compare
-          </TabsTrigger>
-          <TabsTrigger value="compliance" className="flex-none rounded-none px-4 py-2">
-            Compliance
-          </TabsTrigger>
-          <TabsTrigger value="agent-builder" className="flex-none rounded-none px-4 py-2">
-            Agent Builder (Experimental)
-          </TabsTrigger>
+          <TabsTrigger value="chat" className="flex-none rounded-none px-4 py-2">{t("Chat")}</TabsTrigger>
+          <TabsTrigger value="compare" className="flex-none rounded-none px-4 py-2">{t("Compare")}</TabsTrigger>
+          <TabsTrigger value="compliance" className="flex-none rounded-none px-4 py-2">{t("Compliance")}</TabsTrigger>
+          <TabsTrigger value="agent-builder" className="flex-none rounded-none px-4 py-2">{t("Agent Builder (Experimental)")}</TabsTrigger>
         </TabsList>
         <TabsContent value="chat" className="mt-0 h-full min-h-0 min-w-0 overflow-hidden data-hidden:hidden">
           <ChatUI

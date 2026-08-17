@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Input, Tooltip } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 
+import { t } from "@/i18n";
 interface StdioConfigurationProps {
   isVisible: boolean;
   /**
@@ -17,9 +18,7 @@ const StdioConfiguration: React.FC<StdioConfigurationProps> = ({ isVisible, requ
   return (
     <Form.Item
       label={
-        <span className="text-sm font-medium text-gray-700 flex items-center">
-          Stdio Configuration (JSON)
-          <Tooltip title="Paste your stdio MCP server configuration in JSON format. You can use the full mcpServers structure from config.yaml or just the inner server configuration.">
+        <span className="text-sm font-medium text-gray-700 flex items-center">{t("Stdio Configuration (JSON)")}<Tooltip title="Paste your stdio MCP server configuration in JSON format. You can use the full mcpServers structure from config.yaml or just the inner server configuration.">
             <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
           </Tooltip>
         </span>

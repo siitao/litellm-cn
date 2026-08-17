@@ -8,6 +8,7 @@ import { userDetailHref } from "@/utils/entityLinks";
 
 import type { VectorStoreIndex } from "./IndexesTab";
 
+import { t } from "@/i18n";
 interface IndexesTableColumnsDeps {
   resolveVectorStoreId: (name: string) => string | undefined;
   onViewVectorStore: (vectorStoreId: string) => void;
@@ -20,8 +21,8 @@ export const getIndexesTableColumns = ({
   {
     id: "index_name",
     accessorKey: "index_name",
-    meta: { title: "Index Name" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Index Name" />,
+    meta: { title: t("Index Name")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Index Name")} />,
     size: 220,
     enableSorting: true,
     cell: ({ row }) => (
@@ -33,8 +34,8 @@ export const getIndexesTableColumns = ({
   {
     id: "vector_store_name",
     accessorFn: (row) => row.litellm_params.vector_store_name,
-    meta: { title: "Vector Store" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Vector Store" />,
+    meta: { title: t("Vector Store")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Vector Store")} />,
     size: 200,
     enableSorting: true,
     cell: ({ row }) => {
@@ -60,7 +61,7 @@ export const getIndexesTableColumns = ({
   {
     id: "vector_store_index",
     accessorFn: (row) => row.litellm_params.vector_store_index,
-    meta: { title: "Provider Index" },
+    meta: { title: t("Provider Index")},
     header: "Provider Index",
     size: 220,
     enableSorting: false,
@@ -76,7 +77,7 @@ export const getIndexesTableColumns = ({
   {
     id: "created_by",
     accessorKey: "created_by",
-    meta: { title: "Created By" },
+    meta: { title: t("Created By")},
     header: "Created By",
     size: 160,
     enableSorting: false,
@@ -99,8 +100,8 @@ export const getIndexesTableColumns = ({
     id: "created_at",
     accessorKey: "created_at",
     sortingFn: "datetime",
-    meta: { title: "Created At" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Created At" />,
+    meta: { title: t("Created At")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Created At")} />,
     size: 150,
     enableSorting: true,
     cell: ({ row }) => <DateCell value={row.original.created_at} precision="date" />,

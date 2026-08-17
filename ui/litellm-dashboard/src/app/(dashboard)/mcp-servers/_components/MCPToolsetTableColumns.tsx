@@ -18,6 +18,8 @@ import { getProxyBaseUrl } from "@/components/networking";
 import { MCPToolset } from "@/components/mcp_tools/types";
 import { copyToClipboard } from "@/utils/dataUtils";
 
+import { t } from "@/i18n";
+import { useLanguage } from "@/contexts/LanguageContext";
 // Display-only. Toolsets persist {server_id, bare tool_name}; the gateway serves
 // each tool prefixed as "{server-prefix}-{tool}". Render that qualified form so
 // the same tool name on different servers stays distinguishable. This mirrors the
@@ -41,10 +43,11 @@ interface ToolsetRowActionsProps {
 }
 
 function ToolsetRowActions({ toolset, isAdmin, onEditClick, onDeleteClick }: ToolsetRowActionsProps) {
-  return (
+
+  const { t } = useLanguage();  return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open toolset actions"
+        aria-label={t("Open toolset actions")}
         data-testid={`toolset-actions-${toolset.toolset_id}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -103,7 +106,7 @@ export const getMCPToolsetTableColumns = ({
   {
     id: "toolset_id",
     accessorKey: "toolset_id",
-    meta: { title: "Toolset ID" },
+    meta: { title: t("Toolset ID")},
     header: "Toolset ID",
     size: 140,
     enableSorting: false,
@@ -112,8 +115,8 @@ export const getMCPToolsetTableColumns = ({
   {
     id: "toolset_name",
     accessorKey: "toolset_name",
-    meta: { title: "Name" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Name" />,
+    meta: { title: t("Name")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Name")} />,
     size: 260,
     enableSorting: true,
     sortingFn: "alphanumeric",
@@ -129,7 +132,7 @@ export const getMCPToolsetTableColumns = ({
   {
     id: "description",
     accessorKey: "description",
-    meta: { title: "Description" },
+    meta: { title: t("Description")},
     header: "Description",
     size: 200,
     enableSorting: false,
@@ -141,7 +144,7 @@ export const getMCPToolsetTableColumns = ({
   },
   {
     id: "tools",
-    meta: { title: "Tools", skeleton: "chips" },
+    meta: { title: t("Tools"), skeleton: "chips" },
     header: "Tools",
     size: 260,
     enableSorting: false,
@@ -167,8 +170,8 @@ export const getMCPToolsetTableColumns = ({
   {
     id: "created_at",
     accessorKey: "created_at",
-    meta: { title: "Created" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Created" />,
+    meta: { title: t("Created")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Created")} />,
     size: 120,
     enableSorting: true,
     cell: ({ row }) => <DateCell value={row.original.created_at} precision="date" />,
@@ -176,7 +179,7 @@ export const getMCPToolsetTableColumns = ({
   {
     id: "actions",
     meta: { className: "text-right", headerClassName: "text-right" },
-    header: () => <span className="sr-only">Actions</span>,
+    header: () => <span className="sr-only">{t("Actions")}</span>,
     size: 64,
     enableSorting: false,
     enableHiding: false,

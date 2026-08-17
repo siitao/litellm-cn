@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from "react";
 import { Select } from "antd";
 import { TextInput } from "@tremor/react";
-interface ModelSelectorProps {
+
+import { useLanguage } from "@/contexts/LanguageContext";interface ModelSelectorProps {
   value: string;
   onChange: (value: string) => void;
   models: string[];
@@ -9,7 +10,8 @@ interface ModelSelectorProps {
   disabled?: boolean;
 }
 export function ModelSelector({ value, onChange, models, loading, disabled }: ModelSelectorProps) {
-  const [isAddingCustom, setIsAddingCustom] = useState(false);
+
+  const { t } = useLanguage();  const [isAddingCustom, setIsAddingCustom] = useState(false);
   const [customValue, setCustomValue] = useState("");
 
   const options = useMemo(() => Array.from(new Set(models)).sort(), [models]);
@@ -70,7 +72,7 @@ export function ModelSelector({ value, onChange, models, loading, disabled }: Mo
       {isAddingCustom && (
         <TextInput
           className="mt-2"
-          placeholder="Custom Model Name (Enter to add)"
+          placeholder={t("Custom Model Name (Enter to add)")}
           value={customValue}
           onValueChange={setCustomValue}
           onKeyDown={(event) => {

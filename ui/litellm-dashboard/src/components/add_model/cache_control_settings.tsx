@@ -3,6 +3,7 @@ import { Form, Switch, Select, Typography } from "antd";
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
 import NumericalInput from "../shared/numerical_input";
 
+import { t } from "@/i18n";
 const { Text } = Typography;
 
 interface CacheControlInjectionPoint {
@@ -37,14 +38,14 @@ const CacheControlSettings: React.FC<CacheControlSettingsProps> = ({
         form.setFieldValue("litellm_extra_params", "");
       }
     } catch (error) {
-      console.error("Error updating cache control points:", error);
+      console.error(t("Error updating cache control points:"), error);
     }
   };
 
   return (
     <>
       <Form.Item
-        label="Cache Control Injection Points"
+        label={t("Cache Control Injection Points")}
         name="cache_control"
         valuePropName="checked"
         className="mb-4"
@@ -67,30 +68,30 @@ const CacheControlSettings: React.FC<CacheControlSettingsProps> = ({
                   <div key={field.key} className="flex items-center mb-4 gap-4">
                     <Form.Item
                       {...field}
-                      label="Type"
+                      label={t("Type")}
                       name={[field.name, "location"]}
                       initialValue="message"
                       className="mb-0"
                       style={{ width: "180px" }}
                     >
-                      <Select disabled options={[{ value: "message", label: "Message" }]} />
+                      <Select disabled options={[{ value: "message", label: t("Message")}]} />
                     </Form.Item>
 
                     <Form.Item
                       {...field}
-                      label="Role"
+                      label={t("Role")}
                       name={[field.name, "role"]}
                       className="mb-0"
                       style={{ width: "180px" }}
-                      tooltip="LiteLLM will mark all messages of this role as cacheable"
+                      tooltip={t("LiteLLM will mark all messages of this role as cacheable")}
                     >
                       <Select
-                        placeholder="Select a role"
+                        placeholder={t("Select a role")}
                         allowClear
                         options={[
-                          { value: "user", label: "User" },
-                          { value: "system", label: "System" },
-                          { value: "assistant", label: "Assistant" },
+                          { value: "user", label: t("User")},
+                          { value: "system", label: t("System")},
+                          { value: "assistant", label: t("Assistant")},
                         ]}
                         onChange={() => {
                           const values = form.getFieldValue("cache_control_points");
@@ -101,15 +102,15 @@ const CacheControlSettings: React.FC<CacheControlSettingsProps> = ({
 
                     <Form.Item
                       {...field}
-                      label="Index"
+                      label={t("Index")}
                       name={[field.name, "index"]}
                       className="mb-0"
                       style={{ width: "180px" }}
-                      tooltip="(Optional) If set litellm will mark the message at this index as cacheable"
+                      tooltip={t("(Optional) If set litellm will mark the message at this index as cacheable")}
                     >
                       <NumericalInput
                         type="number"
-                        placeholder="Optional"
+                        placeholder={t("Optional")}
                         step={1}
                         onChange={() => {
                           const values = form.getFieldValue("cache_control_points");

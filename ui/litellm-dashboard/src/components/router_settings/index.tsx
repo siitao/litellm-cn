@@ -4,6 +4,7 @@ import NotificationsManager from "../molecules/notifications_manager";
 import { getCallbacksCall, getRouterSettingsCall, setCallbacksCall } from "../networking";
 import RouterSettingsForm, { RouterSettingsFormValue } from "./RouterSettingsForm";
 
+import { t } from "@/i18n";
 interface RouterSettingsProps {
   accessToken: string | null;
   userRole: string | null;
@@ -168,7 +169,7 @@ const RouterSettings: React.FC<RouterSettingsProps> = ({ accessToken, userRole, 
 
     try {
       await setCallbacksCall(accessToken, payload);
-      NotificationsManager.success("router settings updated successfully");
+      NotificationsManager.success(t("router settings updated successfully"));
     } catch (error) {
       NotificationsManager.fromBackend("Failed to update router settings: " + error);
     }
@@ -190,10 +191,8 @@ const RouterSettings: React.FC<RouterSettingsProps> = ({ accessToken, userRole, 
 
       {/* Actions - Sticky at bottom */}
       <div className="border-t border-gray-200 pt-6 flex justify-end gap-3">
-        <Button onClick={() => window.location.reload()}>Reset</Button>
-        <Button type="primary" onClick={handleSaveChanges}>
-          Save Changes
-        </Button>
+        <Button onClick={() => window.location.reload()}>{t("Reset")}</Button>
+        <Button type="primary" onClick={handleSaveChanges}>{t("Save Changes")}</Button>
       </div>
     </div>
   );

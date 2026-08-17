@@ -29,6 +29,7 @@ import {
 } from "./costOptimizationUtils";
 import { DailyActivityRange } from "./useDailyActivityRange";
 
+import { t } from "@/i18n";
 interface UsageTabProps {
   accessToken: string | null;
   activity: DailyActivityRange;
@@ -181,30 +182,30 @@ const UsageTab: React.FC<UsageTabProps> = ({ accessToken, activity }) => {
   return (
     <div className="w-full space-y-6">
       <div className="flex flex-wrap items-center justify-end gap-4">
-        <span className="text-sm text-muted-foreground">Spend is bucketed by UTC day</span>
+        <span className="text-sm text-muted-foreground">{t("Spend is bucketed by UTC day")}</span>
         <AdvancedDatePicker value={dateValue} onValueChange={onDateChange} />
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <SummaryCard
-          label="Total saved"
+          label={t("Total saved")}
           value={usd(totalSaved)}
           hint={loading || isFetchingMore ? "Loading..." : "Compression + prompt caching + auto-router"}
         />
         <SummaryCard
-          label="Compression savings"
+          label={t("Compression savings")}
           value={usd(compressionTotal)}
           hint={`${formatNumberWithCommas(savedTokensTotal)} tokens compressed`}
           info="Tokens Headroom removed before the call, priced at the model's input rate."
         />
         <SummaryCard
-          label="Prompt caching savings"
+          label={t("Prompt caching savings")}
           value={usd(cachingTotal)}
           hint="Cache reads, net of write premium"
           info="What caching saved against paying the input rate for every token: the discount on tokens served from cache, less the premium providers charge to write a cache entry. Can be negative on traffic that writes more cache than it reuses."
         />
         <SummaryCard
-          label="Auto-router savings"
+          label={t("Auto-router savings")}
           value={usd(autorouterTotal)}
           hint="vs. the priciest model it could pick"
           info="What this traffic would have cost had every request gone to the most expensive model the auto-router can route to, minus what it actually cost. Switching leaves the new model with a cold cache, so it pays to write the prompt again while the baseline is priced as already warm; a route that thrashes the cache can total below zero, and a genuine first turn, where neither side had anything cached, is undercounted."
@@ -218,13 +219,13 @@ const UsageTab: React.FC<UsageTabProps> = ({ accessToken, activity }) => {
               never competes with the controls for width and neither moves when it grows.
               The controls wrap within their column instead of pushing past the card */}
           <CardHeader>
-            <CardTitle>Savings</CardTitle>
+            <CardTitle>{t("Savings")}</CardTitle>
             <CardDescription>{savingsSubtitle}</CardDescription>
             <CardAction className="flex flex-wrap items-center justify-end gap-x-4 gap-y-2">
               <CustomLegend categories={SAVINGS_SERIES} colors={SAVINGS_COLORS} />
               <Tabs value={accumulation} onValueChange={(value) => setAccumulation(value as SavingsAccumulation)}>
                 <TabsList>
-                  <TabsTrigger value="cumulative">Cumulative</TabsTrigger>
+                  <TabsTrigger value="cumulative">{t("Cumulative")}</TabsTrigger>
                   <TabsTrigger value="per-interval">{intervalLabel}</TabsTrigger>
                 </TabsList>
               </Tabs>
@@ -258,7 +259,7 @@ const UsageTab: React.FC<UsageTabProps> = ({ accessToken, activity }) => {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Savings by driver</CardTitle>
+            <CardTitle>{t("Savings by driver")}</CardTitle>
           </CardHeader>
           <CardContent>
             <DonutChart
@@ -278,7 +279,7 @@ const UsageTab: React.FC<UsageTabProps> = ({ accessToken, activity }) => {
       {canViewProxyWideCostData && (
         <Card>
           <CardHeader>
-            <CardTitle>Spend by tool</CardTitle>
+            <CardTitle>{t("Spend by tool")}</CardTitle>
             <p className="text-sm text-muted-foreground">
               Spend on requests that invoked each tool (MCP and client-side tools); declaring a tool without invoking it
               does not count. A request that invoked multiple tools counts its full spend toward each, so this
@@ -293,7 +294,7 @@ const UsageTab: React.FC<UsageTabProps> = ({ accessToken, activity }) => {
             ) : (
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                 <div>
-                  <p className="mb-2 text-sm font-medium text-muted-foreground">Total by tool</p>
+                  <p className="mb-2 text-sm font-medium text-muted-foreground">{t("Total by tool")}</p>
                   <BarChart
                     data={topToolsChart}
                     index="tool_name"
@@ -308,7 +309,7 @@ const UsageTab: React.FC<UsageTabProps> = ({ accessToken, activity }) => {
                   />
                 </div>
                 <div>
-                  <p className="mb-2 text-sm font-medium text-muted-foreground">Daily spend by tool</p>
+                  <p className="mb-2 text-sm font-medium text-muted-foreground">{t("Daily spend by tool")}</p>
                   <CustomLegend categories={topToolNames} colors={toolColors} />
                   <BarChart
                     data={dailyToolSeries}

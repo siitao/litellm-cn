@@ -5,6 +5,7 @@ import { getUISettings } from "@/components/networking";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
 import { useEffect, useState } from "react";
 
+import { t } from "@/i18n";
 interface SidebarProviderProps {
   setPage: (page: string) => void;
   defaultSelectedKey: string;
@@ -61,7 +62,7 @@ const SidebarProvider = ({
           setAllowVectorStoresForTeamAdmins(Boolean(settings.values.allow_vector_stores_for_team_admins));
         }
       } catch (error) {
-        console.error("[SidebarProvider] Failed to fetch UI settings:", error);
+        console.error(t("[SidebarProvider] Failed to fetch UI settings:"), error);
       }
     };
 

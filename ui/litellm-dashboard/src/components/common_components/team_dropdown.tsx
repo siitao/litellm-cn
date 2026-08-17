@@ -6,6 +6,7 @@ import { useInfiniteTeams } from "@/app/(dashboard)/hooks/teams/useTeams";
 import { DEBOUNCE_WAIT_MS } from "@/utils/debounceConstants";
 import { Team } from "../key_team_helpers/key_list";
 
+import { t } from "@/i18n";
 const { Text } = Typography;
 
 interface TeamDropdownProps {
@@ -78,7 +79,7 @@ const TeamDropdown: React.FC<TeamDropdownProps> = ({
   return (
     <Select
       showSearch
-      placeholder="Search or select a team"
+      placeholder={t("Search or select a team")}
       value={value || undefined}
       onChange={handleChange}
       disabled={disabled}

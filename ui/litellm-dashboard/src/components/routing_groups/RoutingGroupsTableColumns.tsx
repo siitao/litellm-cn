@@ -17,6 +17,7 @@ import { cn } from "@/lib/cva.config";
 import { formatStrategyLabel } from "./strategy";
 import type { RoutingGroup } from "./types";
 
+import { t } from "@/i18n";
 interface RoutingGroupRowActionsProps {
   group: RoutingGroup;
   onEdit: (group: RoutingGroup) => void;
@@ -65,8 +66,8 @@ export const getRoutingGroupsTableColumns = ({
   {
     id: "group_name",
     accessorKey: "group_name",
-    meta: { title: "Group Name", skeleton: "text" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Group Name" />,
+    meta: { title: t("Group Name"), skeleton: "text" },
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Group Name")} />,
     size: 240,
     enableSorting: true,
     cell: ({ row }) => (
@@ -75,7 +76,7 @@ export const getRoutingGroupsTableColumns = ({
   },
   {
     id: "models",
-    meta: { title: "Models", skeleton: "chips" },
+    meta: { title: t("Models"), skeleton: "chips" },
     header: "Models",
     size: 320,
     enableSorting: false,
@@ -84,8 +85,8 @@ export const getRoutingGroupsTableColumns = ({
   {
     id: "routing_strategy",
     accessorKey: "routing_strategy",
-    meta: { title: "Strategy", skeleton: "text" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Strategy" />,
+    meta: { title: t("Strategy"), skeleton: "text" },
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Strategy")} />,
     size: 180,
     enableSorting: true,
     cell: ({ row }) => (
@@ -98,7 +99,7 @@ export const getRoutingGroupsTableColumns = ({
   {
     id: "actions",
     meta: { className: "text-right", headerClassName: "text-right" },
-    header: () => <span className="sr-only">Actions</span>,
+    header: () => <span className="sr-only">{t("Actions")}</span>,
     size: 64,
     enableSorting: false,
     enableHiding: false,

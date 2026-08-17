@@ -2,6 +2,7 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import { Select as AntdSelect, Tooltip, Typography } from "antd";
 import React from "react";
 
+import { t } from "@/i18n";
 const { Text } = Typography;
 
 export const DEFAULT_ESCALATION_KEYWORDS = ["LITELLM ESCALATE"];
@@ -15,9 +16,7 @@ const EscalationKeywords: React.FC<EscalationKeywordsProps> = ({ keywords, onCha
   return (
     <div className="w-full max-w-none">
       <div className="flex items-center gap-2 mb-1">
-        <Typography.Title level={4} style={{ margin: 0 }}>
-          Escalation Keywords
-        </Typography.Title>
+        <Typography.Title level={4} style={{ margin: 0 }}>{t("Escalation Keywords")}</Typography.Title>
         <Tooltip title="Case-sensitive phrases a user can include in their message to force a bump to the next-higher complexity tier when they aren't happy with results. They can force a stronger model, but not choose which one.">
           <InfoCircleOutlined className="text-gray-400" />
         </Tooltip>
@@ -31,7 +30,7 @@ const EscalationKeywords: React.FC<EscalationKeywordsProps> = ({ keywords, onCha
         mode="tags"
         value={keywords}
         onChange={onChange}
-        placeholder="e.g., LITELLM ESCALATE"
+        placeholder={t("e.g., LITELLM ESCALATE")}
         tokenSeparators={[","]}
         open={false}
         suffixIcon={null}

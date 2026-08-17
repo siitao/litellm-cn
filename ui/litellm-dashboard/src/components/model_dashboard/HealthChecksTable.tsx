@@ -9,6 +9,7 @@ import { DataTable } from "@/components/shared/DataTable";
 
 import { getHealthChecksTableColumns, type HealthCheckData, type HealthStatus } from "./HealthChecksTableColumns";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface HealthChecksTableProps {
   data: HealthCheckData[];
   rowCount: number;
@@ -27,13 +28,14 @@ interface HealthChecksTableProps {
 }
 
 function EmptyState() {
-  return (
+
+  const { t } = useLanguage();  return (
     <div className="flex flex-col items-center gap-1 py-6">
       <div className="mb-1 flex size-10 items-center justify-center rounded-lg bg-muted">
         <HeartPulse className="size-5 text-muted-foreground" />
       </div>
-      <div className="text-sm font-medium text-foreground">No models found</div>
-      <div className="text-sm text-muted-foreground">Models added to this proxy will show their health here.</div>
+      <div className="text-sm font-medium text-foreground">{t("No models found")}</div>
+      <div className="text-sm text-muted-foreground">{t("Models added to this proxy will show their health here.")}</div>
     </div>
   );
 }

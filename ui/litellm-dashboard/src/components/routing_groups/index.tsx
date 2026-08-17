@@ -13,6 +13,7 @@ import RoutingGroupModal from "./RoutingGroupModal";
 import NotificationsManager from "../molecules/notifications_manager";
 import type { RoutingGroup } from "./types";
 
+import { t } from "@/i18n";
 const { Text } = Typography;
 
 const RoutingGroups: React.FC = () => {
@@ -112,14 +113,9 @@ const RoutingGroups: React.FC = () => {
             className="max-w-sm"
           />
           <Flex align="center" gap={12}>
-            <Button icon={<ReloadOutlined />} onClick={() => refetch()} loading={isFetching && !isLoading}>
-              Refresh
-            </Button>
-            <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>
-              Create Group
-            </Button>
-            <Text type="secondary" className="text-sm whitespace-nowrap">
-              Showing {filteredGroups.length} {filteredGroups.length === 1 ? "result" : "results"}
+            <Button icon={<ReloadOutlined />} onClick={() => refetch()} loading={isFetching && !isLoading}>{t("Refresh")}</Button>
+            <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>{t("Create Group")}</Button>
+            <Text type="secondary" className="text-sm whitespace-nowrap">{t("Showing")} {filteredGroups.length} {filteredGroups.length === 1 ? "result" : "results"}
             </Text>
           </Flex>
         </Flex>
@@ -148,17 +144,14 @@ const RoutingGroups: React.FC = () => {
 
       <Modal
         open={Boolean(deletingGroup)}
-        title="Delete routing group?"
-        okText="Delete"
+        title={t("Delete routing group?")}
+        okText={t("Delete")}
         okButtonProps={{ danger: true, loading: saveMutation.isPending }}
-        cancelText="Cancel"
+        cancelText={t("Cancel")}
         onOk={confirmDelete}
         onCancel={() => setDeletingGroup(null)}
       >
-        <Text>
-          Models in <Text strong>{deletingGroup?.group_name}</Text> will fall back to the proxy&apos;s top-level routing
-          strategy. This cannot be undone.
-        </Text>
+        <Text>{t("Models in")}<Text strong>{deletingGroup?.group_name}</Text>{t("will fall back to the proxy&apos;s top-level routing strategy. This cannot be undone.")}</Text>
       </Modal>
     </Space>
   );

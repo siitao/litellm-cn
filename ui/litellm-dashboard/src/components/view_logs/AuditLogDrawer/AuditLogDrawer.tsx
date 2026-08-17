@@ -8,6 +8,7 @@ import { StatusBadge, type StatusTone } from "@/components/shared/table_cells/st
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface AuditLogDrawerProps {
   open: boolean;
   onClose: () => void;
@@ -22,7 +23,8 @@ const ACTION_TONE: Record<string, StatusTone> = {
 };
 
 function CopyableJsonBlock({ label, value }: { label: string; value: Record<string, any> }) {
-  const [copied, setCopied] = useState(false);
+
+  const { t } = useLanguage();  const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(async () => {
     try {
@@ -43,7 +45,7 @@ function CopyableJsonBlock({ label, value }: { label: string; value: Record<stri
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (e) {
-      console.error("Copy failed:", e);
+      console.error(t("Copy failed:"), e);
     }
   }, [value]);
 
@@ -51,7 +53,7 @@ function CopyableJsonBlock({ label, value }: { label: string; value: Record<stri
     <div className="overflow-hidden rounded-sm border border-border bg-card">
       <div className="flex items-center justify-between border-b border-border bg-muted px-3 py-2">
         <span className="text-xs font-semibold text-muted-foreground">{label}</span>
-        <Button variant="ghost" size="icon-xs" onClick={handleCopy} title="Copy JSON" aria-label="Copy JSON">
+        <Button variant="ghost" size="icon-xs" onClick={handleCopy} title="Copy JSON" aria-label={t("Copy JSON")}>
           {copied ? <Check className="text-green-600" /> : <Copy />}
         </Button>
       </div>
@@ -72,7 +74,8 @@ function MetadataRow({ label, value }: { label: string; value: React.ReactNode }
 }
 
 function DiffSection({ log }: { log: AuditLogEntry }) {
-  const { action, table_name, before_value, updated_values } = log;
+
+  const { t } = useLanguage();  const { action, table_name, before_value, updated_values } = log;
   const isKeyTable = table_name === "LiteLLM_VerificationToken";
   const isUpdateAction = action === "updated" || action === "rotated";
 
@@ -120,7 +123,7 @@ function DiffSection({ log }: { log: AuditLogEntry }) {
           <div className="flex items-center border-b border-border bg-muted px-3 py-2">
             <span className="text-xs font-semibold text-muted-foreground">{label}</span>
           </div>
-          <p className="m-0 px-3 py-3 text-xs text-muted-foreground italic">N/A</p>
+          <p className="m-0 px-3 py-3 text-xs text-muted-foreground italic">{t("N/A")}</p>
         </div>
       );
     }
@@ -138,17 +141,17 @@ function DiffSection({ log }: { log: AuditLogEntry }) {
             <div className="space-y-1 px-3 py-3 text-xs">
               {value.token !== undefined && (
                 <p>
-                  <span className="text-muted-foreground">Token:</span> {value.token ?? "N/A"}
+                  <span className="text-muted-foreground">{t("Token:")}</span> {value.token ?? "N/A"}
                 </p>
               )}
               {value.spend !== undefined && (
                 <p>
-                  <span className="text-muted-foreground">Spend:</span> ${Number(value.spend).toFixed(6)}
+                  <span className="text-muted-foreground">{t("Spend:")}</span> ${Number(value.spend).toFixed(6)}
                 </p>
               )}
               {value.max_budget !== undefined && (
                 <p>
-                  <span className="text-muted-foreground">Max Budget:</span> ${Number(value.max_budget).toFixed(6)}
+                  <span className="text-muted-foreground">{t("Max Budget:")}</span> ${Number(value.max_budget).toFixed(6)}
                 </p>
               )}
             </div>
@@ -169,14 +172,15 @@ function DiffSection({ log }: { log: AuditLogEntry }) {
 }
 
 export function AuditLogDrawer({ open, onClose, log }: AuditLogDrawerProps) {
-  if (!log) return null;
+
+  const { t } = useLanguage();  if (!log) return null;
 
   const tableDisplay = AUDIT_TABLE_NAME_DISPLAY[log.table_name] ?? log.table_name;
 
   return (
     <Sheet open={open} onOpenChange={(nextOpen) => !nextOpen && onClose()}>
       <SheetContent side="right" className="w-[60%] gap-0 overflow-y-auto p-0 sm:max-w-none">
-        <SheetTitle className="sr-only">Audit log details</SheetTitle>
+        <SheetTitle className="sr-only">{t("Audit log details")}</SheetTitle>
 
         <div className="flex shrink-0 items-center gap-3 border-b border-border bg-card px-6 py-4">
           <StatusBadge tone={ACTION_TONE[log.action] ?? "neutral"} label={log.action} />
@@ -187,25 +191,25 @@ export function AuditLogDrawer({ open, onClose, log }: AuditLogDrawerProps) {
 
         <div className="px-6 py-5">
           <div className="mb-5 rounded-lg border border-border bg-muted p-4">
-            <p className="mb-2 text-xs font-semibold tracking-wide text-foreground uppercase">Details</p>
+            <p className="mb-2 text-xs font-semibold tracking-wide text-foreground uppercase">{t("Details")}</p>
             <MetadataRow label="Table" value={tableDisplay} />
             <MetadataRow
-              label="Object ID"
+              label={t("Object ID")}
               value={
                 <span className="inline-flex items-center gap-1 font-mono text-xs">
                   {log.object_id}
-                  <CopyButton value={log.object_id} label="Copy object ID" />
+                  <CopyButton value={log.object_id} label={t("Copy object ID")} />
                 </span>
               }
             />
             <MetadataRow label="Changed By" value={<DefaultProxyAdminTag userId={log.changed_by} />} />
             <MetadataRow
-              label="API Key (Hash)"
+              label={t("API Key (Hash)")}
               value={
                 log.changed_by_api_key ? (
                   <span className="inline-flex items-center gap-1 font-mono text-xs break-all">
                     {log.changed_by_api_key}
-                    <CopyButton value={log.changed_by_api_key} label="Copy API key hash" />
+                    <CopyButton value={log.changed_by_api_key} label={t("Copy API key hash")} />
                   </span>
                 ) : (
                   "—"

@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
+import { t } from "@/i18n";
 interface PromptEditorHeaderProps {
   promptName: string;
   onNameChange: (name: string) => void;
@@ -50,7 +51,7 @@ const PromptEditorHeader: React.FC<PromptEditorHeaderProps> = ({
           Back
         </Button>
         <Input
-          aria-label="Prompt name"
+          aria-label={t("Prompt name")}
           value={promptName}
           onChange={(e) => onNameChange(e.target.value)}
           className="text-base font-medium border-none shadow-none"
@@ -58,17 +59,17 @@ const PromptEditorHeader: React.FC<PromptEditorHeaderProps> = ({
         />
         {version && <Badge>{version}</Badge>}
         <Select value={environment} onValueChange={(value) => onEnvironmentChange(String(value))}>
-          <SelectTrigger size="sm" className="w-[140px]" aria-label="Environment">
+          <SelectTrigger size="sm" className="w-[140px]" aria-label={t("Environment")}>
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="development">Development</SelectItem>
-            <SelectItem value="staging">Staging</SelectItem>
-            <SelectItem value="production">Production</SelectItem>
+            <SelectItem value="development">{t("Development")}</SelectItem>
+            <SelectItem value="staging">{t("Staging")}</SelectItem>
+            <SelectItem value="production">{t("Production")}</SelectItem>
           </SelectContent>
         </Select>
-        <Badge variant="secondary">Draft</Badge>
-        <span className="text-xs text-muted-foreground">Unsaved changes</span>
+        <Badge variant="secondary">{t("Draft")}</Badge>
+        <span className="text-xs text-muted-foreground">{t("Unsaved changes")}</span>
       </div>
       <div className="flex items-center space-x-2">
         <PromptCodeSnippets

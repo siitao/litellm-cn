@@ -19,6 +19,7 @@ import { cn } from "@/lib/cva.config";
 import { AutoRouterRow } from "./autoRouterRows";
 import { fitPills } from "./fitPills";
 
+import { t } from "@/i18n";
 function TypeCell({ row }: { row: AutoRouterRow }) {
   return (
     <Badge variant="secondary" className="font-normal">
@@ -108,8 +109,8 @@ export const getAutoRoutersTableColumns = ({
   {
     id: "name",
     accessorKey: "name",
-    meta: { title: "Name" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Name" />,
+    meta: { title: t("Name")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Name")} />,
     size: 260,
     enableSorting: true,
     cell: ({ row }) => <IdentityCell title={row.original.name || "-"} onClick={() => onRouterClick(row.original)} />,
@@ -117,7 +118,7 @@ export const getAutoRoutersTableColumns = ({
   {
     id: "kind",
     accessorKey: "kind",
-    meta: { title: "Type" },
+    meta: { title: t("Type")},
     header: "Type",
     size: 180,
     enableSorting: false,
@@ -125,7 +126,7 @@ export const getAutoRoutersTableColumns = ({
   },
   {
     id: "targets",
-    meta: { title: "Routes to" },
+    meta: { title: t("Routes to")},
     header: "Routes to",
     size: 320,
     enableSorting: false,
@@ -134,7 +135,7 @@ export const getAutoRoutersTableColumns = ({
   {
     id: "defaultModel",
     accessorKey: "defaultModel",
-    meta: { title: "Default model" },
+    meta: { title: t("Default model")},
     header: "Default model",
     size: 200,
     enableSorting: false,
@@ -150,8 +151,8 @@ export const getAutoRoutersTableColumns = ({
   {
     id: "createdAt",
     accessorKey: "createdAt",
-    meta: { title: "Created" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Created" />,
+    meta: { title: t("Created")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Created")} />,
     size: 150,
     enableSorting: true,
     sortingFn: "datetime",

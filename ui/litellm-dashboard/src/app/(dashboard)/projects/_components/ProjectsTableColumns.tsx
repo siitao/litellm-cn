@@ -9,6 +9,7 @@ import { CellTooltip, DateCell, IdentityCell, StatusBadge } from "@/components/s
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 
+import { t } from "@/i18n";
 function ProjectTeamCell({
   project,
   teamAliasMap,
@@ -79,8 +80,8 @@ export const getProjectsTableColumns = ({
   {
     id: "project_alias",
     accessorFn: (row) => row.project_alias ?? "",
-    meta: { title: "Name" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Name" />,
+    meta: { title: t("Name")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Name")} />,
     size: 200,
     enableSorting: true,
     cell: ({ row }) => (
@@ -92,8 +93,8 @@ export const getProjectsTableColumns = ({
   {
     id: "team",
     accessorFn: (row) => teamAliasMap.get(row.team_id ?? "") ?? "",
-    meta: { title: "Team" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Team" />,
+    meta: { title: t("Team")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Team")} />,
     size: 180,
     enableSorting: true,
     cell: ({ row }) => (
@@ -102,7 +103,7 @@ export const getProjectsTableColumns = ({
   },
   {
     id: "models",
-    meta: { title: "Models", skeleton: "badge" },
+    meta: { title: t("Models"), skeleton: "badge" },
     header: "Models",
     size: 110,
     enableSorting: false,
@@ -111,7 +112,7 @@ export const getProjectsTableColumns = ({
   {
     id: "status",
     accessorKey: "blocked",
-    meta: { title: "Status", skeleton: "badge" },
+    meta: { title: t("Status"), skeleton: "badge" },
     header: "Status",
     size: 110,
     enableSorting: false,
@@ -126,8 +127,8 @@ export const getProjectsTableColumns = ({
     id: "created_at",
     accessorKey: "created_at",
     sortingFn: "datetime",
-    meta: { title: "Created" },
-    header: ({ column }) => <DataTableSortHeader column={column} title="Created" />,
+    meta: { title: t("Created")},
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Created")} />,
     size: 140,
     enableSorting: true,
     cell: ({ row }) => <DateCell value={row.original.created_at} precision="date" />,
@@ -135,7 +136,7 @@ export const getProjectsTableColumns = ({
   {
     id: "updated_at",
     accessorKey: "updated_at",
-    meta: { title: "Updated" },
+    meta: { title: t("Updated")},
     header: "Updated",
     size: 140,
     enableSorting: false,

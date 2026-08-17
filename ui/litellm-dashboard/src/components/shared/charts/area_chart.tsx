@@ -7,6 +7,7 @@ import { cn } from "@/lib/cva.config";
 import { ValueTooltip, type ChartTooltipComponent } from "./chart_tooltip";
 import { categoryFills, type ChartColor } from "./colors";
 
+import { t } from "@/i18n";
 export type AreaChartProps<TDatum extends Record<string, unknown>> = {
   data: readonly TDatum[];
   index: string;
@@ -46,7 +47,7 @@ export function AreaChart<TDatum extends Record<string, unknown>>({
         className={cn("flex h-80 w-full items-center justify-center rounded-lg border border-dashed", className)}
         style={style}
       >
-        <p className="text-sm text-muted-foreground">No data</p>
+        <p className="text-sm text-muted-foreground">{t("No data")}</p>
       </div>
     );
   }

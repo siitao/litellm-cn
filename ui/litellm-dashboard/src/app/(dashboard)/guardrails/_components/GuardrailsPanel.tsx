@@ -55,7 +55,7 @@ const GuardrailsPanel: React.FC<GuardrailsPanelProps> = ({ accessToken, userRole
       const response: GuardrailsResponse = await getGuardrailsList(accessToken);
       setGuardrailsList(response.guardrails);
     } catch (error) {
-      console.error("Error fetching guardrails:", error);
+      console.error(t("Error fetching guardrails:"), error);
     } finally {
       setIsLoading(false);
     }
@@ -106,7 +106,7 @@ const GuardrailsPanel: React.FC<GuardrailsPanelProps> = ({ accessToken, userRole
       NotificationsManager.success(`Guardrail "${guardrailToDelete.guardrail_name}" deleted successfully`);
       await fetchGuardrails();
     } catch (error) {
-      console.error("Error deleting guardrail:", error);
+      console.error(t("Error deleting guardrail:"), error);
       NotificationsManager.fromBackend("Failed to delete guardrail");
     } finally {
       setIsDeleting(false);
@@ -142,9 +142,7 @@ const GuardrailsPanel: React.FC<GuardrailsPanelProps> = ({ accessToken, userRole
               </TabsTrigger>
             </>
           )}
-          <TabsTrigger value="submitted" className="flex-none">
-            Submitted Guardrails
-          </TabsTrigger>
+          <TabsTrigger value="submitted" className="flex-none">{t("Submitted Guardrails")}</TabsTrigger>
         </TabsList>
 
         {isAdmin && (
@@ -206,16 +204,16 @@ const GuardrailsPanel: React.FC<GuardrailsPanelProps> = ({ accessToken, userRole
 
               <DeleteResourceModal
                 isOpen={isDeleteModalOpen}
-                title="Delete Guardrail"
+                title={t("Delete Guardrail")}
                 message={`Are you sure you want to delete guardrail: ${guardrailToDelete?.guardrail_name}? This action cannot be undone.`}
                 resourceInformationTitle="Guardrail Information"
                 resourceInformation={[
-                  { label: "Name", value: guardrailToDelete?.guardrail_name },
+                  { label: t("Name"), value: guardrailToDelete?.guardrail_name },
                   { label: "ID", value: guardrailToDelete?.guardrail_id, code: true },
-                  { label: "Provider", value: providerDisplayName },
-                  { label: "Mode", value: guardrailToDelete?.litellm_params.mode },
+                  { label: t("Provider"), value: providerDisplayName },
+                  { label: t("Mode"), value: guardrailToDelete?.litellm_params.mode },
                   {
-                    label: "Default On",
+                    label: t("Default On"),
                     value: guardrailToDelete?.litellm_params.default_on ? "Yes" : "No",
                   },
                 ]}

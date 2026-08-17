@@ -96,7 +96,7 @@ const Navbar: React.FC<NavbarProps> = ({
                     <span
                       className="absolute -left-2 -top-1 animate-bounce text-lg"
                       style={{ animationDuration: "2s" }}
-                      title="Thanks for using LiteLLM!"
+                      title={t("Thanks for using LiteLLM!")}
                     >
                       🌑
                     </span>
@@ -130,7 +130,7 @@ const Navbar: React.FC<NavbarProps> = ({
             )}
 
             <nav
-              aria-label="Product documentation"
+              aria-label={t("Product documentation")}
               className={`flex min-w-0 items-center gap-2 ${showWorkerSwitch ? "border-l border-gray-200 pl-4" : ""}`}
             >
               <a

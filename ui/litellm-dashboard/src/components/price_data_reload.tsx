@@ -37,6 +37,7 @@ import {
   scheduleModelCostMapReload,
 } from "./networking";
 
+import { t } from "@/i18n";
 interface ReloadStatus {
   scheduled: boolean;
   interval_hours: number | null;
@@ -113,7 +114,7 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
       const status = await getModelCostMapReloadStatus(accessToken);
       setReloadStatus(status);
     } catch (error) {
-      console.error("Failed to fetch reload status:", error);
+      console.error(t("Failed to fetch reload status:"), error);
       setReloadStatus(EMPTY_RELOAD_STATUS);
     }
   };
@@ -124,7 +125,7 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
     try {
       setSourceInfo(await getModelCostMapSource(accessToken));
     } catch (error) {
-      console.error("Failed to fetch cost map source info:", error);
+      console.error(t("Failed to fetch cost map source info:"), error);
     }
   };
 
@@ -165,7 +166,7 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
         NotificationsManager.fromBackend("Failed to reload price data");
       }
     } catch (error) {
-      console.error("Error reloading price data:", error);
+      console.error(t("Error reloading price data:"), error);
       NotificationsManager.fromBackend("Failed to reload price data. Please try again.");
     } finally {
       setIsLoading(false);
@@ -196,7 +197,7 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
         NotificationsManager.fromBackend("Failed to schedule periodic reload");
       }
     } catch (error) {
-      console.error("Error scheduling reload:", error);
+      console.error(t("Error scheduling reload:"), error);
       NotificationsManager.fromBackend("Failed to schedule periodic reload. Please try again.");
     } finally {
       setIsScheduling(false);
@@ -214,13 +215,13 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
       const response = await cancelModelCostMapReload(accessToken);
 
       if (response.status === "success") {
-        NotificationsManager.success("Periodic reload cancelled successfully");
+        NotificationsManager.success(t("Periodic reload cancelled successfully"));
         await fetchReloadStatus();
       } else {
         NotificationsManager.fromBackend("Failed to cancel periodic reload");
       }
     } catch (error) {
-      console.error("Error cancelling reload:", error);
+      console.error(t("Error cancelling reload:"), error);
       NotificationsManager.fromBackend("Failed to cancel periodic reload. Please try again.");
     } finally {
       setIsCancelling(false);
@@ -267,14 +268,14 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Hard Refresh Price Data</AlertDialogTitle>
+                <AlertDialogTitle>{t("Hard Refresh Price Data")}</AlertDialogTitle>
                 <AlertDialogDescription>
                   This will immediately fetch the latest pricing information from the remote source. Continue?
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>No</AlertDialogCancel>
-                <AlertDialogAction onClick={handleHardRefresh}>Yes</AlertDialogAction>
+                <AlertDialogCancel>{t("No")}</AlertDialogCancel>
+                <AlertDialogAction onClick={handleHardRefresh}>{t("Yes")}</AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
@@ -307,7 +308,7 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
             <CardContent className="space-y-2">
               <div className="flex items-center gap-2">
                 {sourceInfo.source === "remote" ? <Cloud className="size-4" /> : <Database className="size-4" />}
-                <span className="text-sm font-medium">Pricing Data Source</span>
+                <span className="text-sm font-medium">{t("Pricing Data Source")}</span>
                 <Badge variant="secondary" className="ml-auto uppercase">
                   {sourceInfo.source === "remote" ? "Remote" : "Local"}
                 </Badge>
@@ -316,7 +317,7 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
               <Separator />
 
               <div className="flex items-center justify-between text-xs">
-                <span className="text-muted-foreground">Models loaded:</span>
+                <span className="text-muted-foreground">{t("Models loaded:")}</span>
                 <span className="font-medium">{sourceInfo.model_count.toLocaleString()}</span>
               </div>
 
@@ -337,8 +338,7 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
               {sourceInfo.is_env_forced && (
                 <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                   <Info className="size-3.5 shrink-0" />
-                  <span>
-                    Local mode forced via <code>LITELLM_LOCAL_MODEL_COST_MAP=True</code>
+                  <span>{t("Local mode forced via")}<code>LITELLM_LOCAL_MODEL_COST_MAP=True</code>
                   </span>
                 </div>
               )}
@@ -346,7 +346,7 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
               {sourceInfo.fallback_reason && (
                 <div className="flex items-start gap-1.5 rounded-md border border-destructive/30 bg-destructive/10 px-2 py-1.5 text-xs">
                   <TriangleAlert className="mt-0.5 size-3.5 shrink-0 text-destructive" />
-                  <span>Fell back to local: {sourceInfo.fallback_reason}</span>
+                  <span>{t("Fell back to local:")} {sourceInfo.fallback_reason}</span>
                 </div>
               )}
             </CardContent>
@@ -362,11 +362,11 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
                   Scheduled every {reloadStatus.interval_hours} hours
                 </Badge>
               ) : (
-                <p className="text-sm text-muted-foreground">No periodic reload scheduled</p>
+                <p className="text-sm text-muted-foreground">{t("No periodic reload scheduled")}</p>
               )}
 
               <div className="flex items-center justify-between text-xs">
-                <span className="text-muted-foreground">Last run:</span>
+                <span className="text-muted-foreground">{t("Last run:")}</span>
                 <span>{formatDateTime(reloadStatus.last_run)}</span>
               </div>
 
@@ -374,12 +374,12 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
                 <>
                   {reloadStatus.next_run && (
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-muted-foreground">Next run:</span>
+                      <span className="text-muted-foreground">{t("Next run:")}</span>
                       <span>{formatDateTime(reloadStatus.next_run)}</span>
                     </div>
                   )}
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-muted-foreground">Status:</span>
+                    <span className="text-muted-foreground">{t("Status:")}</span>
                     <Badge variant="outline">{getStatusText()}</Badge>
                   </div>
                 </>
@@ -391,17 +391,15 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
         <Dialog open={showScheduleModal} onOpenChange={setShowScheduleModal}>
           <DialogContent className="max-h-[calc(100dvh-2rem)] overflow-y-auto">
             <DialogHeader>
-              <DialogTitle>Set Up Periodic Reload</DialogTitle>
-              <DialogDescription>
-                Set how often LiteLLM should fetch the latest pricing data from the remote source.
-              </DialogDescription>
+              <DialogTitle>{t("Set Up Periodic Reload")}</DialogTitle>
+              <DialogDescription>{t("Set how often LiteLLM should fetch the latest pricing data from the remote source.")}</DialogDescription>
             </DialogHeader>
             <div className="space-y-4">
-              <p className="text-sm">Set up automatic reload of price data every:</p>
+              <p className="text-sm">{t("Set up automatic reload of price data every:")}</p>
               <InputGroup>
                 <InputGroupInput
                   type="number"
-                  aria-label="Reload interval in hours"
+                  aria-label={t("Reload interval in hours")}
                   min={1}
                   max={168}
                   value={hours}
@@ -409,14 +407,11 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
                 />
                 <InputGroupAddon align="inline-end">hours</InputGroupAddon>
               </InputGroup>
-              <p className="text-sm text-muted-foreground">
-                This will automatically fetch the latest pricing data from the remote source every {hours} hours.
+              <p className="text-sm text-muted-foreground">{t("This will automatically fetch the latest pricing data from the remote source every")} {hours} hours.
               </p>
             </div>
             <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => setShowScheduleModal(false)}>
-                Cancel
-              </Button>
+              <Button type="button" variant="outline" onClick={() => setShowScheduleModal(false)}>{t("Cancel")}</Button>
               <Button type="button" disabled={isScheduling} onClick={handleScheduleReload}>
                 {isScheduling && <LoaderCircle className="animate-spin" data-icon="inline-start" />}
                 Schedule

@@ -10,12 +10,14 @@ import { LogEntry } from "../columns";
 import { parseToolsFromLog } from "./utils";
 import { ToolItem } from "./ToolItem";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface ToolsSectionProps {
   log: LogEntry;
 }
 
 export function ToolsSection({ log }: ToolsSectionProps) {
-  const [open, setOpen] = useState(false);
+
+  const { t } = useLanguage();  const [open, setOpen] = useState(false);
   const tools = parseToolsFromLog(log);
 
   // Don't render if no tools
@@ -42,7 +44,7 @@ export function ToolsSection({ log }: ToolsSectionProps) {
             <ChevronRight className="size-3.5 shrink-0 text-muted-foreground" />
           )}
           <div className="flex flex-wrap items-center gap-3">
-            <h3 className="text-lg font-medium text-foreground">Tools</h3>
+            <h3 className="text-lg font-medium text-foreground">{t("Tools")}</h3>
             <span className="text-sm text-muted-foreground">
               {totalTools} provided, {calledTools} called
             </span>

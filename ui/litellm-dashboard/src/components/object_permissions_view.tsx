@@ -5,6 +5,7 @@ import MCPServerPermissions from "./permissions/MCPServerPermissions";
 import AgentPermissions from "./permissions/AgentPermissions";
 import type { ObjectPermission } from "./object_permission_types";
 
+import { t } from "@/i18n";
 interface ObjectPermissionsViewProps {
   objectPermission?: ObjectPermission | null;
   variant?: "card" | "inline";
@@ -39,11 +40,9 @@ export function ObjectPermissionsView({
       />
       <AgentPermissions agents={agents} agentAccessGroups={agentAccessGroups} accessToken={accessToken} />
       <div className="rounded-md border border-gray-100 p-4">
-        <Text className="text-sm font-medium text-gray-800">Search tools</Text>
+        <Text className="text-sm font-medium text-gray-800">{t("Search tools")}</Text>
         {searchTools.length === 0 ? (
-          <Text className="mt-1 block text-xs text-gray-500">
-            No restriction — all configured search tools are allowed for this team.
-          </Text>
+          <Text className="mt-1 block text-xs text-gray-500">{t("No restriction — all configured search tools are allowed for this team.")}</Text>
         ) : (
           <Text className="mt-1 block text-xs text-gray-700">{searchTools.join(", ")}</Text>
         )}
@@ -56,8 +55,8 @@ export function ObjectPermissionsView({
       <div className={`@container bg-white border border-gray-200 rounded-lg p-6 ${className}`}>
         <div className="flex items-center gap-2 mb-6">
           <div>
-            <Text className="font-semibold text-gray-900">Object Permissions</Text>
-            <Text className="text-xs text-gray-500">Access control for Vector Stores and MCP Servers</Text>
+            <Text className="font-semibold text-gray-900">{t("Object Permissions")}</Text>
+            <Text className="text-xs text-gray-500">{t("Access control for Vector Stores and MCP Servers")}</Text>
           </div>
         </div>
         {content}
@@ -67,7 +66,7 @@ export function ObjectPermissionsView({
 
   return (
     <div className={`${className}`}>
-      <Text className="font-medium text-gray-900 mb-3">Object Permissions</Text>
+      <Text className="font-medium text-gray-900 mb-3">{t("Object Permissions")}</Text>
       {content}
     </div>
   );

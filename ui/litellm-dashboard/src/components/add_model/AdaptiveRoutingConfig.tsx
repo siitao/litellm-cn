@@ -7,6 +7,7 @@ import {
   DEFAULT_TIER_DISTANCE_PENALTY,
 } from "./ComplexityRouterConfig";
 
+import { t } from "@/i18n";
 const { Text } = Typography;
 
 interface AdaptiveRoutingConfigProps {
@@ -47,16 +48,12 @@ const AdaptiveRoutingConfig: React.FC<AdaptiveRoutingConfigProps> = ({ value, on
     <>
       <div className="flex items-center gap-2 mb-2">
         <Switch checked={value.adaptive ?? false} onChange={handleAdaptiveToggle} />
-        <Text strong>Enable adaptive bandit selection</Text>
+        <Text strong>{t("Enable adaptive bandit selection")}</Text>
       </div>
-      <Text type="secondary" style={{ display: "block", fontSize: 12 }}>
-        When disabled, each request always uses the model assigned to its classified tier.
-      </Text>
+      <Text type="secondary" style={{ display: "block", fontSize: 12 }}>{t("When disabled, each request always uses the model assigned to its classified tier.")}</Text>
 
       <Card className="bg-gray-50 mt-4">
-        <Text strong style={{ display: "block", marginBottom: 8 }}>
-          How Adaptive Routing Works
-        </Text>
+        <Text strong style={{ display: "block", marginBottom: 8 }}>{t("How Adaptive Routing Works")}</Text>
         <Text type="secondary" style={{ fontSize: 13 }}>
           It learns from how each conversation actually goes: does the user have to rephrase or correct the model, does
           it get stuck repeating itself, does it run out of tool calls, does the user seem satisfied. Combined with
@@ -69,8 +66,7 @@ const AdaptiveRoutingConfig: React.FC<AdaptiveRoutingConfigProps> = ({ value, on
       {value.adaptive && (
         <div className="mt-4 space-y-4">
           <div>
-            <Text strong style={{ display: "block", marginBottom: 4 }}>
-              Quality vs. Cost ({Math.round(adaptiveWeights.quality * 100)}% quality /{" "}
+            <Text strong style={{ display: "block", marginBottom: 4 }}>{t("Quality vs. Cost (")}{Math.round(adaptiveWeights.quality * 100)}% quality /{" "}
               {Math.round(adaptiveWeights.cost * 100)}% cost)
             </Text>
             <Slider
@@ -87,9 +83,7 @@ const AdaptiveRoutingConfig: React.FC<AdaptiveRoutingConfigProps> = ({ value, on
           </div>
 
           <div>
-            <Text strong style={{ display: "block", marginBottom: 4 }}>
-              Eligible Model Pool
-            </Text>
+            <Text strong style={{ display: "block", marginBottom: 4 }}>{t("Eligible Model Pool")}</Text>
             <Radio.Group
               value={adaptiveEligible}
               onChange={(e) => handleAdaptiveEligibleChange(e.target.value)}
@@ -97,11 +91,11 @@ const AdaptiveRoutingConfig: React.FC<AdaptiveRoutingConfigProps> = ({ value, on
             >
               <Space direction="vertical" className="w-full">
                 <Radio value="all">
-                  <Text strong>All tiers (soft floor)</Text>{" "}
+                  <Text strong>{t("All tiers (soft floor)")}</Text>{" "}
                   <Text type="secondary">— router can pick across tiers, depending on the best fit for the prompt</Text>
                 </Radio>
                 <Radio value="classified_tier">
-                  <Text strong>Classified tier only</Text>{" "}
+                  <Text strong>{t("Classified tier only")}</Text>{" "}
                   <Text type="secondary">— router can only pick models within tier</Text>
                 </Radio>
               </Space>
@@ -110,9 +104,7 @@ const AdaptiveRoutingConfig: React.FC<AdaptiveRoutingConfigProps> = ({ value, on
 
           {adaptiveEligible === "all" && (
             <div>
-              <Text strong style={{ display: "block", marginBottom: 4 }}>
-                Tier Distance Penalty
-              </Text>
+              <Text strong style={{ display: "block", marginBottom: 4 }}>{t("Tier Distance Penalty")}</Text>
               <InputNumber
                 value={tierDistancePenalty}
                 onChange={handleTierDistancePenaltyChange}
@@ -120,9 +112,7 @@ const AdaptiveRoutingConfig: React.FC<AdaptiveRoutingConfigProps> = ({ value, on
                 step={0.1}
                 style={{ width: "100%" }}
               />
-              <Text type="secondary" style={{ fontSize: 12 }}>
-                Score penalty applied per tier-step away from the classified tier.
-              </Text>
+              <Text type="secondary" style={{ fontSize: 12 }}>{t("Score penalty applied per tier-step away from the classified tier.")}</Text>
             </div>
           )}
         </div>

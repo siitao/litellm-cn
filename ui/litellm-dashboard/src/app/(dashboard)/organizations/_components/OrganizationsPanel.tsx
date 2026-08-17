@@ -63,13 +63,13 @@ const OrganizationsPanel: React.FC<OrganizationsPanelProps> = ({ userRole, acces
     try {
       setIsDeleting(true);
       await organizationDeleteCall(accessToken, orgToDelete);
-      NotificationsManager.success("Organization deleted successfully");
+      NotificationsManager.success(t("Organization deleted successfully"));
 
       setIsDeleteModalOpen(false);
       setOrgToDelete(null);
       await refetchOrganizations();
     } catch (error) {
-      console.error("Error deleting organization:", error);
+      console.error(t("Error deleting organization:"), error);
     } finally {
       setIsDeleting(false);
     }
@@ -152,10 +152,10 @@ const OrganizationsPanel: React.FC<OrganizationsPanelProps> = ({ userRole, acces
 
       <DeleteResourceModal
         isOpen={isDeleteModalOpen}
-        title="Delete Organization?"
-        message="Are you sure you want to delete this organization? This action cannot be undone."
+        title={t("Delete Organization?")}
+        message={t("Are you sure you want to delete this organization? This action cannot be undone.")}
         resourceInformationTitle="Organization Information"
-        resourceInformation={[{ label: "Organization ID", value: orgToDelete, code: true }]}
+        resourceInformation={[{ label: t("Organization ID"), value: orgToDelete, code: true }]}
         onCancel={cancelDelete}
         onOk={confirmDelete}
         confirmLoading={isDeleting}

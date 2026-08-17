@@ -9,6 +9,7 @@ import { Tag } from "@/components/tag_management/types";
 
 import { getTagTableColumns } from "./tagTableColumns";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface TagTableProps {
   data: Tag[];
   onEdit: (tag: Tag) => void;
@@ -20,13 +21,14 @@ interface TagTableProps {
 const DEFAULT_SORTING: SortingState = [{ id: "created_at", desc: true }];
 
 function EmptyState() {
-  return (
+
+  const { t } = useLanguage();  return (
     <div className="flex flex-col items-center gap-1 py-6">
       <div className="mb-1 flex size-10 items-center justify-center rounded-lg bg-muted">
         <Inbox className="size-5 text-muted-foreground" />
       </div>
-      <div className="text-sm font-medium text-foreground">No tags yet</div>
-      <div className="text-sm text-muted-foreground">Create a tag to start routing and restricting model usage.</div>
+      <div className="text-sm font-medium text-foreground">{t("No tags yet")}</div>
+      <div className="text-sm text-muted-foreground">{t("Create a tag to start routing and restricting model usage.")}</div>
     </div>
   );
 }

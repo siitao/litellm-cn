@@ -1,6 +1,7 @@
 import React from "react";
 import { Select } from "antd";
 
+import { t } from "@/i18n";
 const { Option } = Select;
 
 export const NEVER_RESETS_BUDGET_DURATION = "none";
@@ -31,7 +32,7 @@ const BudgetDurationDropdown: React.FC<BudgetDurationDropdownProps> = ({
       placeholder={placeholder}
       allowClear
     >
-      {showNeverResets ? <Option value={NEVER_RESETS_BUDGET_DURATION}>Never resets</Option> : null}
+      {showNeverResets ? <Option value={NEVER_RESETS_BUDGET_DURATION}>{t("Never resets")}</Option> : null}
       <Option value="1h">hourly</Option>
       <Option value="24h">daily</Option>
       <Option value="7d">weekly</Option>

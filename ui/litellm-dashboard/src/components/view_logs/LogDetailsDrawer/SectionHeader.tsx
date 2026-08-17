@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/cva.config";
 
+import { t } from "@/i18n";
 interface SectionHeaderProps {
   type: "input" | "output";
   tokens?: number;
@@ -53,13 +54,13 @@ export function SectionHeader({
         </div>
 
         {tokens !== undefined && (
-          <span className="text-xs text-muted-foreground">Tokens: {tokens.toLocaleString()}</span>
+          <span className="text-xs text-muted-foreground">{t("Tokens:")} {tokens.toLocaleString()}</span>
         )}
 
-        {cost !== undefined && <span className="text-xs text-muted-foreground">Cost: ${cost.toFixed(6)}</span>}
+        {cost !== undefined && <span className="text-xs text-muted-foreground">{t("Cost: $")}{cost.toFixed(6)}</span>}
 
         {turnCount !== undefined && turnCount > 0 && (
-          <span className="text-xs text-muted-foreground">Turns: {turnCount}</span>
+          <span className="text-xs text-muted-foreground">{t("Turns:")} {turnCount}</span>
         )}
       </div>
 
@@ -69,7 +70,7 @@ export function SectionHeader({
             <Button
               variant="ghost"
               size="icon-sm"
-              aria-label="Copy"
+              aria-label={t("Copy")}
               onClick={(e) => {
                 e.stopPropagation();
                 onCopy();
@@ -79,7 +80,7 @@ export function SectionHeader({
         >
           <Copy />
         </TooltipTrigger>
-        <TooltipContent>Copy</TooltipContent>
+        <TooltipContent>{t("Copy")}</TooltipContent>
       </Tooltip>
     </div>
   );

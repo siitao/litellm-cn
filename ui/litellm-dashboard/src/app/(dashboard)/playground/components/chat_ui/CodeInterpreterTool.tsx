@@ -4,6 +4,7 @@ import { Code, Info, TriangleAlert } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
+import { t } from "@/i18n";
 interface CodeInterpreterToolProps {
   accessToken: string;
   enabled: boolean;
@@ -39,7 +40,7 @@ const CodeInterpreterTool: React.FC<CodeInterpreterToolProps> = ({
 
   const handleToggle = (checked: boolean) => {
     if (checked && !isOpenAI) {
-      MessageManager.warning("Code Interpreter is only available for OpenAI models");
+      MessageManager.warning(t("Code Interpreter is only available for OpenAI models"));
       return;
     }
     onEnabledChange(checked);
@@ -50,9 +51,9 @@ const CodeInterpreterTool: React.FC<CodeInterpreterToolProps> = ({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Code className="size-4 text-blue-500" />
-          <span className="font-medium text-gray-700">Code Interpreter</span>
+          <span className="font-medium text-gray-700">{t("Code Interpreter")}</span>
           <Tooltip>
-            <TooltipTrigger aria-label="About Code Interpreter">
+            <TooltipTrigger aria-label={t("About Code Interpreter")}>
               <Info className="size-3 text-gray-400" />
             </TooltipTrigger>
             <TooltipContent>
@@ -65,7 +66,7 @@ const CodeInterpreterTool: React.FC<CodeInterpreterToolProps> = ({
           onCheckedChange={handleToggle}
           disabled={isDisabled}
           size="sm"
-          aria-label="Enable Code Interpreter"
+          aria-label={t("Enable Code Interpreter")}
         />
       </div>
 
@@ -74,15 +75,13 @@ const CodeInterpreterTool: React.FC<CodeInterpreterToolProps> = ({
           <div className="flex items-start gap-2">
             <TriangleAlert className="mt-0.5 size-4 shrink-0 text-amber-500" />
             <div className="text-xs text-gray-600">
-              <span>Code Interpreter is currently only supported for OpenAI models. </span>
+              <span>{t("Code Interpreter is currently only supported for OpenAI models.")}</span>
               <a
                 href={GITHUB_FEATURE_REQUEST_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 underline"
-              >
-                Request support for other providers
-              </a>
+              >{t("Request support for other providers")}</a>
             </div>
           </div>
         </div>

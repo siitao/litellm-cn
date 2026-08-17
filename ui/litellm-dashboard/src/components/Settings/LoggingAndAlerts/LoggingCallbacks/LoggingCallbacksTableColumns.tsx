@@ -17,6 +17,7 @@ import { cn } from "@/lib/cva.config";
 
 import { AlertingObject } from "./types";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 export type CallbackRow = AlertingObject & {
   mode?: "success" | "failure" | "info" | string;
 };
@@ -51,10 +52,11 @@ interface CallbackRowActionsProps {
 }
 
 function CallbackRowActions({ callback, onTest, onEdit, onDelete }: CallbackRowActionsProps) {
-  return (
+
+  const { t } = useLanguage();  return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open callback actions"
+        aria-label={t("Open callback actions")}
         data-testid={`callback-actions-${callback.name}-${callbackRowMode(callback)}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -124,7 +126,7 @@ export const getLoggingCallbacksTableColumns = ({
   {
     id: "actions",
     meta: { className: "text-right", headerClassName: "text-right" },
-    header: () => <span className="sr-only">Actions</span>,
+    header: () => <span className="sr-only">{t("Actions")}</span>,
     size: 64,
     enableSorting: false,
     enableHiding: false,

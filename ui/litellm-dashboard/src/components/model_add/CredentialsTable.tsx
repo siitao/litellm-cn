@@ -9,6 +9,7 @@ import { DataTable } from "@/components/shared/DataTable";
 
 import { getCredentialsTableColumns } from "./CredentialsTableColumns";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface CredentialsTableProps {
   credentials: CredentialItem[];
   canModifyCredentials: boolean;
@@ -20,13 +21,14 @@ interface CredentialsTableProps {
 const DEFAULT_SORTING: SortingState = [{ id: "credential_name", desc: false }];
 
 function EmptyState() {
-  return (
+
+  const { t } = useLanguage();  return (
     <div className="flex flex-col items-center gap-1 py-6">
       <div className="mb-1 flex size-10 items-center justify-center rounded-lg bg-muted">
         <KeyRound className="size-5 text-muted-foreground" />
       </div>
-      <div className="text-sm font-medium text-foreground">No credentials configured</div>
-      <div className="text-sm text-muted-foreground">Add a credential to connect an AI provider.</div>
+      <div className="text-sm font-medium text-foreground">{t("No credentials configured")}</div>
+      <div className="text-sm text-muted-foreground">{t("Add a credential to connect an AI provider.")}</div>
     </div>
   );
 }

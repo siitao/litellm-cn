@@ -12,6 +12,7 @@ import { isProxyAdminRole } from "@/utils/roles";
 import AddFallbacks from "./AddFallbacks";
 import EditFallbacks from "./EditFallbacks";
 
+import { t } from "@/i18n";
 type FallbackEntry = { [modelName: string]: string[] };
 type Fallbacks = FallbackEntry[];
 
@@ -96,8 +97,7 @@ async function testFallbackModelResponse(selectedModel: string, accessToken: str
     });
 
     NotificationsManager.success(
-      <span>
-        Test model=<strong>{selectedModel}</strong>, received model=
+      <span>{t("Test model=")}<strong>{selectedModel}</strong>, received model=
         <strong>{response.model}</strong>. See{" "}
         <a
           href="#"
@@ -189,7 +189,7 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID }) 
     try {
       await setCallbacksCall(accessToken, payload);
       setRouterSettings(updatedSettings);
-      NotificationsManager.success("Router settings updated successfully");
+      NotificationsManager.success(t("Router settings updated successfully"));
     } catch (error) {
       NotificationsManager.fromBackend("Failed to update router settings: " + error);
     } finally {
@@ -266,9 +266,9 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID }) 
         <Table>
           <TableHead>
             <TableRow>
-              <TableHeaderCell>Model Name</TableHeaderCell>
-              <TableHeaderCell>Fallbacks</TableHeaderCell>
-              <TableHeaderCell>Actions</TableHeaderCell>
+              <TableHeaderCell>{t("Model Name")}</TableHeaderCell>
+              <TableHeaderCell>{t("Fallbacks")}</TableHeaderCell>
+              <TableHeaderCell>{t("Actions")}</TableHeaderCell>
             </TableRow>
           </TableHead>
 
@@ -283,7 +283,7 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID }) 
                   <TableCell className="align-top">
                     {canModify && (
                       <>
-                        <Tooltip title="Test fallback">
+                        <Tooltip title={t("Test fallback")}>
                           <Icon
                             icon={PlayIcon}
                             size="sm"
@@ -291,7 +291,7 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID }) 
                             className="cursor-pointer hover:text-blue-600"
                           />
                         </Tooltip>
-                        <Tooltip title="Edit fallback">
+                        <Tooltip title={t("Edit fallback")}>
                           <span
                             data-testid="edit-fallback-button"
                             role="button"
@@ -303,7 +303,7 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID }) 
                             <Icon icon={PencilAltIcon} size="sm" className="hover:text-blue-600" />
                           </span>
                         </Tooltip>
-                        <Tooltip title="Delete fallback">
+                        <Tooltip title={t("Delete fallback")}>
                           <span
                             data-testid="delete-fallback-button"
                             role="button"
@@ -336,12 +336,12 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID }) 
       )}
       <DeleteResourceModal
         isOpen={isDeleteModalOpen}
-        title="Delete Fallback?"
-        message="Are you sure you want to delete this fallback? This action cannot be undone."
+        title={t("Delete Fallback?")}
+        message={t("Are you sure you want to delete this fallback? This action cannot be undone.")}
         resourceInformationTitle="Fallback Information"
         resourceInformation={[
           {
-            label: "Model Name",
+            label: t("Model Name"),
             value: fallbackToDelete ? Object.keys(fallbackToDelete)[0] : "",
             code: true,
           },

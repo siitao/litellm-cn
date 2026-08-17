@@ -18,6 +18,8 @@ import {
 import { cn } from "@/lib/cva.config";
 import { copyToClipboard } from "@/utils/dataUtils";
 
+import { t } from "@/i18n";
+import { useLanguage } from "@/contexts/LanguageContext";
 function CredentialProviderCell({ provider }: { provider: string | undefined }) {
   if (!provider) {
     return <span className="text-sm text-muted-foreground">-</span>;
@@ -47,10 +49,11 @@ interface CredentialRowActionsProps {
 }
 
 function CredentialRowActions({ credential, onEdit, onDelete }: CredentialRowActionsProps) {
-  return (
+
+  const { t } = useLanguage();  return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        aria-label="Open credential actions"
+        aria-label={t("Open credential actions")}
         data-testid={`credential-actions-${credential.credential_name}`}
         className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }), "text-muted-foreground")}
       >
@@ -97,8 +100,8 @@ export const getCredentialsTableColumns = ({
     {
       id: "credential_name",
       accessorKey: "credential_name",
-      meta: { title: "Credential Name" },
-      header: ({ column }) => <DataTableSortHeader column={column} title="Credential Name" />,
+      meta: { title: t("Credential Name")},
+      header: ({ column }) => <DataTableSortHeader column={column} title={t("Credential Name")} />,
       size: 260,
       enableSorting: true,
       cell: ({ row }) => (
@@ -108,7 +111,7 @@ export const getCredentialsTableColumns = ({
     {
       id: "provider",
       accessorKey: "credential_info.custom_llm_provider",
-      meta: { title: "Provider" },
+      meta: { title: t("Provider")},
       header: "Provider",
       size: 200,
       enableSorting: false,
@@ -125,7 +128,7 @@ export const getCredentialsTableColumns = ({
     {
       id: "actions",
       meta: { className: "text-right", headerClassName: "text-right" },
-      header: () => <span className="sr-only">Actions</span>,
+      header: () => <span className="sr-only">{t("Actions")}</span>,
       size: 64,
       enableSorting: false,
       enableHiding: false,

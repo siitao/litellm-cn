@@ -14,6 +14,7 @@ import { extractErrorMessage } from "@/utils/errorUtils";
 import { generateCodeChallenge, generateCodeVerifier } from "@/utils/pkce";
 import { getSecureItem, setSecureItem } from "@/utils/secureStorage";
 
+import { t } from "@/i18n";
 export type McpOAuthStatus = "idle" | "authorizing" | "exchanging" | "success" | "error";
 
 interface UseMcpOAuthFlowOptions {
@@ -126,7 +127,7 @@ export const useMcpOAuthFlow = ({
 
     if (!accessToken) {
       setError("Missing admin token");
-      NotificationsManager.error("Access token missing. Please re-authenticate and try again.");
+      NotificationsManager.error(t("Access token missing. Please re-authenticate and try again."));
       return;
     }
 
@@ -204,7 +205,7 @@ export const useMcpOAuthFlow = ({
         try {
           onBeforeRedirect();
         } catch (prepErr) {
-          console.error("Failed to prepare for OAuth redirect", prepErr);
+          console.error(t("Failed to prepare for OAuth redirect"), prepErr);
         }
       }
 
@@ -217,7 +218,7 @@ export const useMcpOAuthFlow = ({
 
       window.location.href = authorizeUrl;
     } catch (err) {
-      console.error("Failed to start OAuth flow", err);
+      console.error(t("Failed to start OAuth flow"), err);
       setStatus("error");
       const message = extractErrorMessage(err);
       setError(message);
@@ -263,7 +264,7 @@ export const useMcpOAuthFlow = ({
       processingRef.current = false;
       setError("Failed to resume OAuth flow. Please retry.");
       setStatus("error");
-      NotificationsManager.error("Failed to resume OAuth flow. Please retry.");
+      NotificationsManager.error(t("Failed to resume OAuth flow. Please retry."));
       return;
     }
 
@@ -330,7 +331,7 @@ export const useMcpOAuthFlow = ({
       setTokenResponse(token);
       setStatus("success");
       setError(null);
-      NotificationsManager.success("OAuth token retrieved successfully");
+      NotificationsManager.success(t("OAuth token retrieved successfully"));
     } catch (err) {
       if (resetVersion !== resetVersionRef.current) {
         return;

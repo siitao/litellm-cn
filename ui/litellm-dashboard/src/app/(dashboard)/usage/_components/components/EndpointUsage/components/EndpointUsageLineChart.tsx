@@ -3,6 +3,7 @@ import { LineChart, type ChartColor } from "@/components/shared/charts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DailyData } from "@/components/UsagePage/types";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface EndpointUsageLineChartProps {
   dailyData?: { results: DailyData[] };
 }
@@ -43,7 +44,8 @@ function transformDailyDataToChart(dailyData: DailyData[]): Array<Record<string,
 }
 
 export function EndpointUsageLineChart({ dailyData }: EndpointUsageLineChartProps) {
-  const chartData = useMemo(() => {
+
+  const { t } = useLanguage();  const chartData = useMemo(() => {
     if (!dailyData?.results || dailyData.results.length === 0) {
       return [];
     }
@@ -75,7 +77,7 @@ export function EndpointUsageLineChart({ dailyData }: EndpointUsageLineChartProp
   return (
     <Card className="mb-6">
       <CardHeader>
-        <CardTitle className="text-base font-semibold">Endpoint Usage Trends</CardTitle>
+        <CardTitle className="text-base font-semibold">{t("Endpoint Usage Trends")}</CardTitle>
       </CardHeader>
       <CardContent>
         <LineChart

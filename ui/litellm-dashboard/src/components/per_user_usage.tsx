@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { perUserAnalyticsCall } from "./networking";
 
+import { t } from "@/i18n";
 interface PerUserMetrics {
   user_id: string;
   user_email: string | null;
@@ -56,7 +57,7 @@ const PerUserUsage: React.FC<PerUserUsageProps> = ({ accessToken, selectedTags, 
       );
       setPerUserData(response);
     } catch (error) {
-      console.error("Failed to fetch per-user data:", error);
+      console.error(t("Failed to fetch per-user data:"), error);
     }
   };
 
@@ -120,17 +121,13 @@ const PerUserUsage: React.FC<PerUserUsageProps> = ({ accessToken, selectedTags, 
 
   return (
     <div className="mb-6">
-      <h3 className="text-lg font-medium text-foreground">Per User Usage</h3>
-      <p className="text-sm text-muted-foreground">Individual developer usage metrics</p>
+      <h3 className="text-lg font-medium text-foreground">{t("Per User Usage")}</h3>
+      <p className="text-sm text-muted-foreground">{t("Individual developer usage metrics")}</p>
 
       <Tabs defaultValue="details">
         <TabsList className="mb-6">
-          <TabsTrigger value="details" className="flex-none px-3">
-            User Details
-          </TabsTrigger>
-          <TabsTrigger value="distribution" className="flex-none px-3">
-            Usage Distribution
-          </TabsTrigger>
+          <TabsTrigger value="details" className="flex-none px-3">{t("User Details")}</TabsTrigger>
+          <TabsTrigger value="distribution" className="flex-none px-3">{t("Usage Distribution")}</TabsTrigger>
         </TabsList>
 
         {/* Tab 1: Existing User Details Table */}
@@ -145,19 +142,15 @@ const PerUserUsage: React.FC<PerUserUsageProps> = ({ accessToken, selectedTags, 
 
           {perUserData.results.length > 10 && (
             <div className="mt-4 flex justify-between items-center">
-              <p className="text-sm text-gray-500">Showing 10 of {perUserData.total_count} results</p>
+              <p className="text-sm text-gray-500">{t("Showing 10 of")} {perUserData.total_count} results</p>
               <div className="flex gap-2">
-                <Button size="sm" variant="secondary" onClick={handlePrevPage} disabled={currentPage === 1}>
-                  Previous
-                </Button>
+                <Button size="sm" variant="secondary" onClick={handlePrevPage} disabled={currentPage === 1}>{t("Previous")}</Button>
                 <Button
                   size="sm"
                   variant="secondary"
                   onClick={handleNextPage}
                   disabled={currentPage >= perUserData.total_pages}
-                >
-                  Next
-                </Button>
+                >{t("Next")}</Button>
               </div>
             </div>
           )}
@@ -166,8 +159,8 @@ const PerUserUsage: React.FC<PerUserUsageProps> = ({ accessToken, selectedTags, 
         {/* Tab 2: Usage Distribution Histogram */}
         <TabsContent value="distribution" keepMounted>
           <div className="mb-4">
-            <h4 className="text-lg font-medium text-foreground">User Usage Distribution</h4>
-            <p className="text-sm text-muted-foreground">Number of users by successful request frequency</p>
+            <h4 className="text-lg font-medium text-foreground">{t("User Usage Distribution")}</h4>
+            <p className="text-sm text-muted-foreground">{t("Number of users by successful request frequency")}</p>
           </div>
 
           <BarChart

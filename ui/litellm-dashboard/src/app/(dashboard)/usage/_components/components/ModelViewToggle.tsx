@@ -1,8 +1,9 @@
+import { t } from "@/i18n";
 export type ModelViewType = "groups" | "individual";
 
 const MODEL_VIEW_OPTIONS: readonly { value: ModelViewType; label: string }[] = [
-  { value: "groups", label: "Public Model Name" },
-  { value: "individual", label: "Litellm Model Name" },
+  { value: "groups", label: t("Public Model Name")},
+  { value: "individual", label: t("Litellm Model Name")},
 ];
 
 interface ModelViewToggleProps {

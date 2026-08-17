@@ -8,6 +8,8 @@ import {
 import { Button, Input, Select, Switch } from "antd";
 import React, { useState } from "react";
 
+import { useLanguage } from "@/contexts/LanguageContext";
+import { t } from "@/i18n";
 interface GuardrailConfigProps {
   guardrailName: string;
   guardrailType: string;
@@ -17,7 +19,7 @@ interface GuardrailConfigProps {
 const versions = [
   {
     id: "v3",
-    label: "v3 (current)",
+    label: t("v3 (current)"),
     date: "2026-02-18",
     author: "admin@company.com",
     changes: "Adjusted sensitivity for medical terms",
@@ -27,7 +29,8 @@ const versions = [
 ];
 
 export function GuardrailConfig({ guardrailName, guardrailType, provider }: GuardrailConfigProps) {
-  const [action, setAction] = useState("block");
+
+  const { t } = useLanguage();  const [action, setAction] = useState("block");
   const [enabled, setEnabled] = useState(true);
   const [customCode, setCustomCode] = useState("");
   const [useCustomCode, setUseCustomCode] = useState(false);
@@ -49,7 +52,7 @@ export function GuardrailConfig({ guardrailName, guardrailType, provider }: Guar
       <div className="bg-white border border-gray-200 rounded-lg p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-sm font-medium text-gray-700">Version:</span>
+            <span className="text-sm font-medium text-gray-700">{t("Version:")}</span>
             <Select
               value={version}
               onChange={setVersion}
@@ -61,9 +64,8 @@ export function GuardrailConfig({ guardrailName, guardrailType, provider }: Guar
             </Button>
           </div>
           <div className="flex items-center gap-2">
-            <Button icon={<RollbackOutlined />}>Revert</Button>
-            <Button type="primary" icon={<SaveOutlined />}>
-              Save as v{parseInt(version.replace("v", ""), 10) + 1}
+            <Button icon={<RollbackOutlined />}>{t("Revert")}</Button>
+            <Button type="primary" icon={<SaveOutlined />}>{t("Save as v")}{parseInt(version.replace("v", ""), 10) + 1}
             </Button>
           </div>
         </div>
@@ -97,62 +99,62 @@ export function GuardrailConfig({ guardrailName, guardrailType, provider }: Guar
 
       {/* Parameters */}
       <div className="bg-white border border-gray-200 rounded-lg p-6">
-        <h3 className="text-base font-semibold text-gray-900 mb-1">Parameters</h3>
-        <p className="text-xs text-gray-500 mb-5">Configure {guardrailName} behavior</p>
+        <h3 className="text-base font-semibold text-gray-900 mb-1">{t("Parameters")}</h3>
+        <p className="text-xs text-gray-500 mb-5">{t("Configure")} {guardrailName} behavior</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Action on Failure</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">{t("Action on Failure")}</label>
             <Select
               value={action}
               onChange={setAction}
               style={{ width: "100%" }}
               options={[
-                { value: "block", label: "Block Request" },
-                { value: "flag", label: "Flag for Review" },
-                { value: "log", label: "Log Only" },
-                { value: "fallback", label: "Use Fallback Response" },
+                { value: "block", label: t("Block Request")},
+                { value: "flag", label: t("Flag for Review")},
+                { value: "log", label: t("Log Only")},
+                { value: "fallback", label: t("Use Fallback Response")},
               ]}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Provider</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">{t("Provider")}</label>
             <Select
               style={{ width: "100%" }}
               defaultValue={provider}
               options={[
-                { value: "bedrock", label: "AWS Bedrock Guardrails" },
-                { value: "google", label: "Google Cloud AI Safety" },
-                { value: "litellm", label: "LiteLLM Built-in" },
-                { value: "custom", label: "Custom Code" },
+                { value: "bedrock", label: t("AWS Bedrock Guardrails")},
+                { value: "google", label: t("Google Cloud AI Safety")},
+                { value: "litellm", label: t("LiteLLM Built-in")},
+                { value: "custom", label: t("Custom Code")},
               ]}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Guardrail Type</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">{t("Guardrail Type")}</label>
             <Select
               style={{ width: "100%" }}
               defaultValue={guardrailType}
               options={[
-                { value: "Content Safety", label: "Content Safety" },
-                { value: "PII", label: "PII Detection" },
-                { value: "Topic", label: "Topic Restriction" },
-                { value: "prompt_injection", label: "Prompt Injection" },
-                { value: "custom", label: "Custom" },
+                { value: "Content Safety", label: t("Content Safety")},
+                { value: "PII", label: t("PII Detection")},
+                { value: "Topic", label: t("Topic Restriction")},
+                { value: "prompt_injection", label: t("Prompt Injection")},
+                { value: "custom", label: t("Custom")},
               ]}
             />
           </div>
 
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Categories (comma-separated)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">{t("Categories (comma-separated)")}</label>
             <Input defaultValue="violence, hate_speech, sexual_content, self_harm, illegal_activity" />
           </div>
 
           <div className="md:col-span-2 flex items-center gap-3">
             <Switch checked={enabled} onChange={setEnabled} />
-            <span className="text-sm text-gray-700">Guardrail enabled in production</span>
+            <span className="text-sm text-gray-700">{t("Guardrail enabled in production")}</span>
           </div>
         </div>
       </div>
@@ -165,7 +167,7 @@ export function GuardrailConfig({ guardrailName, guardrailType, provider }: Guar
               <CodeOutlined className="text-gray-500" />
               Custom Code Override
             </h3>
-            <p className="text-xs text-gray-500 mt-0.5">Replace the built-in guardrail with custom evaluation code</p>
+            <p className="text-xs text-gray-500 mt-0.5">{t("Replace the built-in guardrail with custom evaluation code")}</p>
           </div>
           <Switch checked={useCustomCode} onChange={setUseCustomCode} />
         </div>
@@ -188,10 +190,8 @@ export function GuardrailConfig({ guardrailName, guardrailType, provider }: Guar
 
       {/* Re-run on Failing Logs */}
       <div className="bg-white border border-gray-200 rounded-lg p-6">
-        <h3 className="text-base font-semibold text-gray-900 mb-1">Test Configuration</h3>
-        <p className="text-xs text-gray-500 mb-4">
-          Re-run this guardrail on recent failing logs to validate your changes
-        </p>
+        <h3 className="text-base font-semibold text-gray-900 mb-1">{t("Test Configuration")}</h3>
+        <p className="text-xs text-gray-500 mb-4">{t("Re-run this guardrail on recent failing logs to validate your changes")}</p>
 
         <div className="flex items-center gap-3">
           <Button
@@ -209,7 +209,7 @@ export function GuardrailConfig({ guardrailName, guardrailType, provider }: Guar
             </span>
           )}
 
-          {rerunStatus === "error" && <span className="text-sm text-red-600">Error running tests</span>}
+          {rerunStatus === "error" && <span className="text-sm text-red-600">{t("Error running tests")}</span>}
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 
 import { PolicySelect } from "./PolicySelect";
 
+import { t } from "@/i18n";
 interface ToolPoliciesTableColumnsDeps {
   onSelectTool: (toolName: string) => void;
   savingInput: ReadonlySet<string>;
@@ -39,7 +40,7 @@ export const getToolPoliciesTableColumns = ({
   {
     id: "created_at",
     accessorFn: (row) => row.created_at ?? "",
-    header: ({ column }) => <DataTableSortHeader column={column} title="Discovered" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Discovered")} />,
     size: 170,
     enableGlobalFilter: false,
     cell: ({ row }) => <DateCell value={row.original.created_at} />,
@@ -47,7 +48,7 @@ export const getToolPoliciesTableColumns = ({
   {
     id: "tool_name",
     accessorFn: (row) => row.tool_name,
-    header: ({ column }) => <DataTableSortHeader column={column} title="Tool Name" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Tool Name")} />,
     minSize: 200,
     cell: ({ row }) => (
       <IdentityCell
@@ -61,10 +62,10 @@ export const getToolPoliciesTableColumns = ({
   {
     id: "input_policy",
     accessorFn: (row) => row.input_policy,
-    header: ({ column }) => <DataTableSortHeader column={column} title="Input Policy" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Input Policy")} />,
     size: 140,
     filterFn: "equalsString",
-    meta: { title: "Input Policy", skeleton: "badge" },
+    meta: { title: t("Input Policy"), skeleton: "badge" },
     cell: ({ row }) => (
       <PolicySelect
         value={row.original.input_policy}
@@ -78,10 +79,10 @@ export const getToolPoliciesTableColumns = ({
   {
     id: "output_policy",
     accessorFn: (row) => row.output_policy,
-    header: ({ column }) => <DataTableSortHeader column={column} title="Output Policy" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Output Policy")} />,
     size: 140,
     filterFn: "equalsString",
-    meta: { title: "Output Policy", skeleton: "badge" },
+    meta: { title: t("Output Policy"), skeleton: "badge" },
     cell: ({ row }) => (
       <PolicySelect
         value={row.original.output_policy}
@@ -95,7 +96,7 @@ export const getToolPoliciesTableColumns = ({
   {
     id: "call_count",
     accessorFn: (row) => row.call_count ?? 0,
-    header: ({ column }) => <DataTableSortHeader column={column} title="# Calls" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("# Calls")} />,
     size: 100,
     enableGlobalFilter: false,
     meta: { numeric: true },
@@ -104,10 +105,10 @@ export const getToolPoliciesTableColumns = ({
   {
     id: "team_id",
     accessorFn: (row) => row.team_id ?? "",
-    header: ({ column }) => <DataTableSortHeader column={column} title="Team Name" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Team Name")} />,
     size: 160,
     filterFn: "equalsString",
-    meta: { title: "Team Name" },
+    meta: { title: t("Team Name")},
     cell: ({ row }) => <IdCell value={row.original.team_id} variant="plain" />,
   },
   {
@@ -121,10 +122,10 @@ export const getToolPoliciesTableColumns = ({
   {
     id: "key_alias",
     accessorFn: (row) => row.key_alias ?? "",
-    header: ({ column }) => <DataTableSortHeader column={column} title="Key Name" />,
+    header: ({ column }) => <DataTableSortHeader column={column} title={t("Key Name")} />,
     size: 150,
     filterFn: "equalsString",
-    meta: { title: "Key Name" },
+    meta: { title: t("Key Name")},
     cell: ({ row }) => <TruncatedText value={row.original.key_alias} className="block max-w-32 truncate" />,
   },
   {

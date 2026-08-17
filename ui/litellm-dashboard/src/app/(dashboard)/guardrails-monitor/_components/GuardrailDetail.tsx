@@ -12,6 +12,7 @@ import { LogViewer } from "@/components/GuardrailsMonitor/LogViewer";
 import { MetricCard } from "@/components/GuardrailsMonitor/MetricCard";
 import type { LogEntry } from "@/components/GuardrailsMonitor/mockData";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface GuardrailDetailProps {
   guardrailId: string;
   onBack: () => void;
@@ -27,7 +28,8 @@ const STATUS_TONE: Record<string, StatusTone> = {
 };
 
 export function GuardrailDetail({ guardrailId, onBack, accessToken = null, startDate, endDate }: GuardrailDetailProps) {
-  const [activeTab, setActiveTab] = useState("overview");
+
+  const { t } = useLanguage();  const [activeTab, setActiveTab] = useState("overview");
   const [evaluationModalOpen, setEvaluationModalOpen] = useState(false);
   const [logsPage] = useState(1);
   const logsPageSize = 50;
@@ -106,7 +108,7 @@ export function GuardrailDetail({ guardrailId, onBack, accessToken = null, start
           <ArrowLeft className="size-4" />
           Back to Overview
         </Button>
-        <p className="text-destructive">Failed to load guardrail details.</p>
+        <p className="text-destructive">{t("Failed to load guardrail details.")}</p>
       </div>
     );
   }
@@ -150,7 +152,7 @@ export function GuardrailDetail({ guardrailId, onBack, accessToken = null, start
               variant="outline"
               size="icon"
               onClick={() => setEvaluationModalOpen(true)}
-              title="Evaluation settings"
+              title={t("Evaluation settings")}
             >
               <Settings className="size-4" />
             </Button>
@@ -160,26 +162,22 @@ export function GuardrailDetail({ guardrailId, onBack, accessToken = null, start
 
       <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as string)}>
         <TabsList variant="line">
-          <TabsTrigger value="overview" className="flex-none">
-            Overview
-          </TabsTrigger>
-          <TabsTrigger value="logs" className="flex-none">
-            Logs
-          </TabsTrigger>
+          <TabsTrigger value="overview" className="flex-none">{t("Overview")}</TabsTrigger>
+          <TabsTrigger value="logs" className="flex-none">{t("Logs")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="mt-4 space-y-6">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
             <MetricCard label="Requests Evaluated" value={data.requestsEvaluated.toLocaleString()} />
             <MetricCard
-              label="Fail Rate"
+              label={t("Fail Rate")}
               value={`${data.failRate}%`}
               valueColor={data.failRate > 15 ? "text-red-600" : data.failRate > 5 ? "text-amber-600" : "text-green-600"}
               subtitle={`${Math.round((data.requestsEvaluated * data.failRate) / 100).toLocaleString()} blocked`}
               icon={data.failRate > 15 ? <TriangleAlert className="size-4 text-red-400" /> : undefined}
             />
             <MetricCard
-              label="Avg. latency added"
+              label={t("Avg. latency added")}
               value={data.avgLatency != null ? `${Math.round(data.avgLatency)}ms` : "—"}
               valueColor={
                 data.avgLatency != null

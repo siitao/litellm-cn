@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 
 import { getProxyBaseUrl } from "./networking";
 
+import { t } from "@/i18n";
 interface RoutePreviewProps {
   pathValue: string;
   targetValue: string;
@@ -28,46 +29,42 @@ const RoutePreview: React.FC<RoutePreviewProps> = ({ pathValue, targetValue, inc
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Route Preview</CardTitle>
-        <CardDescription>How your requests will be routed</CardDescription>
+        <CardTitle className="text-lg">{t("Route Preview")}</CardTitle>
+        <CardDescription>{t("How your requests will be routed")}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-5">
         <div>
-          <h4 className="mb-3 text-base font-semibold">Basic routing:</h4>
+          <h4 className="mb-3 text-base font-semibold">{t("Basic routing:")}</h4>
           <div className="flex flex-col items-stretch gap-4 sm:flex-row sm:items-center">
-            <Endpoint label="Your endpoint">{`${proxyBaseUrl}${pathValue}`}</Endpoint>
+            <Endpoint label={t("Your endpoint")}>{`${proxyBaseUrl}${pathValue}`}</Endpoint>
             <ArrowRight className="size-5 shrink-0 self-center text-muted-foreground max-sm:rotate-90" />
-            <Endpoint label="Forwards to">{targetValue}</Endpoint>
+            <Endpoint label={t("Forwards to")}>{targetValue}</Endpoint>
           </div>
         </div>
 
         {includeSubpath ? (
           <div>
-            <h4 className="mb-3 text-base font-semibold">With subpaths:</h4>
+            <h4 className="mb-3 text-base font-semibold">{t("With subpaths:")}</h4>
             <div className="flex flex-col items-stretch gap-4 sm:flex-row sm:items-center">
-              <Endpoint label="Your endpoint + subpath">
+              <Endpoint label={t("Your endpoint + subpath")}>
                 {`${proxyBaseUrl}${pathValue}`}
                 <span className="text-primary">/v1/text-to-image/base/model</span>
               </Endpoint>
               <ArrowRight className="size-5 shrink-0 self-center text-muted-foreground max-sm:rotate-90" />
-              <Endpoint label="Forwards to">
+              <Endpoint label={t("Forwards to")}>
                 {targetValue}
                 <span className="text-primary">/v1/text-to-image/base/model</span>
               </Endpoint>
             </div>
-            <p className="mt-3 text-sm text-muted-foreground">
-              Any path after {pathValue} will be appended to the target URL
+            <p className="mt-3 text-sm text-muted-foreground">{t("Any path after")} {pathValue} will be appended to the target URL
             </p>
           </div>
         ) : (
           <div className="flex items-start gap-2 rounded-md border border-primary/20 bg-primary/5 p-3 text-sm">
             <Info className="mt-0.5 size-4 shrink-0 text-primary" />
             <p>
-              <span className="font-medium">Not seeing the routing you wanted?</span> Try enabling - Include Subpaths -
-              above - this allows subroutes like{" "}
-              <code className="rounded-sm bg-primary/10 px-1 py-0.5 font-mono text-xs">/api/v1/models</code> to be
-              forwarded automatically.
-            </p>
+              <span className="font-medium">{t("Not seeing the routing you wanted?")}</span>{t("Try enabling - Include Subpaths - above - this allows subroutes like")}{" "}
+              <code className="rounded-sm bg-primary/10 px-1 py-0.5 font-mono text-xs">/api/v1/models</code>{t("to be forwarded automatically.")}</p>
           </div>
         )}
       </CardContent>

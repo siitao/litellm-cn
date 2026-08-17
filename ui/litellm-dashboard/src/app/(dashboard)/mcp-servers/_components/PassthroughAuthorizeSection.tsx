@@ -3,6 +3,7 @@ import { Button, Checkbox, Form, Input } from "antd";
 import DcrBridgeToggle from "./DcrBridgeToggle";
 import { credentialAuthClass, isClientForwardedTokenMode } from "@/components/mcp_tools/types";
 
+import { t } from "@/i18n";
 interface PassthroughOAuthFlow {
   startOAuthFlow: () => void | Promise<void>;
   status: string;
@@ -82,7 +83,7 @@ export default function PassthroughAuthorizeSection({
         </p>
       )}
       <Form.Item
-        label={<span className="text-sm font-medium text-gray-700">OAuth Client ID (optional)</span>}
+        label={<span className="text-sm font-medium text-gray-700">{t("OAuth Client ID (optional)")}</span>}
         name={["credentials", "client_id"]}
         extra={clientIdExtra}
       >
@@ -93,7 +94,7 @@ export default function PassthroughAuthorizeSection({
         />
       </Form.Item>
       <Form.Item
-        label={<span className="text-sm font-medium text-gray-700">OAuth Client Secret (optional)</span>}
+        label={<span className="text-sm font-medium text-gray-700">{t("OAuth Client Secret (optional)")}</span>}
         name={["credentials", "client_secret"]}
       >
         <Input.Password
@@ -105,9 +106,7 @@ export default function PassthroughAuthorizeSection({
       <DcrBridgeToggle authType={authType} initialChecked={dcrBridgeInitialChecked} />
       {isEditing && onRemoveStoredAppChange && (
         <Checkbox checked={removeStoredApp} onChange={(e) => onRemoveStoredAppChange(e.target.checked)}>
-          <span className="text-sm text-gray-700">
-            Remove the saved OAuth app on save (the server goes back to dynamic client registration)
-          </span>
+          <span className="text-sm text-gray-700">{t("Remove the saved OAuth app on save (the server goes back to dynamic client registration)")}</span>
         </Checkbox>
       )}
       <Button

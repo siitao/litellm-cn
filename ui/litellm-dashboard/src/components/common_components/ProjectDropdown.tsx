@@ -3,6 +3,7 @@ import { Select, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { ProjectResponse } from "@/app/(dashboard)/hooks/projects/useProjects";
 
+import { t } from "@/i18n";
 interface ProjectDropdownProps {
   projects?: ProjectResponse[] | null;
   value?: string;
@@ -19,7 +20,7 @@ const ProjectDropdown: React.FC<ProjectDropdownProps> = ({ projects, value, onCh
   return (
     <Select
       showSearch
-      placeholder="Search or select a project"
+      placeholder={t("Search or select a project")}
       value={value}
       onChange={onChange}
       disabled={disabled}

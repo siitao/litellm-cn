@@ -15,6 +15,7 @@ import { AUTH_TYPE, type MCPServer } from "@/components/mcp_tools/types";
 import { Logo } from "@/components/molecules/logo/Logo";
 import { getMaskedAndFullUrl } from "./utils";
 
+import { t } from "@/i18n";
 interface MCPServerCardProps {
   server: MCPServer;
   // Per-user env-var fields this user still needs to fill in for this server.
@@ -155,7 +156,7 @@ const MCPServerCard: FC<MCPServerCardProps> = ({
                     type="button"
                     onClick={stop}
                     onKeyDown={stop}
-                    aria-label="Server actions"
+                    aria-label={t("Server actions")}
                     className="-mr-1 -mt-1 inline-flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
                   >
                     <Ellipsis className="size-5" />
@@ -272,7 +273,7 @@ const MCPServerCard: FC<MCPServerCardProps> = ({
                     }
                   />
                   <TooltipContent>
-                    <div className="mb-1 font-semibold">Missing user fields:</div>
+                    <div className="mb-1 font-semibold">{t("Missing user fields:")}</div>
                     <ul className="ml-3">
                       {missing.map((m) => (
                         <li key={m}>• {m}</li>
@@ -288,9 +289,7 @@ const MCPServerCard: FC<MCPServerCardProps> = ({
                       stop(e);
                       onOpenFillFields();
                     }}
-                  >
-                    Set
-                  </Button>
+                  >{t("Set")}</Button>
                 )}
               </div>
             )}
@@ -350,16 +349,16 @@ const HealthChip: FC<HealthChipProps> = ({
         }
       />
       <TooltipContent side="top" className="max-w-xs">
-        <div className="mb-1 font-semibold">Health: {status}</div>
-        {lastCheck && <div className="mb-1 text-xs">Last check: {new Date(lastCheck).toLocaleString()}</div>}
+        <div className="mb-1 font-semibold">{t("Health:")} {status}</div>
+        {lastCheck && <div className="mb-1 text-xs">{t("Last check:")} {new Date(lastCheck).toLocaleString()}</div>}
         {error && (
           <div className="text-xs">
-            <div className="mb-1 font-medium">Error</div>
+            <div className="mb-1 font-medium">{t("Error")}</div>
             <div className="wrap-break-word">{error}</div>
           </div>
         )}
-        {!lastCheck && !error && <div className="text-xs">No health data</div>}
-        {onRecheck && <div className="mt-1 text-xs">Click to recheck</div>}
+        {!lastCheck && !error && <div className="text-xs">{t("No health data")}</div>}
+        {onRecheck && <div className="mt-1 text-xs">{t("Click to recheck")}</div>}
       </TooltipContent>
     </Tooltip>
   );
@@ -374,7 +373,7 @@ const ByokRow: FC<ByokRowProps> = ({ connected, onConnect }) => {
   if (connected) {
     return (
       <div className="flex items-center justify-between gap-2 text-xs">
-        <span className="text-muted-foreground">BYOK credential</span>
+        <span className="text-muted-foreground">{t("BYOK credential")}</span>
         <div className="flex items-center gap-2">
           <Badge variant="outline">
             <Check /> Connected
@@ -387,9 +386,7 @@ const ByokRow: FC<ByokRowProps> = ({ connected, onConnect }) => {
                 stop(e);
                 onConnect();
               }}
-            >
-              Update
-            </Button>
+            >{t("Update")}</Button>
           )}
         </div>
       </div>
@@ -397,7 +394,7 @@ const ByokRow: FC<ByokRowProps> = ({ connected, onConnect }) => {
   }
   return (
     <div className="flex items-center justify-between gap-2 text-xs">
-      <span className="text-muted-foreground">BYOK credential</span>
+      <span className="text-muted-foreground">{t("BYOK credential")}</span>
       {onConnect ? (
         <Button
           size="sm"
@@ -405,9 +402,7 @@ const ByokRow: FC<ByokRowProps> = ({ connected, onConnect }) => {
             stop(e);
             onConnect();
           }}
-        >
-          Connect
-        </Button>
+        >{t("Connect")}</Button>
       ) : (
         <span className="text-muted-foreground">—</span>
       )}

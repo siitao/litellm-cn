@@ -18,6 +18,7 @@ import {
 import { MCPToolset, MCPToolsetTool } from "@/components/mcp_tools/types";
 import { displayToolName, getMCPToolsetTableColumns } from "./MCPToolsetTableColumns";
 
+import { useLanguage } from "@/contexts/LanguageContext";
 interface MCPToolsetsTabProps {
   accessToken: string | null;
   userRole: string | null;
@@ -42,7 +43,8 @@ interface ToolEntry {
 }
 
 function MCPToolList({ serverId, serverName, accessToken, selectedTools, onToggle }: MCPToolListProps) {
-  const [tools, setTools] = useState<ToolEntry[]>([]);
+
+  const { t } = useLanguage();  const [tools, setTools] = useState<ToolEntry[]>([]);
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
@@ -90,7 +92,7 @@ function MCPToolList({ serverId, serverName, accessToken, selectedTools, onToggl
               <Spin size="small" />
             </div>
           ) : tools.length === 0 ? (
-            <p className="text-xs text-gray-400 px-2 py-2">No tools found for this server.</p>
+            <p className="text-xs text-gray-400 px-2 py-2">{t("No tools found for this server.")}</p>
           ) : (
             <div className="flex flex-col gap-1">
               {tools.map((tool) => {
@@ -137,7 +139,8 @@ interface CreateToolsetModalProps {
 }
 
 function CreateToolsetModal({ open, onClose, onSave, accessToken, initialToolset }: CreateToolsetModalProps) {
-  const [form] = Form.useForm<ToolsetFormValues>();
+
+  const { t } = useLanguage();  const [form] = Form.useForm<ToolsetFormValues>();
   const [selectedTools, setSelectedTools] = useState<MCPToolsetTool[]>(initialToolset?.tools || []);
   const [saving, setSaving] = useState(false);
   const [serverSearch, setServerSearch] = useState("");
@@ -195,15 +198,15 @@ function CreateToolsetModal({ open, onClose, onSave, accessToken, initialToolset
       <Form form={form} layout="vertical" className="mt-2">
         <div className="flex gap-4 mb-4">
           <Form.Item
-            label="Toolset Name"
+            label={t("Toolset Name")}
             name="toolset_name"
             rules={[{ required: true, message: "Please enter a toolset name" }]}
             className="flex-1 mb-0"
           >
-            <Input placeholder="e.g. github-linear-tools" />
+            <Input placeholder={t("e.g. github-linear-tools")} />
           </Form.Item>
           <Form.Item label="Description" name="description" className="flex-1 mb-0">
-            <Input placeholder="Optional description" />
+            <Input placeholder={t("Optional description")} />
           </Form.Item>
         </div>
       </Form>
@@ -212,7 +215,7 @@ function CreateToolsetModal({ open, onClose, onSave, accessToken, initialToolset
         {/* Left panel: Available Tools */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between mb-2">
-            <Text className="text-sm font-semibold text-gray-700">Available Tools</Text>
+            <Text className="text-sm font-semibold text-gray-700">{t("Available Tools")}</Text>
           </div>
           <Input
             placeholder="Search MCP servers..."
@@ -246,12 +249,11 @@ function CreateToolsetModal({ open, onClose, onSave, accessToken, initialToolset
 
         {/* Right panel: Your Toolset */}
         <div className="w-72 shrink-0">
-          <Text className="text-sm font-semibold text-gray-700 mb-2 block">
-            Your Toolset <span className="text-xs font-normal text-gray-400">({selectedTools.length} tools)</span>
+          <Text className="text-sm font-semibold text-gray-700 mb-2 block">{t("Your Toolset")}<span className="text-xs font-normal text-gray-400">({selectedTools.length} tools)</span>
           </Text>
           <div className="space-y-1 overflow-y-auto" style={{ maxHeight: 340 }}>
             {selectedTools.length === 0 ? (
-              <Text className="text-gray-400 text-sm">No tools added yet</Text>
+              <Text className="text-gray-400 text-sm">{t("No tools added yet")}</Text>
             ) : (
               selectedTools.map((tool, idx) => (
                 <button
@@ -275,9 +277,7 @@ function CreateToolsetModal({ open, onClose, onSave, accessToken, initialToolset
       </div>
 
       <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-gray-200">
-        <Button variant="secondary" onClick={onClose}>
-          Cancel
-        </Button>
+        <Button variant="secondary" onClick={onClose}>{t("Cancel")}</Button>
         <Button onClick={handleSubmit} loading={saving}>
           {initialToolset ? "Save Changes" : "Create Toolset"}
         </Button>
@@ -287,21 +287,21 @@ function CreateToolsetModal({ open, onClose, onSave, accessToken, initialToolset
 }
 
 function ToolsetsEmptyState() {
-  return (
+
+  const { t } = useLanguage();  return (
     <div className="flex flex-col items-center gap-1 py-6">
       <div className="mb-1 flex size-10 items-center justify-center rounded-lg bg-muted">
         <Inbox className="size-5 text-muted-foreground" />
       </div>
-      <div className="text-sm font-medium text-foreground">No toolsets yet</div>
-      <div className="text-sm text-muted-foreground">
-        Create a toolset to give keys and teams a curated set of MCP tools.
-      </div>
+      <div className="text-sm font-medium text-foreground">{t("No toolsets yet")}</div>
+      <div className="text-sm text-muted-foreground">{t("Create a toolset to give keys and teams a curated set of MCP tools.")}</div>
     </div>
   );
 }
 
 function ToolsetUsageGuide() {
-  const [copied, setCopied] = useState(false);
+
+  const { t } = useLanguage();  const [copied, setCopied] = useState(false);
   const proxyBaseUrl = getProxyBaseUrl();
 
   const snippet = `{
@@ -325,13 +325,12 @@ function ToolsetUsageGuide() {
 
   return (
     <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 px-5 py-4">
-      <p className="text-sm font-medium text-gray-700 mb-1">How toolsets work</p>
-      <p className="text-sm text-gray-500 mb-3">
-        Create a toolset, assign it to a key via{" "}
-        <span className="font-medium text-gray-700">API Keys → Edit Key → MCP Servers</span>, then point your MCP client
+      <p className="text-sm font-medium text-gray-700 mb-1">{t("How toolsets work")}</p>
+      <p className="text-sm text-gray-500 mb-3">{t("Create a toolset, assign it to a key via")}{" "}
+        <span className="font-medium text-gray-700">{t("API Keys → Edit Key → MCP Servers")}</span>, then point your MCP client
         at the toolset URL. The client only sees the tools you picked.
       </p>
-      <div className="text-xs text-gray-400 mb-1">Claude Code / Cursor config</div>
+      <div className="text-xs text-gray-400 mb-1">{t("Claude Code / Cursor config")}</div>
       <div className="relative">
         <pre className="bg-white border border-gray-200 rounded-sm px-4 py-3 text-xs font-mono text-gray-700 overflow-x-auto leading-relaxed pr-14">
           {snippet}
@@ -349,7 +348,8 @@ function ToolsetUsageGuide() {
 }
 
 export function MCPToolsetsTab({ accessToken, userRole }: MCPToolsetsTabProps) {
-  const queryClient = useQueryClient();
+
+  const { t } = useLanguage();  const queryClient = useQueryClient();
   const { data: toolsets = [], isLoading } = useMCPToolsets();
   const { data: mcpServers = [] } = useMCPServers();
   const [createOpen, setCreateOpen] = useState(false);
@@ -362,14 +362,14 @@ export function MCPToolsetsTab({ accessToken, userRole }: MCPToolsetsTabProps) {
   const handleCreate = async (name: string, description: string | undefined, tools: MCPToolsetTool[]) => {
     if (!accessToken) return;
     await createMCPToolset(accessToken, { toolset_name: name, description, tools });
-    message.success("Toolset created");
+    message.success(t("Toolset created"));
     queryClient.invalidateQueries({ queryKey: ["mcpToolsets"] });
   };
 
   const handleUpdate = async (name: string, description: string | undefined, tools: MCPToolsetTool[]) => {
     if (!accessToken || !editToolset) return;
     await updateMCPToolset(accessToken, { toolset_id: editToolset.toolset_id, toolset_name: name, description, tools });
-    message.success("Toolset updated");
+    message.success(t("Toolset updated"));
     queryClient.invalidateQueries({ queryKey: ["mcpToolsets"] });
     setEditToolset(null);
   };
@@ -379,7 +379,7 @@ export function MCPToolsetsTab({ accessToken, userRole }: MCPToolsetsTabProps) {
     setDeleting(true);
     try {
       await deleteMCPToolset(accessToken, deleteId);
-      message.success("Toolset deleted");
+      message.success(t("Toolset deleted"));
       queryClient.invalidateQueries({ queryKey: ["mcpToolsets"] });
       setDeleteId(null);
     } finally {
@@ -406,16 +406,14 @@ export function MCPToolsetsTab({ accessToken, userRole }: MCPToolsetsTabProps) {
     <div className="mt-4">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <Title>MCP Toolsets</Title>
+          <Title>{t("MCP Toolsets")}</Title>
           <Text className="text-gray-500 text-sm">
             Curated collections of tools from one or more MCP servers. Assign toolsets to keys and teams via the MCP
             permissions dropdown.
           </Text>
         </div>
         {isAdmin && (
-          <Button icon={PlusIcon} onClick={() => setCreateOpen(true)}>
-            New Toolset
-          </Button>
+          <Button icon={PlusIcon} onClick={() => setCreateOpen(true)}>{t("New Toolset")}</Button>
         )}
       </div>
 
@@ -455,9 +453,9 @@ export function MCPToolsetsTab({ accessToken, userRole }: MCPToolsetsTabProps) {
         open={!!deleteId}
         onCancel={() => setDeleteId(null)}
         onOk={handleDelete}
-        okText="Delete"
+        okText={t("Delete")}
         okButtonProps={{ danger: true, loading: deleting }}
-        title="Delete Toolset"
+        title={t("Delete Toolset")}
       >
         <p>
           Are you sure you want to delete this toolset? Keys and teams using it will lose access to the scoped tools.

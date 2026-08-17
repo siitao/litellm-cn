@@ -9,6 +9,7 @@ import ResponseMetrics from "@/components/chat_ui/ResponseMetrics";
 import { SearchResultsDisplay } from "../../chat_ui/SearchResultsDisplay";
 import type { MessageType } from "@/components/chat_ui/types";
 
+import { t } from "@/i18n";
 interface MessageDisplayProps {
   messages: MessageType[];
   isLoading: boolean;
@@ -110,7 +111,7 @@ export function MessageDisplay({ messages, isLoading }: MessageDisplayProps) {
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-600">
                     <UserRound size={16} />
                   </div>
-                  <div className="text-sm font-semibold text-gray-700">You</div>
+                  <div className="text-sm font-semibold text-gray-700">{t("You")}</div>
                 </div>
                 {renderMessageBody(block.user)}
               </div>

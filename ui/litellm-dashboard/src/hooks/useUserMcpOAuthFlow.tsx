@@ -25,6 +25,7 @@ import { generateCodeChallenge, generateCodeVerifier } from "@/utils/pkce";
 import { getSecureItem, setSecureItem } from "@/utils/secureStorage";
 import { buildCallbackUrl, clearStorage } from "./mcpOAuthUtils";
 
+import { t } from "@/i18n";
 export type UserMcpOAuthStatus = "idle" | "authorizing" | "exchanging" | "success" | "error";
 
 interface UseUserMcpOAuthFlowOptions {
@@ -221,7 +222,7 @@ export const useUserMcpOAuthFlow = ({
 
       setStatus("success");
       setError(null);
-      NotificationsManager.success("Connected successfully");
+      NotificationsManager.success(t("Connected successfully"));
       onSuccess();
     } catch (err) {
       const msg = extractErrorMessage(err);
