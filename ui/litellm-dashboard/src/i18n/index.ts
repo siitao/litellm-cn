@@ -20,7 +20,7 @@ export type Locale = "en" | "zh";
 /** A translation function (a `t` bound to a specific locale). */
 export type TFunction = (key: string) => string;
 
-type NestedMap = {
+export type NestedMap = {
   [key: string]: string | NestedMap;
 };
 
@@ -49,7 +49,13 @@ export const SUPPORTED_LOCALES: { value: Locale; label: string }[] = [
   { value: "en", label: "English" },
 ];
 
-function resolve(map: NestedMap, key: string): string | undefined {
+/**
+ * Look up `key` in a single locale dictionary, using the same three-step order
+ * `t()` relies on: literal key, then the raw-string `ui` section, then a dotted
+ * path walk. Exported so tooling and tests can check coverage without relying
+ * on `t()`'s fallback, which returns the key itself when nothing matched.
+ */
+export function resolveKey(map: NestedMap, key: string): string | undefined {
   // Literal key wins — lets UI strings containing "." double as keys.
   if (typeof map[key] === "string") return map[key];
   // The "ui" section holds raw English UI strings as keys.
@@ -69,10 +75,10 @@ function resolve(map: NestedMap, key: string): string | undefined {
  */
 export function t(key: string, locale: Locale = currentLocale ?? DEFAULT_LOCALE): string {
   const map = translations[locale] ?? translations.en;
-  const direct = resolve(map, key);
+  const direct = resolveKey(map, key);
   if (direct != null) return direct;
   if (locale !== "en") {
-    const fallback = resolve(translations.en, key);
+    const fallback = resolveKey(translations.en, key);
     if (fallback != null) return fallback;
   }
   return key;
