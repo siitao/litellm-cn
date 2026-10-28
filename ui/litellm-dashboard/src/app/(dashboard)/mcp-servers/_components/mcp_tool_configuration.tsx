@@ -415,8 +415,7 @@ const MCPToolConfiguration: React.FC<MCPToolConfigurationProps> = ({
         {/* Description */}
         <div className="rounded-lg border border-border bg-muted p-3">
           <p className="text-sm">
-            <strong>{t("Select which tools users can call:")}</strong> Only checked tools will be available for users to
-            invoke. Unchecked tools will be blocked from execution.
+            <strong>{t("Select which tools users can call:")}</strong> {t("Only checked tools will be available for users to invoke. Unchecked tools will be blocked from execution.")}
           </p>
         </div>
 
@@ -424,7 +423,7 @@ const MCPToolConfiguration: React.FC<MCPToolConfigurationProps> = ({
         {isLoadingTools && (
           <div className="flex items-center justify-center gap-3 py-6">
             <UiLoadingSpinner className="size-6 text-muted-foreground" />
-            <p className="text-sm">Loading tools from spec...</p>
+            <p className="text-sm">{t("Loading tools from spec...")}</p>
           </div>
         )}
 
@@ -488,7 +487,7 @@ const MCPToolConfiguration: React.FC<MCPToolConfigurationProps> = ({
                 <Search className="size-4 text-muted-foreground" />
               </InputGroupAddon>
               <InputGroupInput
-                placeholder="Search tools by name or description..."
+                placeholder={t("Search tools by name or description...")}
                 value={toolSearchTerm}
                 onChange={(e) => setToolSearchTerm(e.target.value)}
               />

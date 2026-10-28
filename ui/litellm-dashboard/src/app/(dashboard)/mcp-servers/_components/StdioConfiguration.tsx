@@ -18,14 +18,14 @@ const StdioConfiguration: React.FC<StdioConfigurationProps> = ({ isVisible, requ
   return (
     <Form.Item
       label={
-        <span className="text-sm font-medium text-gray-700 flex items-center">{t("Stdio Configuration (JSON)")}<Tooltip title="Paste your stdio MCP server configuration in JSON format. You can use the full mcpServers structure from config.yaml or just the inner server configuration.">
+        <span className="text-sm font-medium text-gray-700 flex items-center">{t("Stdio Configuration (JSON)")}<Tooltip title={t("Paste your stdio MCP server configuration in JSON format. You can use the full mcpServers structure from config.yaml or just the inner server configuration.")}>
             <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
           </Tooltip>
         </span>
       }
       name="stdio_config"
       rules={[
-        ...(required ? [{ required: true, message: "Please enter stdio configuration" }] : []),
+        ...(required ? [{ required: true, message: t("Please enter stdio configuration") }] : []),
         {
           validator: (_, value) => {
             if (!value) return Promise.resolve();

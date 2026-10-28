@@ -59,14 +59,14 @@ function ToolsetRowActions({ toolset, isAdmin, onEditClick, onDeleteClick }: Too
           onClick={() => void copyToClipboard(toolsetEndpointUrl(toolset.toolset_name), "Endpoint URL copied")}
         >
           <Link2 />
-          Copy endpoint URL
+          {t("Copy endpoint URL")}
         </DropdownMenuItem>
         <DropdownMenuItem
           data-testid="toolset-action-copy-id"
           onClick={() => void copyToClipboard(toolset.toolset_id, "Toolset ID copied")}
         >
           <Copy />
-          Copy toolset ID
+          {t("Copy toolset ID")}
         </DropdownMenuItem>
         {isAdmin && (
           <>

@@ -71,7 +71,7 @@ const MCPConnectionStatus: React.FC<MCPConnectionStatusProps> = ({
               {isLoadingTools && (
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <UiLoadingSpinner className="size-4" />
-                  <p className="text-sm">Connecting...</p>
+                  <p className="text-sm">{t("Connecting...")}</p>
                 </div>
               )}
 
@@ -93,7 +93,7 @@ const MCPConnectionStatus: React.FC<MCPConnectionStatusProps> = ({
             {isLoadingTools && (
               <div className="flex items-center justify-center gap-3 py-6">
                 <UiLoadingSpinner className="size-6 text-muted-foreground" />
-                <p className="text-sm">Testing connection and loading tools...</p>
+                <p className="text-sm">{t("Testing connection and loading tools...")}</p>
               </div>
             )}
 

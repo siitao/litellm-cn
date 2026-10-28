@@ -194,8 +194,7 @@ function SubmissionRulesPanel({ requiredFields, onChange, onSave, isSaving }: Su
       {expanded && (
         <div className="border-t border-gray-100 px-4 pt-4 pb-4">
           <p className="text-xs text-gray-500 mb-4">
-            Select which fields must be filled in before a submission is considered compliant. LiteLLM will show ✓ / ✗
-            for each rule on every submission card below.
+            {t("Select which fields must be filled in before a submission is considered compliant. LiteLLM will show ✓ / ✗ for each rule on every submission card below.")}
           </p>
           <div className="grid grid-cols-2 gap-x-8 gap-y-5">
             {FIELD_GROUPS.map((group) => (
@@ -539,7 +538,7 @@ export function MCPSubmissionsTab({ accessToken }: MCPSubmissionsTabProps) {
       />
 
       <div className="grid grid-cols-4 gap-4 mb-6">
-        <StatCard label="Total Submitted" value={summary.total} color="text-gray-900" />
+        <StatCard label={t("Total Submitted")} value={summary.total} color="text-gray-900" />
         <StatCard label={t("Pending Review")} value={summary.pending_review} color="text-yellow-600" />
         <StatCard label={t("Active")} value={summary.active} color="text-green-600" />
         <StatCard label={t("Rejected")} value={summary.rejected} color="text-red-600" />
@@ -550,7 +549,7 @@ export function MCPSubmissionsTab({ accessToken }: MCPSubmissionsTabProps) {
           <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
           <input
             type="text"
-            placeholder="Search MCP servers..."
+            placeholder={t("Search MCP servers...")}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-md text-sm text-gray-700 placeholder-gray-400 focus:outline-hidden focus:ring-1 focus:ring-blue-500 focus:border-blue-500"

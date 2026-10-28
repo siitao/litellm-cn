@@ -98,7 +98,7 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
       <div className="mb-6">
         <Button variant="ghost" className="mb-4" onClick={onBack}>
           <ArrowLeft />
-          Back to All Servers
+          {t("Back to All Servers")}
         </Button>
         <div className="flex items-center gap-2">
           <h1 className="text-2xl font-semibold">{mcpServer.server_name || mcpServer.alias || "Unnamed Server"}</h1>
@@ -301,7 +301,7 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
                     ) : (
                       <Badge variant="outline">
                         <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-                        Internal only
+                        {t("Internal only")}
                       </Badge>
                     )}
                   </div>
@@ -313,7 +313,7 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
                       {mcpServer.delegate_auth_to_upstream ? (
                         <Badge variant="outline">
                           <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-                          Enabled (PKCE passthrough)
+                          {t("Enabled (PKCE passthrough)")}
                         </Badge>
                       ) : (
                         <Badge variant="outline">{t("Disabled")}</Badge>

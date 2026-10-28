@@ -187,7 +187,7 @@ const MCPConnect: React.FC<MCPConnectProps> = ({ currentServerAccessGroups = [] 
           <Title level={4} className="mb-0 text-emerald-900">{t("LiteLLM Proxy API Integration")}</Title>
         </div>
         <Text className="text-emerald-700">
-          Connect to LiteLLM Proxy Responses API for seamless tool integration with multiple model providers
+          {t("Connect to LiteLLM Proxy Responses API for seamless tool integration with multiple model providers")}
         </Text>
       </div>
 
@@ -201,7 +201,7 @@ const MCPConnect: React.FC<MCPConnectProps> = ({ currentServerAccessGroups = [] 
             <div>
               <Text>{t("Get your Virtual Key from your LiteLLM Proxy dashboard or contact your administrator")}</Text>
             </div>
-            <CodeBlock title="Environment Variable" code='export LITELLM_API_KEY="sk-..."' copyKey="litellm-env" />
+            <CodeBlock title={t("Environment Variable")} code='export LITELLM_API_KEY="sk-..."' copyKey="litellm-env" />
           </Space>
         </FeatureCard>
 
@@ -278,7 +278,7 @@ const MCPConnect: React.FC<MCPConnectProps> = ({ currentServerAccessGroups = [] 
                 </a>
               </Text>
             </div>
-            <CodeBlock title="Environment Variable" code='export OPENAI_API_KEY="sk-..."' copyKey="openai-env" />
+            <CodeBlock title={t("Environment Variable")} code='export OPENAI_API_KEY="sk-..."' copyKey="openai-env" />
           </Space>
         </FeatureCard>
 
@@ -334,8 +334,7 @@ const MCPConnect: React.FC<MCPConnectProps> = ({ currentServerAccessGroups = [] 
           <Title level={4} className="mb-0 text-purple-900">{t("Cursor IDE Integration")}</Title>
         </div>
         <Text className="text-purple-700">
-          Use tools directly from Cursor IDE with LiteLLM MCP. Enable your AI assistant to perform real-world tasks
-          without leaving your coding environment.
+          {t("Use tools directly from Cursor IDE with LiteLLM MCP. Enable your AI assistant to perform real-world tasks without leaving your coding environment.")}
         </Text>
       </div>
 
@@ -394,7 +393,7 @@ const MCPConnect: React.FC<MCPConnectProps> = ({ currentServerAccessGroups = [] 
           <Title level={4} className="mb-0 text-green-900">{t("Streamable HTTP Transport")}</Title>
         </div>
         <Text className="text-green-700">
-          Connect to LiteLLM MCP using HTTP transport. Compatible with any MCP client that supports HTTP streaming.
+          {t("Connect to LiteLLM MCP using HTTP transport. Compatible with any MCP client that supports HTTP streaming.")}
         </Text>
       </div>
 
@@ -406,8 +405,7 @@ const MCPConnect: React.FC<MCPConnectProps> = ({ currentServerAccessGroups = [] 
         <Space direction="vertical" size="middle" className="w-full">
           <div>
             <Text>
-              Each MCP client supports different transports. Refer to your client documentation to determine the
-              appropriate transport method.
+              {t("Each MCP client supports different transports. Refer to your client documentation to determine the appropriate transport method.")}
             </Text>
           </div>
           <CodeBlock title="Server URL" code={`${proxyBaseUrl}/mcp`} copyKey="http-server-url" />
@@ -441,8 +439,7 @@ const MCPConnect: React.FC<MCPConnectProps> = ({ currentServerAccessGroups = [] 
         <div>
           <TremorTitle className="text-3xl font-bold text-gray-900 mb-3">{t("Connect to your MCP client")}</TremorTitle>
           <TremorText className="text-lg text-gray-600">
-            Use tools directly from any MCP client with LiteLLM MCP. Enable your AI assistant to perform real-world
-            tasks through a simple, secure connection.
+            {t("Use tools directly from any MCP client with LiteLLM MCP. Enable your AI assistant to perform real-world tasks through a simple, secure connection.")}
           </TremorText>
         </div>
 

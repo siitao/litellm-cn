@@ -73,7 +73,7 @@ const MCPLogoSelector: React.FC<MCPLogoSelectorProps> = ({ value, onChange }) =>
               render={<Info className="size-4 cursor-help text-muted-foreground" aria-label={t("About the logo")} />}
             />
             <TooltipContent>
-              Select a well-known logo or paste a URL to any image. The logo is shown on the admin and chat pages.
+              {t("Select a well-known logo or paste a URL to any image. The logo is shown on the admin and chat pages.")}
             </TooltipContent>
           </Tooltip>
         </div>
@@ -131,7 +131,7 @@ const MCPLogoSelector: React.FC<MCPLogoSelectorProps> = ({ value, onChange }) =>
             <LinkIcon className="size-4 text-muted-foreground" />
           </InputGroupAddon>
           <InputGroupInput
-            placeholder="Or paste a custom logo URL..."
+            placeholder={t("Or paste a custom logo URL...")}
             value={value && !selectedWellKnown ? value : ""}
             onChange={(e) => {
               const v = e.target.value.trim();

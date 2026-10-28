@@ -366,7 +366,7 @@ export function ToolTestPanel({
                       </span>
                     }
                     name="input"
-                    rules={[{ required: true, message: "Please enter input for this tool" }]}
+                    rules={[{ required: true, message: t("Please enter input for this tool") }]}
                     className="mb-3"
                   >
                     <TextInput
@@ -641,7 +641,7 @@ export function ToolTestPanel({
                         <div className="animate-spin rounded-full h-8 w-8 border-2 border-gray-200"></div>
                         <div className="animate-spin rounded-full h-8 w-8 border-2 border-blue-600 border-t-transparent absolute top-0"></div>
                       </div>
-                      <p className="text-sm font-medium mt-3">Calling tool...</p>
+                      <p className="text-sm font-medium mt-3">{t("Calling tool...")}</p>
                       <p className="text-xs text-gray-400 mt-1">{t("Please wait while we process your request")}</p>
                     </div>
                   )}
@@ -781,7 +781,7 @@ export function ToolTestPanel({
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img
                                       src={content.url}
-                                      alt="Tool result"
+                                      alt={t("Tool result")}
                                       className="max-w-full h-auto rounded-sm shadow-xs"
                                     />
                                   </div>

@@ -444,7 +444,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
           isAdmin
             ? "MCP Server created successfully"
             : {
-                message: "MCP Server submitted for admin review",
+                message: t("MCP Server submitted for admin review"),
                 description: t("Once an admin approves it, the server will appear in your MCP Servers list."),
               },
         );
@@ -523,7 +523,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
             <span className="font-medium">{searchValue}</span>
-            <span className="text-gray-400 text-xs ml-1">create new group</span>
+            <span className="text-gray-400 text-xs ml-1">{t("create new group")}</span>
           </div>
         ),
       });
@@ -615,7 +615,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
           )}
           <img
             src={mcpLogoImg}
-            alt="MCP Logo"
+            alt={t("MCP Logo")}
             className="w-8 h-8 object-contain"
             style={{
               height: "20px",
@@ -649,21 +649,20 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
         >
           {!isAdmin && (
             <div className="rounded-md bg-blue-50 border border-blue-200 px-4 py-3 text-sm text-blue-800">
-              Your submission will be sent for admin review. Once approved, the server will appear in your MCP Servers
-              list. The request must be made with a team-scoped API key.
+              {t("Your submission will be sent for admin review. Once approved, the server will appear in your MCP Servers list. The request must be made with a team-scoped API key.")}
             </div>
           )}
           <div className="grid grid-cols-1 gap-6">
             <Form.Item
               label={
-                <span className="text-sm font-medium text-gray-700 flex items-center">{t("MCP Server Name")}<Tooltip title="Best practice: Use a descriptive name that indicates the server's purpose (e.g., 'GitHub_MCP', 'Email_Service'). Cannot contain spaces or hyphens; use underscores instead. Names must comply with SEP-986 and will be rejected if invalid (https://modelcontextprotocol.io/specification/2025-11-25/server/tools#tool-names).">
+                <span className="text-sm font-medium text-gray-700 flex items-center">{t("MCP Server Name")}<Tooltip title={t("Best practice: Use a descriptive name that indicates the server's purpose (e.g., 'GitHub_MCP', 'Email_Service'). Cannot contain spaces or hyphens; use underscores instead. Names must comply with SEP-986 and will be rejected if invalid (https://modelcontextprotocol.io/specification/2025-11-25/server/tools#tool-names).")}>
                     <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                   </Tooltip>
                 </span>
               }
               name="server_name"
               rules={[
-                { required: false, message: "Please enter a server name" },
+                { required: false, message: t("Please enter a server name") },
                 { validator: (_, value) => validateMCPServerName(value) },
               ]}
             >
@@ -675,7 +674,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
 
             <Form.Item
               label={
-                <span className="text-sm font-medium text-gray-700 flex items-center">{t("Alias")}<Tooltip title="A short, unique identifier for this server. Defaults to the server name if not provided. Cannot contain spaces or hyphens; use underscores instead.">
+                <span className="text-sm font-medium text-gray-700 flex items-center">{t("Alias")}<Tooltip title={t("A short, unique identifier for this server. Defaults to the server name if not provided. Cannot contain spaces or hyphens; use underscores instead.")}>
                     <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                   </Tooltip>
                 </span>
@@ -696,7 +695,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
               rules={[
                 {
                   required: false,
-                  message: "Please enter a server description",
+                  message: t("Please enter a server description"),
                 },
               ]}
             >
@@ -721,7 +720,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
             <Form.Item
               label={<span className="text-sm font-medium text-gray-700">{t("Transport Type")}</span>}
               name="transport"
-              rules={[{ required: true, message: "Please select a transport type" }]}
+              rules={[{ required: true, message: t("Please select a transport type") }]}
             >
               <Select
                 placeholder={t("Select transport")}
@@ -743,7 +742,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
                 label={<span className="text-sm font-medium text-gray-700">{t("MCP Server URL")}</span>}
                 name="url"
                 rules={[
-                  { required: true, message: "Please enter a server URL" },
+                  { required: true, message: t("Please enter a server URL") },
                   { validator: (_, value) => validateMCPServerUrl(value) },
                 ]}
               >
@@ -773,7 +772,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
 
             <Form.Item
               label={
-                <span className="text-sm font-medium text-gray-700 flex items-center">{t("Max Concurrent Requests (optional)")}<Tooltip title="Maximum number of tool calls LiteLLM will run against this server at the same time. Additional calls wait for a free slot. Leave blank for no limit.">
+                <span className="text-sm font-medium text-gray-700 flex items-center">{t("Max Concurrent Requests (optional)")}<Tooltip title={t("Maximum number of tool calls LiteLLM will run against this server at the same time. Additional calls wait for a free slot. Leave blank for no limit.")}>
                     <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                   </Tooltip>
                 </span>
@@ -800,8 +799,8 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
                     label: <span className="text-sm font-semibold text-gray-700">{t("Authentication")}</span>,
                     children: (
                       <>
-                        <Form.Item name="auth_type" rules={[{ required: true, message: "Please select an auth type" }]}>
-                          <Select placeholder="Select auth type" className="rounded-lg" size="large" virtual={false}>
+                        <Form.Item name="auth_type" rules={[{ required: true, message: t("Please select an auth type") }]}>
+                          <Select placeholder={t("Select auth type")} className="rounded-lg" size="large" virtual={false}>
                             <Select.Option value="none">{t("None")}</Select.Option>
                             <Select.Option value="api_key">{t("API Key")}</Select.Option>
                             <Select.Option value="bearer_token">{t("Bearer Token")}</Select.Option>
@@ -833,7 +832,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
                         {shouldShowAuthValueField && (
                           <Form.Item
                             label={
-                              <span className="text-sm font-medium text-gray-700 flex items-center">{t("Authentication Value")}<Tooltip title="Token, password, or header value to send with each request for the selected auth type.">
+                              <span className="text-sm font-medium text-gray-700 flex items-center">{t("Authentication Value")}<Tooltip title={t("Token, password, or header value to send with each request for the selected auth type.")}>
                                   <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                                 </Tooltip>
                               </span>

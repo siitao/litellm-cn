@@ -24,7 +24,7 @@ export default function DcrBridgeToggle({
   return (
     <Form.Item
       label={
-        <span className="text-sm font-medium text-gray-700 flex items-center">{t("Gateway-hosted sign-in (DCR bridge)")}<Tooltip title="Lets OAuth-only clients like Claude Desktop register and sign in through the gateway. Turn off to relay the upstream server's own OAuth metadata instead (for clients pre-registered with the upstream IdP).">
+        <span className="text-sm font-medium text-gray-700 flex items-center">{t("Gateway-hosted sign-in (DCR bridge)")}<Tooltip title={t("Lets OAuth-only clients like Claude Desktop register and sign in through the gateway. Turn off to relay the upstream server's own OAuth metadata instead (for clients pre-registered with the upstream IdP).")}>
             <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
           </Tooltip>
         </span>

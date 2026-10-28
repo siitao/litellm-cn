@@ -27,11 +27,11 @@ const IdJagFormFields: React.FC<IdJagFormFieldsProps> = ({ isEditing = false }) 
         label={
           <FieldLabel
             label={t("Org Token Endpoint (leg 1)")}
-            tooltip="Your IdP org authorization server's token endpoint. LiteLLM exchanges the user's identity assertion here for an ID-JAG assertion (RFC 8693 with requested_token_type=urn:ietf:params:oauth:token-type:id-jag)."
+            tooltip={t("Your IdP org authorization server's token endpoint. LiteLLM exchanges the user's identity assertion here for an ID-JAG assertion (RFC 8693 with requested_token_type=urn:ietf:params:oauth:token-type:id-jag).")}
           />
         }
         name="token_exchange_endpoint"
-        rules={[{ required: !isEditing, message: "The org token endpoint is required for ID-JAG" }]}
+        rules={[{ required: !isEditing, message: t("The org token endpoint is required for ID-JAG") }]}
       >
         <Input placeholder="https://your-org.okta.com/oauth2/v1/token" className={fieldClassName} />
       </Form.Item>
@@ -39,18 +39,18 @@ const IdJagFormFields: React.FC<IdJagFormFieldsProps> = ({ isEditing = false }) 
         label={
           <FieldLabel
             label={t("Resource Token Endpoint (leg 2)")}
-            tooltip="The upstream resource authorization server's token endpoint. LiteLLM posts the ID-JAG assertion here as an RFC 7523 jwt-bearer grant to get the access token the MCP server accepts."
+            tooltip={t("The upstream resource authorization server's token endpoint. LiteLLM posts the ID-JAG assertion here as an RFC 7523 jwt-bearer grant to get the access token the MCP server accepts.")}
           />
         }
         name={["credentials", "id_jag_resource_token_endpoint"]}
-        rules={[{ required: !isEditing, message: "The resource token endpoint is required for ID-JAG" }]}
+        rules={[{ required: !isEditing, message: t("The resource token endpoint is required for ID-JAG") }]}
       >
         <Input placeholder="https://upstream.example.com/oauth2/token" className={fieldClassName} />
       </Form.Item>
       <Form.Item
         label={<FieldLabel label={t("Client ID")} tooltip={t("OAuth2 client ID LiteLLM authenticates as on both legs.")} />}
         name={["credentials", "client_id"]}
-        rules={[{ required: !isEditing, message: "Client ID is required for ID-JAG" }]}
+        rules={[{ required: !isEditing, message: t("Client ID is required for ID-JAG") }]}
       >
         <Input.Password placeholder={`Enter OAuth client ID${placeholderSuffix}`} className={fieldClassName} />
       </Form.Item>
@@ -58,7 +58,7 @@ const IdJagFormFields: React.FC<IdJagFormFieldsProps> = ({ isEditing = false }) 
         label={
           <FieldLabel
             label={t("Client Secret")}
-            tooltip="Authenticates LiteLLM as the OAuth client via client_secret_post. Leave blank when using a private key instead; a private key takes precedence over this secret."
+            tooltip={t("Authenticates LiteLLM as the OAuth client via client_secret_post. Leave blank when using a private key instead; a private key takes precedence over this secret.")}
           />
         }
         name={["credentials", "client_secret"]}
@@ -80,7 +80,7 @@ const IdJagFormFields: React.FC<IdJagFormFieldsProps> = ({ isEditing = false }) 
         label={
           <FieldLabel
             label={t("Client Private Key (PEM)")}
-            tooltip="PEM private key signing the RFC 7523 private_key_jwt client assertion. Okta Cross App Access normally requires this. When set it takes precedence over the client secret."
+            tooltip={t("PEM private key signing the RFC 7523 private_key_jwt client assertion. Okta Cross App Access normally requires this. When set it takes precedence over the client secret.")}
           />
         }
         name={["credentials", "client_private_key"]}
@@ -95,7 +95,7 @@ const IdJagFormFields: React.FC<IdJagFormFieldsProps> = ({ isEditing = false }) 
         label={
           <FieldLabel
             label={t("Private Key ID (optional)")}
-            tooltip="The kid advertised in the client assertion JWT header, so the IdP can select the right registered key."
+            tooltip={t("The kid advertised in the client assertion JWT header, so the IdP can select the right registered key.")}
           />
         }
         name={["credentials", "client_private_key_id"]}
@@ -117,7 +117,7 @@ const IdJagFormFields: React.FC<IdJagFormFieldsProps> = ({ isEditing = false }) 
         label={
           <FieldLabel
             label={t("Audience (optional)")}
-            tooltip="RFC 8693 audience sent on leg 1, identifying the upstream the ID-JAG assertion is minted for."
+            tooltip={t("RFC 8693 audience sent on leg 1, identifying the upstream the ID-JAG assertion is minted for.")}
           />
         }
         name="audience"
@@ -128,7 +128,7 @@ const IdJagFormFields: React.FC<IdJagFormFieldsProps> = ({ isEditing = false }) 
         label={
           <FieldLabel
             label={t("Resource Indicator (optional)")}
-            tooltip="RFC 8707 resource indicator sent on leg 1. Separate from Audience, which is the RFC 8693 parameter."
+            tooltip={t("RFC 8707 resource indicator sent on leg 1. Separate from Audience, which is the RFC 8693 parameter.")}
           />
         }
         name={["credentials", "id_jag_resource"]}
@@ -139,7 +139,7 @@ const IdJagFormFields: React.FC<IdJagFormFieldsProps> = ({ isEditing = false }) 
         label={
           <FieldLabel
             label={t("Subject Token Type (optional)")}
-            tooltip="Type of the identity assertion exchanged on leg 1. Defaults to urn:ietf:params:oauth:token-type:id_token."
+            tooltip={t("Type of the identity assertion exchanged on leg 1. Defaults to urn:ietf:params:oauth:token-type:id_token.")}
           />
         }
         name="subject_token_type"
@@ -150,7 +150,7 @@ const IdJagFormFields: React.FC<IdJagFormFieldsProps> = ({ isEditing = false }) 
         label={<FieldLabel label={t("Scopes (optional)")} tooltip={t("Scopes requested on leg 1 of the exchange.")} />}
         name={["credentials", "scopes"]}
       >
-        <Select mode="tags" tokenSeparators={[","]} placeholder="Add scopes" className="rounded-lg" size="large" />
+        <Select mode="tags" tokenSeparators={[","]} placeholder={t("Add scopes")} className="rounded-lg" size="large" />
       </Form.Item>
     </>
   );

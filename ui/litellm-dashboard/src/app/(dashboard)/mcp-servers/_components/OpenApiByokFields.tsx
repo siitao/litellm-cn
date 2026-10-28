@@ -7,7 +7,7 @@ const OpenApiByokFields: React.FC = () => (
   <>
     <Form.Item
       label={
-        <span className="text-sm font-medium text-gray-700 flex items-center gap-2">{t("BYOK (Bring Your Own Key)")}<Tooltip title="When enabled, each user provides their own API key for this service. Keys are stored per-user and never shared.">
+        <span className="text-sm font-medium text-gray-700 flex items-center gap-2">{t("BYOK (Bring Your Own Key)")}<Tooltip title={t("When enabled, each user provides their own API key for this service. Keys are stored per-user and never shared.")}>
             <InfoCircleOutlined className="text-blue-400 hover:text-blue-600 cursor-help" />
           </Tooltip>
         </span>
@@ -46,7 +46,7 @@ const OpenApiByokFields: React.FC = () => (
             )}
             <Form.Item
               label={
-                <span className="text-sm font-medium text-gray-700">{t("Access Description")}<Tooltip title="List of permissions shown to users in the connection modal (e.g. 'Create and manage Jira issues')">
+                <span className="text-sm font-medium text-gray-700">{t("Access Description")}<Tooltip title={t("List of permissions shown to users in the connection modal (e.g. 'Create and manage Jira issues')")}>
                     <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                   </Tooltip>
                 </span>

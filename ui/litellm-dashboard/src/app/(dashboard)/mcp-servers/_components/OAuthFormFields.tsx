@@ -45,7 +45,7 @@ const UpstreamResourceField: React.FC = () => (
     label={<FieldLabel label={t("Resource Indicator (optional)")} tooltip={UPSTREAM_RESOURCE_TOOLTIP} />}
     name={["credentials", "upstream_resource"]}
   >
-    <TextInput placeholder="auto, or https://mcp.example.com/mcp" className={fieldClassName} />
+    <TextInput placeholder={t("auto, or https://mcp.example.com/mcp")} className={fieldClassName} />
   </Form.Item>
 );
 
@@ -65,13 +65,13 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
         label={
           <FieldLabel
             label={t("OAuth Flow Type")}
-            tooltip="Choose how the proxy authenticates with this MCP server. M2M is for server-to-server communication using client credentials. Interactive (PKCE) is for user-facing flows that require browser-based authorization."
+            tooltip={t("Choose how the proxy authenticates with this MCP server. M2M is for server-to-server communication using client credentials. Interactive (PKCE) is for user-facing flows that require browser-based authorization.")}
           />
         }
         name="oauth_flow_type"
         {...(initialFlowType ? { initialValue: initialFlowType } : {})}
       >
-        <Select placeholder="Select OAuth flow" className="rounded-lg" size="large">
+        <Select placeholder={t("Select OAuth flow")} className="rounded-lg" size="large">
           <Select.Option value={OAUTH_FLOW.M2M}>
             <div>
               <span className="font-medium">{t("Machine-to-Machine (M2M)")}</span>
@@ -114,7 +114,7 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
             />
           </Form.Item>
           <Form.Item
-            label={<FieldLabel label="Token URL" tooltip={t("Token endpoint URL for the client_credentials grant.")} />}
+            label={<FieldLabel label={t("Token URL")} tooltip={t("Token endpoint URL for the client_credentials grant.")} />}
             name="token_url"
             rules={requiredWhenCreating("Token URL is required for M2M OAuth")}
           >
@@ -130,7 +130,7 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
             }
             name={["credentials", "scopes"]}
           >
-            <Select mode="tags" tokenSeparators={[","]} placeholder="Add scopes" className="rounded-lg" size="large" />
+            <Select mode="tags" tokenSeparators={[","]} placeholder={t("Add scopes")} className="rounded-lg" size="large" />
           </Form.Item>
           <UpstreamResourceField />
         </>
@@ -177,19 +177,19 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
             label={
               <FieldLabel
                 label={t("Scopes (optional)")}
-                tooltip="Optional scopes requested during token exchange. Separate multiple scopes with enter or commas."
+                tooltip={t("Optional scopes requested during token exchange. Separate multiple scopes with enter or commas.")}
               />
             }
             name={["credentials", "scopes"]}
           >
-            <Select mode="tags" tokenSeparators={[","]} placeholder="Add scopes" className="rounded-lg" size="large" />
+            <Select mode="tags" tokenSeparators={[","]} placeholder={t("Add scopes")} className="rounded-lg" size="large" />
           </Form.Item>
           <UpstreamResourceField />
           <Form.Item
             label={
               <FieldLabel
                 label={t("Issuer (optional)")}
-                tooltip="OAuth 2.0 authorization server issuer (RFC 8414). Leave empty to discover endpoints from the upstream resource; set it to pin the trust anchor, which makes this issuer's document the only endpoint source (RFC 8414 §3.3), overriding the Authorization/Token/Registration URLs above and failing closed if its metadata cannot be fetched."
+                tooltip={t("OAuth 2.0 authorization server issuer (RFC 8414). Leave empty to discover endpoints from the upstream resource; set it to pin the trust anchor, which makes this issuer's document the only endpoint source (RFC 8414 §3.3), overriding the Authorization/Token/Registration URLs above and failing closed if its metadata cannot be fetched.")}
               />
             }
             name="issuer"
@@ -208,7 +208,7 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
             <TextInput placeholder="https://example.com/oauth/authorize" className={fieldClassName} />
           </Form.Item>
           <Form.Item
-            label={<FieldLabel label="Token URL (optional)" tooltip={t("Optional override for the token endpoint.")} />}
+            label={<FieldLabel label={t("Token URL (optional)")} tooltip={t("Optional override for the token endpoint.")} />}
             name="token_url"
           >
             <TextInput placeholder="https://example.com/oauth/token" className={fieldClassName} />
@@ -229,7 +229,7 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
             label={
               <FieldLabel
                 label={t("Token Validation Rules (optional)")}
-                tooltip='JSON object of key-value rules checked against the OAuth token response before storing. Supports dot-notation for nested fields (e.g. {"organization": "my-org", "team.id": "123"}). Tokens that fail validation are rejected with HTTP 403.'
+                tooltip={t("JSON object of key-value rules checked against the OAuth token response before storing. Supports dot-notation for nested fields (e.g. {\"organization\": \"my-org\", \"team.id\": \"123\"}). Tokens that fail validation are rejected with HTTP 403.")}
               />
             }
             name="token_validation_json"
@@ -257,18 +257,17 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
             label={
               <FieldLabel
                 label={t("Token Storage TTL (seconds, optional)")}
-                tooltip="How long to cache each user's OAuth access token in Redis before evicting it (never longer than the token's own expires_in). Leave blank to derive the TTL from the token's expires_in, or fall back to the 12-hour default."
+                tooltip={t("How long to cache each user's OAuth access token in Redis before evicting it (never longer than the token's own expires_in). Leave blank to derive the TTL from the token's expires_in, or fall back to the 12-hour default.")}
               />
             }
             name="token_storage_ttl_seconds"
           >
-            <InputNumber min={1} placeholder="e.g. 3600" className="w-full rounded-lg" style={{ width: "100%" }} />
+            <InputNumber min={1} placeholder={t("e.g. 3600")} className="w-full rounded-lg" style={{ width: "100%" }} />
           </Form.Item>
           {oauthFlow && (
             <div className="rounded-lg border border-dashed border-gray-300 p-4 space-y-2">
               <p className="text-sm text-gray-600">
-                Use OAuth to fetch a fresh access token and temporarily save it in the session as the authentication
-                value.
+                {t("Use OAuth to fetch a fresh access token and temporarily save it in the session as the authentication value.")}
               </p>
               <Button
                 variant="secondary"

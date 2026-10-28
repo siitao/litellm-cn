@@ -64,14 +64,14 @@ const EnvVarsSection: React.FC = () => {
                   className="mb-0"
                   style={{ flex: 1 }}
                   rules={[
-                    { required: true, message: "Variable name is required" },
+                    { required: true, message: t("Variable name is required") },
                     {
                       pattern: /^[A-Za-z_][A-Za-z0-9_]*$/,
-                      message: "Use letters, digits, underscores; cannot start with a digit.",
+                      message: t("Use letters, digits, underscores; cannot start with a digit."),
                     },
                   ]}
                 >
-                  <Input placeholder="e.g. DB_PROTOCOL" className="rounded-md font-mono" />
+                  <Input placeholder={t("e.g. DB_PROTOCOL")} className="rounded-md font-mono" />
                 </Form.Item>
                 <div style={{ flex: 1 }}>
                   <ScopedValueOrDescription name={name} restField={restField} />
@@ -114,10 +114,10 @@ const ScopedValueOrDescription: React.FC<{
       <Form.Item {...restField} name={[name, "description"]} className="mb-0">
         <Input
           addonBefore={
-            <Tooltip title="Per-user variables have no shared value. This text is only a hint shown to each user when they fill in their own value.">
+            <Tooltip title={t("Per-user variables have no shared value. This text is only a hint shown to each user when they fill in their own value.")}>
               <span className="text-xs text-gray-500 cursor-help whitespace-nowrap">
                 <InfoCircleOutlined className="mr-1" />
-                Hint
+                {t("Hint")}
               </span>
             </Tooltip>
           }
@@ -129,7 +129,7 @@ const ScopedValueOrDescription: React.FC<{
   }
   return (
     <Form.Item {...restField} name={[name, "value"]} className="mb-0">
-      <Input placeholder="e.g. postgresql" className="rounded-md font-mono" />
+      <Input placeholder={t("e.g. postgresql")} className="rounded-md font-mono" />
     </Form.Item>
   );
 };

@@ -353,7 +353,7 @@ const MCPToolsViewer = ({
                     <div className="mt-2">
                       <p className="flex items-center text-xs text-muted-foreground">
                         <span className="mr-2 inline-block size-2 rounded-full bg-green-500" />
-                        {Object.keys(passthroughHeaders).length} header(s) configured
+                        {Object.keys(passthroughHeaders).length} {t("header(s) configured")}
                       </p>
                     </div>
                   )}
@@ -415,7 +415,7 @@ const MCPToolsViewer = ({
                             <Search className="size-4 text-muted-foreground" />
                           </InputGroupAddon>
                           <InputGroupInput
-                            placeholder="Search tools..."
+                            placeholder={t("Search tools...")}
                             value={toolSearchTerm}
                             onChange={(e) => setToolSearchTerm(e.target.value)}
                           />
@@ -427,7 +427,7 @@ const MCPToolsViewer = ({
                     {toolsAreaLoading && (
                       <div className="flex flex-col items-center justify-center rounded-lg border border-border bg-card py-8">
                         <UiLoadingSpinner className="mb-3 size-6 text-muted-foreground" />
-                        <p className="text-xs font-medium">Loading tools...</p>
+                        <p className="text-xs font-medium">{t("Loading tools...")}</p>
                       </div>
                     )}
 

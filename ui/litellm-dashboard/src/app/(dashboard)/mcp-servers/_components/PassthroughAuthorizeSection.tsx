@@ -71,15 +71,11 @@ export default function PassthroughAuthorizeSection({
   return (
     <div className="rounded-lg border border-dashed border-gray-300 p-4 space-y-2 mb-4">
       <p className="text-sm text-gray-600">
-        Callers bring their own upstream token for this auth type, so LiteLLM never stores tokens. To preview tools and
-        configure the tool allowlist, authorize against the upstream here: the token stays in this browser session only
-        and is never saved to LiteLLM. An OAuth app configured below IS saved with the server, so internal users who
-        authorize from the Tools page go through it.
+        {t("Callers bring their own upstream token for this auth type, so LiteLLM never stores tokens. To preview tools and configure the tool allowlist, authorize against the upstream here: the token stays in this browser session only and is never saved to LiteLLM. An OAuth app configured below IS saved with the server, so internal users who authorize from the Tools page go through it.")}
       </p>
       {appMayNotMatchUpstream && (
         <p className="text-sm text-amber-600">
-          You changed the upstream URL or endpoints; the OAuth app entered here was registered for the previous upstream
-          and may not be valid. Update the client ID, or clear it to use dynamic client registration.
+          {t("You changed the upstream URL or endpoints; the OAuth app entered here was registered for the previous upstream and may not be valid. Update the client ID, or clear it to use dynamic client registration.")}
         </p>
       )}
       <Form.Item
@@ -118,8 +114,7 @@ export default function PassthroughAuthorizeSection({
       {oauthFlow.error && <p className="text-sm text-red-500">{oauthFlow.error}</p>}
       {oauthFlow.status === "success" && oauthFlow.tokenResponse?.access_token && (
         <p className="text-sm text-green-600">
-          Token held for this browser session. Tools can now be previewed and configured; the token was not saved to
-          LiteLLM.
+          {t("Token held for this browser session. Tools can now be previewed and configured; the token was not saved to LiteLLM.")}
         </p>
       )}
     </div>

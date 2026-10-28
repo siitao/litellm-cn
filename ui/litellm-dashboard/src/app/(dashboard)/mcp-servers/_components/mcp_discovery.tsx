@@ -108,11 +108,11 @@ const MCPDiscovery: React.FC<MCPDiscoveryProps> = ({
         <DialogHeader>
           <div className="flex items-center justify-between border-b border-border pb-4">
             <div className="flex items-center space-x-3">
-              <img src={resolveLogoSrc(mcpLogoImg)} alt="MCP Logo" className="mr-2 size-5 object-contain" />
+              <img src={resolveLogoSrc(mcpLogoImg)} alt={t("MCP Logo")} className="mr-2 size-5 object-contain" />
               <DialogTitle className="text-xl font-semibold">{t("Add MCP Server")}</DialogTitle>
             </div>
             <Button variant="link" size="sm" className="mr-8" onClick={onCustomServer}>
-              + Custom Server
+              {t("+ Custom Server")}
             </Button>
           </div>
         </DialogHeader>
@@ -141,7 +141,7 @@ const MCPDiscovery: React.FC<MCPDiscoveryProps> = ({
               <Search className="size-4 text-muted-foreground" />
             </InputGroupAddon>
             <InputGroupInput
-              placeholder="Search servers..."
+              placeholder={t("Search servers...")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />

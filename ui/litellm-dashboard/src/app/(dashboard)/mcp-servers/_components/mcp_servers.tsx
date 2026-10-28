@@ -427,7 +427,7 @@ const MCPServers: React.FC<MCPServerProps> = ({ accessToken, userRole, userID })
             </AlertDialogHeader>
             <div className="space-y-4">
               <p className="text-sm text-muted-foreground">
-                This action is permanent and cannot be undone. All associated configurations will be removed.
+                {t("This action is permanent and cannot be undone. All associated configurations will be removed.")}
               </p>
 
               {serverToDelete && (
@@ -485,7 +485,7 @@ const MCPServers: React.FC<MCPServerProps> = ({ accessToken, userRole, userID })
           <div className="flex items-center gap-2">
             {isAdminRole(userRole) && (
               <Button className="shrink-0" onClick={() => setDiscoveryVisible(true)}>
-                + Add New MCP Server
+                {t("+ Add New MCP Server")}
               </Button>
             )}
             {!isAdminRole(userRole) && (
@@ -497,7 +497,7 @@ const MCPServers: React.FC<MCPServerProps> = ({ accessToken, userRole, userID })
                 }}
                 variant="secondary"
               >
-                + Submit MCP Server
+                {t("+ Submit MCP Server")}
               </Button>
             )}
           </div>
@@ -587,8 +587,7 @@ const MCPServers: React.FC<MCPServerProps> = ({ accessToken, userRole, userID })
                               }
                             />
                             <TooltipContent>
-                              An MCP Access Group is a set of users or teams that have permission to access specific MCP
-                              servers. Use access groups to control and organize who can connect to which servers.
+                              {t("An MCP Access Group is a set of users or teams that have permission to access specific MCP servers. Use access groups to control and organize who can connect to which servers.")}
                             </TooltipContent>
                           </Tooltip>
                         </p>
@@ -651,7 +650,7 @@ const MCPServers: React.FC<MCPServerProps> = ({ accessToken, userRole, userID })
                   {isLoadingServers ? (
                     <div className="flex items-center justify-center gap-3 rounded-lg border border-dashed border-border bg-card p-12">
                       <UiLoadingSpinner className="size-6 text-muted-foreground" />
-                      <p className="text-sm text-muted-foreground">Loading MCP servers...</p>
+                      <p className="text-sm text-muted-foreground">{t("Loading MCP servers...")}</p>
                     </div>
                   ) : displayedServers.length === 0 ? (
                     <div className="rounded-lg border border-dashed border-border bg-card p-12 text-center">

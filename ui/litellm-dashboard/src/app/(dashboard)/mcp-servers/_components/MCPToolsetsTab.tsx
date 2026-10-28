@@ -200,7 +200,7 @@ function CreateToolsetModal({ open, onClose, onSave, accessToken, initialToolset
           <Form.Item
             label={t("Toolset Name")}
             name="toolset_name"
-            rules={[{ required: true, message: "Please enter a toolset name" }]}
+            rules={[{ required: true, message: t("Please enter a toolset name") }]}
             className="flex-1 mb-0"
           >
             <Input placeholder={t("e.g. github-linear-tools")} />
@@ -218,7 +218,7 @@ function CreateToolsetModal({ open, onClose, onSave, accessToken, initialToolset
             <Text className="text-sm font-semibold text-gray-700">{t("Available Tools")}</Text>
           </div>
           <Input
-            placeholder="Search MCP servers..."
+            placeholder={t("Search MCP servers...")}
             value={serverSearch}
             onChange={(e) => setServerSearch(e.target.value)}
             className="mb-2"
@@ -408,8 +408,7 @@ export function MCPToolsetsTab({ accessToken, userRole }: MCPToolsetsTabProps) {
         <div>
           <Title>{t("MCP Toolsets")}</Title>
           <Text className="text-gray-500 text-sm">
-            Curated collections of tools from one or more MCP servers. Assign toolsets to keys and teams via the MCP
-            permissions dropdown.
+            {t("Curated collections of tools from one or more MCP servers. Assign toolsets to keys and teams via the MCP permissions dropdown.")}
           </Text>
         </div>
         {isAdmin && (
@@ -427,7 +426,7 @@ export function MCPToolsetsTab({ accessToken, userRole }: MCPToolsetsTabProps) {
         sorting={sorting}
         onSortingChange={setSorting}
         isLoading={isLoading}
-        loadingMessage="Loading toolsets…"
+        loadingMessage={t("Loading toolsets…")}
         noDataMessage={<ToolsetsEmptyState />}
         size="compact"
       />
@@ -458,7 +457,7 @@ export function MCPToolsetsTab({ accessToken, userRole }: MCPToolsetsTabProps) {
         title={t("Delete Toolset")}
       >
         <p>
-          Are you sure you want to delete this toolset? Keys and teams using it will lose access to the scoped tools.
+          {t("Are you sure you want to delete this toolset? Keys and teams using it will lose access to the scoped tools.")}
         </p>
       </Modal>
     </div>

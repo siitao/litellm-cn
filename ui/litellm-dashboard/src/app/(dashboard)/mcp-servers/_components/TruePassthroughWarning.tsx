@@ -16,10 +16,7 @@ export default function TruePassthroughWarning({ authType }: { authType?: string
       <TriangleAlert />
       <AlertTitle>{t("True Passthrough disables LiteLLM authentication for this server")}</AlertTitle>
       <AlertDescription>
-        Anyone who can reach the gateway can call this server without a LiteLLM key. The caller&apos;s Authorization
-        header is forwarded to the upstream verbatim, per-key and per-team rate limits and spend tracking do not apply,
-        and the upstream is fully responsible for authenticating callers. Choose OAuth Delegate instead if callers
-        should still authenticate to LiteLLM.
+        {t("Anyone who can reach the gateway can call this server without a LiteLLM key. The caller's Authorization header is forwarded to the upstream verbatim, per-key and per-team rate limits and spend tracking do not apply, and the upstream is fully responsible for authenticating callers. Choose OAuth Delegate instead if callers should still authenticate to LiteLLM.")}
       </AlertDescription>
     </Alert>
   );

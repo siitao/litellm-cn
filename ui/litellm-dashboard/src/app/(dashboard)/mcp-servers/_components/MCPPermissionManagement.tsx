@@ -139,7 +139,7 @@ const MCPPermissionManagement: React.FC<MCPPermissionManagementProps> = ({
 
           <div className="flex items-start justify-between gap-4">
             <div>
-              <span className="text-sm font-medium text-gray-700 flex items-center">{t("Internal network only")}<Tooltip title="When on, only requests from within your internal network are accepted. Turn off to allow external clients (other clusters, ChatGPT, etc). API key authentication is always required regardless of this setting.">
+              <span className="text-sm font-medium text-gray-700 flex items-center">{t("Internal network only")}<Tooltip title={t("When on, only requests from within your internal network are accepted. Turn off to allow external clients (other clusters, ChatGPT, etc). API key authentication is always required regardless of this setting.")}>
                   <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                 </Tooltip>
               </span>
@@ -160,7 +160,7 @@ const MCPPermissionManagement: React.FC<MCPPermissionManagementProps> = ({
           {isOAuth2 && (
             <div className="flex items-start justify-between gap-4">
               <div>
-                <span className="text-sm font-medium text-gray-700 flex items-center">{t("Delegate auth to upstream (PKCE passthrough)")}<Tooltip title="When on, LiteLLM skips its own API key/SSO check for this server and lets the client complete PKCE directly with the upstream MCP server. Only honored when Auth Type is oauth2. No spend tracking or per-key rate limiting will run on this route.">
+                <span className="text-sm font-medium text-gray-700 flex items-center">{t("Delegate auth to upstream (PKCE passthrough)")}<Tooltip title={t("When on, LiteLLM skips its own API key/SSO check for this server and lets the client complete PKCE directly with the upstream MCP server. Only honored when Auth Type is oauth2. No spend tracking or per-key rate limiting will run on this route.")}>
                     <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                   </Tooltip>
                 </span>
@@ -180,13 +180,12 @@ const MCPPermissionManagement: React.FC<MCPPermissionManagementProps> = ({
           {canEnableOAuthPassthrough && (
             <div className="flex items-start justify-between gap-4">
               <div>
-                <span className="text-sm font-medium text-gray-700 flex items-center">{t("OAuth pass-through")}<Tooltip title="When on, this server is treated as an OAuth pass-through: the gateway proxies the upstream /.well-known/oauth-protected-resource metadata, emits spec-compliant 401 challenges when no bearer is supplied, and propagates upstream 401/403 responses. Only honored when Auth Type is None and 'Authorization' is in Extra Headers.">
+                <span className="text-sm font-medium text-gray-700 flex items-center">{t("OAuth pass-through")}<Tooltip title={t("When on, this server is treated as an OAuth pass-through: the gateway proxies the upstream /.well-known/oauth-protected-resource metadata, emits spec-compliant 401 challenges when no bearer is supplied, and propagates upstream 401/403 responses. Only honored when Auth Type is None and 'Authorization' is in Extra Headers.")}>
                     <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                   </Tooltip>
                 </span>
                 <p className="text-sm text-gray-600 mt-1">
-                  Forward upstream OAuth discovery and 401 challenges so clients negotiate OAuth directly with the
-                  upstream MCP server.
+                  {t("Forward upstream OAuth discovery and 401 challenges so clients negotiate OAuth directly with the upstream MCP server.")}
                 </p>
               </div>
               <Form.Item
@@ -206,13 +205,13 @@ const MCPPermissionManagement: React.FC<MCPPermissionManagementProps> = ({
               showIcon
               className="mb-2"
               message={t("Internal server with upstream OAuth delegation")}
-              description="This MCP server is configured as internal-only but delegates auth to upstream. Anonymous users will be able to reach the upstream OAuth2 /authorize flow without a LiteLLM session. Ensure your upstream provider and network enforce access controls."
+              description={t("This MCP server is configured as internal-only but delegates auth to upstream. Anonymous users will be able to reach the upstream OAuth2 /authorize flow without a LiteLLM session. Ensure your upstream provider and network enforce access controls.")}
             />
           )}
 
           <Form.Item
             label={
-              <span className="text-sm font-medium text-gray-700 flex items-center">{t("MCP Access Groups")}<Tooltip title="Specify access groups for this MCP server. Users must be in at least one of these groups to access the server.">
+              <span className="text-sm font-medium text-gray-700 flex items-center">{t("MCP Access Groups")}<Tooltip title={t("Specify access groups for this MCP server. Users must be in at least one of these groups to access the server.")}>
                   <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                 </Tooltip>
               </span>
@@ -223,7 +222,7 @@ const MCPPermissionManagement: React.FC<MCPPermissionManagementProps> = ({
             <Select
               mode="tags"
               showSearch
-              placeholder="Select existing groups or type to create new ones"
+              placeholder={t("Select existing groups or type to create new ones")}
               optionFilterProp="value"
               filterOption={(input, option) => (option?.value ?? "").toLowerCase().includes(input.toLowerCase())}
               onSearch={(value) => setSearchValue(value)}
@@ -236,7 +235,7 @@ const MCPPermissionManagement: React.FC<MCPPermissionManagementProps> = ({
 
           <Form.Item
             label={
-              <span className="text-sm font-medium text-gray-700 flex items-center">{t("Extra Headers")}<Tooltip title="Forward custom headers from incoming requests to this MCP server (e.g., Authorization, X-Custom-Header, User-Agent)">
+              <span className="text-sm font-medium text-gray-700 flex items-center">{t("Extra Headers")}<Tooltip title={t("Forward custom headers from incoming requests to this MCP server (e.g., Authorization, X-Custom-Header, User-Agent)")}>
                   <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                 </Tooltip>
                 {mcpServer?.extra_headers && mcpServer.extra_headers.length > 0 && (
@@ -280,7 +279,7 @@ const MCPPermissionManagement: React.FC<MCPPermissionManagementProps> = ({
                         {...restField}
                         name={[name, "header"]}
                         className="flex-1"
-                        rules={[{ required: true, message: "Header name is required" }]}
+                        rules={[{ required: true, message: t("Header name is required") }]}
                       >
                         <Input
                           size="large"
@@ -293,7 +292,7 @@ const MCPPermissionManagement: React.FC<MCPPermissionManagementProps> = ({
                         {...restField}
                         name={[name, "value"]}
                         className="flex-1"
-                        rules={[{ required: true, message: "Header value is required" }]}
+                        rules={[{ required: true, message: t("Header value is required") }]}
                       >
                         <Input size="large" allowClear className="rounded-lg" placeholder={t("Header value")} />
                       </Form.Item>

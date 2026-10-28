@@ -626,7 +626,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
             <span className="font-medium">{searchValue}</span>
-            <span className="text-gray-400 text-xs ml-1">create new group</span>
+            <span className="text-gray-400 text-xs ml-1">{t("create new group")}</span>
           </div>
         ),
       });
@@ -1057,7 +1057,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                 label={t("MCP Server URL")}
                 name="url"
                 rules={[
-                  { required: true, message: "Please enter a server URL" },
+                  { required: true, message: t("Please enter a server URL") },
                   { validator: (_, value) => validateMCPServerUrl(value) },
                 ]}
               >
@@ -1072,13 +1072,13 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
             {isOpenAPITransport && (
               <Form.Item
                 label={
-                  <span className="text-sm font-medium text-gray-700 flex items-center">{t("OpenAPI Spec URL")}<Tooltip title="URL to an OpenAPI specification (JSON or YAML). MCP tools will be automatically generated from the API endpoints defined in the spec.">
+                  <span className="text-sm font-medium text-gray-700 flex items-center">{t("OpenAPI Spec URL")}<Tooltip title={t("URL to an OpenAPI specification (JSON or YAML). MCP tools will be automatically generated from the API endpoints defined in the spec.")}>
                       <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                     </Tooltip>
                   </span>
                 }
                 name="spec_path"
-                rules={[{ required: true, message: "Please enter an OpenAPI spec URL" }]}
+                rules={[{ required: true, message: t("Please enter an OpenAPI spec URL") }]}
               >
                 <Input
                   placeholder="https://petstore3.swagger.io/api/v3/openapi.json"
@@ -1089,7 +1089,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
 
             <Form.Item
               label={
-                <span className="text-sm font-medium text-gray-700 flex items-center">{t("Max Concurrent Requests (optional)")}<Tooltip title="Maximum number of tool calls LiteLLM will run against this server at the same time. Additional calls wait for a free slot. Leave blank for no limit.">
+                <span className="text-sm font-medium text-gray-700 flex items-center">{t("Max Concurrent Requests (optional)")}<Tooltip title={t("Maximum number of tool calls LiteLLM will run against this server at the same time. Additional calls wait for a free slot. Leave blank for no limit.")}>
                     <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                   </Tooltip>
                 </span>
@@ -1144,14 +1144,13 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
             {isStdioTransport && (
               <div className="rounded-lg border border-gray-200 p-4 space-y-4">
                 <p className="text-sm text-gray-600">
-                  Configure the stdio transport used to launch the MCP server process. You can either fill in the fields
-                  below or paste a JSON configuration.
+                  {t("Configure the stdio transport used to launch the MCP server process. You can either fill in the fields below or paste a JSON configuration.")}
                 </p>
 
                 <Form.Item
                   label={t("Command")}
                   name="command"
-                  rules={[{ required: true, message: "Please enter a command for stdio transport" }]}
+                  rules={[{ required: true, message: t("Please enter a command for stdio transport") }]}
                 >
                   <Input
                     placeholder={t("e.g., npx")}
@@ -1159,7 +1158,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                   />
                 </Form.Item>
 
-                <Form.Item label="Args" name="args">
+                <Form.Item label={t("Args")} name="args">
                   <Select
                     mode="tags"
                     size="large"
@@ -1204,7 +1203,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
             {!isStdioTransport && shouldShowAuthValueField && (
               <Form.Item
                 label={
-                  <span className="text-sm font-medium text-gray-700 flex items-center">{t("Authentication Value")}<Tooltip title="Token, password, or header value to send with each request for the selected auth type.">
+                  <span className="text-sm font-medium text-gray-700 flex items-center">{t("Authentication Value")}<Tooltip title={t("Token, password, or header value to send with each request for the selected auth type.")}>
                       <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                     </Tooltip>
                   </span>
@@ -1234,7 +1233,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                     showIcon
                     className="mb-4 rounded-lg"
                     message={t("This server has no OAuth flow set")}
-                    description="Choose Machine-to-Machine (M2M) or Interactive (PKCE) so LiteLLM authenticates it the way you intend, then save. Until it is set, LiteLLM falls back to interactive per-user auth and treats a machine-to-machine credential shape conservatively."
+                    description={t("Choose Machine-to-Machine (M2M) or Interactive (PKCE) so LiteLLM authenticates it the way you intend, then save. Until it is set, LiteLLM falls back to interactive per-user auth and treats a machine-to-machine credential shape conservatively.")}
                   />
                 )}
                 <OAuthFormFields
@@ -1263,7 +1262,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                     rel="noopener noreferrer"
                     className="text-blue-500 hover:text-blue-700"
                   >
-                    View docs &rarr;
+                    {t("View docs ->")}
                   </a>
                 </p>
                 <Form.Item
@@ -1297,7 +1296,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                 </Form.Item>
                 <Form.Item
                   label={
-                    <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Access Key ID")}<Tooltip title="Optional. If not provided, falls back to the boto3 credential chain (IAM role, env vars, etc.).">
+                    <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Access Key ID")}<Tooltip title={t("Optional. If not provided, falls back to the boto3 credential chain (IAM role, env vars, etc.).")}>
                         <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>
@@ -1341,7 +1340,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                 </Form.Item>
                 <Form.Item
                   label={
-                    <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Role ARN")}<Tooltip title="Optional. IAM role ARN to assume via STS before signing. If set, LiteLLM calls sts:AssumeRole to get temporary credentials.">
+                    <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Role ARN")}<Tooltip title={t("Optional. IAM role ARN to assume via STS before signing. If set, LiteLLM calls sts:AssumeRole to get temporary credentials.")}>
                         <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>
@@ -1355,7 +1354,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                 </Form.Item>
                 <Form.Item
                   label={
-                    <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Session Name")}<Tooltip title="Optional. Session name for the AssumeRole call — appears in CloudTrail logs. Auto-generated if omitted.">
+                    <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Session Name")}<Tooltip title={t("Optional. Session name for the AssumeRole call — appears in CloudTrail logs. Auto-generated if omitted.")}>
                         <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>

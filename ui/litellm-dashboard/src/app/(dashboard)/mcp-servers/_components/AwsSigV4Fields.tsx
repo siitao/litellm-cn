@@ -12,7 +12,7 @@ const AwsSigV4Fields: React.FC = () => (
         rel="noopener noreferrer"
         className="text-blue-500 hover:text-blue-700"
       >
-        View docs &rarr;
+        {t("View docs ->")}
       </a>
     </p>
     <Form.Item
@@ -23,7 +23,7 @@ const AwsSigV4Fields: React.FC = () => (
         </span>
       }
       name={["credentials", "aws_region_name"]}
-      rules={[{ required: true, message: "AWS region is required for SigV4 auth" }]}
+      rules={[{ required: true, message: t("AWS region is required for SigV4 auth") }]}
     >
       <Input placeholder="us-east-1" className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500" />
     </Form.Item>
@@ -43,7 +43,7 @@ const AwsSigV4Fields: React.FC = () => (
     </Form.Item>
     <Form.Item
       label={
-        <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Access Key ID")}<Tooltip title="Optional. If not provided, falls back to the boto3 credential chain (IAM role, env vars, etc.).">
+        <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Access Key ID")}<Tooltip title={t("Optional. If not provided, falls back to the boto3 credential chain (IAM role, env vars, etc.).")}>
             <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
           </Tooltip>
         </span>
@@ -63,7 +63,7 @@ const AwsSigV4Fields: React.FC = () => (
       ]}
     >
       <Input.Password
-        placeholder="AKIA... (optional — uses IAM role if blank)"
+        placeholder={t("AKIA... (optional — uses IAM role if blank)")}
         className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
       />
     </Form.Item>
@@ -109,7 +109,7 @@ const AwsSigV4Fields: React.FC = () => (
     </Form.Item>
     <Form.Item
       label={
-        <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Role ARN")}<Tooltip title="Optional. IAM role ARN to assume via STS before signing. If set, LiteLLM calls sts:AssumeRole to get temporary credentials. Uses ambient credentials (IAM role, env vars) as the source identity unless explicit keys are also provided.">
+        <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Role ARN")}<Tooltip title={t("Optional. IAM role ARN to assume via STS before signing. If set, LiteLLM calls sts:AssumeRole to get temporary credentials. Uses ambient credentials (IAM role, env vars) as the source identity unless explicit keys are also provided.")}>
             <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
           </Tooltip>
         </span>
@@ -123,7 +123,7 @@ const AwsSigV4Fields: React.FC = () => (
     </Form.Item>
     <Form.Item
       label={
-        <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Session Name")}<Tooltip title="Optional. Session name for the AssumeRole call — appears in CloudTrail logs. Auto-generated if omitted.">
+        <span className="text-sm font-medium text-gray-700 flex items-center">{t("AWS Session Name")}<Tooltip title={t("Optional. Session name for the AssumeRole call — appears in CloudTrail logs. Auto-generated if omitted.")}>
             <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
           </Tooltip>
         </span>

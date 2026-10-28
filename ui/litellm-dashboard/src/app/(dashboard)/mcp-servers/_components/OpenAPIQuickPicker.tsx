@@ -99,7 +99,7 @@ const OpenAPIQuickPicker: React.FC<OpenAPIQuickPickerProps> = ({ accessToken, se
       </div>
 
       <p className="mt-2 text-xs text-muted-foreground">
-        Select an API to pre-fill the spec URL and OAuth 2.0 settings, or enter your own spec URL below.
+        {t("Select an API to pre-fill the spec URL and OAuth 2.0 settings, or enter your own spec URL below.")}
       </p>
     </div>
   );

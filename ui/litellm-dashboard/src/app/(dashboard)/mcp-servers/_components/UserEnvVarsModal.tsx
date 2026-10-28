@@ -95,9 +95,7 @@ const UserEnvVarsModal: React.FC<UserEnvVarsModalProps> = ({ server, open, acces
         ) : (
           <>
             <Text className="text-sm text-gray-600 block">
-              These values are private to you. Your admin configured this MCP server to require these per-user
-              credentials. Saved values are never shown back; leave an already-set field blank to keep it, or enter a
-              value to set or change it.
+              {t("These values are private to you. Your admin configured this MCP server to require these per-user credentials. Saved values are never shown back; leave an already-set field blank to keep it, or enter a value to set or change it.")}
             </Text>
             <Form form={form} layout="vertical" onFinish={handleSave} disabled={isSaving}>
               {required.map((spec) => (
