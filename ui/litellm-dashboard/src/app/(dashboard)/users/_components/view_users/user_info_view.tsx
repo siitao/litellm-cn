@@ -677,7 +677,7 @@ export default function UserInfoView({
         maskClosable={!isAddingTeam}
       >
         <Form layout="vertical" onFinish={handleAddTeamSubmit}>
-          <Form.Item label="Team" required>
+          <Form.Item label={t("Team")} required>
             <AntdSelect
               showSearch
               value={selectedTeamId || undefined}

@@ -38,7 +38,7 @@ const LLMJudgeFields: React.FC<LLMJudgeFieldsProps> = ({ availableModels, form }
             </Tooltip>
           </span>
         }
-        rules={[{ required: true, message: "Select a judge model" }]}
+        rules={[{ required: true, message: t("Select a judge model") }]}
       >
         <Select
           showSearch

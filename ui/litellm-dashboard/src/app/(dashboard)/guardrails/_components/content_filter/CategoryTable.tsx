@@ -33,7 +33,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
 }) => {
   const columns: ColumnDef<ContentCategory>[] = [
     {
-      header: "Category",
+      header: t("Category"),
       accessorKey: "display_name",
       cell: ({ row }) => {
         const { category, display_name: displayName } = row.original;
@@ -46,7 +46,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
       },
     },
     {
-      header: "Severity Threshold",
+      header: t("Severity Threshold"),
       accessorKey: "severity_threshold",
       size: 180,
       cell: ({ row }) => {
@@ -77,7 +77,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
       },
     },
     {
-      header: "Action",
+      header: t("Action"),
       accessorKey: "action",
       size: 150,
       cell: ({ row }) => {
@@ -115,7 +115,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
       cell: ({ row }) => (
         <Button variant="ghost" size="sm" onClick={() => onRemove?.(row.original.id)}>
           <Trash2 />
-          Delete
+          {t("Delete")}
         </Button>
       ),
     });

@@ -146,7 +146,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
         id: "key_alias",
         accessorKey: "key_alias",
         meta: { title: t("Key Alias")},
-        header: ({ column }) => <DataTableSortHeader column={column} title="Key Alias" variant="header-cycle" />,
+        header: ({ column }) => <DataTableSortHeader column={column} title={t("Key Alias")} variant="header-cycle" />,
         size: 150,
         enableSorting: true,
         cell: (info) => {
@@ -161,7 +161,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
       {
         id: "key_name",
         accessorKey: "key_name",
-        header: "Secret Key",
+        header: t("Secret Key"),
         size: 120,
         enableSorting: false,
         cell: (info) => <span className="font-mono text-xs">{info.getValue() as string}</span>,
@@ -169,7 +169,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
       {
         id: "organization_id",
         accessorKey: "organization_id",
-        header: "Organization ID",
+        header: t("Organization ID"),
         size: 140,
         enableSorting: false,
         cell: (info) => (info.getValue() ? info.renderValue() : "-"),
@@ -177,7 +177,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
       {
         id: "user_email",
         accessorKey: "user",
-        header: "User Email",
+        header: t("User Email"),
         size: 160,
         enableSorting: false,
         cell: (info) => {
@@ -193,7 +193,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
       {
         id: "user_id",
         accessorKey: "user_id",
-        header: "User ID",
+        header: t("User ID"),
         size: 70,
         enableSorting: false,
         cell: (info) => {
@@ -210,7 +210,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
         id: "created_at",
         accessorKey: "created_at",
         meta: { title: t("Created At")},
-        header: ({ column }) => <DataTableSortHeader column={column} title="Created At" variant="header-cycle" />,
+        header: ({ column }) => <DataTableSortHeader column={column} title={t("Created At")} variant="header-cycle" />,
         size: 120,
         enableSorting: true,
         cell: (info) => <DateCell value={info.getValue() as string | null} precision="date" />,
@@ -218,7 +218,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
       {
         id: "created_by",
         accessorKey: "created_by",
-        header: "Created By",
+        header: t("Created By"),
         size: 130,
         enableSorting: false,
         cell: (info) => {
@@ -279,7 +279,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
         id: "updated_at",
         accessorKey: "updated_at",
         meta: { title: t("Updated At")},
-        header: ({ column }) => <DataTableSortHeader column={column} title="Updated At" variant="header-cycle" />,
+        header: ({ column }) => <DataTableSortHeader column={column} title={t("Updated At")} variant="header-cycle" />,
         size: 120,
         enableSorting: true,
         cell: (info) => <DateCell value={info.getValue() as string | null} precision="date" fallback="Never" />,
@@ -287,7 +287,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
       {
         id: "last_active",
         accessorKey: "last_active",
-        header: "Last Active",
+        header: t("Last Active"),
         size: 130,
         enableSorting: false,
         cell: (info) => <DateCell value={info.getValue() as string | null} precision="date" fallback="Unknown" />,
@@ -295,7 +295,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
       {
         id: "expires",
         accessorKey: "expires",
-        header: "Expires",
+        header: t("Expires"),
         size: 120,
         enableSorting: false,
         cell: (info) => <DateCell value={info.getValue() as string | null} precision="date" fallback="Never" />,
@@ -304,7 +304,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
         id: "spend",
         accessorKey: "spend",
         meta: { title: t("Spend (USD)")},
-        header: ({ column }) => <DataTableSortHeader column={column} title="Spend (USD)" variant="header-cycle" />,
+        header: ({ column }) => <DataTableSortHeader column={column} title={t("Spend (USD)")} variant="header-cycle" />,
         size: 100,
         enableSorting: true,
         cell: (info) => <MoneyCell value={info.getValue() as number | null} decimals={4} />,
@@ -313,17 +313,17 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
         id: "max_budget",
         accessorKey: "max_budget",
         meta: { title: t("Budget (USD)")},
-        header: ({ column }) => <DataTableSortHeader column={column} title="Budget (USD)" variant="header-cycle" />,
+        header: ({ column }) => <DataTableSortHeader column={column} title={t("Budget (USD)")} variant="header-cycle" />,
         size: 110,
         enableSorting: true,
         cell: (info) => (
-          <MoneyCell value={info.getValue() as number | null} decimals={0} emptyText="Unlimited" showZero />
+          <MoneyCell value={info.getValue() as number | null} decimals={0} emptyText={t("Unlimited")} showZero />
         ),
       },
       {
         id: "budget_reset_at",
         accessorKey: "budget_reset_at",
-        header: "Budget Reset",
+        header: t("Budget Reset"),
         size: 130,
         enableSorting: false,
         cell: (info) => <DateCell value={info.getValue() as string | null} fallback="Never" />,
@@ -331,7 +331,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
       {
         id: "models",
         accessorKey: "models",
-        header: "Models",
+        header: t("Models"),
         size: 200,
         enableSorting: false,
         cell: (info) => {
@@ -416,7 +416,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
       },
       {
         id: "rate_limits",
-        header: "Rate Limits",
+        header: t("Rate Limits"),
         size: 140,
         enableSorting: false,
         cell: ({ row }) => {

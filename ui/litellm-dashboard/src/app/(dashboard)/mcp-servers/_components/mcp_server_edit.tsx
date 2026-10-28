@@ -1038,11 +1038,11 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                 className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
               />
             </Form.Item>
-            <Form.Item label="Description" name="description">
+            <Form.Item label={t("Description")} name="description">
               <Input className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500" />
             </Form.Item>
             <MCPLogoSelector value={logoUrl} onChange={setLogoUrl} />
-            <Form.Item label="Transport Type" name="transport" rules={[{ required: true }]}>
+            <Form.Item label={t("Transport Type")} name="transport" rules={[{ required: true }]}>
               <Select onChange={handleTransportChange}>
                 <Select.Option value="http">{t("Streamable HTTP (Recommended)")}</Select.Option>
                 <Select.Option value="sse">{t("Server-Sent Events (SSE)")}</Select.Option>
@@ -1108,7 +1108,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
             {/* Authentication - for HTTP, SSE, and OpenAPI */}
             {!isStdioTransport && (
               <>
-                <Form.Item label="Authentication" name="auth_type" rules={[{ required: true }]}>
+                <Form.Item label={t("Authentication")} name="auth_type" rules={[{ required: true }]}>
                   <Select virtual={false}>
                     <Select.Option value="none">{t("None")}</Select.Option>
                     <Select.Option value="api_key">{t("API Key")}</Select.Option>

@@ -102,7 +102,7 @@ export const getAttachmentTableColumns = ({
     id: "attachment_id",
     accessorKey: "attachment_id",
     meta: { title: t("Attachment ID")},
-    header: "Attachment ID",
+    header: t("Attachment ID"),
     size: 160,
     enableSorting: false,
     cell: ({ row }) => <IdCell value={row.original.attachment_id} variant="plain" />,
@@ -120,7 +120,7 @@ export const getAttachmentTableColumns = ({
     id: "scope",
     accessorFn: (row) => row.scope ?? "",
     meta: { title: t("Scope"), skeleton: "badge" },
-    header: "Scope",
+    header: t("Scope"),
     size: 120,
     enableSorting: false,
     cell: ({ row }) => {
@@ -141,7 +141,7 @@ export const getAttachmentTableColumns = ({
   {
     id: "teams",
     meta: { title: t("Teams"), skeleton: "chips" },
-    header: "Teams",
+    header: t("Teams"),
     size: 160,
     enableSorting: false,
     cell: ({ row }) => <ChipList values={row.original.teams ?? []} />,
@@ -157,7 +157,7 @@ export const getAttachmentTableColumns = ({
   {
     id: "models",
     meta: { title: t("Models"), skeleton: "chips" },
-    header: "Models",
+    header: t("Models"),
     size: 160,
     enableSorting: false,
     cell: ({ row }) => <ChipList values={row.original.models ?? []} />,

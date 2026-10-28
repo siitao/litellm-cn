@@ -483,7 +483,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
       {
         id: "status",
         accessorKey: "status",
-        header: "Status",
+        header: t("Status"),
         meta: { title: t("Status")},
         filterFn: "equalsString",
         cell: ({ row }) => {
@@ -498,7 +498,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
       },
       {
         accessorKey: "created_at",
-        header: "Created",
+        header: t("Created"),
         meta: { title: t("Created")},
         cell: ({ row }) => <span className="text-xs text-muted-foreground">{timeAgo(row.original.created_at)}</span>,
       },
@@ -610,7 +610,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
                 </Button>
                 <Button variant="outline" size="sm" onClick={() => fetchRunDetail(selectedRun)}>
                   <RefreshCw />
-                  Refresh
+                  {t("Refresh")}
                 </Button>
               </div>
 

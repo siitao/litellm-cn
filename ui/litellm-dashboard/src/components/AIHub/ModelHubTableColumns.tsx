@@ -82,7 +82,7 @@ function ModelHubRowActions({ model, onModelClick }: ModelHubRowActionsProps) {
           onClick={() => void copyToClipboard(model.model_group, "Model name copied")}
         >
           <Copy />
-          Copy model name
+          {t("Copy model name")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -192,7 +192,7 @@ export const getModelHubTableColumns = ({ onModelClick }: ModelHubTableColumnsDe
   {
     id: "capabilities",
     meta: { title: t("Features"), skeleton: "chips" },
-    header: "Features",
+    header: t("Features"),
     size: 220,
     enableSorting: false,
     cell: ({ row }) => {

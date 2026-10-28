@@ -97,7 +97,7 @@ function PromptRowActions({ prompt, isAdmin, onDeleteClick }: PromptRowActionsPr
               onClick={() => onDeleteClick?.(prompt.prompt_id, prompt.prompt_id || "Unknown Prompt")}
             >
               <Trash2 />
-              Delete
+              {t("Delete")}
             </DropdownMenuItem>
           </>
         )}
@@ -138,7 +138,7 @@ export const getPromptTableColumns = ({
   {
     id: "model",
     meta: { title: t("Model")},
-    header: "Model",
+    header: t("Model"),
     size: 200,
     enableSorting: false,
     cell: ({ row }) => <PromptModelCell prompt={row.original} modelHubData={modelHubData} />,
@@ -167,7 +167,7 @@ export const getPromptTableColumns = ({
     id: "environment",
     accessorKey: "environment",
     meta: { title: t("Environment"), skeleton: "badge" },
-    header: "Environment",
+    header: t("Environment"),
     size: 130,
     enableSorting: false,
     cell: ({ row }) => {
@@ -179,7 +179,7 @@ export const getPromptTableColumns = ({
     id: "created_by",
     accessorKey: "created_by",
     meta: { title: t("Created By")},
-    header: "Created By",
+    header: t("Created By"),
     size: 160,
     enableSorting: false,
     cell: ({ row }) => {

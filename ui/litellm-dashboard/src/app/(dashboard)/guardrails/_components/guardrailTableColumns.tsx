@@ -59,7 +59,7 @@ function GuardrailRowActions({ guardrail, onDeleteClick }: GuardrailRowActionsPr
           onClick={() => onDeleteClick(guardrail.guardrail_id, guardrail.guardrail_name || t("guardrails.unnamed"))}
         >
           <Trash2 />
-          Delete
+          {t("Delete")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

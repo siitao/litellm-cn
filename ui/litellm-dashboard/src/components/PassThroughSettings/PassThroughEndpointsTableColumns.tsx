@@ -102,7 +102,7 @@ function EndpointRowActions({ endpoint, onEndpointClick, onDeleteClick }: Endpoi
           onClick={() => endpointId && onDeleteClick(endpointId)}
         >
           <Trash2 />
-          Delete
+          {t("Delete")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -154,7 +154,7 @@ export const getPassThroughEndpointsTableColumns = ({
     id: "target",
     accessorKey: "target",
     meta: { title: t("Target")},
-    header: "Target",
+    header: t("Target"),
     size: 240,
     enableSorting: false,
     cell: ({ row }) => (
@@ -166,7 +166,7 @@ export const getPassThroughEndpointsTableColumns = ({
   {
     id: "methods",
     meta: { title: t("Methods"), skeleton: "chips" },
-    header: () => <HeaderWithTooltip title="Methods" tooltip={t("HTTP methods supported by this endpoint")} />,
+    header: () => <HeaderWithTooltip title={t("Methods")} tooltip={t("HTTP methods supported by this endpoint")} />,
     size: 150,
     enableSorting: false,
     cell: ({ row }) => <MethodsCell methods={row.original.methods} />,
@@ -175,7 +175,7 @@ export const getPassThroughEndpointsTableColumns = ({
     id: "auth",
     accessorKey: "auth",
     meta: { title: t("Authentication"), skeleton: "badge" },
-    header: () => <HeaderWithTooltip title="Authentication" tooltip={t("LiteLLM Virtual Key required to call endpoint")} />,
+    header: () => <HeaderWithTooltip title={t("Authentication")} tooltip={t("LiteLLM Virtual Key required to call endpoint")} />,
     size: 140,
     enableSorting: false,
     cell: ({ row }) => (
@@ -185,7 +185,7 @@ export const getPassThroughEndpointsTableColumns = ({
   {
     id: "headers",
     meta: { title: t("Headers")},
-    header: "Headers",
+    header: t("Headers"),
     size: 180,
     enableSorting: false,
     cell: ({ row }) => <HeadersCell value={row.original.headers || {}} />,

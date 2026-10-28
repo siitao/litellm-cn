@@ -194,7 +194,7 @@ ${formattedBody}
               }}
             >
               <Copy data-icon="inline-start" />
-              Copy to Clipboard
+              {t("Copy to Clipboard")}
             </Button>
           </div>
         </div>
@@ -208,7 +208,7 @@ ${formattedBody}
         render={<a href="https://docs.litellm.ai/docs/providers" target="_blank" rel="noopener noreferrer" />}
       >
         <Info data-icon="inline-start" />
-        View Documentation
+        {t("View Documentation")}
         <ExternalLink data-icon="inline-end" />
       </Button>
     </div>

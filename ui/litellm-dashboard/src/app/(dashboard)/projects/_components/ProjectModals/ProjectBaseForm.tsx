@@ -124,7 +124,7 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item name="team_id" label="Team" rules={[{ required: true, message: "Please select a team" }]}>
+          <Form.Item name="team_id" label={t("Team")} rules={[{ required: true, message: "Please select a team" }]}>
             <Select
               showSearch
               placeholder={t("Search or select a team")}
@@ -237,7 +237,7 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
 
                     <Divider />
 
-                    <Form.Item label="Guardrails" name="guardrails" help="Select existing guardrails or enter new ones">
+                    <Form.Item label={t("Guardrails")} name="guardrails" help="Select existing guardrails or enter new ones">
                       <Select
                         mode="tags"
                         style={{ width: "100%" }}
@@ -278,10 +278,10 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
                                 <Input placeholder={t("Model name (e.g. gpt-4)")} />
                               </Form.Item>
                               <Form.Item {...restField} name={[name, "tpm"]}>
-                                <InputNumber placeholder="TPM Limit" min={0} />
+                                <InputNumber placeholder={t("TPM Limit")} min={0} />
                               </Form.Item>
                               <Form.Item {...restField} name={[name, "rpm"]}>
-                                <InputNumber placeholder="RPM Limit" min={0} />
+                                <InputNumber placeholder={t("RPM Limit")} min={0} />
                               </Form.Item>
                               <MinusCircleOutlined onClick={() => remove(name)} style={{ color: "#ef4444" }} />
                             </Space>

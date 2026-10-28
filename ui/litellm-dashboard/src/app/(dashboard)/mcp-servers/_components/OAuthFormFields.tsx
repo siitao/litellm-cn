@@ -42,7 +42,7 @@ const FieldLabel: React.FC<{ label: string; tooltip: string }> = ({ label, toolt
 
 const UpstreamResourceField: React.FC = () => (
   <Form.Item
-    label={<FieldLabel label="Resource Indicator (optional)" tooltip={UPSTREAM_RESOURCE_TOOLTIP} />}
+    label={<FieldLabel label={t("Resource Indicator (optional)")} tooltip={UPSTREAM_RESOURCE_TOOLTIP} />}
     name={["credentials", "upstream_resource"]}
   >
     <TextInput placeholder="auto, or https://mcp.example.com/mcp" className={fieldClassName} />
@@ -90,7 +90,7 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
       {isM2M ? (
         <>
           <Form.Item
-            label={<FieldLabel label="Client ID" tooltip={t("OAuth2 client ID for the client_credentials grant.")} />}
+            label={<FieldLabel label={t("Client ID")} tooltip={t("OAuth2 client ID for the client_credentials grant.")} />}
             name={["credentials", "client_id"]}
             rules={requiredWhenCreating("Client ID is required for M2M OAuth")}
           >
@@ -102,7 +102,7 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
           </Form.Item>
           <Form.Item
             label={
-              <FieldLabel label="Client Secret" tooltip={t("OAuth2 client secret for the client_credentials grant.")} />
+              <FieldLabel label={t("Client Secret")} tooltip={t("OAuth2 client secret for the client_credentials grant.")} />
             }
             name={["credentials", "client_secret"]}
             rules={requiredWhenCreating("Client Secret is required for M2M OAuth")}

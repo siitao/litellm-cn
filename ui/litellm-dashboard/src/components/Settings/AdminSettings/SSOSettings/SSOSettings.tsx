@@ -251,7 +251,7 @@ export default function SSOSettings() {
                 <CardAction className="flex gap-2">
                   <Button type="button" variant="outline" onClick={() => setIsEditModalVisible(true)}>
                     <Edit />
-                    Edit SSO Settings
+                    {t("Edit SSO Settings")}
                   </Button>
                   <Button type="button" variant="destructive" onClick={() => setIsDeleteModalVisible(true)}>
                     <Trash2 />

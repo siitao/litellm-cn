@@ -80,7 +80,7 @@ function MCPHubRowActions({ server, onServerClick }: MCPHubRowActionsProps) {
           onClick={() => void copyToClipboard(server.server_name, "Server name copied")}
         >
           <Copy />
-          Copy server name
+          {t("Copy server name")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -159,7 +159,7 @@ export const getMCPHubTableColumns = ({ onServerClick }: MCPHubTableColumnsDeps)
   {
     id: "allowed_tools",
     meta: { title: t("Tools"), skeleton: "chips", className: "hidden lg:table-cell" },
-    header: "Tools",
+    header: t("Tools"),
     size: 180,
     enableSorting: false,
     cell: ({ row }) => {

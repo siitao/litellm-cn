@@ -88,7 +88,7 @@ const TopKeyView: React.FC<TopKeyViewProps> = ({ topKeys, teams, showTags = fals
       cell: (info: any) => <IdCell value={info.getValue()} onClick={() => handleKeyClick(info.row.original)} />,
     },
     {
-      header: "Key Alias",
+      header: t("Key Alias"),
       accessorKey: "key_alias",
       cell: (info: any) => info.getValue() || "-",
     },
@@ -151,7 +151,7 @@ const TopKeyView: React.FC<TopKeyViewProps> = ({ topKeys, teams, showTags = fals
   };
 
   const spendColumn = {
-    header: "Spend (USD)",
+    header: t("Spend (USD)"),
     accessorKey: "spend",
     meta: { numeric: true },
     cell: (info: any) => <MoneyCell value={info.getValue()} decimals={2} />,

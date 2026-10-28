@@ -109,7 +109,7 @@ const PolicyTestPanel: React.FC<PolicyTestPanelProps> = ({ accessToken }) => {
 
         <Form form={form} layout="vertical">
           <div className="grid grid-cols-2 gap-4">
-            <Form.Item name="team_alias" label="Team Alias" className="mb-3">
+            <Form.Item name="team_alias" label={t("Team Alias")} className="mb-3">
               <Select
                 showSearch
                 allowClear
@@ -118,7 +118,7 @@ const PolicyTestPanel: React.FC<PolicyTestPanelProps> = ({ accessToken }) => {
                 filterOption={(input, option) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase())}
               />
             </Form.Item>
-            <Form.Item name="key_alias" label="Key Alias" className="mb-3">
+            <Form.Item name="key_alias" label={t("Key Alias")} className="mb-3">
               <Select
                 showSearch
                 allowClear
@@ -127,7 +127,7 @@ const PolicyTestPanel: React.FC<PolicyTestPanelProps> = ({ accessToken }) => {
                 filterOption={(input, option) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase())}
               />
             </Form.Item>
-            <Form.Item name="model" label="Model" className="mb-3">
+            <Form.Item name="model" label={t("Model")} className="mb-3">
               <Select
                 showSearch
                 allowClear
@@ -136,7 +136,7 @@ const PolicyTestPanel: React.FC<PolicyTestPanelProps> = ({ accessToken }) => {
                 filterOption={(input, option) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase())}
               />
             </Form.Item>
-            <Form.Item name="tags" label="Tags" className="mb-3">
+            <Form.Item name="tags" label={t("Tags")} className="mb-3">
               <Select
                 mode="tags"
                 placeholder={t("Type a tag and press Enter")}

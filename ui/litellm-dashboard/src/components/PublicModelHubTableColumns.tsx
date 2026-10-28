@@ -255,7 +255,7 @@ export const getPublicModelHubColumns = ({ onModelClick }: PublicModelHubColumns
   {
     id: "features",
     meta: { title: t("Features"), skeleton: "chips" },
-    header: "Features",
+    header: t("Features"),
     size: 140,
     enableSorting: false,
     cell: ({ row }) => {
@@ -339,7 +339,7 @@ export const getPublicAgentHubColumns = ({ onAgentClick }: PublicAgentHubColumns
     id: "description",
     accessorKey: "description",
     meta: { title: t("Description")},
-    header: "Description",
+    header: t("Description"),
     size: 260,
     enableSorting: false,
     cell: ({ row }) => (
@@ -361,7 +361,7 @@ export const getPublicAgentHubColumns = ({ onAgentClick }: PublicAgentHubColumns
   {
     id: "provider",
     meta: { title: t("Provider")},
-    header: "Provider",
+    header: t("Provider"),
     size: 130,
     enableSorting: false,
     cell: ({ row }) =>
@@ -374,7 +374,7 @@ export const getPublicAgentHubColumns = ({ onAgentClick }: PublicAgentHubColumns
   {
     id: "skills",
     meta: { title: t("Skills"), skeleton: "chips" },
-    header: "Skills",
+    header: t("Skills"),
     size: 160,
     enableSorting: false,
     cell: ({ row }) => <OverflowChips items={(row.original.skills || []).map((skill) => skill.name)} />,
@@ -382,7 +382,7 @@ export const getPublicAgentHubColumns = ({ onAgentClick }: PublicAgentHubColumns
   {
     id: "capabilities",
     meta: { title: t("Capabilities"), skeleton: "chips" },
-    header: "Capabilities",
+    header: t("Capabilities"),
     size: 160,
     enableSorting: false,
     cell: ({ row }) => {

@@ -272,7 +272,7 @@ main();`;
               }}
             >
               <CopyIcon />
-              Copy to Clipboard
+              {t("Copy to Clipboard")}
             </Button>
           </div>
 

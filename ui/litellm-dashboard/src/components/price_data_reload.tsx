@@ -283,7 +283,7 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
           {!reloadStatus?.scheduled ? (
             <Button type="button" variant="outline" size={buttonSizes[size]} onClick={() => setShowScheduleModal(true)}>
               <Clock3 data-icon="inline-start" />
-              Set Up Periodic Reload
+              {t("Set Up Periodic Reload")}
             </Button>
           ) : (
             <Button

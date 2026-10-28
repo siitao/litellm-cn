@@ -394,7 +394,7 @@ const RealtimePlayground: React.FC<RealtimePlaygroundProps> = ({
           ) : (
             <Button variant="destructive" onClick={disconnect} size="sm">
               <CircleX />
-              Disconnect
+              {t("Disconnect")}
             </Button>
           )}
         </div>

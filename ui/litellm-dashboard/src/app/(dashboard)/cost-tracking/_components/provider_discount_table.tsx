@@ -5,6 +5,7 @@ import { SimpleTable } from "@/components/common_components/simple_table";
 import { DiscountConfig } from "./types";
 import { getProviderLogoAndName } from "@/components/provider_info_helpers";
 import { Logo } from "@/components/molecules/logo/Logo";
+import { t } from "@/i18n";
 
 interface ProviderDiscountTableProps {
   discountConfig: DiscountConfig;
@@ -66,7 +67,7 @@ const ProviderDiscountTable: React.FC<ProviderDiscountTableProps> = ({
       data={data}
       columns={[
         {
-          header: "Provider",
+          header: t("Provider"),
           cell: (row) => {
             const { displayName } = getProviderLogoAndName(row.provider);
             return (
@@ -78,7 +79,7 @@ const ProviderDiscountTable: React.FC<ProviderDiscountTableProps> = ({
           },
         },
         {
-          header: "Discount Percentage",
+          header: t("Discount Percentage"),
           cell: (row) => (
             <div className="flex items-center gap-2">
               {editingProvider === row.provider ? (
@@ -121,7 +122,7 @@ const ProviderDiscountTable: React.FC<ProviderDiscountTableProps> = ({
           width: "250px",
         },
         {
-          header: "Actions",
+          header: t("Actions"),
           cell: (row) => {
             const { displayName } = getProviderLogoAndName(row.provider);
             return (

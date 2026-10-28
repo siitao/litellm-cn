@@ -210,7 +210,7 @@ const MCPConnect: React.FC<MCPConnectProps> = ({ currentServerAccessGroups = [] 
           title={t("MCP Server Information")}
           description={t("Connection details for your LiteLLM MCP server")}
         >
-          <CodeBlock title="Server URL" code={`${proxyBaseUrl}/mcp`} copyKey="litellm-server-url" />
+          <CodeBlock title={t("Server URL")} code={`${proxyBaseUrl}/mcp`} copyKey="litellm-server-url" />
         </FeatureCard>
 
         <FeatureCard

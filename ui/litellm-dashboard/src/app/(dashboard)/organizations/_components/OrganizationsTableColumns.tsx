@@ -68,7 +68,7 @@ function OrganizationRowActions({ organization, onEditClick, onDeleteClick }: Or
           onClick={() => onDeleteClick(organization.organization_id)}
         >
           <Trash2 />
-          Delete
+          {t("Delete")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -144,17 +144,17 @@ export const getOrganizationsTableColumns = ({
   {
     id: "max_budget",
     meta: { title: t("Budget (USD)")},
-    header: "Budget (USD)",
+    header: t("Budget (USD)"),
     size: 120,
     enableSorting: false,
     cell: ({ row }) => (
-      <MoneyCell value={getOrganizationBudget(row.original).max_budget} decimals={2} emptyText="Unlimited" showZero />
+      <MoneyCell value={getOrganizationBudget(row.original).max_budget} decimals={2} emptyText={t("Unlimited")} showZero />
     ),
   },
   {
     id: "models",
     meta: { title: t("Models"), skeleton: "chips" },
-    header: "Models",
+    header: t("Models"),
     size: 260,
     enableSorting: false,
     cell: ({ row }) => <ModelsCell models={row.original.models} />,
@@ -162,7 +162,7 @@ export const getOrganizationsTableColumns = ({
   {
     id: "limits",
     meta: { title: t("TPM / RPM Limits")},
-    header: "TPM / RPM Limits",
+    header: t("TPM / RPM Limits"),
     size: 150,
     enableSorting: false,
     cell: ({ row }) => <OrganizationLimitsCell organization={row.original} />,
@@ -170,7 +170,7 @@ export const getOrganizationsTableColumns = ({
   {
     id: "members",
     meta: { title: t("Members")},
-    header: "Members",
+    header: t("Members"),
     size: 100,
     enableSorting: false,
     cell: ({ row }) => <span className="text-sm">{row.original.members?.length ?? 0} Members</span>,

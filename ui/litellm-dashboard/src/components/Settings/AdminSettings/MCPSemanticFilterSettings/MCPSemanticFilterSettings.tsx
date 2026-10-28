@@ -197,7 +197,7 @@ export default function MCPSemanticFilterSettings({ accessToken }: MCPSemanticFi
                   </Typography.Text>
                 </Card>
 
-                <Card title="Configuration" style={{ marginBottom: 16 }}>
+                <Card title={t("Configuration")} style={{ marginBottom: 16 }}>
                   <Form.Item
                     name="embedding_model"
                     label={

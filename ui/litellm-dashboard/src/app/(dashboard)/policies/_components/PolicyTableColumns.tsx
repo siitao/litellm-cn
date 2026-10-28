@@ -130,7 +130,7 @@ export const getPolicyTableColumns = ({
     id: "description",
     accessorFn: (row) => row.primaryPolicy.description ?? "",
     meta: { title: t("Description")},
-    header: "Description",
+    header: t("Description"),
     size: 220,
     enableSorting: false,
     cell: ({ row }) => {
@@ -149,7 +149,7 @@ export const getPolicyTableColumns = ({
     id: "inherit",
     accessorFn: (row) => row.primaryPolicy.inherit ?? "",
     meta: { title: t("Inherits From"), skeleton: "badge" },
-    header: "Inherits From",
+    header: t("Inherits From"),
     size: 150,
     enableSorting: false,
     cell: ({ row }) => {
@@ -163,7 +163,7 @@ export const getPolicyTableColumns = ({
   {
     id: "guardrails_add",
     meta: { title: t("Guardrails (Add)"), skeleton: "chips" },
-    header: "Guardrails (Add)",
+    header: t("Guardrails (Add)"),
     size: 180,
     enableSorting: false,
     cell: ({ row }) => <GuardrailChips guardrails={row.original.primaryPolicy.guardrails_add ?? []} tone="success" />,
@@ -171,7 +171,7 @@ export const getPolicyTableColumns = ({
   {
     id: "guardrails_remove",
     meta: { title: t("Guardrails (Remove)"), skeleton: "chips" },
-    header: "Guardrails (Remove)",
+    header: t("Guardrails (Remove)"),
     size: 180,
     enableSorting: false,
     cell: ({ row }) => <GuardrailChips guardrails={row.original.primaryPolicy.guardrails_remove ?? []} tone="error" />,
@@ -179,7 +179,7 @@ export const getPolicyTableColumns = ({
   {
     id: "model_condition",
     meta: { title: t("Model Condition")},
-    header: "Model Condition",
+    header: t("Model Condition"),
     size: 160,
     enableSorting: false,
     cell: ({ row }) => {

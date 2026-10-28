@@ -169,7 +169,7 @@ const SearchTools: React.FC<SearchToolsProps> = ({ accessToken, userRole, userID
         label={t("Search Provider")}
         rules={[{ required: true, message: "Please select a search provider" }]}
       >
-        <Select placeholder="Select a search provider" loading={isLoadingProviders}>
+        <Select placeholder={t("Select a search provider")} loading={isLoadingProviders}>
           {availableProviders.map((provider) => (
             <Select.Option key={provider.provider_name} value={provider.provider_name}>
               {provider.ui_friendly_name}

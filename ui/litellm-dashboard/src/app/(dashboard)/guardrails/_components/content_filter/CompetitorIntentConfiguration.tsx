@@ -287,7 +287,7 @@ const CompetitorIntentConfiguration: React.FC<CompetitorIntentConfigurationProps
                 style={{ width: 80 }}
               />
             </Form.Item>
-            <Form.Item label="Medium" style={{ marginBottom: 0 }} help={t("e.g. 0.45")}>
+            <Form.Item label={t("Medium")} style={{ marginBottom: 0 }} help={t("e.g. 0.45")}>
               <InputNumber
                 min={0}
                 max={1}

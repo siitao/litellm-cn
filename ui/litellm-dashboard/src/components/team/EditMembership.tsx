@@ -188,7 +188,7 @@ const MemberModal = <T extends BaseMember>({
         )}
 
         {config.showUserId && (
-          <Form.Item label="User ID" name="user_id" className="mb-4">
+          <Form.Item label={t("User ID")} name="user_id" className="mb-4">
             <TextInput placeholder="user_123" />
           </Form.Item>
         )}

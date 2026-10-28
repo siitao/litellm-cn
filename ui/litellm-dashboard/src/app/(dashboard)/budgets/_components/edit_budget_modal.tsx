@@ -53,7 +53,7 @@ const EditBudgetModal: React.FC<EditBudgetModalProps> = ({ isModalVisible, setIs
         initialValues={existingBudget}
       >
         <>
-          <Form.Item label="Budget ID" name="budget_id" help={t("Budget ID cannot be changed after creation")}>
+          <Form.Item label={t("Budget ID")} name="budget_id" help={t("Budget ID cannot be changed after creation")}>
             <TextInput placeholder="" disabled={true} />
           </Form.Item>
           <Form.Item label="Max Tokens per minute" name="tpm_limit" help={t("Default is model limit.")}>
@@ -68,10 +68,10 @@ const EditBudgetModal: React.FC<EditBudgetModalProps> = ({ isModalVisible, setIs
               <b>{t("Optional Settings")}</b>
             </AccordionHeader>
             <AccordionBody>
-              <Form.Item label="Max Budget (USD)" name="max_budget">
+              <Form.Item label={t("Max Budget (USD)")} name="max_budget">
                 <InputNumber step={0.01} precision={2} width={200} />
               </Form.Item>
-              <Form.Item className="mt-8" label="Reset Budget" name="budget_duration">
+              <Form.Item className="mt-8" label={t("Reset Budget")} name="budget_duration">
                 <Select defaultValue={null} placeholder="n/a">
                   <Select.Option value="24h">daily</Select.Option>
                   <Select.Option value="7d">weekly</Select.Option>

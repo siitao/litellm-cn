@@ -102,7 +102,7 @@ function TagRowActions({ tag, onEdit, onDelete }: TagRowActionsProps) {
           onClick={() => onDelete(tag.name)}
         >
           <Trash2 />
-          Delete
+          {t("Delete")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -129,7 +129,7 @@ export const getTagTableColumns = ({ onSelectTag, onEdit, onDelete }: TagTableCo
     id: "description",
     accessorKey: "description",
     meta: { title: t("Description")},
-    header: "Description",
+    header: t("Description"),
     size: 300,
     enableSorting: false,
     cell: ({ row }) => {
@@ -144,7 +144,7 @@ export const getTagTableColumns = ({ onSelectTag, onEdit, onDelete }: TagTableCo
   {
     id: "models",
     meta: { title: t("Allowed Models"), skeleton: "chips" },
-    header: "Allowed Models",
+    header: t("Allowed Models"),
     size: 240,
     enableSorting: false,
     cell: ({ row }) => <TagModelsCell tag={row.original} />,

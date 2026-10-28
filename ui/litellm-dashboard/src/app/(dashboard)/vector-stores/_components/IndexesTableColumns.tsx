@@ -62,7 +62,7 @@ export const getIndexesTableColumns = ({
     id: "vector_store_index",
     accessorFn: (row) => row.litellm_params.vector_store_index,
     meta: { title: t("Provider Index")},
-    header: "Provider Index",
+    header: t("Provider Index"),
     size: 220,
     enableSorting: false,
     cell: ({ row }) => (
@@ -78,7 +78,7 @@ export const getIndexesTableColumns = ({
     id: "created_by",
     accessorKey: "created_by",
     meta: { title: t("Created By")},
-    header: "Created By",
+    header: t("Created By"),
     size: 160,
     enableSorting: false,
     cell: ({ row }) => {

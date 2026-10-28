@@ -76,7 +76,7 @@ function PluginRowActions({ plugin, isAdmin, onDeleteClick }: PluginRowActionsPr
               onClick={() => onDeleteClick(plugin.name, plugin.name)}
             >
               <Trash2 />
-              Delete
+              {t("Delete")}
             </DropdownMenuItem>
           </>
         )}
@@ -116,7 +116,7 @@ export const getPluginTableColumns = ({
     id: "version",
     accessorKey: "version",
     meta: { title: t("Version")},
-    header: "Version",
+    header: t("Version"),
     size: 100,
     enableSorting: false,
     cell: ({ row }) => <span className="text-sm text-muted-foreground">{row.original.version || "N/A"}</span>,
@@ -125,7 +125,7 @@ export const getPluginTableColumns = ({
     id: "description",
     accessorKey: "description",
     meta: { title: t("Description")},
-    header: "Description",
+    header: t("Description"),
     size: 300,
     enableSorting: false,
     cell: ({ row }) => {
@@ -141,7 +141,7 @@ export const getPluginTableColumns = ({
     id: "category",
     accessorKey: "category",
     meta: { title: t("Category"), skeleton: "badge" },
-    header: "Category",
+    header: t("Category"),
     size: 150,
     enableSorting: false,
     cell: ({ row }) => <PluginCategoryBadge category={row.original.category} />,
@@ -150,7 +150,7 @@ export const getPluginTableColumns = ({
     id: "enabled",
     accessorKey: "enabled",
     meta: { title: t("Public"), skeleton: "badge" },
-    header: "Public",
+    header: t("Public"),
     size: 100,
     enableSorting: false,
     cell: ({ row }) => (

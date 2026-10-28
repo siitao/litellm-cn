@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MultiModelResult } from "./types";
 import { exportMultiToPDF, exportMultiToCSV } from "./multi_export_utils";
+import { t } from "@/i18n";
 
 interface MultiExportDropdownProps {
   multiResult: MultiModelResult;
@@ -25,7 +26,7 @@ const MultiExportDropdown: React.FC<MultiExportDropdownProps> = ({ multiResult }
     <DropdownMenu>
       <DropdownMenuTrigger className={buttonVariants({ variant: "secondary", size: "xs" })}>
         <Download />
-        Export
+        {t("Export")}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-44">
         <DropdownMenuItem onClick={() => exportMultiToPDF(multiResult)}>

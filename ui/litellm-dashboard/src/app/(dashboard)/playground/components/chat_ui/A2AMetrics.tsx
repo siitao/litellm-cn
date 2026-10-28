@@ -204,7 +204,7 @@ const A2AMetrics: React.FC<A2AMetricsProps> = ({ a2aMetadata, timeToFirstToken, 
               }
             >
               {showDetails ? <ChevronDown className="size-3" /> : <ChevronRight className="size-3" />}
-              Details
+              {t("Details")}
             </CollapsibleTrigger>
           </Collapsible>
         )}

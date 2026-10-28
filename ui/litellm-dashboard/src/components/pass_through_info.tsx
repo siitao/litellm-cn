@@ -344,11 +344,11 @@ const PassThroughInfoView: React.FC<PassThroughInfoProps> = ({
                       </Select>
                     </Form.Item>
 
-                    <Form.Item label="Include Subpath" name="include_subpath" valuePropName="checked">
+                    <Form.Item label={t("Include Subpath")} name="include_subpath" valuePropName="checked">
                       <Switch />
                     </Form.Item>
 
-                    <Form.Item label="Cost per Request" name="cost_per_request">
+                    <Form.Item label={t("Cost per Request")} name="cost_per_request">
                       <InputNumber min={0} step={0.01} precision={2} placeholder="0.00" addonBefore="$" />
                     </Form.Item>
 

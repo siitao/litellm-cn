@@ -139,8 +139,8 @@ export const HelpIcon: React.FC<HelpIconProps> = ({ content, learnMoreHref, lear
  *
  * @example
  * <DocsMenu items={[
- *   { label: "Custom pricing for models", href: "https://docs.litellm.ai/docs/proxy/custom_pricing" },
- *   { label: "Spend tracking", href: "https://docs.litellm.ai/docs/proxy/cost_tracking" }
+ *   { label: t("Custom pricing for models"), href: "https://docs.litellm.ai/docs/proxy/custom_pricing" },
+ *   { label: t("Spend tracking"), href: "https://docs.litellm.ai/docs/proxy/cost_tracking" }
  * ]}>
  *   Docs
  * </DocsMenu>

@@ -104,7 +104,7 @@ export const getProjectsTableColumns = ({
   {
     id: "models",
     meta: { title: t("Models"), skeleton: "badge" },
-    header: "Models",
+    header: t("Models"),
     size: 110,
     enableSorting: false,
     cell: ({ row }) => <ProjectModelsCell project={row.original} />,
@@ -113,7 +113,7 @@ export const getProjectsTableColumns = ({
     id: "status",
     accessorKey: "blocked",
     meta: { title: t("Status"), skeleton: "badge" },
-    header: "Status",
+    header: t("Status"),
     size: 110,
     enableSorting: false,
     cell: ({ row }) => (
@@ -137,7 +137,7 @@ export const getProjectsTableColumns = ({
     id: "updated_at",
     accessorKey: "updated_at",
     meta: { title: t("Updated")},
-    header: "Updated",
+    header: t("Updated"),
     size: 140,
     enableSorting: false,
     cell: ({ row }) => <DateCell value={row.original.updated_at} precision="date" />,

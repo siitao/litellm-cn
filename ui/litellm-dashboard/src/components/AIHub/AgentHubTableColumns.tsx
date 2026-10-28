@@ -70,7 +70,7 @@ function AgentHubRowActions({ agent, onAgentClick }: AgentHubRowActionsProps) {
           onClick={() => void copyToClipboard(agent.name, "Agent name copied")}
         >
           <Copy />
-          Copy agent name
+          {t("Copy agent name")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -135,7 +135,7 @@ export const getAgentHubTableColumns = ({ onAgentClick }: AgentHubTableColumnsDe
   {
     id: "skills",
     meta: { title: t("Skills"), skeleton: "chips" },
-    header: "Skills",
+    header: t("Skills"),
     size: 180,
     enableSorting: false,
     cell: ({ row }) => {
@@ -162,7 +162,7 @@ export const getAgentHubTableColumns = ({ onAgentClick }: AgentHubTableColumnsDe
   {
     id: "capabilities",
     meta: { title: t("Capabilities"), skeleton: "chips" },
-    header: "Capabilities",
+    header: t("Capabilities"),
     size: 160,
     enableSorting: false,
     cell: ({ row }) => {
@@ -186,7 +186,7 @@ export const getAgentHubTableColumns = ({ onAgentClick }: AgentHubTableColumnsDe
   {
     id: "io_modes",
     meta: { title: t("I/O Modes"), skeleton: "twoLine", className: "hidden xl:table-cell" },
-    header: "I/O Modes",
+    header: t("I/O Modes"),
     size: 150,
     enableSorting: false,
     cell: ({ row }) => {

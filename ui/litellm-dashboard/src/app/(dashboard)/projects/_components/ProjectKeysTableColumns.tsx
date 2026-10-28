@@ -28,7 +28,7 @@ export const getProjectKeysTableColumns = (): ColumnDef<KeyResponse>[] => [
     id: "key_alias",
     accessorKey: "key_alias",
     meta: { title: t("Key Name")},
-    header: "Key Name",
+    header: t("Key Name"),
     enableSorting: false,
     cell: ({ row }) => (
       <IdentityCell
@@ -41,7 +41,7 @@ export const getProjectKeysTableColumns = (): ColumnDef<KeyResponse>[] => [
   {
     id: "owner",
     meta: { title: t("Owner")},
-    header: "Owner",
+    header: t("Owner"),
     enableSorting: false,
     cell: ({ row }) => <OwnerCell record={row.original} />,
   },
@@ -49,7 +49,7 @@ export const getProjectKeysTableColumns = (): ColumnDef<KeyResponse>[] => [
     id: "created_at",
     accessorKey: "created_at",
     meta: { title: t("Created")},
-    header: "Created",
+    header: t("Created"),
     size: 130,
     enableSorting: false,
     cell: ({ row }) => <DateCell value={row.original.created_at} precision="date" />,
@@ -58,7 +58,7 @@ export const getProjectKeysTableColumns = (): ColumnDef<KeyResponse>[] => [
     id: "last_active",
     accessorKey: "last_active",
     meta: { title: t("Last Active")},
-    header: "Last Active",
+    header: t("Last Active"),
     size: 130,
     enableSorting: false,
     cell: ({ row }) => <DateCell value={row.original.last_active} precision="date" fallback="Never" />,

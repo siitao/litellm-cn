@@ -41,7 +41,7 @@ function AgentRowActions({ agent, onDeleteClick }: AgentRowActionsProps) {
           onClick={() => onDeleteClick(agent.agent_id, agent.agent_name)}
         >
           <Trash2 />
-          Delete
+          {t("Delete")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -102,7 +102,7 @@ export const getAgentsTableColumns = ({
   {
     id: "model",
     meta: { title: t("Model")},
-    header: "Model",
+    header: t("Model"),
     size: 170,
     enableSorting: false,
     cell: ({ row }) => {
@@ -134,7 +134,7 @@ export const getAgentsTableColumns = ({
   {
     id: "status",
     meta: { title: t("Status")},
-    header: "Status",
+    header: t("Status"),
     size: 130,
     enableSorting: false,
     cell: ({ row }) => {

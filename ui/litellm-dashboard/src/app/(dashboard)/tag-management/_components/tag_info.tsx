@@ -141,11 +141,11 @@ const TagInfoView: React.FC<TagInfoViewProps> = ({ tagId, onClose, accessToken, 
       {isEditing ? (
         <Card>
           <Form form={form} onFinish={handleSave} layout="vertical" initialValues={tagDetails}>
-            <Form.Item label="Tag Name" name="name" rules={[{ required: true, message: "Please input a tag name" }]}>
+            <Form.Item label={t("Tag Name")} name="name" rules={[{ required: true, message: "Please input a tag name" }]}>
               <Input className="rounded-md border-gray-300" />
             </Form.Item>
 
-            <Form.Item label="Description" name="description">
+            <Form.Item label={t("Description")} name="description">
               <Input.TextArea rows={4} />
             </Form.Item>
 

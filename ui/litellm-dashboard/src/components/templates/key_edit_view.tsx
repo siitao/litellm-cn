@@ -306,11 +306,11 @@ export function KeyEditView({
 
   return (
     <Form form={form} onFinish={handleSubmit} initialValues={initialValues} layout="vertical">
-      <Form.Item label="Key Alias" name="key_alias">
+      <Form.Item label={t("Key Alias")} name="key_alias">
         <TextInput />
       </Form.Item>
 
-      <Form.Item label="Models" name="models">
+      <Form.Item label={t("Models")} name="models">
         <Form.Item
           noStyle
           shouldUpdate={(prevValues, currentValues) =>
@@ -445,11 +445,11 @@ export function KeyEditView({
         <Input placeholder="Enter allowed routes (comma-separated). Special values: llm_api_routes, management_routes. Examples: llm_api_routes, /chat/completions, /keys/*. Leave empty to allow all routes" />
       </Form.Item>
 
-      <Form.Item label="Max Budget (USD)" name="max_budget">
+      <Form.Item label={t("Max Budget (USD)")} name="max_budget">
         <NumericalInput step={0.01} style={{ width: "100%" }} placeholder={t("Enter a numerical value")} />
       </Form.Item>
 
-      <Form.Item label="Reset Budget" name="budget_duration">
+      <Form.Item label={t("Reset Budget")} name="budget_duration">
         <BudgetDurationDropdown placeholder={t("Never resets")} />
       </Form.Item>
 
@@ -481,13 +481,13 @@ export function KeyEditView({
         />
       </Form.Item>
 
-      <Form.Item label="TPM Limit" name="tpm_limit">
+      <Form.Item label={t("TPM Limit")} name="tpm_limit">
         <NumericalInput min={0} />
       </Form.Item>
 
       <RateLimitTypeFormItem type="tpm" name="tpm_limit_type" showDetailedDescriptions={false} />
 
-      <Form.Item label="RPM Limit" name="rpm_limit">
+      <Form.Item label={t("RPM Limit")} name="rpm_limit">
         <NumericalInput min={0} />
       </Form.Item>
 
@@ -563,7 +563,7 @@ export function KeyEditView({
         <TagRateLimitEditor value={tagRateLimits} onChange={setTagRateLimits} />
       </Form.Item>
 
-      <Form.Item label="Guardrails" name="guardrails">
+      <Form.Item label={t("Guardrails")} name="guardrails">
         {accessToken && (
           <GuardrailSelector
             onChange={(v) => {
@@ -612,7 +612,7 @@ export function KeyEditView({
         </Form.Item>
       )}
 
-      <Form.Item label="Tags" name="tags">
+      <Form.Item label={t("Tags")} name="tags">
         <Select
           mode="tags"
           style={{ width: "100%" }}
@@ -626,7 +626,7 @@ export function KeyEditView({
       </Form.Item>
 
       {canViewPrompts && (
-        <Form.Item label="Prompts" name="prompts">
+        <Form.Item label={t("Prompts")} name="prompts">
           <Tooltip title={!premiumUser ? "Setting prompts by key is a premium feature" : ""} placement="top">
             <Select
               mode="tags"
@@ -677,7 +677,7 @@ export function KeyEditView({
         />
       </Form.Item>
 
-      <Form.Item label="Vector Stores" name="vector_stores">
+      <Form.Item label={t("Vector Stores")} name="vector_stores">
         <VectorStoreSelector
           onChange={(values: string[]) => form.setFieldValue("vector_stores", values)}
           value={form.getFieldValue("vector_stores")}
@@ -686,7 +686,7 @@ export function KeyEditView({
         />
       </Form.Item>
 
-      <Form.Item label="MCP Servers / Access Groups" name="mcp_servers_and_groups">
+      <Form.Item label={t("MCP Servers / Access Groups")} name="mcp_servers_and_groups">
         <MCPServerSelector
           onChange={(val) => form.setFieldValue("mcp_servers_and_groups", val)}
           value={form.getFieldValue("mcp_servers_and_groups")}
@@ -804,7 +804,7 @@ export function KeyEditView({
         />
       </Form.Item>
 
-      <Form.Item label="Logging Settings" name="logging_settings">
+      <Form.Item label={t("Logging Settings")} name="logging_settings">
         <EditLoggingSettings
           value={form.getFieldValue("logging_settings")}
           onChange={(values) => form.setFieldValue("logging_settings", values)}
@@ -819,7 +819,7 @@ export function KeyEditView({
         />
       </Form.Item>
 
-      <Form.Item label="Metadata" name="metadata">
+      <Form.Item label={t("Metadata")} name="metadata">
         <Input.TextArea rows={10} />
       </Form.Item>
 

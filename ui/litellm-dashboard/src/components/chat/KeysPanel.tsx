@@ -212,7 +212,7 @@ const KeysPanel: React.FC<Props> = ({ accessToken, userId, premiumUser }) => {
       ) : keys.length === 0 ? (
         <div className="text-center text-muted-foreground text-sm py-12 border border-dashed rounded-lg">
           <KeyRound className="h-6 w-6 mb-3 mx-auto text-muted-foreground/50" />
-          No keys found
+          {t("No keys found")}
         </div>
       ) : (
         <div className="rounded-lg border overflow-hidden">

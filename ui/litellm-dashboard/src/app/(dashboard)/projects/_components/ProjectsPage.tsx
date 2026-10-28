@@ -64,7 +64,7 @@ export function ProjectsPage() {
           actions={
             <Button onClick={() => setIsCreateModalVisible(true)}>
               <Plus className="size-4" />
-              Create Project
+              {t("Create Project")}
             </Button>
           }
         />

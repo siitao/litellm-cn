@@ -1,5 +1,6 @@
 import React from "react";
 import { NumberInput } from "@tremor/react";
+import { t } from "@/i18n";
 
 interface NumericalInputProps {
   step?: number;
@@ -25,7 +26,7 @@ interface NumericalInputProps {
 const NumericalInput: React.FC<NumericalInputProps> = ({
   step = 0.01,
   style = { width: "100%" },
-  placeholder = "Enter a numerical value",
+  placeholder = t("Enter a numerical value"),
   min,
   max,
   onChange,

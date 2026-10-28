@@ -78,7 +78,7 @@ function CredentialRowActions({ credential, onEdit, onDelete }: CredentialRowAct
           onClick={() => onDelete(credential)}
         >
           <Trash2 />
-          Delete
+          {t("Delete")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -112,7 +112,7 @@ export const getCredentialsTableColumns = ({
       id: "provider",
       accessorKey: "credential_info.custom_llm_provider",
       meta: { title: t("Provider")},
-      header: "Provider",
+      header: t("Provider"),
       size: 200,
       enableSorting: false,
       cell: ({ row }) => <CredentialProviderCell provider={row.original.credential_info?.custom_llm_provider} />,

@@ -8,6 +8,7 @@ import { Alert, AlertAction, AlertDescription } from "@/components/shared/Alert"
 import { Button } from "@/components/ui/button";
 import { useUserBanner } from "@/app/(dashboard)/hooks/userBanner/useUserBanner";
 import { UserBanner as UserBannerData, UserBannerSeverity } from "@/components/networking";
+import { t } from "@/i18n";
 
 const DISMISS_STORAGE_KEY = "litellm:userBannerDismissed";
 
@@ -62,7 +63,7 @@ export const UserBanner: React.FC<UserBannerProps> = ({ accessToken }) => {
         <UserBannerMarkdown message={banner.message} />
       </AlertDescription>
       <AlertAction>
-        <Button variant="ghost" size="icon-sm" aria-label="Dismiss banner" onClick={handleDismiss}>
+        <Button variant="ghost" size="icon-sm" aria-label={t("Dismiss banner")} onClick={handleDismiss}>
           <X />
         </Button>
       </AlertAction>

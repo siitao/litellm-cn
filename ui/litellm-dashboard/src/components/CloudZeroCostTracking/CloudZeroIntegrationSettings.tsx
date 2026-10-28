@@ -142,7 +142,7 @@ export function CloudZeroIntegrationSettings({ settings, onSettingsUpdated }: Cl
               </Button>
               <Button variant="destructive" onClick={handleDeleteClick}>
                 <Trash2 />
-                Delete
+                {t("Delete")}
               </Button>
             </CardAction>
           </CardHeader>

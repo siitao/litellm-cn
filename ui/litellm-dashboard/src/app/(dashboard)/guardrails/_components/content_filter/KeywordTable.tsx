@@ -23,11 +23,11 @@ interface KeywordTableProps {
 const KeywordTable: React.FC<KeywordTableProps> = ({ keywords, onActionChange, onRemove }) => {
   const columns: ColumnDef<BlockedWord>[] = [
     {
-      header: "Keyword",
+      header: t("Keyword"),
       accessorKey: "keyword",
     },
     {
-      header: "Action",
+      header: t("Action"),
       accessorKey: "action",
       size: 150,
       cell: ({ row }) => (
@@ -50,7 +50,7 @@ const KeywordTable: React.FC<KeywordTableProps> = ({ keywords, onActionChange, o
       ),
     },
     {
-      header: "Description",
+      header: t("Description"),
       accessorKey: "description",
       cell: ({ row }) => row.original.description || "-",
     },
@@ -61,7 +61,7 @@ const KeywordTable: React.FC<KeywordTableProps> = ({ keywords, onActionChange, o
       cell: ({ row }) => (
         <Button variant="ghost" size="sm" onClick={() => onRemove(row.original.id)}>
           <Trash2 />
-          Delete
+          {t("Delete")}
         </Button>
       ),
     },

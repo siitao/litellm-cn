@@ -78,7 +78,7 @@ export function AutoRoutersPanel({ accessToken, userRole, userID, teams, createS
         {canCreate && (
           <Button onClick={() => setIsCreating(true)} className="shrink-0">
             <Plus />
-            Add Auto Router
+            {t("Add Auto Router")}
           </Button>
         )}
       </div>

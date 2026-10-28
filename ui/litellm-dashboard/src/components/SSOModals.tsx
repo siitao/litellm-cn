@@ -351,7 +351,7 @@ const SSOModals: React.FC<SSOModalsProps> = ({
                 const useRoleMappings = getFieldValue("use_role_mappings");
                 return useRoleMappings ? (
                   <>
-                    <Form.Item label="Default Role" name="default_role" initialValue="Internal User">
+                    <Form.Item label={t("Default Role")} name="default_role" initialValue="Internal User">
                       <Select>
                         <Select.Option value="internal_user_viewer">{t("Internal Viewer")}</Select.Option>
                         <Select.Option value="internal_user">{t("Internal User")}</Select.Option>

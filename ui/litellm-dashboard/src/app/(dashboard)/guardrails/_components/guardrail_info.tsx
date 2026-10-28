@@ -663,7 +663,7 @@ const GuardrailInfoView: React.FC<GuardrailInfoProps> = ({ guardrailId, onClose,
                       <Input placeholder={t("Enter guardrail name")} />
                     </Form.Item>
 
-                    <Form.Item label="Default On" name="default_on">
+                    <Form.Item label={t("Default On")} name="default_on">
                       <Select>
                         <Select.Option value={true}>{t("Yes")}</Select.Option>
                         <Select.Option value={false}>{t("No")}</Select.Option>

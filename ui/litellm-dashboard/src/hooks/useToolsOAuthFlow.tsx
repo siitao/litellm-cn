@@ -174,7 +174,7 @@ export const useToolsOAuthFlow = ({
       payload = JSON.parse(storedResult);
       flowState = peeked;
     } catch (_) {
-      setError("Failed to resume OAuth flow. Please retry.");
+      setError(t("Failed to resume OAuth flow. Please retry."));
       setStatus("error");
       processingRef.current = false;
       clearStorage(FLOW_STATE_KEY);

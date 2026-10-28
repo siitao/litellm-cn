@@ -1058,7 +1058,7 @@ const TeamInfoView: React.FC<TeamInfoProps> = ({
                       />
                     </Form.Item>
 
-                    <Form.Item label="Max Budget (USD)" name="max_budget">
+                    <Form.Item label={t("Max Budget (USD)")} name="max_budget">
                       <NumericalInput step={0.01} precision={2} style={{ width: "100%" }} />
                     </Form.Item>
 
@@ -1145,15 +1145,15 @@ const TeamInfoView: React.FC<TeamInfoProps> = ({
                       </AccordionBody>
                     </Accordion>
 
-                    <Form.Item label="Reset Budget" name="budget_duration">
+                    <Form.Item label={t("Reset Budget")} name="budget_duration">
                       <BudgetDurationDropdown placeholder={t("Never resets")} />
                     </Form.Item>
 
-                    <Form.Item label="Tokens per minute Limit (TPM)" name="tpm_limit">
+                    <Form.Item label={t("Tokens per minute Limit (TPM)")} name="tpm_limit">
                       <NumericalInput step={1} style={{ width: "100%" }} />
                     </Form.Item>
 
-                    <Form.Item label="Requests per minute Limit (RPM)" name="rpm_limit">
+                    <Form.Item label={t("Requests per minute Limit (RPM)")} name="rpm_limit">
                       <NumericalInput step={1} style={{ width: "100%" }} />
                     </Form.Item>
 
@@ -1221,10 +1221,10 @@ const TeamInfoView: React.FC<TeamInfoProps> = ({
                                     },
                                   ]}
                                 >
-                                  <InputNumber placeholder="TPM Limit" min={0} />
+                                  <InputNumber placeholder={t("TPM Limit")} min={0} />
                                 </Form.Item>
                                 <Form.Item {...restField} name={[name, "rpm"]}>
-                                  <InputNumber placeholder="RPM Limit" min={0} />
+                                  <InputNumber placeholder={t("RPM Limit")} min={0} />
                                 </Form.Item>
                                 <MinusCircleOutlined onClick={() => remove(name)} style={{ color: "#ef4444" }} />
                               </Space>
@@ -1365,7 +1365,7 @@ const TeamInfoView: React.FC<TeamInfoProps> = ({
                       <AccessGroupSelector placeholder={t("Select access groups (optional)")} />
                     </Form.Item>
 
-                    <Form.Item label="Vector Stores" name="vector_stores" aria-label={t("Vector Stores")}>
+                    <Form.Item label={t("Vector Stores")} name="vector_stores" aria-label={t("Vector Stores")}>
                       <VectorStoreSelector
                         onChange={(values: string[]) => form.setFieldValue("vector_stores", values)}
                         value={form.getFieldValue("vector_stores")}
@@ -1392,7 +1392,7 @@ const TeamInfoView: React.FC<TeamInfoProps> = ({
                       />
                     </Form.Item>
 
-                    <Form.Item label="MCP Servers / Access Groups" name="mcp_servers_and_groups">
+                    <Form.Item label={t("MCP Servers / Access Groups")} name="mcp_servers_and_groups">
                       <MCPServerSelector
                         onChange={(val) => form.setFieldValue("mcp_servers_and_groups", val)}
                         value={form.getFieldValue("mcp_servers_and_groups")}
@@ -1455,7 +1455,7 @@ const TeamInfoView: React.FC<TeamInfoProps> = ({
                       </AccordionBody>
                     </Accordion>
 
-                    <Form.Item label="Organization" name="organization_id">
+                    <Form.Item label={t("Organization")} name="organization_id">
                       <Select
                         allowClear
                         placeholder={t("Select an organization")}
@@ -1468,7 +1468,7 @@ const TeamInfoView: React.FC<TeamInfoProps> = ({
                       />
                     </Form.Item>
 
-                    <Form.Item label="Logging Settings" name="logging_settings">
+                    <Form.Item label={t("Logging Settings")} name="logging_settings">
                       <EditLoggingSettings
                         value={form.getFieldValue("logging_settings")}
                         onChange={(values) => form.setFieldValue("logging_settings", values)}

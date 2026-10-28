@@ -225,11 +225,11 @@ export const CreateUserButton: React.FC<CreateuserProps> = ({
               ))}
           </Select2>
         </Form.Item>
-        <Form.Item label="Team" name="team_id">
+        <Form.Item label={t("Team")} name="team_id">
           <TeamDropdown />
         </Form.Item>
 
-        <Form.Item label="Metadata" name="metadata">
+        <Form.Item label={t("Metadata")} name="metadata">
           <Input.TextArea rows={4} placeholder={t("Enter metadata as JSON")} />
         </Form.Item>
 
@@ -357,7 +357,7 @@ export const CreateUserButton: React.FC<CreateuserProps> = ({
                 name="models"
                 help={t("Models user has access to, outside of team scope.")}
               >
-                <Select2 mode="multiple" placeholder="Select models" style={{ width: "100%" }}>
+                <Select2 mode="multiple" placeholder={t("Select models")} style={{ width: "100%" }}>
                   <Select2.Option key="all-proxy-models" value="all-proxy-models">
                     {t("users.all_proxy_models")}
                   </Select2.Option>

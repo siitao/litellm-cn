@@ -95,7 +95,7 @@ function VectorStoreRowActions({ vectorStore, onEdit, onDelete }: VectorStoreRow
           onClick={() => onDelete(vectorStore.vector_store_id)}
         >
           <Trash2 />
-          Delete
+          {t("Delete")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -149,7 +149,7 @@ export const getVectorStoreTableColumns = ({
     id: "vector_store_description",
     accessorKey: "vector_store_description",
     meta: { title: t("Description")},
-    header: "Description",
+    header: t("Description"),
     size: 280,
     enableSorting: false,
     cell: ({ row }) => {
@@ -164,7 +164,7 @@ export const getVectorStoreTableColumns = ({
   {
     id: "files",
     meta: { title: t("Files")},
-    header: "Files",
+    header: t("Files"),
     size: 160,
     enableSorting: false,
     cell: ({ row }) => <VectorStoreFilesCell vectorStore={row.original} />,
@@ -173,7 +173,7 @@ export const getVectorStoreTableColumns = ({
     id: "provider",
     accessorKey: "custom_llm_provider",
     meta: { title: t("Provider")},
-    header: "Provider",
+    header: t("Provider"),
     size: 160,
     enableSorting: false,
     cell: ({ row }) => <VectorStoreProviderCell provider={row.original.custom_llm_provider} />,

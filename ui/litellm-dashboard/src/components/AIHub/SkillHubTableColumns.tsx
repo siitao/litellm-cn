@@ -88,7 +88,7 @@ export const getSkillHubTableColumns = ({ onSkillClick }: SkillHubTableColumnsDe
     id: "description",
     accessorKey: "description",
     meta: { title: t("Description")},
-    header: "Description",
+    header: t("Description"),
     size: 260,
     enableSorting: false,
     cell: ({ row }) => (
@@ -125,7 +125,7 @@ export const getSkillHubTableColumns = ({ onSkillClick }: SkillHubTableColumnsDe
   {
     id: "source",
     meta: { title: t("Source")},
-    header: "Source",
+    header: t("Source"),
     size: 200,
     enableSorting: false,
     cell: ({ row }) => {

@@ -117,7 +117,7 @@ export const getSearchToolTableColumns = ({
   {
     id: "provider",
     meta: { title: t("Provider")},
-    header: "Provider",
+    header: t("Provider"),
     size: 160,
     enableSorting: false,
     cell: ({ row }) => {
@@ -147,7 +147,7 @@ export const getSearchToolTableColumns = ({
   {
     id: "source",
     meta: { title: t("Source"), skeleton: "badge" },
-    header: "Source",
+    header: t("Source"),
     size: 100,
     enableSorting: false,
     cell: ({ row }) => {

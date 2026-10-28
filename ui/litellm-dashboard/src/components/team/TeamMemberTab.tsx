@@ -156,7 +156,7 @@ export default function TeamMemberTab({
       title: t("Team Member Budget (USD)"),
       key: "budget",
       render: (_: unknown, record: Member) => (
-        <MoneyCell value={getUserBudget(record.user_id)} decimals={2} emptyText="Unlimited" showZero />
+        <MoneyCell value={getUserBudget(record.user_id)} decimals={2} emptyText={t("Unlimited")} showZero />
       ),
     },
     {

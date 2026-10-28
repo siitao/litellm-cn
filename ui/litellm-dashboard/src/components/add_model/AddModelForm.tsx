@@ -209,7 +209,7 @@ const AddModelForm: React.FC<AddModelFormProps> = ({
                 <ConditionalPublicModelName />
 
                 {/* Select Mode */}
-                <Form.Item label="Mode" name="mode" className="mb-1">
+                <Form.Item label={t("Mode")} name="mode" className="mb-1">
                   <AntdSelect
                     style={{ width: "100%" }}
                     value={testMode}
@@ -234,7 +234,7 @@ const AddModelForm: React.FC<AddModelFormProps> = ({
                   </Typography.Text>
                 </div>
 
-                <Form.Item label="Existing Credentials" name="litellm_credential_name" initialValue={null}>
+                <Form.Item label={t("Existing Credentials")} name="litellm_credential_name" initialValue={null}>
                   <AntdSelect
                     showSearch
                     placeholder={t("Select or search for existing credentials")}

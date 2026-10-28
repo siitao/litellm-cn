@@ -71,7 +71,7 @@ export function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
   if (!project) {
     return (
       <div className="p-6 px-12">
-        <Button variant="ghost" size="icon" aria-label="Back" onClick={onBack} className="mb-4">
+        <Button variant="ghost" size="icon" aria-label={t("Back")} onClick={onBack} className="mb-4">
           <ArrowLeftIcon className="size-4" />
         </Button>
         <p className="py-8 text-center text-sm text-muted-foreground">{t("Project not found")}</p>
@@ -104,7 +104,7 @@ export function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
         </div>
         <Button onClick={() => setIsEditModalVisible(true)}>
           <EditIcon className="size-4" />
-          Edit Project
+          {t("Edit Project")}
         </Button>
       </div>
 
@@ -145,7 +145,7 @@ export function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <DollarSignIcon className="size-4" />
-              Budget
+              {t("Budget")}
             </CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">

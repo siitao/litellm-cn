@@ -55,7 +55,7 @@ export function AccessGroupDetail({ accessGroupId, onBack }: AccessGroupDetailPr
   if (!accessGroup) {
     return (
       <div className="p-6 px-12">
-        <Button variant="ghost" size="icon" aria-label="Back" onClick={onBack} className="mb-4">
+        <Button variant="ghost" size="icon" aria-label={t("Back")} onClick={onBack} className="mb-4">
           <ArrowLeftIcon className="size-4" />
         </Button>
         <p className="py-8 text-center text-sm text-muted-foreground">{t("Access group not found")}</p>
@@ -89,7 +89,7 @@ export function AccessGroupDetail({ accessGroupId, onBack }: AccessGroupDetailPr
         </div>
         <Button onClick={() => setIsEditModalVisible(true)}>
           <EditIcon className="size-4" />
-          Edit Access Group
+          {t("Edit Access Group")}
         </Button>
       </div>
 
@@ -193,17 +193,17 @@ export function AccessGroupDetail({ accessGroupId, onBack }: AccessGroupDetailPr
             <TabsList variant="line" className="h-auto w-full justify-start rounded-none border-b p-0">
               <TabsTrigger value="models" className="flex-none gap-2 rounded-none px-4 py-2">
                 <LayersIcon className="size-4" />
-                Models
+                {t("Models")}
                 <Badge variant="secondary">{modelIds.length}</Badge>
               </TabsTrigger>
               <TabsTrigger value="mcp" className="flex-none gap-2 rounded-none px-4 py-2">
                 <ServerIcon className="size-4" />
-                MCP Servers
+                {t("MCP Servers")}
                 <Badge variant="secondary">{mcpServerIds.length}</Badge>
               </TabsTrigger>
               <TabsTrigger value="agents" className="flex-none gap-2 rounded-none px-4 py-2">
                 <BotIcon className="size-4" />
-                Agents
+                {t("Agents")}
                 <Badge variant="secondary">{agentIds.length}</Badge>
               </TabsTrigger>
             </TabsList>

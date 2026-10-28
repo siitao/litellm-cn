@@ -52,7 +52,7 @@ const PublishModal: React.FC<PublishModalProps> = ({
           <Button variant="outline" onClick={onCancel}>{t("Cancel")}</Button>
           <Button onClick={onPublish} disabled={isSaving}>
             {isSaving && <LoaderCircleIcon className="animate-spin" />}
-            Publish
+            {t("Publish")}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -215,15 +215,15 @@ function SessionCard({ session, turnCount }: { session: RealtimeSession; turnCou
               fontSize: 13,
             }}
           >
-            <ConfigRow label="Model" value={session.model} />
-            <ConfigRow label="Voice" value={session.voice} />
-            <ConfigRow label="Temperature" value={session.temperature} />
+            <ConfigRow label={t("Model")} value={session.model} />
+            <ConfigRow label={t("Voice")} value={session.voice} />
+            <ConfigRow label={t("Temperature")} value={session.temperature} />
             <ConfigRow label="Max Output Tokens" value={session.max_response_output_tokens} />
             <ConfigRow label="Input Audio Format" value={session.input_audio_format} />
             <ConfigRow label="Output Audio Format" value={session.output_audio_format} />
             {session.turn_detection && <ConfigRow label="Turn Detection" value={session.turn_detection.type} />}
             {session.tools && session.tools.length > 0 && (
-              <ConfigRow label="Tools" value={`${session.tools.length} tool(s)`} />
+              <ConfigRow label={t("Tools")} value={`${session.tools.length} tool(s)`} />
             )}
           </div>
 
@@ -323,6 +323,7 @@ function ConversationCard({
 }
 
 function ResponseTurn({ response, index }: { response: RealtimeResponse; index: number }) {
+  const { t } = useLanguage();
   const outputs = response.output || [];
   const usage = response.usage;
 
@@ -366,7 +367,7 @@ function ResponseTurn({ response, index }: { response: RealtimeResponse; index: 
       ))}
 
       {/* Token breakdown if available */}
-      {usage?.input_token_details && <TokenBreakdown label="Input" details={usage.input_token_details} />}
+      {usage?.input_token_details && <TokenBreakdown label={t("Input")} details={usage.input_token_details} />}
       {usage?.output_token_details && <TokenBreakdown label="Output" details={usage.output_token_details} />}
     </div>
   );

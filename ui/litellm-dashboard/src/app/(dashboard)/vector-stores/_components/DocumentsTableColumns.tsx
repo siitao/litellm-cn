@@ -54,7 +54,7 @@ function DocumentRowActions({ document, onRemove }: { document: DocumentUpload; 
           onClick={() => onRemove(document.uid)}
         >
           <Trash2 />
-          Remove
+          {t("Remove")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -87,7 +87,7 @@ export const getDocumentsTableColumns = ({ onRemove }: DocumentsTableColumnsDeps
     id: "status",
     accessorKey: "status",
     meta: { title: t("Status"), skeleton: "badge" },
-    header: "Status",
+    header: t("Status"),
     size: 150,
     enableSorting: false,
     cell: ({ row }) => {

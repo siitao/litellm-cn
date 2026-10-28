@@ -498,7 +498,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
                     isLoading={agentLoading}
                     loadingMessage="Loading agents…"
                     noDataMessage={
-                      <HubEmptyState title="No agents yet" body="Agents added to this proxy will appear here." />
+                      <HubEmptyState title={t("No agents yet")} body="Agents added to this proxy will appear here." />
                     }
                     size="compact"
                   />

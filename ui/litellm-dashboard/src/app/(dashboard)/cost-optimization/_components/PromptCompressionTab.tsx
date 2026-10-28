@@ -131,7 +131,7 @@ const PromptCompressionTab: React.FC<PromptCompressionTabProps> = ({ accessToken
             onFinish={handleAdd}
             initialValues={{ defaultOn: true }}
           >
-            <Form.Item name="name" label="Name" rules={[{ required: true, message: "Name is required" }]}>
+            <Form.Item name="name" label={t("Name")} rules={[{ required: true, message: "Name is required" }]}>
               <Input placeholder="headroom-compression" />
             </Form.Item>
             <Form.Item

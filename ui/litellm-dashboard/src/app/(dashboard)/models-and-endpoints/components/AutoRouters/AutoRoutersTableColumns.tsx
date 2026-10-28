@@ -127,7 +127,7 @@ export const getAutoRoutersTableColumns = ({
   {
     id: "targets",
     meta: { title: t("Routes to")},
-    header: "Routes to",
+    header: t("Routes to"),
     size: 320,
     enableSorting: false,
     cell: ({ row }) => <TargetsCell targets={row.original.targets} />,
@@ -136,7 +136,7 @@ export const getAutoRoutersTableColumns = ({
     id: "defaultModel",
     accessorKey: "defaultModel",
     meta: { title: t("Default model")},
-    header: "Default model",
+    header: t("Default model"),
     size: 200,
     enableSorting: false,
     cell: ({ row }) =>

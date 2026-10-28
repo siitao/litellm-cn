@@ -403,7 +403,7 @@ const AddPolicyForm: React.FC<AddPolicyFormProps> = ({
           name="policy_name"
           label={t("Policy Name")}
           rules={[
-            { required: true, message: "Please enter a policy name" },
+            { required: true, message: t("Please enter a policy name") },
             {
               pattern: /^[a-zA-Z0-9_-]+$/,
               message: "Policy name can only contain letters, numbers, hyphens, and underscores",

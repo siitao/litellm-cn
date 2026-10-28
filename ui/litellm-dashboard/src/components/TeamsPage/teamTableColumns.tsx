@@ -107,7 +107,7 @@ function TeamRowActions({ team, canManage, onEditTeam, onDeleteTeam }: TeamRowAc
         )}
         <DropdownMenuItem onClick={handleCopy} data-testid="team-action-copy">
           <Copy />
-          Copy team ID
+          {t("Copy team ID")}
         </DropdownMenuItem>
         {canManage && (
           <>

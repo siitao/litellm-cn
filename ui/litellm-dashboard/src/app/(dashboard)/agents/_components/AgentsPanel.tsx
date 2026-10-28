@@ -156,7 +156,7 @@ const AgentsPanel: React.FC<AgentsPanelProps> = ({ accessToken, userRole, teams 
           <div className="mt-2 flex items-center gap-4">
             <Button onClick={handleAddAgent} disabled={!accessToken}>
               <Plus />
-              Add New Agent
+              {t("Add New Agent")}
             </Button>
           </div>
         )}

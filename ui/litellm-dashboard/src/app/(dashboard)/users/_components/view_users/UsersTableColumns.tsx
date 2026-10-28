@@ -177,7 +177,7 @@ export const getUsersTableColumns = ({
       header: t("users.col_budget"),
       size: 130,
       enableSorting: false,
-      cell: ({ row }) => <MoneyCell value={row.original.max_budget} decimals={2} emptyText="Unlimited" showZero />,
+      cell: ({ row }) => <MoneyCell value={row.original.max_budget} decimals={2} emptyText={t("Unlimited")} showZero />,
     },
     {
       id: "sso_user_id",

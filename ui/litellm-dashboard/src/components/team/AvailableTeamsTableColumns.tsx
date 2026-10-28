@@ -65,7 +65,7 @@ export const getAvailableTeamsTableColumns = ({
     id: "description",
     accessorKey: "description",
     meta: { title: t("Description")},
-    header: "Description",
+    header: t("Description"),
     size: 280,
     enableSorting: false,
     cell: ({ row }) => {
@@ -91,7 +91,7 @@ export const getAvailableTeamsTableColumns = ({
   {
     id: "models",
     meta: { title: t("Models")},
-    header: "Models",
+    header: t("Models"),
     size: 260,
     enableSorting: false,
     cell: ({ row }) => <ModelsCell models={row.original.models} />,

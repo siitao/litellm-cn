@@ -61,7 +61,7 @@ export function AccessGroupBaseForm({ form, isNameDisabled = false }: AccessGrou
       label: (
         <Space align="center" size={4}>
           <LayersIcon size={16} />
-          Models
+          {t("Models")}
         </Space>
       ),
       children: (
@@ -82,7 +82,7 @@ export function AccessGroupBaseForm({ form, isNameDisabled = false }: AccessGrou
       label: (
         <Space align="center" size={4}>
           <ServerIcon size={16} />
-          MCP Servers
+          {t("MCP Servers")}
         </Space>
       ),
       children: (
@@ -108,7 +108,7 @@ export function AccessGroupBaseForm({ form, isNameDisabled = false }: AccessGrou
       label: (
         <Space align="center" size={4}>
           <BotIcon size={16} />
-          Agents
+          {t("Agents")}
         </Space>
       ),
       children: (

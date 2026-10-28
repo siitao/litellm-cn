@@ -141,7 +141,7 @@ export default function PluginSettings() {
           >
             <Input placeholder="litellm-platform-plugin" />
           </Form.Item>
-          <Form.Item name="display_name" label="Display Name" rules={[{ required: true, message: "Required" }]}>
+          <Form.Item name="display_name" label={t("Display Name")} rules={[{ required: true, message: "Required" }]}>
             <Input placeholder={t("Agent Control Plane")} />
           </Form.Item>
           <Form.Item

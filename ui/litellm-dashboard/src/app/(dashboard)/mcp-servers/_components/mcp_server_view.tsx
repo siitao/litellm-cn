@@ -283,7 +283,7 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
                     {mcpServer.allow_all_keys ? (
                       <Badge variant="outline">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-                        Enabled
+                        {t("Enabled")}
                       </Badge>
                     ) : (
                       <Badge variant="outline">{t("Disabled")}</Badge>
@@ -296,7 +296,7 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
                     {mcpServer.available_on_public_internet ? (
                       <Badge variant="outline">
                         <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-                        Public
+                        {t("Public")}
                       </Badge>
                     ) : (
                       <Badge variant="outline">

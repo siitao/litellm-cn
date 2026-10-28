@@ -546,10 +546,10 @@ const AddAgentForm: React.FC<AddAgentFormProps> = ({ visible, onClose, accessTok
           <div className="text-sm font-medium text-gray-700">{t("Agent Rate Limits")}</div>
           <p className="text-xs text-gray-500">{t("Global rate limits applied across all callers of this agent.")}</p>
           <div className="grid grid-cols-2 gap-4">
-            <Form.Item label="TPM Limit" name="tpm_limit" className="mb-0">
+            <Form.Item label={t("TPM Limit")} name="tpm_limit" className="mb-0">
               <InputNumber className="w-full" min={0} placeholder="e.g. 100000" disabled={!requireTraceIdOutbound} />
             </Form.Item>
-            <Form.Item label="RPM Limit" name="rpm_limit" className="mb-0">
+            <Form.Item label={t("RPM Limit")} name="rpm_limit" className="mb-0">
               <InputNumber className="w-full" min={0} placeholder="e.g. 100" disabled={!requireTraceIdOutbound} />
             </Form.Item>
           </div>
@@ -557,10 +557,10 @@ const AddAgentForm: React.FC<AddAgentFormProps> = ({ visible, onClose, accessTok
           <div className="text-sm font-medium text-gray-700 mt-4">{t("Per-Session Rate Limits")}</div>
           <p className="text-xs text-gray-500">{t("Rate limits per session (x-litellm-trace-id). Each session gets its own counters.")}</p>
           <div className="grid grid-cols-2 gap-4">
-            <Form.Item label="Session TPM Limit" name="session_tpm_limit" className="mb-0">
+            <Form.Item label={t("Session TPM Limit")} name="session_tpm_limit" className="mb-0">
               <InputNumber className="w-full" min={0} placeholder="e.g. 10000" disabled={!requireTraceIdOutbound} />
             </Form.Item>
-            <Form.Item label="Session RPM Limit" name="session_rpm_limit" className="mb-0">
+            <Form.Item label={t("Session RPM Limit")} name="session_rpm_limit" className="mb-0">
               <InputNumber className="w-full" min={0} placeholder="e.g. 20" disabled={!requireTraceIdOutbound} />
             </Form.Item>
           </div>
@@ -725,7 +725,7 @@ const AddAgentForm: React.FC<AddAgentFormProps> = ({ visible, onClose, accessTok
             >
               <Input placeholder={t("e.g. my-custom-agent")} />
             </Form.Item>
-            <Form.Item label="Description" name="description">
+            <Form.Item label={t("Description")} name="description">
               <Input.TextArea placeholder="Describe what this agent does…" rows={3} />
             </Form.Item>
           </div>
@@ -926,7 +926,7 @@ const AddAgentForm: React.FC<AddAgentFormProps> = ({ visible, onClose, accessTok
       title={
         <div className="flex items-center space-x-3 pb-4 border-b border-gray-100">
           {selectedLogo && currentStep < 1 && (
-            <Logo src={selectedLogo} label="Agent" className="w-6 h-6 object-contain" />
+            <Logo src={selectedLogo} label={t("Agent")} className="w-6 h-6 object-contain" />
           )}
           <h2 className="text-xl font-semibold text-gray-900">{t("Add New Agent")}</h2>
         </div>

@@ -540,9 +540,9 @@ export function MCPSubmissionsTab({ accessToken }: MCPSubmissionsTabProps) {
 
       <div className="grid grid-cols-4 gap-4 mb-6">
         <StatCard label="Total Submitted" value={summary.total} color="text-gray-900" />
-        <StatCard label="Pending Review" value={summary.pending_review} color="text-yellow-600" />
-        <StatCard label="Active" value={summary.active} color="text-green-600" />
-        <StatCard label="Rejected" value={summary.rejected} color="text-red-600" />
+        <StatCard label={t("Pending Review")} value={summary.pending_review} color="text-yellow-600" />
+        <StatCard label={t("Active")} value={summary.active} color="text-green-600" />
+        <StatCard label={t("Rejected")} value={summary.rejected} color="text-red-600" />
       </div>
 
       <div className="flex items-center gap-3 mb-5">

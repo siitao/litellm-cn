@@ -240,7 +240,7 @@ export function AllModelsTable({
             </Select>
 
             <Select value={viewMode} onValueChange={(value) => onViewModeChange(value as ModelViewMode)}>
-              <SelectTrigger size="sm" aria-label="View" data-testid="models-view-select" className="gap-2">
+              <SelectTrigger size="sm" aria-label={t("View")} data-testid="models-view-select" className="gap-2">
                 <span className="text-muted-foreground">{t("View")}</span>
                 <span className="truncate">{VIEW_MODE_LABELS[viewMode]}</span>
               </SelectTrigger>

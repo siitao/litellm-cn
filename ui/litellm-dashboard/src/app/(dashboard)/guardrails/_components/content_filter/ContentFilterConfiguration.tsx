@@ -239,7 +239,7 @@ const ContentFilterConfiguration: React.FC<ContentFilterConfigurationProps> = ({
             <div className="mb-4 flex flex-wrap gap-2">
               <Button onClick={() => setPatternModalVisible(true)}>
                 <Plus />
-                Add prebuilt pattern
+                {t("Add prebuilt pattern")}
               </Button>
               <Button variant="outline" onClick={() => setCustomPatternModalVisible(true)}>
                 <Plus />

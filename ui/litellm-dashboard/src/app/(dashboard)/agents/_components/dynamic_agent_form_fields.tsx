@@ -28,7 +28,7 @@ const DynamicAgentFormFields: React.FC<DynamicAgentFormFieldsProps> = ({ agentTy
         <Input placeholder={t("e.g., my-langgraph-agent")} />
       </Form.Item>
 
-      <Form.Item label="Description" name="description" tooltip={t("Brief description of what this agent does")}>
+      <Form.Item label={t("Description")} name="description" tooltip={t("Brief description of what this agent does")}>
         <Input.TextArea rows={2} placeholder="Describe what this agent does..." />
       </Form.Item>
 

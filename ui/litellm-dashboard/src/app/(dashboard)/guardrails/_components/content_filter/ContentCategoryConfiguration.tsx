@@ -175,7 +175,7 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
 
   const columns: ColumnDef<SelectedCategory>[] = [
     {
-      header: "Category",
+      header: t("Category"),
       accessorKey: "display_name",
       cell: ({ row }) => {
         const category = availableCategories.find((c) => c.name === row.original.category);
@@ -188,7 +188,7 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
       },
     },
     {
-      header: "Action",
+      header: t("Action"),
       accessorKey: "action",
       size: 150,
       cell: ({ row }) => (
@@ -211,7 +211,7 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
       ),
     },
     {
-      header: "Severity Threshold",
+      header: t("Severity Threshold"),
       accessorKey: "severity_threshold",
       size: 180,
       cell: ({ row }) => (
@@ -242,7 +242,7 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
       cell: ({ row }) => (
         <Button variant="outline" size="sm" onClick={() => onCategoryRemove(row.original.id)}>
           <Trash2 />
-          Remove
+          {t("Remove")}
         </Button>
       ),
     },

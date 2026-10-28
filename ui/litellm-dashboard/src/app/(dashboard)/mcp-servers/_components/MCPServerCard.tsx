@@ -173,7 +173,7 @@ const MCPServerCard: FC<MCPServerCardProps> = ({
                     }}
                   >
                     <Zap />
-                    Test Connection
+                    {t("Test Connection")}
                   </DropdownMenuItem>
                 )}
                 {onRecheckHealth && onDelete && <DropdownMenuSeparator />}
@@ -186,7 +186,7 @@ const MCPServerCard: FC<MCPServerCardProps> = ({
                     }}
                   >
                     <Trash2 />
-                    Delete
+                    {t("Delete")}
                   </DropdownMenuItem>
                 )}
               </DropdownMenuContent>
@@ -376,7 +376,7 @@ const ByokRow: FC<ByokRowProps> = ({ connected, onConnect }) => {
         <span className="text-muted-foreground">{t("BYOK credential")}</span>
         <div className="flex items-center gap-2">
           <Badge variant="outline">
-            <Check /> Connected
+            <Check /> {t("Connected")}
           </Badge>
           {onConnect && (
             <Button

@@ -75,7 +75,7 @@ export default function CredentialModal({
           name="credential_name"
           rules={[{ required: true, message: "Credential name is required" }]}
         >
-          <TextInput placeholder="Enter a friendly name for these credentials" disabled={isEdit} />
+          <TextInput placeholder={t("Enter a friendly name for these credentials")} disabled={isEdit} />
         </Form.Item>
 
         <Form.Item

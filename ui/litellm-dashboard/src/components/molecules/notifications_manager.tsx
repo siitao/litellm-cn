@@ -294,7 +294,7 @@ const NotificationManager = {
     if (React.isValidElement(input)) {
       getNotification().success({
         ...COMMON_NOTIFICATION_PROPS,
-        message: "Success",
+        message: t("Success"),
         description: input,
         placement: defaultPlacement(),
         duration: 3.5,

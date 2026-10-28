@@ -391,18 +391,18 @@ const AgentInfoView: React.FC<AgentInfoViewProps> = ({ agentId, onClose, accessT
                     <Divider />
                     <Title className="mb-4">{t("Rate Limits")}</Title>
                     <div className="grid grid-cols-2 gap-4">
-                      <Form.Item label="TPM Limit" name="tpm_limit">
+                      <Form.Item label={t("TPM Limit")} name="tpm_limit">
                         <InputNumber className="w-full" min={0} placeholder={t("Unlimited")} />
                       </Form.Item>
-                      <Form.Item label="RPM Limit" name="rpm_limit">
+                      <Form.Item label={t("RPM Limit")} name="rpm_limit">
                         <InputNumber className="w-full" min={0} placeholder={t("Unlimited")} />
                       </Form.Item>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
-                      <Form.Item label="Session TPM Limit" name="session_tpm_limit">
+                      <Form.Item label={t("Session TPM Limit")} name="session_tpm_limit">
                         <InputNumber className="w-full" min={0} placeholder={t("Unlimited")} />
                       </Form.Item>
-                      <Form.Item label="Session RPM Limit" name="session_rpm_limit">
+                      <Form.Item label={t("Session RPM Limit")} name="session_rpm_limit">
                         <InputNumber className="w-full" min={0} placeholder={t("Unlimited")} />
                       </Form.Item>
                     </div>

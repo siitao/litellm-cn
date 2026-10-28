@@ -47,7 +47,7 @@ function MemoryRowActions({ row, onViewClick, onEditClick, onDeleteClick }: Memo
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive" data-testid="memory-action-delete" onClick={() => onDeleteClick(row)}>
           <Trash2 />
-          Delete
+          {t("Delete")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -97,7 +97,7 @@ export const getMemoryTableColumns = ({
     id: "value",
     accessorKey: "value",
     meta: { title: t("Preview")},
-    header: "Preview",
+    header: t("Preview"),
     enableSorting: false,
     cell: ({ row }) => (
       <span className="block max-w-72 truncate text-sm text-muted-foreground" title={row.original.value}>
@@ -109,7 +109,7 @@ export const getMemoryTableColumns = ({
     id: "user_id",
     accessorKey: "user_id",
     meta: { title: t("User ID")},
-    header: "User ID",
+    header: t("User ID"),
     size: 160,
     enableSorting: false,
     cell: ({ row }) => <IdCell value={row.original.user_id} />,
@@ -118,7 +118,7 @@ export const getMemoryTableColumns = ({
     id: "team_id",
     accessorKey: "team_id",
     meta: { title: t("Team ID")},
-    header: "Team ID",
+    header: t("Team ID"),
     size: 160,
     enableSorting: false,
     cell: ({ row }) => <IdCell value={row.original.team_id} />,
@@ -127,7 +127,7 @@ export const getMemoryTableColumns = ({
     id: "updated_at",
     accessorKey: "updated_at",
     meta: { title: t("Updated")},
-    header: "Updated",
+    header: t("Updated"),
     size: 170,
     enableSorting: false,
     cell: ({ row }) => <DateCell value={row.original.updated_at} />,

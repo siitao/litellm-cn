@@ -536,7 +536,7 @@ export default function AgentBuilderView({
                 <TabsList variant="line" className="h-auto w-full justify-start rounded-none border-b p-0 pl-4">
                   <TabsTrigger value="configure" className="flex-none rounded-none px-4 py-2">
                     <Bot />
-                    Configure
+                    {t("Configure")}
                   </TabsTrigger>
                   <TabsTrigger value="chat" disabled={isNewAgent} className="flex-none rounded-none px-4 py-2">
                     <MessageSquare />
@@ -548,7 +548,7 @@ export default function AgentBuilderView({
                   </TabsTrigger>
                   <TabsTrigger value="connect" disabled={isNewAgent} className="flex-none rounded-none px-4 py-2">
                     <LinkIcon />
-                    Connect
+                    {t("Connect")}
                   </TabsTrigger>
                 </TabsList>
 
@@ -656,7 +656,7 @@ export default function AgentBuilderView({
                                 </Button>
                                 <Button variant="destructive" onClick={handleDeleteAgent} disabled={deleting}>
                                   <Trash2 />
-                                  Delete
+                                  {t("Delete")}
                                 </Button>
                               </>
                             )}

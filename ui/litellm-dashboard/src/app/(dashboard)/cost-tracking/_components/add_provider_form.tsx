@@ -33,7 +33,7 @@ const AddProviderForm: React.FC<AddProviderFormProps> = ({
             </Tooltip>
           </span>
         }
-        rules={[{ required: true, message: "Please select a provider" }]}
+        rules={[{ required: true, message: t("Please select a provider") }]}
       >
         <AntdSelect
           showSearch

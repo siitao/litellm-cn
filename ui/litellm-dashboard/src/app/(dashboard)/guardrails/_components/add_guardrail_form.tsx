@@ -646,7 +646,7 @@ const AddGuardrailForm: React.FC<AddGuardrailFormProps> = ({ visible, onClose, a
         <Form.Item
           name="provider"
           label={t("Guardrail Provider")}
-          rules={[{ required: true, message: "Please select a provider" }]}
+          rules={[{ required: true, message: t("Please select a provider") }]}
         >
           <Select
             placeholder={t("Select a guardrail provider")}

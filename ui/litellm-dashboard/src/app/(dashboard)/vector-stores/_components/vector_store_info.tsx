@@ -169,11 +169,11 @@ const VectorStoreInfoView: React.FC<VectorStoreInfoViewProps> = ({
                       <Input disabled />
                     </Form.Item>
 
-                    <Form.Item label="Vector Store Name" name="vector_store_name">
+                    <Form.Item label={t("Vector Store Name")} name="vector_store_name">
                       <Input />
                     </Form.Item>
 
-                    <Form.Item label="Description" name="vector_store_description">
+                    <Form.Item label={t("Description")} name="vector_store_description">
                       <Input.TextArea rows={4} />
                     </Form.Item>
 
@@ -186,7 +186,7 @@ const VectorStoreInfoView: React.FC<VectorStoreInfoViewProps> = ({
                         </span>
                       }
                       name="custom_llm_provider"
-                      rules={[{ required: true, message: "Please select a provider" }]}
+                      rules={[{ required: true, message: t("Please select a provider") }]}
                     >
                       <Select2>
                         {Object.entries(Providers).map(([providerEnum, providerDisplayName]) => {
@@ -211,7 +211,7 @@ const VectorStoreInfoView: React.FC<VectorStoreInfoViewProps> = ({
                       <Text className="text-sm text-gray-500 mb-2">{t("Either select existing credentials OR enter provider credentials below")}</Text>
                     </div>
 
-                    <Form.Item label="Existing Credentials" name="litellm_credential_name">
+                    <Form.Item label={t("Existing Credentials")} name="litellm_credential_name">
                       <Select2
                         showSearch
                         placeholder={t("Select or search for existing credentials")}

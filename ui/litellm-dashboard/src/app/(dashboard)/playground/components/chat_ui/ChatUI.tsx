@@ -1906,7 +1906,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                             onClick={handleRemoveAudio}
                           >
                             <Trash2 className="size-3" />
-                            Remove
+                            {t("Remove")}
                           </Button>
                         </div>
                       )}

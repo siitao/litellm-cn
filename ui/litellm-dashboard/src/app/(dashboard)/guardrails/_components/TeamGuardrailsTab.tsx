@@ -313,7 +313,7 @@ function GuardrailCard({
           className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700 transition-colors"
         >
           {isHeadersExpanded ? <ChevronUpIcon className="h-3.5 w-3.5" /> : <ChevronDownIcon className="h-3.5 w-3.5" />}
-          Static headers
+          {t("Static headers")}
           {g.customHeaders.length > 0 && (
             <span className="ml-1 bg-gray-100 text-gray-600 rounded-full px-1.5 py-0.5 text-xs">
               {g.customHeaders.length}
@@ -654,7 +654,7 @@ function DetailPanel({
                 className="flex-1 flex items-center justify-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-sm font-medium py-2 rounded-md transition-colors"
               >
                 <CheckIcon className="h-4 w-4" />
-                Approve
+                {t("Approve")}
               </button>
               <button
                 type="button"
@@ -662,7 +662,7 @@ function DetailPanel({
                 className="flex-1 flex items-center justify-center gap-1.5 border border-red-300 text-red-600 hover:bg-red-50 text-sm font-medium py-2 rounded-md transition-colors"
               >
                 <XIcon className="h-4 w-4" />
-                Reject
+                {t("Reject")}
               </button>
             </div>
           )}
@@ -886,9 +886,9 @@ export function TeamGuardrailsTab({ accessToken }: TeamGuardrailsTabProps) {
       <div className={`flex-1 min-w-0 p-6 overflow-auto ${selected ? "border-r border-gray-200" : ""}`}>
         <div className="grid grid-cols-4 gap-4 mb-6">
           <StatCard label="Total Submitted" value={totalCount} color="text-gray-900" />
-          <StatCard label="Pending Review" value={pendingCount} color="text-yellow-600" />
-          <StatCard label="Active" value={activeCount} color="text-green-600" />
-          <StatCard label="Rejected" value={rejectedCount} color="text-red-600" />
+          <StatCard label={t("Pending Review")} value={pendingCount} color="text-yellow-600" />
+          <StatCard label={t("Active")} value={activeCount} color="text-green-600" />
+          <StatCard label={t("Rejected")} value={rejectedCount} color="text-red-600" />
         </div>
         <div className="flex items-center gap-3 mb-5">
           <div className="relative flex-1 max-w-xs">
@@ -1005,7 +1005,7 @@ export function TeamGuardrailsTab({ accessToken }: TeamGuardrailsTabProps) {
             }
           }}
         >
-          <Form.Item label="Team" name="team_id" rules={[{ required: true, message: "Select a team" }]}>
+          <Form.Item label={t("Team")} name="team_id" rules={[{ required: true, message: t("Select a team") }]}>
             <TeamDropdown />
           </Form.Item>
           <Form.Item
@@ -1015,7 +1015,7 @@ export function TeamGuardrailsTab({ accessToken }: TeamGuardrailsTabProps) {
           >
             <Input placeholder={t("e.g. pii-detection")} />
           </Form.Item>
-          <Form.Item label="Mode" name="mode" rules={[{ required: true, message: "Select a mode" }]}>
+          <Form.Item label={t("Mode")} name="mode" rules={[{ required: true, message: "Select a mode" }]}>
             <Select>
               <Select.Option value="pre_call">{t("Pre Call")}</Select.Option>
               <Select.Option value="post_call">{t("Post Call")}</Select.Option>

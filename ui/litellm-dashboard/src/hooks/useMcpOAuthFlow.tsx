@@ -262,7 +262,7 @@ export const useMcpOAuthFlow = ({
     } catch (err) {
       clearStoredFlow();
       processingRef.current = false;
-      setError("Failed to resume OAuth flow. Please retry.");
+      setError(t("Failed to resume OAuth flow. Please retry."));
       setStatus("error");
       NotificationsManager.error(t("Failed to resume OAuth flow. Please retry."));
       return;

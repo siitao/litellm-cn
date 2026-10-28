@@ -149,7 +149,7 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
           data-testid="member-existing-users-notice"
         />
 
-        <Form.Item label="Email" name="user_email" className="mb-4">
+        <Form.Item label={t("Email")} name="user_email" className="mb-4">
           <Select
             showSearch
             className="w-full"
@@ -166,7 +166,7 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
 
         <div className="text-center mb-4">OR</div>
 
-        <Form.Item label="User ID" name="user_id" className="mb-4">
+        <Form.Item label={t("User ID")} name="user_id" className="mb-4">
           <Select
             showSearch
             className="w-full"
@@ -180,7 +180,7 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
           />
         </Form.Item>
 
-        <Form.Item label="Member Role" name="role" className="mb-4">
+        <Form.Item label={t("Member Role")} name="role" className="mb-4">
           <Select defaultValue={defaultRole}>
             {roles.map((role) => (
               <Select.Option key={role.value} value={role.value}>

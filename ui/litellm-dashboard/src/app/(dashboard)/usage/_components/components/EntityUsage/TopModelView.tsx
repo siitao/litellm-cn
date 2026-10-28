@@ -27,12 +27,12 @@ export default function TopModelView({ topModels, topModelsLimit, setTopModelsLi
 
   const columns = [
     {
-      header: "Model",
+      header: t("Model"),
       accessorKey: "key",
       cell: (info: any) => info.getValue() || "-",
     },
     {
-      header: "Spend (USD)",
+      header: t("Spend (USD)"),
       accessorKey: "spend",
       meta: { numeric: true },
       cell: (info: any) => <MoneyCell value={info.getValue()} decimals={2} />,
@@ -44,13 +44,13 @@ export default function TopModelView({ topModels, topModelsLimit, setTopModelsLi
       cell: (info: any) => <span className="text-green-600">{info.getValue()?.toLocaleString() || 0}</span>,
     },
     {
-      header: "Failed",
+      header: t("Failed"),
       accessorKey: "failed_requests",
       meta: { numeric: true },
       cell: (info: any) => <span className="text-red-600">{info.getValue()?.toLocaleString() || 0}</span>,
     },
     {
-      header: "Tokens",
+      header: t("Tokens"),
       accessorKey: "tokens",
       meta: { numeric: true },
       cell: (info: any) => info.getValue()?.toLocaleString() || 0,

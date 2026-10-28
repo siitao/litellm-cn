@@ -48,7 +48,7 @@ const IdJagFormFields: React.FC<IdJagFormFieldsProps> = ({ isEditing = false }) 
         <Input placeholder="https://upstream.example.com/oauth2/token" className={fieldClassName} />
       </Form.Item>
       <Form.Item
-        label={<FieldLabel label="Client ID" tooltip={t("OAuth2 client ID LiteLLM authenticates as on both legs.")} />}
+        label={<FieldLabel label={t("Client ID")} tooltip={t("OAuth2 client ID LiteLLM authenticates as on both legs.")} />}
         name={["credentials", "client_id"]}
         rules={[{ required: !isEditing, message: "Client ID is required for ID-JAG" }]}
       >
@@ -147,7 +147,7 @@ const IdJagFormFields: React.FC<IdJagFormFieldsProps> = ({ isEditing = false }) 
         <Input placeholder="urn:ietf:params:oauth:token-type:id_token" className={fieldClassName} />
       </Form.Item>
       <Form.Item
-        label={<FieldLabel label="Scopes (optional)" tooltip={t("Scopes requested on leg 1 of the exchange.")} />}
+        label={<FieldLabel label={t("Scopes (optional)")} tooltip={t("Scopes requested on leg 1 of the exchange.")} />}
         name={["credentials", "scopes"]}
       >
         <Select mode="tags" tokenSeparators={[","]} placeholder="Add scopes" className="rounded-lg" size="large" />

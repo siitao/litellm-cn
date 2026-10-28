@@ -210,13 +210,13 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
                 ) : (
                   <Save data-icon="inline-start" />
                 )}
-                Save Changes
+                {t("Save Changes")}
               </Button>
             </div>
           ) : (
             <Button type="button" variant="outline" onClick={() => setIsEditing(true)}>
               <Edit data-icon="inline-start" />
-              Edit Settings
+              {t("Edit Settings")}
             </Button>
           )}
         </CardAction>

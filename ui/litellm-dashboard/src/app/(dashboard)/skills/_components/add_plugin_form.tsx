@@ -246,7 +246,7 @@ const AddPluginForm: React.FC<AddPluginFormProps> = ({ visible, onClose, accessT
         </div>
 
         {/* Description */}
-        <Form.Item label="Description (Optional)" name="description" tooltip={t("Brief description of what the skill does")}>
+        <Form.Item label={t("Description (Optional)")} name="description" tooltip={t("Brief description of what the skill does")}>
           <TextArea rows={3} placeholder="A skill that helps with..." maxLength={500} className="rounded-lg" />
         </Form.Item>
 

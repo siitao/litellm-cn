@@ -204,7 +204,7 @@ const useJudgeModelOptions = (): SearchSelectOption[] => {
     const pinned: SearchSelectOption[] = RECOMMENDED_JUDGE_MODELS.map((model) => ({
       label: model,
       value: model,
-      sublabel: "Recommended",
+      sublabel: t("Recommended"),
     }));
     if (!costMap) return pinned;
     const pinnedNames = new Set<string>(RECOMMENDED_JUDGE_MODELS);

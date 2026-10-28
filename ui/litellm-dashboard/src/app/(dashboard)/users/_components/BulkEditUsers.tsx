@@ -272,7 +272,7 @@ const BulkEditUserModal: React.FC<BulkEditUserModalProps> = ({
                 key: "max_budget",
                 width: "20%",
                 render: (budget: number | null) => (
-                  <MoneyCell value={budget} decimals={2} emptyText="Unlimited" showZero />
+                  <MoneyCell value={budget} decimals={2} emptyText={t("Unlimited")} showZero />
                 ),
               },
             ]}

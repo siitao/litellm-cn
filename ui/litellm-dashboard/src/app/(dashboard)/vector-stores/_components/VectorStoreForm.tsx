@@ -122,7 +122,7 @@ const VectorStoreForm: React.FC<VectorStoreFormProps> = ({
             </span>
           }
           name="custom_llm_provider"
-          rules={[{ required: true, message: "Please select a provider" }]}
+          rules={[{ required: true, message: t("Please select a provider") }]}
           initialValue="bedrock"
         >
           <Select onChange={(value) => setSelectedProvider(value)}>
@@ -341,7 +341,7 @@ const VectorStoreForm: React.FC<VectorStoreFormProps> = ({
           <TextInput />
         </Form.Item>
 
-        <Form.Item label="Description" name="vector_store_description">
+        <Form.Item label={t("Description")} name="vector_store_description">
           <Input.TextArea rows={4} />
         </Form.Item>
 

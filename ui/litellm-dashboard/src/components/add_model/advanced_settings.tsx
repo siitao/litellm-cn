@@ -181,7 +181,7 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
               />
             </Form.Item>
 
-            <Form.Item label="Tags" name="tags" className="mb-4">
+            <Form.Item label={t("Tags")} name="tags" className="mb-4">
               <Select
                 mode="tags"
                 style={{ width: "100%" }}

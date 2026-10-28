@@ -212,13 +212,13 @@ export function KeyInfoHeader({
       <Flex align="stretch" gap={40} style={{ marginBottom: 40 }}>
         <Space direction="vertical" size={16}>
           <UserField userAlias={data.userAlias} userEmail={data.userEmail} userId={data.userId} />
-          <LabeledField label="Expires" value={data.expires} icon={<FieldTimeOutlined />} />
+          <LabeledField label={t("Expires")} value={data.expires} icon={<FieldTimeOutlined />} />
         </Space>
 
         <Divider type="vertical" style={{ height: "auto" }} />
 
         <Space direction="vertical" size={16}>
-          <LabeledField label="Created At" value={data.createdAt} icon={<CalendarOutlined />} />
+          <LabeledField label={t("Created At")} value={data.createdAt} icon={<CalendarOutlined />} />
           <LabeledField
             label={t("Created By")}
             value={data.createdBy}
@@ -232,8 +232,8 @@ export function KeyInfoHeader({
         <Divider type="vertical" style={{ height: "auto" }} />
 
         <Space direction="vertical" size={16}>
-          <LabeledField label="Last Updated" value={data.lastUpdated} icon={<ClockCircleOutlined />} />
-          <LabeledField label="Last Active" value={data.lastActive} icon={<ThunderboltOutlined />} />
+          <LabeledField label={t("Last Updated")} value={data.lastUpdated} icon={<ClockCircleOutlined />} />
+          <LabeledField label={t("Last Active")} value={data.lastActive} icon={<ThunderboltOutlined />} />
         </Space>
       </Flex>
     </div>

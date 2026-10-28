@@ -79,12 +79,12 @@ const PerUserUsage: React.FC<PerUserUsageProps> = ({ accessToken, selectedTags, 
 
   const columns: ColumnDef<PerUserMetrics>[] = [
     {
-      header: "User ID",
+      header: t("User ID"),
       accessorKey: "user_id",
       cell: ({ row }) => <span className="font-medium">{row.original.user_id}</span>,
     },
     {
-      header: "User Email",
+      header: t("User Email"),
       accessorKey: "user_email",
       cell: ({ row }) => row.original.user_email || "N/A",
     },
@@ -100,7 +100,7 @@ const PerUserUsage: React.FC<PerUserUsageProps> = ({ accessToken, selectedTags, 
       cell: ({ row }) => formatAbbreviatedNumber(row.original.successful_requests),
     },
     {
-      header: "Total Tokens",
+      header: t("Total Tokens"),
       accessorKey: "total_tokens",
       meta: { numeric: true },
       cell: ({ row }) => formatAbbreviatedNumber(row.original.total_tokens),
@@ -112,7 +112,7 @@ const PerUserUsage: React.FC<PerUserUsageProps> = ({ accessToken, selectedTags, 
       cell: ({ row }) => formatAbbreviatedNumber(row.original.failed_requests),
     },
     {
-      header: "Total Cost",
+      header: t("Total Cost"),
       accessorKey: "spend",
       meta: { numeric: true },
       cell: ({ row }) => `$${formatAbbreviatedNumber(row.original.spend, 4)}`,

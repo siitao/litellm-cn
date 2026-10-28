@@ -81,7 +81,7 @@ function ToolsetRowActions({ toolset, isAdmin, onEditClick, onDeleteClick }: Too
               onClick={() => onDeleteClick(toolset.toolset_id)}
             >
               <Trash2 />
-              Delete
+              {t("Delete")}
             </DropdownMenuItem>
           </>
         )}
@@ -107,7 +107,7 @@ export const getMCPToolsetTableColumns = ({
     id: "toolset_id",
     accessorKey: "toolset_id",
     meta: { title: t("Toolset ID")},
-    header: "Toolset ID",
+    header: t("Toolset ID"),
     size: 140,
     enableSorting: false,
     cell: ({ row }) => <IdCell value={row.original.toolset_id} />,
@@ -133,7 +133,7 @@ export const getMCPToolsetTableColumns = ({
     id: "description",
     accessorKey: "description",
     meta: { title: t("Description")},
-    header: "Description",
+    header: t("Description"),
     size: 200,
     enableSorting: false,
     cell: ({ row }) => (
@@ -145,7 +145,7 @@ export const getMCPToolsetTableColumns = ({
   {
     id: "tools",
     meta: { title: t("Tools"), skeleton: "chips" },
-    header: "Tools",
+    header: t("Tools"),
     size: 260,
     enableSorting: false,
     cell: ({ row }) => {

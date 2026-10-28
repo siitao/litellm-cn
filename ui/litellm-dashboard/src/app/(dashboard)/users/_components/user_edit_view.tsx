@@ -99,18 +99,18 @@ export function UserEditView({
   return (
     <Form form={form} onFinish={handleSubmit} layout="vertical">
       {!isBulkEdit && (
-        <Form.Item label="User ID" name="user_id">
+        <Form.Item label={t("User ID")} name="user_id">
           <TextInput disabled />
         </Form.Item>
       )}
 
       {!isBulkEdit && (
-        <Form.Item label="Email" name="user_email">
+        <Form.Item label={t("Email")} name="user_email">
           <TextInput />
         </Form.Item>
       )}
 
-      <Form.Item label="User Alias" name="user_alias">
+      <Form.Item label={t("User Alias")} name="user_alias">
         <TextInput />
       </Form.Item>
 
@@ -187,11 +187,11 @@ export function UserEditView({
         <NumericalInput step={0.01} precision={2} style={{ width: "100%" }} disabled={unlimitedBudget} />
       </Form.Item>
 
-      <Form.Item label="Reset Budget" name="budget_duration">
+      <Form.Item label={t("Reset Budget")} name="budget_duration">
         <BudgetDurationDropdown />
       </Form.Item>
 
-      <Form.Item label="Metadata" name="metadata">
+      <Form.Item label={t("Metadata")} name="metadata">
         <Textarea rows={4} placeholder={t("Enter metadata as JSON")} />
       </Form.Item>
 

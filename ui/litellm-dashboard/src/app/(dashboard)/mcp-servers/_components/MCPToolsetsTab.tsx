@@ -205,7 +205,7 @@ function CreateToolsetModal({ open, onClose, onSave, accessToken, initialToolset
           >
             <Input placeholder={t("e.g. github-linear-tools")} />
           </Form.Item>
-          <Form.Item label="Description" name="description" className="flex-1 mb-0">
+          <Form.Item label={t("Description")} name="description" className="flex-1 mb-0">
             <Input placeholder={t("Optional description")} />
           </Form.Item>
         </div>

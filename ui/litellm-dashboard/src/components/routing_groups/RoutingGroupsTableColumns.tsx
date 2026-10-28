@@ -45,7 +45,7 @@ function RoutingGroupRowActions({ group, onEdit, onDelete }: RoutingGroupRowActi
           onClick={() => onDelete(group)}
         >
           <Trash2 />
-          Delete
+          {t("Delete")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -77,7 +77,7 @@ export const getRoutingGroupsTableColumns = ({
   {
     id: "models",
     meta: { title: t("Models"), skeleton: "chips" },
-    header: "Models",
+    header: t("Models"),
     size: 320,
     enableSorting: false,
     cell: ({ row }) => <ModelsCell models={row.original.models} />,
